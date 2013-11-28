@@ -1,0 +1,43 @@
+Package: ggtern
+Type: Package
+Title: An extension to ggplot, to create ternary plots
+Version: 1.0
+Date: 2013-11-15
+Author: Nicholas Hamilton
+Maintainer: Nicholas Hamilton <n.hamilton@student.unsw.edu.au>
+Description: More about what it does (maybe more than one line)
+License: GPL-2
+Depends:
+  ggplot2(>= 0.9.3.1),
+  proto,
+  grid,
+  scales,
+  plyr,
+  gtable
+Collate:
+  'element_ternary.R'
+  'utilities.R'
+  'theme.R'
+  'transformTernToCart.R'
+  'labs.R'
+  'aes.R'
+  'scales.R'
+  'geom_point_tern.R'
+  'geom_point_tern_new.R'
+  'geom_text_tern.R'
+  'geom_path_tern.R'
+  'geom_polygon_tern.R'
+  'geom_segment_tern.R'
+  'ternborder.R'
+  'ternbackground.R'
+  'ternlabels.R'
+  'ternfixedcoords.R'
+  'ternarrows.R'
+  'terngridlines.R'
+  'ternticks.R'
+  'ggtern.R'
+  'plot-build.R'
+  'panel.R'
+  'chull_tern.R'
+  'onLoad.R'
+  'tern-render.R'

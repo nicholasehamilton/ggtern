@@ -1,0 +1,1 @@
+chull_tern <- function(T,L,R,data=data.frame(T=T,L=L,R=R)){chull(transformTernToCart(data=data))}
