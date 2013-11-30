@@ -4,10 +4,10 @@
 \title{Draw plot on current graphics device.}
 \usage{
   \method{print}{ggplot} (x, newpage = is.null(vp),
-    vp = NULL, ..., verbose = T)
+    vp = NULL, ...)
 
   \method{plot}{ggplot} (x, newpage = is.null(vp),
-    vp = NULL, ..., verbose = T)
+    vp = NULL, ...)
 }
 \arguments{
   \item{x}{plot to display}

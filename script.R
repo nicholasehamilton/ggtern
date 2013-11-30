@@ -4,14 +4,14 @@ MYDATA <- data.frame(Mg=runif(100),Zn=runif(100),Ca=runif(100),colour=runif(100)
                      groupB=rep(paste(c("P1","P2"),""),50)[sample(50)]) 
 
 
-plot <- ggtern(data=MYDATA,mapping=aes(x=Mg,y=Zn,z=Ca)) + facet_grid(groupA~groupB) + 
+plot <- ggtern(data=MYDATA,mapping=aes(x=Mg,y=Zn,z=Ca)) + #facet_grid(groupA~groupB) + 
   geom_point_tern(size=5,shape=21,aes(fill=factor(paste0(groupA,"/",groupB)))) + 
   labs(title="Example Ternary Plots w/ Facetting",fill="Temperature / Pressure") + 
   theme(legend.position=c(0,1),legend.justification=c(0,1))
   #      ternary.options=element_ternary(padding=0,arrowsep=0),
   #      plot.margin=unit(c(0,0,0,0),"cm"),
   #      legend.margin=unit(-0*3.5,"lines"))
-plot
+plot + coord_polar()
 
 #plot <- plot + coord_tern() #+ coord_fixed(ylim=c(0,1),xlim=c(0,1))
 #plot

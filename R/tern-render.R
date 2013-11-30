@@ -219,11 +219,7 @@ ggtern_gtable <- function(data) {
 #' @keywords hplot
 #' @export
 #' @method print ggplot
-print.ggtern <- function(x, newpage = is.null(vp), vp = NULL, ...,verbose=T) {
-  if(verbose){
-    writeLines("print.ggtern: Generating Ternary Plots")
-  }
-  
+print.ggtern <- function(x, newpage = is.null(vp), vp = NULL, ...) {  
   ggplot2:::set_last_plot(x)
   if (newpage) grid.newpage()
   
