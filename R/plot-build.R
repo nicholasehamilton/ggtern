@@ -1,45 +1,48 @@
-##FUNCTION TO HACK INTO THE STANDARD
-#.build_hack <- function(){
-  
-#  ##RETRIEVE THE EXISTING FUNCTION
-#  .ggplot_build <- ggplot2:::ggplot_build
-  
-  #PATCH.
-#  ggplot_build <- function(plot){    
-#    plot <- ggtern_build(plot) ##CALL THE TERN EQUIVALENT.
-#    .ggplot_build(plot)        ##CALL THE EXISTING FUNCTION.
-#  }
-  
-  #PUSH BACK.
-#  unlockBinding("ggplot_build", asNamespace("ggplot2"))
-#    assign("ggplot_build", ggplot_build, asNamespace("ggplot2"))
-#  lockBinding("ggplot_build", asNamespace("ggplot2"))
-#}
-
 ggtern_build <- function(plot){
-  #IF WE HAVE TERNARY OPTIONS SOMEWHERE...
-  if(!identical(plot$theme$ternary.options,NULL) | !identical(theme_update()$ternary.options,NULL)){  
-    #STORE EXISTING LAYERS & MAPPINGS AND RESET TEMPORARILY...
-    layers.existing <- plot$layers;   
-    plot$layers     <- list()
+  #IF WE HAVE TERNARY OPTIONS SOMEWHERE...  
+  if("ggtern" %in% class(plot) & ("gg" %in% class(plot) | "ggplot" %in% class(plot))){    
+    #THE TERNARY COMPONENTS 
+    tern.layer <- list( ternbackground(plot)
+                       ,ternborder(plot)
+                       ,ternarrows(plot)
+                       ,ternlabels(plot)
+                       ,terngridlines(plot)
+                       ,ternticks(plot)
+                )
     
-    #CREATE THE TERNARY FRAMEWORK.
-    plot <- plot + ternbackground(plot) #Apply Background
-    plot <- plot + ternborder(plot)     #Apply Ternary Axes.
-    plot <- plot + ternarrows(plot)     #Arrow Marker
-    plot <- plot + ternlabels(plot)     #Apply Species Labels.
-    plot <- plot + ternfixedcoords(plot)#Fixed Ratio
+    ##Add the missing scales
+    ggplot2:::scales_add_missing(plot,c("x","y","T","L","R"),environment())
     
-    plot <- plot + terngridlines(plot)  #Apply Gridlines
-    plot <- plot + ternticks(plot)      #APPLY TICKS
+    ##INSERT COMPONENTS UNDERNEATH LAYERS...
+    plot$layers <- c(tern.layer,plot$layers)
     
-    #Stack New layers on top of the base layers
-    ##THE NEW LAYERS, IE, BACKGROUND, TICKS, AXES, GRIDS ETC UNDER THE ACTUAL LAYERS TO PLOT.
-    plot$layers <- c(plot$layers,layers.existing) 
+    xlim <- c(0,1); ylim <- c(0,1)
+    tryCatch({
+      PADDING <- max(plot$theme$ternary.options$padding, 0)
+      #ARROWSEP<- max(plot$theme$ternary.options$arrowsep,0) 
+      #BACKBY <- PADDING + ARROWSEP
+      #YMAX <- as.numeric(transformTernToCart(1,0,0)[2])
+      
+      xlim <- c(0 - PADDING,1 + PADDING)
+      ylim <- c(as.numeric(transformTernToCart(-PADDING,0,   PADDING,scale=F)[2]),
+                as.numeric(transformTernToCart( 1+PADDING,0,-PADDING,scale=F)[2]))
+    },error=function(e){
+      #NOTHING
+    })
+    
+    ##Add the ternary fixed coordinates
+    #plot <- plot + ternfixedcoords(plot)
+    if(!inherits(plot$coordinates,"ternary")){
+      plot <- plot + coord_tern(xlim=xlim,ylim=ylim)
+    }
+    
+    ##Update the coordinates limits.
+    plot$coordinates$limits$T <- plot$scales$get_scales("T")$limits
+    plot$coordinates$limits$L <- plot$scales$get_scales("L")$limits
+    plot$coordinates$limits$R <- plot$scales$get_scales("R")$limits
   }
-  #scales <- plot$scales
-  #scale_z <- function()scales$get_scales("z")
-  #ggplot2:::scales_add_missing(plot, c("z"))
+  
+  ##Execute the normal  building process.
   ggplot2:::ggplot_build(plot)
 }
 

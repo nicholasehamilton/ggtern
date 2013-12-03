@@ -1,10 +1,24 @@
+getTernExtremes <- function(coordinates){
+  Tlim <- coordinates$limits$T; if(!is.numeric(Tlim)){Tlim <- c(0,1)} 
+  Llim <- coordinates$limits$L; if(!is.numeric(Llim)){Llim <- c(0,1)} 
+  Rlim <- coordinates$limits$R; if(!is.numeric(Rlim)){Rlim <- c(0,1)} 
+  
+  
+  #get the data.
+  ret <- data.frame(T=c(max(Tlim),min(Tlim),min(Tlim)),
+                    L=c(min(Llim),max(Llim),min(Llim)),
+                    R=c(min(Rlim),min(Rlim),max(Rlim)))
+  
+  #Check
+  agg <- apply(ret,1,sum)
+  if(length(which(agg != 1.0)) > 0){stop("Non-Default limits for Ternary plot must be selected so that the extremes sum to unity.")}
+  ret
+}
+
+
 #convert ternary data to xy data, 
-transformTernToCart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE){
-  if(scale){
-    d <- abs(data)
-  }else{
-    d <- data
-  }
+transformTernToCart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE,allow.negatives=TRUE,...,Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1)){
+  if(!allow.negatives){ d <- abs(data)}else{d <- data}
   s <- rowSums(d);
   
   #If scale to composition sum of 1
@@ -17,6 +31,19 @@ transformTernToCart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE){
     }
     for(i in 1:ncol(d)){d[,i] <- d[,i]/s}
   }
+  
+  .adj <- function(input,lim){
+    MIN <- min(lim)
+    MAX <- max(lim)
+    ret <- (input-MIN)/(MAX - MIN)
+    ret
+  }
+  
+  #Adjust for the Limits.
+  d$T <- .adj(d$T,Tlim)
+  d$L <- .adj(d$L,Llim)
+  d$R <- .adj(d$R,Rlim)
+  
   
   #Do the actual transformation
   out.Y <- d[,1]*tan(pi*60/180)*0.5

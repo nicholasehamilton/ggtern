@@ -38,33 +38,6 @@
   lockBinding("validate_element", asNamespace("ggplot2"))
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  # Look up the scale that should be used for a given aesthetic
-  #aes_to_scale <- function(var) {
-  #  var[var %in% c("x", "xmin", "xmax", "xend", "xintercept")] <- "x"
-  #  var[var %in% c("y", "ymin", "ymax", "yend", "yintercept")] <- "y"
-  #  var[var %in% c("z", "zmin", "zmax", "zend", "zintercept")] <- "z"
-  #  var
-  #}
-  #unlockBinding("aes_to_scale", asNamespace("ggplot2"))
-  #  assign("aes_to_scale", aes_to_scale, asNamespace("ggplot2"))
-  #lockBinding("aes_to_scale", asNamespace("ggplot2"))
-  
-  # Figure out if an aesthetic is a position aesthetic or not
-  #is_position_aes <- function(vars){aes_to_scale(vars) %in% c("x","y","z")}
-  
-  #unlockBinding("is_position_aes", asNamespace("ggplot2"))
-  #  assign("is_position_aes", is_position_aes, asNamespace("ggplot2"))
-  #lockBinding("is_position_aes", asNamespace("ggplot2"))
-  
   .element_tree <- ggplot2:::.element_tree #DUPLICATE
   
   #TERNARY OPTIONS.
@@ -150,14 +123,6 @@
 
 
 theme_tern <- function(){
-  
-  
-  
-  
-  
-  
-  
-  
   
   ##CUSTOMIZE
   default <- theme_update()

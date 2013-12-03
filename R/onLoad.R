@@ -21,5 +21,5 @@
   .theme_hack()
   #.build_hack()
   .aes_hack()
-  #.panel_hack()
+  .panel_hack()
 }
