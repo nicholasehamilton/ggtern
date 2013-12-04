@@ -15,6 +15,29 @@ getTernExtremes <- function(coordinates){
   ret
 }
 
+scale_X = function(X,plot){
+  X <- X[1]
+  if(!X %in% c("T","L","R")){stop("X must be either 'T', 'L' or 'R'")}
+  if(!inherits(plot,"ggtern")){stop("plot must be of class 'ggtern'")}
+  ret = plot$scales$get_scales(X); 
+  if(!identical(ret,NULL)){
+    ret
+  }else{
+    do.call(paste0("scale_",X,"_continuous"),args=list())
+  }
+}
+vett.labels <- function(scale){
+  x = scale$labels; 
+  y = scale$breaks;
+  if(identical(x,waiver())){
+    100*y
+  }else{
+    x
+  }
+}
+
+ifthenelse <- function(x,a,b){if(x){a}else{b}}
+
 
 #convert ternary data to xy data, 
 transformTernToCart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE,allow.negatives=TRUE,...,Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1)){

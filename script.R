@@ -16,7 +16,7 @@ plot <- ggtern(data=MYDATA,mapping=aes(x=Mg,y=Zn,z=Ca)) + #facet_grid(groupA~gro
   labs(title="Example Ternary Plots w/ Facetting",fill="Temperature / Pressure",color="Series")
 #plot #+ coord_tern(xlim=c(0.5,1.1),ylim=c(0,0.5))
 
-plot <- plot + scale_T_continuous(limits=c(0.0,0.75)) + scale_L_continuous(limits=c(0.0,0.75)) + scale_R_continuous(limits=c(0.25,1.0)) 
+plot <- plot + scale_T_continuous(limits=c(0.05,0.9)) + scale_L_continuous(limits=c(0.05,0.9)) + scale_R_continuous(limits=c(0.05,0.9)) 
 plot <- plot + theme(legend.position=c(0,1),legend.justification=c(0,1))
 #plot <- plot + coord_tern()
 plot

@@ -6,7 +6,7 @@ ggtern_build <- function(plot){
                        ,ternborder(plot)
                        ,ternarrows(plot)
                        ,ternlabels(plot)
-                       ,terngridlines(plot)
+                       #,terngridlines(plot)
                        ,ternticks(plot)
                 )
     
