@@ -9,9 +9,23 @@ getTernExtremes <- function(coordinates){
                     L=c(min(Llim),max(Llim),min(Llim)),
                     R=c(min(Rlim),min(Rlim),max(Rlim)))
   
+  rownames(ret) <- c("AT.T","AT.L","AT.R")
+  
   #Check
   agg <- apply(ret,1,sum)
-  if(length(which(agg != 1.0)) > 0){stop("Non-Default limits for Ternary plot must be selected so that the extremes sum to unity.")}
+  report.data <- data.frame(ret,Total=agg);
+  rownames(report.data) <- paste("At Point:",   c("T","L","R"))
+  colnames(report.data) <- c("T Amt.","L Amt.","R Amt.","Tot. Amt.")
+  if(length(which(agg != 1.0)) > 0){
+      writeLines("ATTENTION: Non-Default Ternary Limits Do not Sum to Unity!")
+      print(report.data)
+      stop("Extremes must sum to unity.")
+  }
+  if(min(agg) < 0 | max(ret) > 1){
+    writeLines("ATTENTION: Non-Default Ternary Limits are outside [0,1]")
+    print(report.data)
+    stop("Negative Values, or Values > 1 are Not Acceptable")
+  }
   ret
 }
 

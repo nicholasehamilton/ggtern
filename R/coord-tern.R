@@ -43,12 +43,13 @@ coord_transform.ternary <- function(coord, data, details){
   data   <- rename_data.ternary(coord, data)
   ix.tern <- c("T","L","R")
   ix.cart <- c("x","y")
+  
   if(length(which(ix.tern %in% colnames(data))) == length(ix.tern)){
     ##Execute the transformation to cartesian
     tmp    <- transformTernToCart(data=data[,ix.tern],
                                   Tlim = coord$limits$T,
-                                  Llim=coord$limits$L,
-                                  Rlim=coord$limits$R)
+                                  Llim = coord$limits$L,
+                                  Rlim = coord$limits$R)
     
     ##and update cartesian.
     data$x <- tmp$x
@@ -77,7 +78,7 @@ coord_train.ternary <- function(coord, scales){
 }
 
 ##' @S3method coord_aspect tern
-coord_aspect.ternary <- function(coord, details){0.866}
+coord_aspect.ternary <- function(coord, details){sin(60*pi/180)}
 
 #' @S3method coord_distance ternary
 coord_distance.ternary <- function(coord,x,y,details) {
