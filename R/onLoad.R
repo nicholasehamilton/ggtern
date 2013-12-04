@@ -22,4 +22,6 @@
   #.build_hack()
   .aes_hack()
   .panel_hack()
+  
+  options("tern.discard.external"=TRUE)
 }

@@ -12,8 +12,9 @@ ternbackground <- function(plot) {
         
     #get the data.
     data.background <- getTernExtremes(coordinates)
-    #data.background    <- transformTernToCart(data=data.background)
-    data.background    <- coord_transform(coordinates, data.background, scales)
+    options("tern.discard.external"=FALSE)
+      data.background    <- coord_transform(coordinates, data.background, scales)
+    options("tern.discard.external"=TRUE)
     data.background$id =  1
     
     ##Function to create new axis grob
@@ -63,14 +64,13 @@ ternarrows <- function(plot) {
     if(!is.logical(plot$theme$ternary.options$showarrows)){
       ##BYPASS IF NULL
     }else if(plot$theme$ternary.options$showarrows){
-      .ifthenelse <- function(i,y,n){if(i){y}else{n}}
       e <- calc_element_plot("ternary.options",theme=theme_update(),verbose=F,plot=plot)
       
       #get the extermes
       D <- getTernExtremes(coordinates)
       
       ##GET THE DATA.
-      b <-.ifthenelse(is.numeric(e$arrowsep),e$arrowsep[1],0)
+      b <-ifthenelse(is.numeric(e$arrowsep),e$arrowsep[1],0)
       
       f.T <- abs(diff(coordinates$limits$T))*b; if(!is.numeric(f.T)){f.T = b}
       f.L <- abs(diff(coordinates$limits$L))*b; if(!is.numeric(f.L)){f.L = b}
@@ -92,17 +92,10 @@ ternarrows <- function(plot) {
       d.f <- d.f - (1-f)*d.diff
       d.s <- d.s +   (s)*d.diff
       
-      
-      #d.s <- data.frame(T=c(s,1-s-b,+b),
-      #                  L=c(b,s,1-s-b),
-      #                  R=c(1-s-b,+b,s))
-      #FINISH
-      #d.f <- data.frame(T=c(f,1-f-b,b), 
-      #                  L=c(b,f,1-f-b),
-      #                  R=c(1-f-b,b,f))
-      
       ##TRANSFORM
-      d <- coord_transform(coordinates,rbind(d.s,d.f),scales); 
+      options("tern.discard.external"=FALSE)
+        d <- coord_transform(coordinates,rbind(d.s,d.f),scales); 
+      options("tern.discard.external"=TRUE)
       
       ix <- which(colnames(d) %in% c("x","y"))
       d <- cbind(d[1:3,ix],d[4:6,ix]);
@@ -202,8 +195,9 @@ ternborder <- function(plot) {
     
     #get the data.
     data.border <- getTernExtremes(coordinates)
-    #data.border <- transformTernToCart(data=data.border)
-    data.border <- coord_transform(coordinates, data.border, scales)
+    options("tern.discard.external"=FALSE)
+      data.border <- coord_transform(coordinates, data.border, scales)
+    options("tern.discard.external"=TRUE)
     
     ##Function to create new axis grob
     .render <- function(name,s,f,items){
@@ -258,12 +252,12 @@ ternlabels <- function (plot) {
     #get the data.
     d    <- getTernExtremes(coordinates)
     #d    <- transformTernToCart(data=d)
-    d    <- coord_transform(coordinates,d, scales)
+    options("tern.discard.external"=FALSE)
+      d    <- coord_transform(coordinates,d, scales)
+    options("tern.discard.external"=TRUE)
     d$L  <- as.character(c(plot$labels$T,
                            plot$labels$L,
                            plot$labels$R))
-    
-    .ifthenelse <- function(a,b,c){if(a){b}else{c}}
     
     ##Function to create new axis grob
     .render <- function(name,ix,items){
@@ -389,10 +383,12 @@ ternTicksGridAndAxes <- function (plot) {
     ##Grid data
     d.g  <- d[,c("grid.T.end","grid.L.end","grid.R.end")]; colnames(d.g) <- c("T","L","R"); 
     
-    ##Do the coordinate transformation
-    d    <- coord_transform(coordinates,d, scales)
-    d.g  <- coord_transform(coordinates,d.g,scales)[,c("x","y")]; colnames(d.g) <- c("xend.grid","yend.grid");
-    d    <- cbind(d,d.g) ##Join
+    options("tern.discard.external"=FALSE)
+      ##Do the coordinate transformation
+      d    <- coord_transform(coordinates,d, scales)
+      d.g  <- coord_transform(coordinates,d.g,scales)[,c("x","y")]; colnames(d.g) <- c("xend.grid","yend.grid");
+      d    <- cbind(d,d.g) ##Join
+    options("tern.discard.external"=TRUE)
     
     ##Determine the tick finish positions for segments.
     d$xend <- cos(d$Angle*pi/180)*d$TickLength + d$x

@@ -44,22 +44,39 @@ coord_transform.ternary <- function(coord, data, details){
   ix.tern <- c("T","L","R")
   ix.cart <- c("x","y")
   
+  #Get the extremes to determine if points are outside the plot area.
+  data.extremes <-getTernExtremes(coord)
+  data.extremes <-transformTernToCart(data = data.extremes[,ix.tern],
+                                      Tlim = coord$limits$T,
+                                      Llim = coord$limits$L,
+                                      Rlim = coord$limits$R)[,c("x","y")]
+  
   if(length(which(ix.tern %in% colnames(data))) == length(ix.tern)){
     ##Execute the transformation to cartesian
-    tmp    <- transformTernToCart(data=data[,ix.tern],
+    tmp    <- transformTernToCart(data = data[,ix.tern],
                                   Tlim = coord$limits$T,
                                   Llim = coord$limits$L,
                                   Rlim = coord$limits$R)
-    
     ##and update cartesian.
     data$x <- tmp$x
     data$y <- tmp$y
+    
+    #only keep records in poly
+    if(getOption("tern.discard.external")){
+      A <- as.numeric(data.extremes[1,])
+      B <- as.numeric(data.extremes[2,])
+      C <- as.numeric(data.extremes[3,])
+      in.poly <- apply(data[,c("x","y")],1,function(P){PointInTriangle(as.numeric(P),A,B,C)})
+      data <- data[which(in.poly),]
+    }
+    
   }else if(length(which(ix.cart %in% colnames(bup))) == length(ix.cart)){
     data <- bup
-    warning("Ternary plot generally requires x, y and z aesthetics, however, reverting to cartesian.") 
+    writeLines("Ternary plot requires x, y and z aesthetics, however, reverting to cartesian.") 
   }else{
     stop("Neither Ternary or Cartesian Data has been provided.")
   }
+  
   data <- ggplot2:::coord_transform.cartesian(coord,data,details)
   data
 }

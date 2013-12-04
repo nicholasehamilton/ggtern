@@ -1,3 +1,22 @@
+
+PointInTriangle <- function(P,A,B,C){
+  v0=C-A; v1=B-A; v2=P-A
+  dot00 = v0 %*% v0
+  dot01 = v0 %*% v1
+  dot02 = v0 %*% v2
+  dot11 = v1 %*% v1
+  dot12 = v1 %*% v2
+  invDenom = 1 / (dot00 * dot11 - dot01 * dot01)
+  u = (dot11 * dot02 - dot01 * dot12) * invDenom
+  v = (dot00 * dot12 - dot01 * dot02) * invDenom
+  
+  ret <- (u >= 0) & (v >= 0) & (u + v <= 1)
+  
+  return(as.logical(ret))
+}
+#PointInTriangle(c(0,1),c(0,1),c(-1,0),c(1,0))
+
+
 getTernExtremes <- function(coordinates){
   Tlim <- coordinates$limits$T; if(!is.numeric(Tlim)){Tlim <- c(0,1)} 
   Llim <- coordinates$limits$L; if(!is.numeric(Llim)){Llim <- c(0,1)} 

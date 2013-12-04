@@ -22,7 +22,7 @@ ggtern_build <- function(plot){
     for(X in c("T","L","R")){ plot$coordinates$limits[[X]] <- plot$scales$get_scales(X)$limits}
     
     #THE TERNARY COMPONENTS 
-    tern.layer <- list( ternbackground(plot)
+    tern.layer <- list(  ternbackground(plot)
                         ,ternborder(plot)
                         ,ternarrows(plot)
                         ,ternlabels(plot)

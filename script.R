@@ -11,7 +11,7 @@ MYDATA <- data.frame(Mg=runif(100),Zn=runif(100),Ca=runif(100),colour=runif(100)
                      groupA=rep(paste(c("T1","T2"),""),50)[sample(50)],
                      groupB=rep(paste(c("P1","P2"),""),50)[sample(50)]) 
 
-plot <- ggtern(data=MYDATA,mapping=aes(x=Mg,y=Zn,z=Ca)) + #facet_grid(groupA~groupB) + 
+plot <- ggtern(data=MYDATA,mapping=aes(x=Mg,y=Zn,z=Ca)) + facet_grid(groupA~groupB) + 
   geom_point(size=5,shape=21,aes(fill=factor(paste0(groupA,"/",groupB)))) + #+ coord_tern() + 
   labs(title="Example Ternary Plots w/ Facetting",fill="Temperature / Pressure",color="Series")
 #plot #+ coord_tern(xlim=c(0.5,1.1),ylim=c(0,0.5))
@@ -26,7 +26,7 @@ plot
 plot + geom_smooth(data=MYDATA,method=lm,aes(color=groupA),inherit.aes=F,aes(x=x,y=y)) 
 
 
-plot <- ggtern(data=MYDATA,mapping=aes(x=Mg,y=Zn,z=Ca)) + facet_grid(groupA~groupB) + 
+plot <- ggtern(data=MYDATA,mapping=aes(x=Mg,y=Zn,z=Ca)) + #facet_grid(groupA~groupB) + 
   geom_point(size=5,shape=21,aes(fill=factor(paste0(groupA,"/",groupB)))) + 
   labs(title="Example Ternary Plots w/ Facetting",fill="Temperature / Pressure",color="Series") + 
   theme(legend.position=c(0,1),legend.justification=c(0,1),
@@ -34,8 +34,8 @@ plot <- ggtern(data=MYDATA,mapping=aes(x=Mg,y=Zn,z=Ca)) + facet_grid(groupA~grou
         plot.margin=unit(c(0,0,0,0),"cm"),
         legend.margin=unit(-0*3.5,"lines"))
 plot
-plot + geom_point(data=data.frame(x=1,y=-0.1),aes(x=x,y=y),inherit.aes=F,size=10,color="red")
-plot + geom_smooth(data=MYDATA,method=lm)
+plot + geom_point(data=data.frame(x=1,y=0),aes(x=x,y=y),inherit.aes=F,size=10,color="red")
+plot + geom_smooth(method="lm")
 
 #plot <- plot + coord_tern() #+ coord_fixed(ylim=c(0,1),xlim=c(0,1))
 #plot
