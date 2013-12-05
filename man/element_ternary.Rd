@@ -38,14 +38,18 @@
   \code{\link{ggplot2}} which permits absolute distances
   (ie say unit(1,"cm")) via the \code{\link{grid}} package,
   are instead defined as a relative length to the limits
-  underlying \code{x} and \code{y} axes. For example, the
-  ternary axes are rendered directly onto the plot area,
-  rather than using an exclusive grid component. In
-  essence, since the \code{x} limits (unless changed) are
-  between \code{[0,1]}, then a relative length of
+  imposed by the underlying \code{x} and \code{y} axes.
+
+  For example, the ternary axes are rendered directly onto
+  the plot area, (rather than using an exclusive grid
+  component) and since the \code{x} limits (unless changed)
+  are between \code{[0,1]}, then a relative length of
   \code{0.02} represents a length that is approximately
   \code{2\%} of the plot edges from tip to tip. Elements
   which are subject to this include the \code{padding},
-  \code{ticklength.major} and \code{ticklength.minor}
+  \code{arrowsep}, \code{ticklength.major} and
+  \code{ticklength.minor}. This is perhaps not ideal,
+  however, seemed to be a necessary sacrifice in order to
+  produce these plots.
 }
 

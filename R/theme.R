@@ -74,7 +74,7 @@
   )
 }
 
-
+#helper function
 .theme_tern      <- function(col.BG="grey90",col.T="darkred",col.L="darkgreen",col.R="darkblue"){
   
   ##CUSTOMIZE
@@ -84,7 +84,7 @@
   
   theme(
     legend.background       = element_blank(),
-    
+    ternary.options         = element_ternary(),
     panel.background.tern   = element_rect(fill=col.BG,color=NA),
     axis.tern               = element_line(size=0.5,linetype="solid"),
     axis.tern.line          = element_line(),
@@ -126,7 +126,10 @@
       axis.tern.ticks.minor   = element_line(size=0.10,colour="black")
     )
 }
-theme_tern       <- function(){.theme_tern()}
+
+#some custom themes
+theme_tern_rgbg  <- function(){.theme_tern(col.BG="gray90")}
+theme_tern_rgbw  <- function(){.theme_tern(col.BG="white")}
 theme_tern_bw    <- function(){.theme_tern("white","black","black","black")}
 theme_tern_gray  <- function(){.theme_tern(col.BG="grey90",col.T="black",col.L="black",col.R="black")}
 

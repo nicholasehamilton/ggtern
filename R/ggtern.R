@@ -8,7 +8,7 @@
 #'@export
 ggtern <- function(...){
   plot <- ggplot(...)
-  plot <- plot + theme_tern() + theme(ternary.options=element_ternary())
+  plot <- plot + theme_tern_gray() #DEFAULT
   class(plot) <- c("ggtern",class(plot))
   plot
 }
