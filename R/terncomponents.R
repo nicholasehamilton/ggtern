@@ -141,9 +141,8 @@ ternlabels <- function (plot) {.ternlabels$new(mapping=NULL,data=data.frame(x=NA
     ##Function to create new axis grob
     .render <- function(name,ix,items){
       tryCatch({  
-        e <- calc_element_plot(name,theme=theme_update(),verbose=F,plot=plot)
+        e <- calc_element_plot(name,theme=theme.current,verbose=F,plot=plot)
         colour    <- e$colour
-        fill      <- e$fill
         size      <- e$size
         lineheight<- e$lineheight
         family    <- ifthenelse(is.character(e$family),e$family,"sans")
@@ -157,7 +156,7 @@ ternlabels <- function (plot) {.ternlabels$new(mapping=NULL,data=data.frame(x=NA
                                default.units="native", 
                                hjust=hjust, 
                                vjust=vjust, 
-                               rot  =angle, 
+                               rot  =angle,
                                gp   = gpar(col      = colour, 
                                            fontsize   = size * ggplot2:::.pt,
                                            fontfamily = family, 
@@ -225,8 +224,9 @@ ternTicksGridAndAxes <- function (plot) {.ternTicksGridAndAxes$new(mapping=NULL,
       })
       if(!is.numeric(limits)){limits=c(0,1)}
       new <- data.frame(ID = id,Scale=X,Breaks=breaks,Labels=labels,Major=major)
-      MAX <- max(limits); MIN <- min(limits)
-      new <- new[which(new$Breaks > MIN & new$Breaks <= MAX),]
+      MAX <- max(limits); 
+      MIN <- min(limits)
+      new <- new[which(new$Breaks > 1.001*MIN & new$Breaks <= MAX),]
       new$Lower=MIN
       new$Upper=MAX
       new$Prop = (new$Breaks - new$Lower) / (new$Upper - new$Lower) #The relative position

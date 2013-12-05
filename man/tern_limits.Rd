@@ -1,0 +1,34 @@
+\name{tern_limits}
+\alias{tern_limits}
+\title{Restrict Ternary Limits}
+\usage{
+  tern_limits(T = 1, L = 1, R = 1, ...)
+}
+\arguments{
+  \item{T}{numeric value of the maximum T species scale
+  value}
+
+  \item{L}{numeric value of the maximum L species scale
+  value}
+
+  \item{R}{numeric value of the maximum R species scale
+  value}
+
+  \item{...}{other arguments to pass to ALL of
+  \code{scale_X_continuous}, where \code{X = T, L, R}}
+}
+\description{
+  Appends new T, L and R ternary continuous scales, where
+  the maximum scale value is specified, and, where the
+  minimums for each are solved.
+}
+\examples{
+plot <- ggtern(data=data.frame(x=runif(100),y=runif(100),z=runif(100)),aes(x,y,z)) + geom_point() + tern_limits(0.7,0.3,0.4)
+plot
+}
+\seealso{
+  \code{\link{scale_T_continuous}},
+  \code{\link{scale_L_continuous}} and
+  \code{\link{scale_R_continuous}}
+}
+

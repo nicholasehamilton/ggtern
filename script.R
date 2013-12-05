@@ -14,7 +14,7 @@ MYDATA <- data.frame(Mg=runif(100),Zn=runif(100),Ca=runif(100),colour=runif(100)
 plot <- ggtern(data=MYDATA,mapping=aes(x=Mg,y=Zn,z=Ca)) + #facet_grid(groupA~groupB) + 
   geom_point(size=3,shape=21,aes(fill=factor(paste0(groupA,"/",groupB)))) + #+ coord_tern() + 
   labs(title="Example Ternary Plots w/ Facetting",fill="Temperature / Pressure",color="Series")
-plot + atomic_percent() + theme(legend.position=c(0,1),legend.justification=c(0,1)) + geom_smooth(method="lm")
+#plot + atomic_percent() + theme(legend.position=c(0,1),legend.justification=c(0,1)) + geom_smooth(method="lm")
 
 #plot #+ coord_tern(xlim=c(0.5,1.1),ylim=c(0,0.5))
 
@@ -23,7 +23,8 @@ plot <- plot + scale_T_continuous(limits=c(0.00,0.6)) + scale_L_continuous(limit
 plot <- plot + theme(legend.position=c(0,1),legend.justification=c(0,1))
 
 #plot <- plot + coord_tern()
-plot
+plot + tern_limits(0.7,0.3,0.4)
+plot + scale_T_continuous("ABC") + coord_tern(T="y",L="x") + atomic_percent() + theme_tern_bw()
 
 plot + geom_smooth(data=MYDATA,method=lm,aes(color=groupA),inherit.aes=F,aes(x=x,y=y)) 
 
