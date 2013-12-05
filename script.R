@@ -3,7 +3,7 @@
 
 
 MYDATA <- data.frame(Mg=c(1,0,0),Zn=c(0,1,0),Ca=c(0,0,1))
-plot <- ggtern(data=MYDATA,aes(x=Mg,y=Zn,z=Ca)) + geom_point() #+ geom_smooth(method=lm)
+plot <- ggtern(data=MYDATA,aes(x=Mg,y=Zn,z=Ca)) + geom_point() #+ geom_smooth(method="lm")
 plot 
 
 
@@ -11,10 +11,10 @@ MYDATA <- data.frame(Mg=runif(100),Zn=runif(100),Ca=runif(100),colour=runif(100)
                      groupA=rep(paste(c("T1","T2"),""),50)[sample(50)],
                      groupB=rep(paste(c("P1","P2"),""),50)[sample(50)]) 
 
-plot <- ggtern(data=MYDATA,mapping=aes(Mg,Zn,Ca)) + #facet_grid(groupA~groupB) + 
+plot <- ggtern(data=MYDATA,mapping=aes(x=Mg,y=Zn,z=Ca)) + #facet_grid(groupA~groupB) + 
   geom_point(size=3,shape=21,aes(fill=factor(paste0(groupA,"/",groupB)))) + #+ coord_tern() + 
   labs(title="Example Ternary Plots w/ Facetting",fill="Temperature / Pressure",color="Series")
-plot + atomic_percent() + theme(legend.position=c(0,1),legend.justification=c(0,1))
+plot + atomic_percent() + theme(legend.position=c(0,1),legend.justification=c(0,1)) + geom_smooth(method="lm")
 
 #plot #+ coord_tern(xlim=c(0.5,1.1),ylim=c(0,0.5))
 

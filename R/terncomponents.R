@@ -1,107 +1,52 @@
-
-#THE BACKGROUND
-ternbackground <- function(plot) {
-  .ternbackground$new(mapping=NULL,data=data.frame(x=NA),geom_params=list(plot=plot),inherit.aes=FALSE,show_guide=FALSE,stat="identity")
-}
-.ternbackground <- proto(ggplot2:::Geom, {
-  objname <- "background_tern"
-  draw_groups <- function(., data, scales, coordinates, plot,...) {
-    items <- list()
-    theme.plot    <- plot$theme
-    theme.current <- theme_update()
-        
-    #get the data.
-    data.background <- get_tern_extremes(coordinates)
-    data.background <- coord_transform(coordinates, data.background, scales,discard=FALSE)
-    data.background$id =  1
-    
-    ##Function to create new axis grob
-    .render <- function(name,items){
-      tryCatch({  
-        e <- calc_element_plot(name,theme=theme_update(),verbose=F,plot=plot)
-        colour   <- e$colour
-        fill     <- e$fill
-        size     <- ifthenelse(!is.numeric(e$size),0,e$size)
-        linetype <- e$linetype
-        alpha    <- ifthenelse(!is.numeric(e$alpha),1,e$alpha)
-        grob     <- polygonGrob(  data.background$x, 
-                                  data.background$y, 
-                                  default.units = "native",
-                                  id   = data.background$id,
-                                  gp   = gpar(  col  = colour,
-                                                fill = alpha(fill,alpha),
-                                                lwd  = size * ggplot2:::.pt,
-                                                lty  = linetype
-                                  )
-        )
-        
-        ##Add to the items.
-        items[[length(items) + 1]] <- grob
-      },error = function(e){print(e)})
-      return(items)
-    }
-    
-    #process the axes
-    items <- .render("panel.background.tern",items)
-    
-    #render.
-    gTree(children = do.call("gList", items))
-  }
-  default_stat <- function(.) StatIdentity
-  default_aes <- function(.) aes(fill="grey90",size=0,colour="transparent",linetype=1)
-})
-
 #THE DIRECTION ARROWS
-ternarrows <- function(plot) {
-  .ternarrows$new(mapping=NULL,data=data.frame(x=NA),geom_params = list(plot=plot),show_guide=FALSE,inherit.aes=FALSE,stat="identity")
-}
+ternarrows <- function(plot) {.ternarrows$new(mapping=NULL,data=data.frame(x=NA),geom_params = list(plot=plot),show_guide=FALSE,inherit.aes=FALSE,stat="identity")}
 .ternarrows <- proto(ggplot2:::Geom,{
   objname      <- "ternarrows_tern"
   draw_groups  <- function(.,data,scales,coordinates,plot,...) {
     items <- list()
+    
     if(!is.logical(plot$theme$ternary.options$showarrows)){
       ##BYPASS IF NULL
     }else if(plot$theme$ternary.options$showarrows){
-      e <- calc_element_plot("ternary.options",theme=theme_update(),verbose=F,plot=plot)
-      
       #get the extermes
       D <- get_tern_extremes(coordinates)
       
-      ##GET THE DATA.
-      b <-ifthenelse(is.numeric(e$arrowsep),e$arrowsep[1],0)
-      
-      f.T <- abs(diff(coordinates$limits$T))*b; if(!is.numeric(f.T)){f.T = b}
-      f.L <- abs(diff(coordinates$limits$L))*b; if(!is.numeric(f.L)){f.L = b}
-      f.R <- abs(diff(coordinates$limits$R))*b; if(!is.numeric(f.R)){f.R = b}
-      
-      #START
-      d.s <- data.frame(T=c(0   , +f.T, -f.T), 
-                        L=c(-f.L,  0  , +f.L), 
-                        R=c(+f.R, -f.R,  0     )) + D[c(3,1,2),]
-      #FINISH
-      d.f <- data.frame(T=c(0   ,  +f.T, -f.T),   
-                        L=c(-f.L,   0  , +f.L),   
-                        R=c(+f.R,  -f.R,  0    )) + D[c(1,2,3),]
+      #The basic data.
+      d.f <- D[c(1,2,3),]
+      d.s <- D[c(3,1,2),]; rownames(d.s) <- rownames(d.f) #Correct rownames
+      d.diff <- d.f - d.s
       
       #Cut down to relative proportion.
-      s <- min(max(e$arrowstart, 0.0),1.0)
-      f <- max(min(e$arrowfinish,1.0),0.0)
-      d.diff <- d.f - d.s
-      d.f <- d.f - (1-f)*d.diff
-      d.s <- d.s +   (s)*d.diff
+      e <- calc_element_plot("ternary.options",theme=theme_update(),verbose=F,plot=plot)
+      d.f <- d.f - (1-max(min(e$arrowfinish,1.0),0.0))*d.diff
+      d.s <- d.s +   (min(max(e$arrowstart, 0.0),1.0))*d.diff
       
       ##TRANSFORM
       d <- coord_transform(coordinates,rbind(d.s,d.f),scales,discard=FALSE); 
       
       ix <- which(colnames(d) %in% c("x","y"))
-      d <- cbind(d[1:3,ix],d[4:6,ix]);
+      d <- cbind(d[1:3,ix],
+                 d[4:6,ix]);
       colnames(d) <- c("x","y","xend","yend")
       
+      #MOVE the Arrows Off the Axes.
+      d[c("AT.T","AT.L","AT.R"),"angle"] <- c(0,120,240)
+      d[c("AT.T","AT.L","AT.R"),"arrowsep"] <- ifthenelse(is.numeric(e$arrowsep),e$arrowsep[1],0) #*c(abs(diff(coordinates$limits$R)),
+                                                                                                  #  abs(diff(coordinates$limits$L)),
+                                                                                                  #  abs(diff(coordinates$limits$R)))
+      d[,c("x","xend")] <- d[,c("x","xend")] + cos(pi*d$angle/180)*d$arrowsep
+      d[,c("y","yend")] <- d[,c("y","yend")] + sin(pi*d$angle/180)*d$arrowsep
+      
+      #Centerpoints
       d$xmn   <- rowMeans(d[,c("x","xend")])
       d$ymn   <- rowMeans(d[,c("y","yend")])
+      
+      #Labels for arrowmarks
       d$L     <- c(plot$labels$T,
                    plot$labels$L,
                    plot$labels$R)
+      
+      #Arrowmarks Suffix.
       d$W     <- plot$labels$W
       
       ##Function to create new axis grob
@@ -178,64 +123,8 @@ ternarrows <- function(plot) {
   default_aes  <- function(.) aes(colour = "black", size = 0.5, linetype = 1, alpha = 1)
 })
 
-#THE BORDERS AROUND BACKGROUND
-ternborder <- function(plot) {
-  .ternborder$new(mapping=NULL,data=data.frame(x=NA),geom_params = list(plot=plot),inherit.aes=FALSE,show_guide=FALSE,stat="identity")
-}
-.ternborder <- proto(ggplot2:::Geom,{
-  objname <- "border_tern"
-  draw_groups <- function(., data, scales, coordinates,plot,...) {
-    items <- list()
-    theme.plot    <- plot$theme
-    theme.current <- theme_update()
-    
-    #get the data.
-    data.border <- get_tern_extremes(coordinates)
-    data.border <- coord_transform(coordinates, data.border, scales,discard=FALSE)
-    
-    ##Function to create new axis grob
-    .render <- function(name,s,f,items){
-      tryCatch({
-        e <- calc_element_plot(name,theme=theme_update(),verbose=F,plot=plot)
-        colour   <- e$colour
-        size     <- e$size
-        linetype <- e$linetype
-        lineend  <- e$lineend
-        grob     <- segmentsGrob(
-          x0 = data.border$x[s], 
-          x1 = data.border$x[f],
-          y0 = data.border$y[s], 
-          y1 = data.border$y[f],
-          default.units="native",
-          gp = gpar(col = colour, 
-                    lty = linetype,
-                    lineend=lineend,
-                    lwd = size*ggplot2:::.pt)
-        )
-        
-        ##Add to the items.
-        items[[length(items) + 1]] <- grob
-      },error = function(e){ warning(e)})
-      return(items)
-    }
-    
-    #process the axes
-    items <- .render("axis.tern.line.T",3,1,items)
-    items <- .render("axis.tern.line.L",1,2,items)
-    items <- .render("axis.tern.line.R",2,3,items)
-    
-    #render.
-    gTree(children = do.call("gList", items))
-  }
-  default_stat <- function(.) StatIdentity
-  default_aes <- function(.) aes(colour = "black", size = 0.5, linetype = 1, alpha = 1)
-  #guide_geom <- function(.) "none"
-})
-
 #THE LABELS
-ternlabels <- function (plot) {
-  .ternlabels$new(mapping=NULL,data=data.frame(x=NA),geom_params=list(plot=plot),inherit.aes=FALSE,show_guide=FALSE,stat="identity")
-}
+ternlabels <- function (plot) {.ternlabels$new(mapping=NULL,data=data.frame(x=NA),geom_params=list(plot=plot),inherit.aes=FALSE,show_guide=FALSE,stat="identity")}
 .ternlabels <- proto(ggplot2:::Geom, {
   objname <- "ternlabels_tern"
   #draw_groups <- function(.,...).$draw(...)
@@ -247,9 +136,7 @@ ternlabels <- function (plot) {
     d    <- get_tern_extremes(coordinates)
     d    <- coord_transform(coordinates,d,scales,discard=FALSE)
     
-    d$L  <- as.character(c(plot$labels$T,
-                           plot$labels$L,
-                           plot$labels$R))
+    d$L  <- as.character(c(plot$labels$T, plot$labels$L, plot$labels$R))
     
     ##Function to create new axis grob
     .render <- function(name,ix,items){
@@ -296,9 +183,7 @@ ternlabels <- function (plot) {
 })
 
 #THE TICKS
-ternTicksGridAndAxes <- function (plot) {
-  .ternTicksGridAndAxes$new(mapping=NULL,data=data.frame(x=NA),geom_params=list(plot=plot),inherit.aes=FALSE,show_guide=FALSE,stat="identity")
-}
+ternTicksGridAndAxes <- function (plot) {.ternTicksGridAndAxes$new(mapping=NULL,data=data.frame(x=NA),geom_params=list(plot=plot),inherit.aes=FALSE,show_guide=FALSE,stat="identity")}
 .ternTicksGridAndAxes <- proto(ggplot2:::Geom, {
   objname <- "ticks_tern"
   draw_groups <- function(.,...){draw(.,...)}

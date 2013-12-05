@@ -3,8 +3,9 @@
 \title{Theme element: ternary structure}
 \usage{
   element_ternary(showarrows = TRUE, padding = 0.15,
-    arrowsep = 0.1, arrowstart = 0.25, arrowfinish = 0.75,
-    ticklength.major = 0.02, ticklength.minor = 0.01)
+    arrowsep = 0.075, arrowstart = 0.25,
+    arrowfinish = 0.75, ticklength.major = 0.02,
+    ticklength.minor = 0.01)
 }
 \arguments{
   \item{showarrows}{logical whether to show the axis

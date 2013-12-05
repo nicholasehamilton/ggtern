@@ -35,6 +35,89 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,sin(pi/3)),Tlim=
   )
 }
 
+coord_render_fg.ternary <- function(coord,details,theme){
+  NULL
+}
+
+coord_render_bg.ternary <- function(coord,details,theme){
+  items <- list()
+  
+  #The limits.
+  data.extreme <- data.frame(T=c(1,0,0),L=c(0,1,0),R=c(0,0,1))
+  data.extreme <- transform_tern_to_cart(data=data.extreme)
+  data.extreme <- ggplot2:::coord_transform.cartesian(coord,data.extreme,details)
+  
+  #--------------------------------------------------
+  #BACKGROUND...
+  data.background <- data.extreme
+  data.background$id =  1
+  
+  ##Function to create new axis grob
+  .render <- function(name,items){
+    tryCatch({  
+      e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
+      colour   <- e$colour
+      fill     <- e$fill
+      size     <- ifthenelse(!is.numeric(e$size),0,e$size)
+      linetype <- e$linetype
+      alpha    <- ifthenelse(!is.numeric(e$alpha),1,e$alpha)
+      grob     <- polygonGrob(  data.background$x, 
+                                data.background$y, 
+                                default.units = "native",
+                                id   = data.background$id,
+                                gp   = gpar(  col  = colour,
+                                              fill = alpha(fill,alpha),
+                                              lwd  = size * ggplot2:::.pt,
+                                              lty  = linetype
+                                )
+      )
+      
+      ##Add to the items.
+      items[[length(items) + 1]] <- grob
+    },error = function(e){print(e)})
+    return(items)
+  }
+  #process the axes
+  items <- .render("panel.background.tern",items)
+  
+  #--------------------------------------------------
+  #BORDER
+  data.border <- data.extreme
+  ##Function to create new axis grob
+  .render <- function(name,s,f,items){
+    tryCatch({
+      e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
+      colour   <- e$colour
+      size     <- e$size
+      linetype <- e$linetype
+      lineend  <- e$lineend
+      grob     <- segmentsGrob(
+        x0 = data.border$x[s], 
+        x1 = data.border$x[f],
+        y0 = data.border$y[s], 
+        y1 = data.border$y[f],
+        default.units="native",
+        gp = gpar(col = colour, 
+                  lty = linetype,
+                  lineend=lineend,
+                  lwd = size*ggplot2:::.pt)
+      )
+      
+      ##Add to the items.
+      items[[length(items) + 1]] <- grob
+    },error = function(e){ warning(e)})
+    return(items)
+  }
+  
+  #process the axes
+  items <- .render("axis.tern.line.T",3,1,items)
+  items <- .render("axis.tern.line.L",1,2,items)
+  items <- .render("axis.tern.line.R",2,3,items)
+  
+  #render.
+  ggplot2:::ggname("background",gTree(children = do.call("gList", items)))
+}
+
 scale_transform.ternary <- function(){writeLines("scale_transform.ternary")}
 
 #' @S3method rename_data ternary
@@ -92,9 +175,7 @@ coord_transform.ternary <- function(coord, data, details){
 }
 
 #' @S3method coord_expand_defaults ternary
-coord_expand_defaults.ternary <- function(coord, scale, aesthetic) {
-  ggplot2:::expand_default(scale)
-}
+coord_expand_defaults.ternary <- function(coord, scale, aesthetic){ggplot2:::expand_default(scale)}
 
 #' @S3method coord_train ternary
 coord_train.ternary <- function(coord, scales){

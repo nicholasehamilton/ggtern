@@ -22,7 +22,7 @@
 #' @export
 element_ternary <- function(showarrows       =TRUE,
                             padding          =0.15,
-                            arrowsep         =0.10,
+                            arrowsep         =0.075,
                             arrowstart       =0.25,
                             arrowfinish      =0.75,
                             ticklength.major =0.020,
