@@ -232,15 +232,13 @@ calc_element_plot <- function(element,theme=theme_update(),...,plot=NULL,verbose
   ifthenelse(!identical(ret.plot,NULL),ret.plot,ret.theme)
 }
 
+#Modified Coordinate transform 
 .coord_transform_existing <- ggplot2:::coord_transform
-
 coord_transform <- function(...,discard=TRUE){
   if(!is.logical(discard))stop("discard parameter must be logical")
   options("tern.discard.external"=discard[1])
   .coord_transform_existing(...)
 }
-
-
 
 
 

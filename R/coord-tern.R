@@ -1,18 +1,31 @@
-coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1)) {
+
+#' Ternary Coordinate System
+#' 
+#' \code{coord_tern} is a function which creates a transformation mechanism between the ternary system, and, the cartesian system.
+#' It inherits from the fixed coordinate system, employing fixed ratio between x and y axes once transformed.
+#' @param T the Top Mapping (default x)
+#' @param L the Left Mapping (default y)
+#' @param R the Right Mapping (default z)
+#' @param xlim the range of x in the cartesian space
+#' @param ylim the range of y in the cartesian space
+#' @param Tlim the range of T in the ternary space
+#' @param Llim the range of L in the ternary space
+#' @param Rlim the range of R in the ternary space
+#' @return ternary coordinate system object.
+coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,sin(pi/3)),Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1)) {
   all.coords <- c("x","y","z")
+  if(length(which(!c(T,L,R) %in% all.coords)) > 0){stop("Options for T, L and R are x,y and z")}
+  if(length(unique(c(T,L,R))) != 3){stop("x, y and z must be assigned to T, L and R in some order and NOT duplicated")}
+  
   T <- match.arg(T, all.coords)
   L <- match.arg(L, all.coords[which(!all.coords %in% c(T  ))]) #T is picked
   R <- match.arg(R, all.coords[which(!all.coords %in% c(T,L))]) #T & L are picked
-  
-  cart.coords <- c("x","y")
-  x <- match.arg(T,cart.coords)
-  y <- match.arg(L,cart.coords[which(!cart.coords %in% c(T  ))]) #T is picked
   
   coord(
     T = T, 
     L = L,
     R = R,
-    ratio=1,
+    #ratio=0.5,
     limits = list(x = xlim, 
                   y = ylim,
                   T = Tlim,

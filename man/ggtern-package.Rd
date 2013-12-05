@@ -1,6 +1,5 @@
 \name{ggtern-package}
 \alias{ggtern-package}
-\alias{ggtern}
 \docType{package}
 \title{
 An extension to ggplot2 for ternary diagrams

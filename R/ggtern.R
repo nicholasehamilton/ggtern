@@ -1,15 +1,17 @@
 
+#'Create ggtern object
+#'
+#'\code{ggtern} is a function, analogous to \code{ggplot}, which creates an object of class \code{ggtern} (which inherits \code{ggplot}), 
+#'and creation of a ternary plot is predicated on using this constructor.
+#'@param ... same arguments as passed through to ggplot
+#'@seealso \code{\link{ggplot}}
+#'@export
 ggtern <- function(...){
   plot <- ggplot(...)
   plot <- plot + theme_tern() + theme(ternary.options=element_ternary())
-  
-  .val <- function(desired,fallback=""){ifthenelse(is.character(desired),desired,fallback)}
-  
-  plot <- plot + labs(T=.val(plot$labels$x,"T"),L=.val(plot$labels$y,"L"),R=.val(plot$labels$z,"R"), W="%")
   class(plot) <- c("ggtern",class(plot))
   plot
 }
-
 
 
 

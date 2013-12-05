@@ -19,6 +19,7 @@ Collate:
   'utilities.R'
   'theme.R'
   'labs.R'
+  'labs-atomic-weight-percent.R'
   'aes.R'
   'scales.R'
   'terncomponents.R'
