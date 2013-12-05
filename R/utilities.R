@@ -1,27 +1,84 @@
+#' ggtern Utilities
+#' 
+#' \code{ifthenelse} function takes input arguments \code{x}, \code{a} and \code{b} and returns \code{a} 
+#' when \code{x} is \code{TRUE} otherwise \code{b} (when \code{x} is \code{FALSE})
+#' @param x logical tern
+#' @param a value to return when true
+#' @param b value to return when false
+#' @export
+#' @rdname utilities
+#' @examples ifthenelse(TRUE,1,0)
+ifthenelse <- function(x,a,b){
+  if(!is.logical(x))stop("x argument must be logical")
+  if(x){a}else{b}
+}
 
-PointInTriangle <- function(P,A,B,C){
-  v0=C-A; v1=B-A; v2=P-A
-  dot00 = v0 %*% v0
-  dot01 = v0 %*% v1
-  dot02 = v0 %*% v2
-  dot11 = v1 %*% v1
-  dot12 = v1 %*% v2
-  invDenom = 1 / (dot00 * dot11 - dot01 * dot01)
-  u = (dot11 * dot02 - dot01 * dot12) * invDenom
-  v = (dot00 * dot12 - dot01 * dot02) * invDenom
+#' Point In Triangle
+#' 
+#' \code{point_in_triangle} is a function that determines if point is contained by a triangle via the Barycentric Technique
+#' @param P numeric vector of length 2 [x,y], representing the point to test
+#' @param x numeric vector of length 3, representing the x coordinates of the triangle
+#' @param y numeric vector of length 3, representing the y coordinates of the triangle
+#' @param ... not used
+#' @param strictly logical value representing whether inside is 'strictly' inside, meaning, 
+#' that a point lying on the edges or vertices is considered outside the triangle when strictly is \code{TRUE}.
+#' @examples
+#' P <- c(0,0); x <- c(0,2,1); y = c(0,0,1)
+#' point_in_triangle(P,x,y)
+#' @rdname PointInTriangle
+#' @export
+point_in_triangle <- function(P,x,y,...,strictly=FALSE){
+  if(!is.numeric(x) | !is.numeric(y))stop("x and y must be numeric")
+  if(length(x) != 3 | length(y) != 3)stop("x and y must be of length 3.")
+  if(!is.numeric(P)) stop("P must be numeric")
+  if(length(P) != 2) stop("P must be of length 2")
+  if(!is.logical(strictly))strictly=FALSE
   
-  ret <- (u >= 0) & (v >= 0) & (u + v <= 1)
+  #Create source points
+  v.A = c(x[1],y[1]);
+  v.B = c(x[2],y[2]);
+  v.C = c(x[3],y[3]);
+  
+  #Create the vectors relative to A
+  v0=v.C-v.A 
+  v1=v.B-v.A
+  v2=P  -v.A
+  
+  #Evaluate
+  dot00 = v0 %*% v0; dot01 = v0 %*% v1; dot02 = v0 %*% v2; dot11 = v1 %*% v1; dot12 = v1 %*% v2
+  denom = (dot00 * dot11 - dot01 * dot01)
+  u     = (dot11 * dot02 - dot01 * dot12) / denom
+  v     = (dot00 * dot12 - dot01 * dot02) / denom
+  
+  #Yes or No...
+  ret <- ifthenelse(!strictly[1],
+                    (u >= 0) & (v >= 0) & (u + v <= 1),
+                    (u >= 0) & (v >= 0) & (u + v <  1))
   
   return(as.logical(ret))
 }
-#PointInTriangle(c(0,1),c(0,1),c(-1,0),c(1,0))
 
-
-getTernExtremes <- function(coordinates){
+#' ggtern Utiltities
+#' 
+#' \code{get_tern_extremes} determines the limiting ternary coordinates given input plot or coordinates. In the event that the 
+#' @param plot ggtern object
+#' @param coordinates ggtern coordinate system, inheriting "ternary" and "coord" classes.
+#' @param verbose logical indicating verbose reporting to console
+#' @examples get_tern_extremes(coordinates = coord_tern())
+#' @return data.frame representing the T, L and R amounts (Columns) at each of the tips (extremes) of the ternary plot area (Rows)
+#' @rdname utilities
+#' @export
+get_tern_extremes <- function(plot,coordinates=plot$coordinates,verbose=F){
+  if(!missing(plot)){
+    if(inherits(plot,"ternary") & inherits(plot,"coord")){
+      coordinates <- plot
+    }
+  }
+  if(!inherits(coordinates,"ternary") & !inherits(coordinates,"coord"))stop("coordinates must be ternary coordinates")
+  
   Tlim <- coordinates$limits$T; if(!is.numeric(Tlim)){Tlim <- c(0,1)} 
   Llim <- coordinates$limits$L; if(!is.numeric(Llim)){Llim <- c(0,1)} 
   Rlim <- coordinates$limits$R; if(!is.numeric(Rlim)){Rlim <- c(0,1)} 
-  
   
   #get the data.
   ret <- data.frame(T=c(max(Tlim),min(Tlim),min(Tlim)),
@@ -44,38 +101,59 @@ getTernExtremes <- function(coordinates){
     writeLines("ATTENTION: Non-Default Ternary Limits are outside [0,1]")
     print(report.data)
     stop("Negative Values, or Values > 1 are Not Acceptable")
+  }else if(verbose){
+    writeLines("ATTENTION: Non-Default Ternary Limits are OK.")
+    print(report.data)
   }
-  ret
+  
+  #Return
+  invisible(ret)
 }
 
-scale_X = function(X,plot){
-  X <- X[1]
-  if(!X %in% c("T","L","R")){stop("X must be either 'T', 'L' or 'R'")}
-  if(!inherits(plot,"ggtern")){stop("plot must be of class 'ggtern'")}
-  ret = plot$scales$get_scales(X); 
-  if(!identical(ret,NULL)){
-    ret
-  }else{
-    do.call(paste0("scale_",X,"_continuous"),args=list())
-  }
-}
-vett.labels <- function(scale){
-  x = scale$labels; 
-  y = scale$breaks;
-  if(identical(x,waiver())){
-    100*y
-  }else{
-    x
-  }
-}
-
-ifthenelse <- function(x,a,b){if(x){a}else{b}}
-
-
-#convert ternary data to xy data, 
-transformTernToCart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE,allow.negatives=TRUE,...,Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1)){
-  if(!allow.negatives){ d <- abs(data)}else{d <- data}
-  s <- rowSums(d);
+#' Transform Ternary Coordinates to Cartesian Coordinates
+#' 
+#' \code{transform_tern_to_cart(...)} is a function that takes input numeric vectors for the \code{T}, \code{L} and \code{R} species, 
+#' or, alternatively, a data.frame with columns \code{T}, \code{L} and \code{R} (Mandatory Column Names), and, transforms the data from the ternary space, 
+#' to the cartesian space where \code{x} and \code{y} are in the range \code{[0,1]} and \code{[0,\eqn{sin(\pi/3)}]} respectively.
+#' The limits for \code{T}, \code{L} and \code{R} \strong{MAY NOT NECESSARILY} be in the range \code{[0,1]}, however, this is the default range.
+#' 
+#' Since the constituents of each ternary points must sum to \code{1.0}, the user has the option to scale the data so that this is satisfied. 
+#' Negative values \emph{may} be of interest when trying to determine the coordinates of a point 'outside' of the ternary plot surface, 
+#' however, they must still sum to unity.
+#' 
+#' Custom Limits can be applied for \code{T}, \code{L} and \code{R} species (by the parameters \code{Tlim}, \code{Llim} and \code{Rlim}, respectively),
+#' however, if they are non-standard (ie [0,1]), then checks are made so that non-sensical results are not implied and,
+#' an error will be thrown if such non-sensical results exist, IE, All points \strong{MUST} sum to unity given that the axis extremes 
+#' should meet at the vertices of the plot area. 
+#' 
+#' By the above statement, the following constraints must hold \code{TRUE}: 
+#' \enumerate{
+#'  \item{\code{\strong{max(Tlim)} + min(Llim) + min(Rlim) = 1} AND}
+#'  \item{\code{min(Tlim) + \strong{max(Llim)} + min(Rlim) = 1} AND}
+#'  \item{\code{min(Tlim) + min(Llim) + \strong{max(Rlim)} = 1}}
+#' }
+#' 
+#' @param T the concentrations of the \strong{Top} species on the ternary diagram
+#' @param L the concentrations of the \strong{Left} species on the ternary diagram
+#' @param R the concentrations of the \strong{Right} species on the ternary diagram
+#' @param data object of type \code{data.frame} containing columns \code{T}, \code{L} and \code{R}. If not specified (Default), 
+#' it will be produced from the \code{T}, \code{L} and \code{R} parameters for use in the function.
+#' @param scale logical indicating whether the concentrations should be scaled to sum to unity.
+#' @return \code{data.frame} object with columns \code{x} and \code{y} representing the transformed coordinates, and, number of rows
+#' equal to that of the \code{data} argument. In other words, a '1 to 1' transformation from the ternary to the cartesian space. 
+#' @examples
+#' #Species Concentrations
+#' T=c(1,0,0) #TOP 
+#' L=c(0,1,0) #LEFT
+#' R=c(0,0,1) #RIGHT
+#' #Transform
+#' transform_tern_to_cart(T,L,R)
+#' @export
+transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE,...,Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1)){
+  if(class(data) != "data.frame")stop("data must be of type 'data.frame'")
+  if(length(which(c("T","L","R") %in% colnames(data))) < 3) stop("data must contain columns T, L and R")
+  
+  d <- data; s <- rowSums(d);
   
   #If scale to composition sum of 1
   if(scale){
@@ -108,52 +186,60 @@ transformTernToCart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE,al
   return(data.frame(x=out.X,y=out.Y))
 }
 
-
-# Null default
-# Analog of || from ruby
-# 
-# @keyword internal
-# @name nulldefault-infix
-"%||%" <- function(a, b) {
-  if (!is.null(a)) a else b
-}
-
-
-validLabel <- function(desired,fallback=""){
-  if(is.character(desired)){return(desired)}
-  return(fallback)
-}
-
-arrow.label.formatter <- function(species,suffix){
+#' ggtern Utilities
+#' 
+#' \code{arrow.label.formatter} is a function that formats the labels directly adjacent to the axes on a ternary plot.
+#' @param label character label
+#' @param suffix chacater suffix behind each label
+#' @param .... not used
+#' @param sep the seperator between label and suffix 
+#' @rdname utilities
+#' @examples arrow.label.formatter("TOP","Wt.%",sep="/")
+#' @export
+arrow.label.formatter <- function(label,suffix="",...,sep="/"){
+  if(missing(label))stop("label cannot be missing")
+  if(!is.character(label) | !is.character(suffix) | !is.character(sep))stop("label, sep and suffix must be characters")
   if(missing(suffix)){
-    return(species)
+    label
   }else if(identical(suffix,NULL) | identical(suffix,"") | missing(suffix)){
-    return(species)
+    label
   }else{
-    return(paste(species,"/",suffix))
+    paste(label,sep,suffix)
   }
 }
 
-calc_element_plot <- function(element,theme=theme_update(),verbose=F,...,plot=NULL){
-  ret.plot  <- ggplot2:::calc_element(element,plot$theme,verbose=verbose)
-  ret.theme <- ggplot2:::calc_element(element,theme=theme,verbose=verbose) 
-  if(!identical(ret.plot,NULL)){
-    ret <- ret.plot
-  }else{
-    ret <- ret.theme
+#' Utilities
+#' 
+#' \code{calc_element_plot} Calculate the element properties, by inheriting properties from its parents, 
+#' and compares to whether the local plot overrides this value. Based largely off the \code{\link[ggplot2]{calc_element}} 
+#' as provided in \code{\link{ggplot2}}
+#' @seealso \code{\link[ggplot2]{calc_element}}
+#' @param element the element name to calculate
+#' @param theme the theme to inherit from
+#' @param plot either \code{gg}, \code{ggplot}, \code{ggtern} or \code{NULL} objects.
+#' @param verbose logical indicating verbose reporting to console
+#' @rdname utilities
+#' @export
+calc_element_plot <- function(element,theme=theme_update(),...,plot=NULL,verbose=F){
+  if(!is.null(plot)){
+    if(!inherits(plot,"gg") & !inherits(plot,"ggplot") & !inherits(plot,"ggtern")){
+      stop("plot must inherit gg, ggplot or ggtern classes")
+    }
   }
-  return(ret)
+  if(!is.character(element))stop("element name must be specified as character")
+  ret.plot  <- ggplot2:::calc_element(element,theme=plot$theme,verbose=verbose)
+  ret.theme <- ggplot2:::calc_element(element,theme=theme,     verbose=verbose) 
+  ifthenelse(!identical(ret.plot,NULL),ret.plot,ret.theme)
 }
 
+.coord_transform_existing <- ggplot2:::coord_transform
 
-pushback <- function(target,destination=target,namespace="ggplot2",check=T){
-  if(check){if(!exists(target))stop("target does not exist")}
-  if(class(target) != "character")stop("target must be specified as a character")
-  writeLines(paste("patching:",target))
-  unlockBinding(destination, asNamespace(namespace))
-    assign(target, destination, asNamespace(namespace))
-  lockBinding(destination, asNamespace(namespace))
+coord_transform <- function(...,discard=TRUE){
+  if(!is.logical(discard))stop("discard parameter must be logical")
+  options("tern.discard.external"=discard[1])
+  .coord_transform_existing(...)
 }
+
 
 
 

@@ -18,7 +18,6 @@ Collate:
   'element_ternary.R'
   'utilities.R'
   'theme.R'
-  'transformTernToCart.R'
   'labs.R'
   'aes.R'
   'scales.R'

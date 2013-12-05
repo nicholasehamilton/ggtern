@@ -20,6 +20,16 @@ assign("is_position_aes", is_position_aes, asNamespace("ggplot2"))
 lockBinding("is_position_aes", asNamespace("ggplot2"))
 
 
+pushback <- function(target,destination=target,namespace="ggplot2",check=T){
+  if(check){if(!exists(target))stop("target does not exist")}
+  if(class(target) != "character")stop("target must be specified as a character")
+  writeLines(paste("patching:",target))
+  unlockBinding(destination, asNamespace(namespace))
+  assign(target, destination, asNamespace(namespace))
+  lockBinding(destination, asNamespace(namespace))
+}
+
+
 
 .ggtern_build_axislines <- function(plot){
   ##Axis Lines

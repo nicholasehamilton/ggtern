@@ -19,9 +19,8 @@
   
   #Hack Hackidie hack hack hack.
   .theme_hack()
-  #.build_hack()
   .aes_hack()
-  .panel_hack()
+  .utilities_hack()
   
   options("tern.discard.external"=TRUE)
 }

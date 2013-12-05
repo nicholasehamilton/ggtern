@@ -1,108 +1,62 @@
-##Hack into the theme elements.
-##Need to create parallel theme elements for a third axis.
-.theme_hack <- function(){
-  
-  # Check that an element object has the proper class
-  #
-  # Given an element object and the name of the element, this function
-  # checks it against the element inheritance tree to make sure the
-  # element is of the correct class
-  #
-  # It throws error if invalid, and returns invisible() if valid.
-  #
-  # @param el an element
-  # @param elname the name of the element
-  validate_element <- function(el, elname) {
-    eldef <- .element_tree[[elname]]
+.element_tree <- ggplot2:::.element_tree #DUPLICATE
 
-    if (is.null(eldef)) {
-      stop('"', elname, '" is not a valid theme element name.')
-    }
-    
-    # NULL values for elements are OK
-    if (is.null(el)) return()
-    
-    if (eldef$class == "character") {
-      # Need to be a bit looser here since sometimes it's a string like "top"
-      # but sometimes its a vector like c(0,0)
-      if (!is.character(el) && !is.numeric(el))
-        stop("Element ", elname, " must be a string or numeric vector.")
-      
-    } else if (!inherits(el, eldef$class) && !inherits(el, "element_blank")) {
-      stop("Element ", elname, " must be a ", eldef$class, " object.")
-    }
-    invisible()
-  }
-  unlockBinding("validate_element", asNamespace("ggplot2"))
-    assign("validate_element", validate_element, asNamespace("ggplot2"))
-  lockBinding("validate_element", asNamespace("ggplot2"))
-  
-  
-  .element_tree <- ggplot2:::.element_tree #DUPLICATE
-  
-  #TERNARY OPTIONS.
-  .element_tree$ternary.options = ggplot2:::el_def("element_ternary","")
-  
-  ##AXIS ARROWS
-  .element_tree$axis.tern         = ggplot2:::el_def("element_line", "line")
-  
-  .element_tree$axis.tern.arrow   = ggplot2:::el_def("element_line", "axis.tern")
-  .element_tree$axis.tern.arrow.T = ggplot2:::el_def("element_line", "axis.tern.arrow")
-  .element_tree$axis.tern.arrow.L = ggplot2:::el_def("element_line", "axis.tern.arrow")
-  .element_tree$axis.tern.arrow.R = ggplot2:::el_def("element_line", "axis.tern.arrow")
-  
-  .element_tree$axis.tern.line    = ggplot2:::el_def("element_line", "axis.tern")
-  .element_tree$axis.tern.line.T  = ggplot2:::el_def("element_line", "axis.tern.line")
-  .element_tree$axis.tern.line.L  = ggplot2:::el_def("element_line", "axis.tern.line")
-  .element_tree$axis.tern.line.R  = ggplot2:::el_def("element_line", "axis.tern.line")
-  
-  .element_tree$axis.tern.text    = ggplot2:::el_def("element_text", "text")
-  .element_tree$axis.tern.text.T  = ggplot2:::el_def("element_text", "axis.tern.text")
-  .element_tree$axis.tern.text.L  = ggplot2:::el_def("element_text", "axis.tern.text")
-  .element_tree$axis.tern.text.R  = ggplot2:::el_def("element_text", "axis.tern.text")
-  
-  .element_tree$axis.tern.arrow.text    = ggplot2:::el_def("element_text", "text")
-  .element_tree$axis.tern.arrow.text.T  = ggplot2:::el_def("element_text", "axis.tern.arrow.text")
-  .element_tree$axis.tern.arrow.text.L  = ggplot2:::el_def("element_text", "axis.tern.arrow.text")
-  .element_tree$axis.tern.arrow.text.R  = ggplot2:::el_def("element_text", "axis.tern.arrow.text")
-  
-  .element_tree$axis.tern.title   = ggplot2:::el_def("element_text", "text")
-  .element_tree$axis.tern.title.T = ggplot2:::el_def("element_text", "axis.tern.title")
-  .element_tree$axis.tern.title.L = ggplot2:::el_def("element_text", "axis.tern.title")
-  .element_tree$axis.tern.title.R = ggplot2:::el_def("element_text", "axis.tern.title")
-  
-  .element_tree$axis.tern.ticks          = ggplot2:::el_def("element_line", "line")
-  
-  .element_tree$axis.tern.ticks.major    = ggplot2:::el_def("element_line", "axis.tern.ticks")
-  .element_tree$axis.tern.ticks.major.T  = ggplot2:::el_def("element_line", "axis.tern.ticks.major")
-  .element_tree$axis.tern.ticks.major.L  = ggplot2:::el_def("element_line", "axis.tern.ticks.major")
-  .element_tree$axis.tern.ticks.major.R  = ggplot2:::el_def("element_line", "axis.tern.ticks.major")
-  
-  .element_tree$axis.tern.ticks.minor    = ggplot2:::el_def("element_line", "axis.tern.ticks")
-  .element_tree$axis.tern.ticks.minor.T  = ggplot2:::el_def("element_line", "axis.tern.ticks.minor")
-  .element_tree$axis.tern.ticks.minor.L  = ggplot2:::el_def("element_line", "axis.tern.ticks.minor")
-  .element_tree$axis.tern.ticks.minor.R  = ggplot2:::el_def("element_line", "axis.tern.ticks.minor")
-  
-  .element_tree$panel.grid.tern          = ggplot2:::el_def("element_line", "line")
-  .element_tree$panel.grid.tern.major    = ggplot2:::el_def("element_line", "panel.grid.tern")
-  .element_tree$panel.grid.tern.minor    = ggplot2:::el_def("element_line", "panel.grid.tern")
-  
-  .element_tree$panel.grid.tern.major.T = ggplot2:::el_def("element_line", "panel.grid.tern.major")
-  .element_tree$panel.grid.tern.minor.T = ggplot2:::el_def("element_line", "panel.grid.tern.minor")
-  .element_tree$panel.grid.tern.major.L = ggplot2:::el_def("element_line", "panel.grid.tern.major")
-  
-  .element_tree$panel.grid.tern.minor.L = ggplot2:::el_def("element_line", "panel.grid.tern.minor")
-  .element_tree$panel.grid.tern.major.R = ggplot2:::el_def("element_line", "panel.grid.tern.major")
-  .element_tree$panel.grid.tern.minor.R = ggplot2:::el_def("element_line", "panel.grid.tern.minor")
-  
-  ##TERNARY PANEL
-  .element_tree$panel.background.tern <- ggplot2:::el_def("element_rect", "rect") 
-  
-  #PUSH BACK INTO GGPLOT
-  unlockBinding(".element_tree", asNamespace("ggplot2"))
-    assign(".element_tree", .element_tree, asNamespace("ggplot2"))
-  lockBinding(".element_tree", asNamespace("ggplot2"))
-}
+#TERNARY OPTIONS.
+.element_tree$ternary.options = ggplot2:::el_def("element_ternary","")
+
+##AXIS ARROWS
+.element_tree$axis.tern         = ggplot2:::el_def("element_line", "line")
+
+.element_tree$axis.tern.arrow   = ggplot2:::el_def("element_line", "axis.tern")
+.element_tree$axis.tern.arrow.T = ggplot2:::el_def("element_line", "axis.tern.arrow")
+.element_tree$axis.tern.arrow.L = ggplot2:::el_def("element_line", "axis.tern.arrow")
+.element_tree$axis.tern.arrow.R = ggplot2:::el_def("element_line", "axis.tern.arrow")
+
+.element_tree$axis.tern.line    = ggplot2:::el_def("element_line", "axis.tern")
+.element_tree$axis.tern.line.T  = ggplot2:::el_def("element_line", "axis.tern.line")
+.element_tree$axis.tern.line.L  = ggplot2:::el_def("element_line", "axis.tern.line")
+.element_tree$axis.tern.line.R  = ggplot2:::el_def("element_line", "axis.tern.line")
+
+.element_tree$axis.tern.text    = ggplot2:::el_def("element_text", "text")
+.element_tree$axis.tern.text.T  = ggplot2:::el_def("element_text", "axis.tern.text")
+.element_tree$axis.tern.text.L  = ggplot2:::el_def("element_text", "axis.tern.text")
+.element_tree$axis.tern.text.R  = ggplot2:::el_def("element_text", "axis.tern.text")
+
+.element_tree$axis.tern.arrow.text    = ggplot2:::el_def("element_text", "text")
+.element_tree$axis.tern.arrow.text.T  = ggplot2:::el_def("element_text", "axis.tern.arrow.text")
+.element_tree$axis.tern.arrow.text.L  = ggplot2:::el_def("element_text", "axis.tern.arrow.text")
+.element_tree$axis.tern.arrow.text.R  = ggplot2:::el_def("element_text", "axis.tern.arrow.text")
+
+.element_tree$axis.tern.title   = ggplot2:::el_def("element_text", "text")
+.element_tree$axis.tern.title.T = ggplot2:::el_def("element_text", "axis.tern.title")
+.element_tree$axis.tern.title.L = ggplot2:::el_def("element_text", "axis.tern.title")
+.element_tree$axis.tern.title.R = ggplot2:::el_def("element_text", "axis.tern.title")
+
+.element_tree$axis.tern.ticks          = ggplot2:::el_def("element_line", "line")
+
+.element_tree$axis.tern.ticks.major    = ggplot2:::el_def("element_line", "axis.tern.ticks")
+.element_tree$axis.tern.ticks.major.T  = ggplot2:::el_def("element_line", "axis.tern.ticks.major")
+.element_tree$axis.tern.ticks.major.L  = ggplot2:::el_def("element_line", "axis.tern.ticks.major")
+.element_tree$axis.tern.ticks.major.R  = ggplot2:::el_def("element_line", "axis.tern.ticks.major")
+
+.element_tree$axis.tern.ticks.minor    = ggplot2:::el_def("element_line", "axis.tern.ticks")
+.element_tree$axis.tern.ticks.minor.T  = ggplot2:::el_def("element_line", "axis.tern.ticks.minor")
+.element_tree$axis.tern.ticks.minor.L  = ggplot2:::el_def("element_line", "axis.tern.ticks.minor")
+.element_tree$axis.tern.ticks.minor.R  = ggplot2:::el_def("element_line", "axis.tern.ticks.minor")
+
+.element_tree$panel.grid.tern          = ggplot2:::el_def("element_line", "line")
+.element_tree$panel.grid.tern.major    = ggplot2:::el_def("element_line", "panel.grid.tern")
+.element_tree$panel.grid.tern.minor    = ggplot2:::el_def("element_line", "panel.grid.tern")
+
+.element_tree$panel.grid.tern.major.T = ggplot2:::el_def("element_line", "panel.grid.tern.major")
+.element_tree$panel.grid.tern.minor.T = ggplot2:::el_def("element_line", "panel.grid.tern.minor")
+.element_tree$panel.grid.tern.major.L = ggplot2:::el_def("element_line", "panel.grid.tern.major")
+
+.element_tree$panel.grid.tern.minor.L = ggplot2:::el_def("element_line", "panel.grid.tern.minor")
+.element_tree$panel.grid.tern.major.R = ggplot2:::el_def("element_line", "panel.grid.tern.major")
+.element_tree$panel.grid.tern.minor.R = ggplot2:::el_def("element_line", "panel.grid.tern.minor")
+
+##TERNARY PANEL
+.element_tree$panel.background.tern <- ggplot2:::el_def("element_rect", "rect")
 
 
 #FUNCTION TO CLEAR THE EXISTING CARTESIAN THEME ELEMENTS

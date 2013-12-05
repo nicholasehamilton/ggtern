@@ -22,9 +22,7 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=c(0,1),L
   )
 }
 
-scale_transform.ternary <- function(){
-  writeLines("scale_transform.ternary")
-}
+scale_transform.ternary <- function(){writeLines("scale_transform.ternary")}
 
 #' @S3method rename_data ternary
 rename_data.ternary <- function(coord,data){
@@ -45,28 +43,27 @@ coord_transform.ternary <- function(coord, data, details){
   ix.cart <- c("x","y")
   
   #Get the extremes to determine if points are outside the plot area.
-  data.extremes <-getTernExtremes(coord)
-  data.extremes <-transformTernToCart(data = data.extremes[,ix.tern],
-                                      Tlim = coord$limits$T,
-                                      Llim = coord$limits$L,
-                                      Rlim = coord$limits$R)[,c("x","y")]
+  data.extremes <-get_tern_extremes(coord)
+  data.extremes <-transform_tern_to_cart(data = data.extremes[,ix.tern],
+                                         Tlim = coord$limits$T,
+                                         Llim = coord$limits$L,
+                                         Rlim = coord$limits$R)[,c("x","y")]
   
   if(length(which(ix.tern %in% colnames(data))) == length(ix.tern)){
     ##Execute the transformation to cartesian
-    tmp    <- transformTernToCart(data = data[,ix.tern],
-                                  Tlim = coord$limits$T,
-                                  Llim = coord$limits$L,
-                                  Rlim = coord$limits$R)
+    tmp    <- transform_tern_to_cart(data = data[,ix.tern],
+                                     Tlim = coord$limits$T,
+                                     Llim = coord$limits$L,
+                                     Rlim = coord$limits$R)
     ##and update cartesian.
     data$x <- tmp$x
     data$y <- tmp$y
     
     #only keep records in poly
     if(getOption("tern.discard.external")){
-      A <- as.numeric(data.extremes[1,])
-      B <- as.numeric(data.extremes[2,])
-      C <- as.numeric(data.extremes[3,])
-      in.poly <- apply(data[,c("x","y")],1,function(P){PointInTriangle(as.numeric(P),A,B,C)})
+      in.poly <- apply(data[,c("x","y")],1,function(P){point_in_triangle(as.numeric(P),
+                                                                       x=as.numeric(data.extremes$x),
+                                                                       y=as.numeric(data.extremes$y))})
       data <- data[which(in.poly),]
     }
     
@@ -88,19 +85,16 @@ coord_expand_defaults.ternary <- function(coord, scale, aesthetic) {
 
 #' @S3method coord_train ternary
 coord_train.ternary <- function(coord, scales){
-  #print(scales)
   ret <- c(ggplot2:::train_cartesian(scales$x, coord$limits$x, "x"),
            ggplot2:::train_cartesian(scales$y, coord$limits$y, "y"))
   ret
 }
 
 ##' @S3method coord_aspect tern
-coord_aspect.ternary <- function(coord, details){sin(60*pi/180)}
+coord_aspect.ternary <- function(coord, details){sin(pi/3)}
 
 #' @S3method coord_distance ternary
-coord_distance.ternary <- function(coord,x,y,details) {
-  ggplot2:::coord_distance.cartesian(coord,x,y,details)
-}
+coord_distance.ternary <- function(coord,x,y,details){ ggplot2:::coord_distance.cartesian(coord,x,y,details)}
 
 
 

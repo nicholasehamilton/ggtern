@@ -11,10 +11,8 @@ ternbackground <- function(plot) {
     theme.current <- theme_update()
         
     #get the data.
-    data.background <- getTernExtremes(coordinates)
-    options("tern.discard.external"=FALSE)
-      data.background    <- coord_transform(coordinates, data.background, scales)
-    options("tern.discard.external"=TRUE)
+    data.background <- get_tern_extremes(coordinates)
+    data.background <- coord_transform(coordinates, data.background, scales,discard=FALSE)
     data.background$id =  1
     
     ##Function to create new axis grob
@@ -67,7 +65,7 @@ ternarrows <- function(plot) {
       e <- calc_element_plot("ternary.options",theme=theme_update(),verbose=F,plot=plot)
       
       #get the extermes
-      D <- getTernExtremes(coordinates)
+      D <- get_tern_extremes(coordinates)
       
       ##GET THE DATA.
       b <-ifthenelse(is.numeric(e$arrowsep),e$arrowsep[1],0)
@@ -93,9 +91,7 @@ ternarrows <- function(plot) {
       d.s <- d.s +   (s)*d.diff
       
       ##TRANSFORM
-      options("tern.discard.external"=FALSE)
-        d <- coord_transform(coordinates,rbind(d.s,d.f),scales); 
-      options("tern.discard.external"=TRUE)
+      d <- coord_transform(coordinates,rbind(d.s,d.f),scales,discard=FALSE); 
       
       ix <- which(colnames(d) %in% c("x","y"))
       d <- cbind(d[1:3,ix],d[4:6,ix]);
@@ -194,10 +190,8 @@ ternborder <- function(plot) {
     theme.current <- theme_update()
     
     #get the data.
-    data.border <- getTernExtremes(coordinates)
-    options("tern.discard.external"=FALSE)
-      data.border <- coord_transform(coordinates, data.border, scales)
-    options("tern.discard.external"=TRUE)
+    data.border <- get_tern_extremes(coordinates)
+    data.border <- coord_transform(coordinates, data.border, scales,discard=FALSE)
     
     ##Function to create new axis grob
     .render <- function(name,s,f,items){
@@ -250,11 +244,9 @@ ternlabels <- function (plot) {
     theme.plot    <- plot$theme
     theme.current <- theme_update()
     #get the data.
-    d    <- getTernExtremes(coordinates)
-    #d    <- transformTernToCart(data=d)
-    options("tern.discard.external"=FALSE)
-      d    <- coord_transform(coordinates,d, scales)
-    options("tern.discard.external"=TRUE)
+    d    <- get_tern_extremes(coordinates)
+    d    <- coord_transform(coordinates,d,scales,discard=FALSE)
+    
     d$L  <- as.character(c(plot$labels$T,
                            plot$labels$L,
                            plot$labels$R))
@@ -267,7 +259,7 @@ ternlabels <- function (plot) {
         fill      <- e$fill
         size      <- e$size
         lineheight<- e$lineheight
-        family    <- validLabel(e$family,"sans")
+        family    <- ifthenelse(is.character(e$family),e$family,"sans")
         face      <- e$face
         hjust     <- e$hjust
         vjust     <- e$vjust
@@ -317,21 +309,30 @@ ternTicksGridAndAxes <- function (plot) {
     
     ##ASSEMBLE THE DATA FOR THE TICKS.
     .vett.tl <- function(x){if(!is.numeric(x)){x <- 0 } else{x <- max(x[1],0)}}
+    .vett.labels <- function(scale){ x = scale$labels; y = scale$breaks; ifthenelse(identical(x,waiver()),100*y,x)}
+    .scale_X <- function(X,plot){
+      X <- X[1]
+      if(!X %in% c("T","L","R")){stop("X must be either 'T', 'L' or 'R'")}
+      if(!inherits(plot,"ggtern")){stop("plot must be of class 'ggtern'")}
+      ret = plot$scales$get_scales(X); 
+      ifthenelse(!identical(ret,NULL),ret,do.call(paste0("scale_",X,"_continuous"),args=list()))
+    }
+    
     tl.major <- .vett.tl(calc_element_plot("ternary.options",theme=theme.plot)$ticklength.major)
     tl.minor <- .vett.tl(calc_element_plot("ternary.options",theme=theme.plot)$ticklength.minor)
   
     #THE TIPS OF THE TERNARY PLOT AREA
-    d.extremes <- getTernExtremes(coordinates)
+    d.extremes <- get_tern_extremes(coordinates)
     
     #ASSEMBLE THE GRID DATA.
     .getData <- function(X,existing=NULL,major=TRUE,angle=0){
-      S <- scale_X(X,plot)
+      S <- .scale_X(X,plot)
       breaks <- if(major){S$breaks}else{S$minor_breaks}
       if(length(breaks) == 0)return(existing) #BYPASS
       
       id <- max(existing$ID,0) + 1
       
-      labels <- if(major){vett.labels(S)}else{""}
+      labels <- if(major){.vett.labels(S)}else{""}
       tryCatch({
         limits <- as.numeric(coordinates$limits[[X]]) 
       },error=function(e){
@@ -383,12 +384,10 @@ ternTicksGridAndAxes <- function (plot) {
     ##Grid data
     d.g  <- d[,c("grid.T.end","grid.L.end","grid.R.end")]; colnames(d.g) <- c("T","L","R"); 
     
-    options("tern.discard.external"=FALSE)
-      ##Do the coordinate transformation
-      d    <- coord_transform(coordinates,d, scales)
-      d.g  <- coord_transform(coordinates,d.g,scales)[,c("x","y")]; colnames(d.g) <- c("xend.grid","yend.grid");
-      d    <- cbind(d,d.g) ##Join
-    options("tern.discard.external"=TRUE)
+    ##Do the coordinate transformation
+    d    <- coord_transform(coordinates,d,  scales,discard=FALSE)
+    d.g  <- coord_transform(coordinates,d.g,scales,discard=FALSE)[,c("x","y")]; colnames(d.g) <- c("xend.grid","yend.grid");
+    d    <- cbind(d,d.g) ##Join
     
     ##Determine the tick finish positions for segments.
     d$xend <- cos(d$Angle*pi/180)*d$TickLength + d$x
@@ -425,7 +424,7 @@ ternTicksGridAndAxes <- function (plot) {
         fill      <- e$fill
         size      <- e$size
         lineheight<- ifthenelse(is.numeric(e$lineheight),e$lineheight,1)
-        family    <- validLabel(e$family,"sans")
+        family    <- ifthenelse(is.character(e$family),e$family,"sans")
         face      <- e$face
         hjust     <- ifthenelse(is.numeric(e$hjust),e$hjust,0)
         vjust     <- ifthenelse(is.numeric(e$vjust),e$vjust,0)
