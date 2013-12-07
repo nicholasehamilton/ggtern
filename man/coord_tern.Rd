@@ -3,7 +3,7 @@
 \title{Ternary Coordinate System}
 \usage{
   coord_tern(T = "x", L = "y", R = "z", xlim = c(0, 1),
-    ylim = c(0, sin(pi/3)), Tlim = c(0, 1), Llim = c(0, 1),
+    ylim = c(0, 1), Tlim = c(0, 1), Llim = c(0, 1),
     Rlim = c(0, 1))
 }
 \arguments{

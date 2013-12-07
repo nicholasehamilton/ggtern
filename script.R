@@ -11,9 +11,27 @@ MYDATA <- data.frame(Mg=runif(100),Zn=runif(100),Ca=runif(100),colour=runif(100)
                      groupA=rep(paste(c("T1","T2"),""),50)[sample(50)],
                      groupB=rep(paste(c("P1","P2"),""),50)[sample(50)]) 
 
-plot <- ggtern(data=MYDATA,mapping=aes(x=Mg,y=Zn,z=Ca)) + #facet_grid(groupA~groupB) + 
-  geom_point(size=3,shape=21,aes(fill=factor(paste0(groupA,"/",groupB)))) + #+ coord_tern() + 
+plot <- ggtern(data=MYDATA,mapping=aes(x=Mg,y=Zn,z=Ca)) + #facet_grid(groupA~groupB) +
   labs(title="Example Ternary Plots w/ Facetting",fill="Temperature / Pressure",color="Series")
+plot <- plot + #stat_density2d(method="lm",fullrange=T,n=200,geom="polygon",aes(fill=..level..,alpha=..level..),breaks=pretty(c(0,7),n=25)) + theme_tern_rgbw() + 
+  geom_point(size=3,shape=16,aes(colour=factor(paste0(groupA,"/",groupB)))) + tern_limits(labels=c(0,10,20,"","","","","",80,90,100)) + 
+  theme(ternary.options=element_ternary(arrowsep=0.03)) + atomic_percent()
+plot
+plot + stat_density2d(method="lm",fullrange=T,n=200,geom="polygon",aes(fill=..level..,alpha=..level..)) + theme_tern_rgbw() + scale_fill_gradient(low="transparent",high="red")
+
+
+MYDATA <- data.frame(Mg=c(20,41,60)/100,Zn=c(70,39,10)/100,Ca=c(10,20,30)/100)
+plot <- ggtern(data=MYDATA,aes(x=Mg,y=Zn,z=Ca)) + geom_point() #+ geom_smooth(method="lm",stat="smooth")
+#plot + atomic_percent() + theme_tern_bw() + stat_smooth(data=transform_tern_to_cart(T=MYDATA$Mg,L=MYDATA$Zn,R=MYDATA$Ca),aes(x,y),inherit.aes=F,method="lm") + theme_tern_rgbw()
+
+
+plot + geom_smooth(fullrange=T,limitarea=F,method="lm")
+
+
+#TEST NORMAL FUNCTIONALITY
+ggplot(data=data.frame(x=runif(100),y=runif(100)),aes(x,y)) + geom_point() + stat_density2d(aes(fill=..level..,alpha=..level..),geom="polygon")
+
+
 #plot + atomic_percent() + theme(legend.position=c(0,1),legend.justification=c(0,1)) + geom_smooth(method="lm")
 
 #plot #+ coord_tern(xlim=c(0.5,1.1),ylim=c(0,0.5))

@@ -84,7 +84,7 @@
   
   theme(
     legend.background       = element_blank(),
-    ternary.options         = element_ternary(),
+    #ternary.options         = element_ternary(),
     panel.background.tern   = element_rect(fill=col.BG,color=NA),
     axis.tern               = element_line(size=0.5,linetype="solid"),
     axis.tern.line          = element_line(),

@@ -1,3 +1,8 @@
+##---------------------------------------------------
+##INTERNAL FUNCTIONS
+## Unorthadox rendering of ternary componenets
+##---------------------------------------------------
+
 #THE DIRECTION ARROWS
 ternarrows <- function(plot) {.ternarrows$new(mapping=NULL,data=data.frame(x=NA),geom_params = list(plot=plot),show_guide=FALSE,inherit.aes=FALSE,stat="identity")}
 .ternarrows <- proto(ggplot2:::Geom,{
@@ -22,7 +27,9 @@ ternarrows <- function(plot) {.ternarrows$new(mapping=NULL,data=data.frame(x=NA)
       d.s <- d.s +   (min(max(e$arrowstart, 0.0),1.0))*d.diff
       
       ##TRANSFORM
-      d <- coord_transform(coordinates,rbind(d.s,d.f),scales,discard=FALSE); 
+      options("tern.discard.external"=FALSE)
+        d <- coord_transform(coordinates,rbind(d.s,d.f),scales); 
+      options("tern.discard.external"=TRUE)
       
       ix <- which(colnames(d) %in% c("x","y"))
       d <- cbind(d[1:3,ix],
@@ -41,13 +48,13 @@ ternarrows <- function(plot) {.ternarrows$new(mapping=NULL,data=data.frame(x=NA)
       d$xmn   <- rowMeans(d[,c("x","xend")])
       d$ymn   <- rowMeans(d[,c("y","yend")])
       
+      LABELS  <- ternlabs(plot)
+      
       #Labels for arrowmarks
-      d$L     <- c(plot$labels$T,
-                   plot$labels$L,
-                   plot$labels$R)
+      d$L     <- c(LABELS$T,LABELS$L,LABELS$R)
       
       #Arrowmarks Suffix.
-      d$W     <- plot$labels$W
+      d$W     <- LABELS$W
       
       ##Function to create new axis grob
       .render.arrow <- function(name,ix,items){
@@ -134,9 +141,14 @@ ternlabels <- function (plot) {.ternlabels$new(mapping=NULL,data=data.frame(x=NA
     theme.current <- theme_update()
     #get the data.
     d    <- get_tern_extremes(coordinates)
-    d    <- coord_transform(coordinates,d,scales,discard=FALSE)
+    options("tern.discard.external"=FALSE)
+      d    <- coord_transform(coordinates,d,scales)
+    options("tern.discard.external"=TRUE)
     
-    d$L  <- as.character(c(plot$labels$T, plot$labels$L, plot$labels$R))
+    #Modify the labels accordingly....
+    LABELS  <- ternlabs(plot)
+    
+    d$L  <- as.character(c(LABELS$T,LABELS$L,LABELS$R))
     
     ##Function to create new axis grob
     .render <- function(name,ix,items){
@@ -270,9 +282,11 @@ ternTicksGridAndAxes <- function (plot) {.ternTicksGridAndAxes$new(mapping=NULL,
     d.g  <- d[,c("grid.T.end","grid.L.end","grid.R.end")]; colnames(d.g) <- c("T","L","R"); 
     
     ##Do the coordinate transformation
-    d    <- coord_transform(coordinates,d,  scales,discard=FALSE)
-    d.g  <- coord_transform(coordinates,d.g,scales,discard=FALSE)[,c("x","y")]; colnames(d.g) <- c("xend.grid","yend.grid");
-    d    <- cbind(d,d.g) ##Join
+    options("tern.discard.external"=FALSE)
+      d    <- coord_transform(coordinates,d,  scales)
+      d.g  <- coord_transform(coordinates,d.g,scales)[,c("x","y")]; colnames(d.g) <- c("xend.grid","yend.grid");
+    options("tern.discard.external"=TRUE)
+      d    <- cbind(d,d.g) ##Join
     
     ##Determine the tick finish positions for segments.
     d$xend <- cos(d$Angle*pi/180)*d$TickLength + d$x

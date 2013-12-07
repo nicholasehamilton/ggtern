@@ -13,7 +13,9 @@ Depends:
   grid,
   scales,
   plyr,
-  gtable
+  gtable,
+  MASS,
+  sp
 Collate:
   'element_ternary.R'
   'utilities.R'
@@ -25,6 +27,11 @@ Collate:
   'ggtern.R'
   'ggtern-build.R'
   'tern-render.R'
+  'tern-limits.R'
   'coord-tern.R'
+  'geom-smooth.R'
+  'stat-smooth.R'
+  'stat-density-2d.R'
+  'stat-contour.R'
   'hacks.R'
   'onLoad.R'

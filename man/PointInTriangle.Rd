@@ -2,7 +2,8 @@
 \alias{point_in_triangle}
 \title{Point In Triangle}
 \usage{
-  point_in_triangle(P, x, y, ..., strictly = FALSE)
+  point_in_triangle(P, x, y, ..., strictly = FALSE,
+    check = TRUE)
 }
 \arguments{
   \item{P}{numeric vector of length 2 [x,y], representing
@@ -20,6 +21,8 @@
   is 'strictly' inside, meaning, that a point lying on the
   edges or vertices is considered outside the triangle when
   strictly is \code{TRUE}.}
+
+  \item{check}{logical validate input data or not.}
 }
 \description{
   \code{point_in_triangle} is a function that determines if

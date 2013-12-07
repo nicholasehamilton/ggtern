@@ -1,0 +1,59 @@
+#' Add a smoothed conditional mean (MODIFIED)
+#' 
+#' \code{geom_smooth} is a function that provides additional functionality to the standard \code{\link[ggplot2]{geom_smooth}} function in the 
+#' event that it is being used on a \code{ggtern} object. Parameters are the same, with the exception of the introduction of the \code{limitarea} parameter.
+#' 
+#' @param limitarea logical value to indicate whether smoothed data is discared outside of the ternary plot area, when this is set to \code{TRUE}, 
+#' the value of \code{fullrange} has no meaning, since the full-range becomes essentially becomes limited by the ternary plot area. 
+#' When set to \code{FALSE}, \code{fullarea} behaves as per normal.
+#' @export
+geom_smooth <- function (mapping = NULL, data = NULL, stat = "smooth", position = "identity",limitarea=T,fullrange=F,...) { 
+  limitarea <- ifthenelse(!is.logical(limitarea),T,limitarea[1])
+  fullrange <- ifthenelse(limitarea,TRUE,fullrange) #FORCE FULL RANGE IN ORDER TO BE ABLE TO TRUNCATE
+  GeomSmooth$new(mapping = mapping, data = data, stat = stat, position = position,limitarea=limitarea,fullrange=fullrange,...)
+}
+
+GeomSmooth <- proto(ggplot2:::Geom, {
+  objname <- "smooth"
+  draw <- function(., data, scales, coordinates,limitarea=F,...) { 
+    
+    #HACK
+    if(limitarea){
+      if(inherits(last_plot(),"ggtern")){
+        data <- removeoutside(data)
+      }
+    }
+    
+    
+    ribbon <- transform(data, colour = NA)
+    path   <- transform(data, alpha  = NA)
+    
+    has_ribbon <- function(x) !is.null(data$ymax) && !is.null(data$ymin)
+    
+    gList(
+      if (has_ribbon(data)) GeomRibbon$draw(ribbon, scales, coordinates),
+      GeomLine$draw(path, scales, coordinates)
+    )
+  }
+  guide_geom <- function(.) "smooth"
+  default_stat <- function(.) StatSmooth
+  required_aes <- c("x", "y")
+  default_aes <- function(.) aes(colour="#3366FF", fill="grey60", size=0.5, linetype=1, weight=1, alpha=0.4)
+  
+  
+  draw_legend <- function(., data, params, ...) {
+    data <- aesdefaults(data, .$default_aes(), list(...))
+    data$fill <- alpha(data$fill, data$alpha)
+    data$alpha <- 1
+    
+    if (is.null(params$se) || params$se) {
+      gTree(children = gList(
+        rectGrob(gp = gpar(col = NA, fill = data$fill)),
+        GeomPath$draw_legend(data, ...)
+      ))      
+    } else {
+      GeomPath$draw_legend(data, ...)
+    }
+  }
+  
+})

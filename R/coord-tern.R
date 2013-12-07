@@ -12,7 +12,19 @@
 #' @param Llim the range of L in the ternary space
 #' @param Rlim the range of R in the ternary space
 #' @return ternary coordinate system object.
-coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,sin(pi/3)),Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1)) {
+coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1)) {
+  
+  ##Validate x and y lims...
+  xlim <- ifthenelse(!is.numeric(xlim),c(0,1),xlim)
+  ylim <- ifthenelse(!is.numeric(ylim),c(0,1),ylim)
+  xlim <- sort(xlim); ylim <- sort(ylim);
+  if(diff(xlim) != diff(ylim)){
+    warning("Error in xlim and ylim ratios, adjusting ymax to maintain aspect.",call.=FALSE)
+    ylim <- c(min(ylim),min(ylim) + diff(xlim))
+  }
+  ylim <- c(min(ylim),min(ylim) + diff(ylim)*coord_aspect.ternary())
+  
+  
   all.coords <- c("x","y","z")
   if(length(which(!c(T,L,R) %in% all.coords)) > 0){stop("Options for T, L and R are x,y and z")}
   if(length(unique(c(T,L,R))) != 3){stop("x, y and z must be assigned to T, L and R in some order and NOT duplicated")}
@@ -25,7 +37,6 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,sin(pi/3)),Tlim=
     T = T, 
     L = L,
     R = R,
-    #ratio=0.5,
     limits = list(x = xlim, 
                   y = ylim,
                   T = Tlim,
@@ -35,10 +46,89 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,sin(pi/3)),Tlim=
   )
 }
 
-coord_render_fg.ternary <- function(coord,details,theme){
-  NULL
+
+#' @S3method rename_data ternary
+rename_data.ternary <- function(coord,data){
+  tryCatch({
+    to <- c("T","L","R"); 
+    names(to) <- c(coord$T,coord$L,coord$R)
+    data <- rename(data,to,warn_missing=FALSE)
+  },error=function(e){
+    stop(e)
+  })
+  data
 }
 
+#' @S3method coord_range ternary
+coord_range.ternary <- function(coord, scales){}
+
+#' @S3method coord_transform ternary
+coord_transform.ternary <- function(coord, data, details){  
+  bup    <- data #Original Data Backup.
+  data   <- rename_data.ternary(coord, data)
+  ix.tern <- c("T","L","R"); 
+  ix.cart <- c("x","y")
+  
+  if(length(which(ix.tern %in% colnames(data))) == length(ix.tern)){
+    ##Execute the transformation to cartesian
+    data[,c("x","y")] <- transform_tern_to_cart(data = data[,ix.tern],
+                                     Tlim = coord$limits$T,
+                                     Llim = coord$limits$L,
+                                     Rlim = coord$limits$R)[,c("x","y")]
+    
+    #only keep records in poly
+    if(getOption("tern.discard.external")){
+      #Get the extremes to determine if points are outside the plot area.
+      data.extremes <-transform_tern_to_cart(data = get_tern_extremes(coord)[,ix.tern],Tlim = coord$limits$T,Llim = coord$limits$L,Rlim = coord$limits$R)[,c("x","y")]
+      in.poly <- apply(data[,c("x","y")],1,function(P){point_in_triangle(as.numeric(P),x=as.numeric(data.extremes$x),y=as.numeric(data.extremes$y))})
+      data <- data[which(in.poly),]
+    }
+  }else if(length(which(ix.cart %in% colnames(bup))) == length(ix.cart)){
+    data <- bup #writeLines("Ternary plot requires x, y and z aesthetics, however, reverting to cartesian.") 
+  }else{
+    stop("Neither Ternary or Cartesian Data has been provided.")
+  }
+  data <- ggplot2:::coord_transform.cartesian(coord,data,details)
+  #print(data[1:3,])
+  data
+}
+
+#' @S3method coord_expand_defaults ternary
+coord_expand_defaults.ternary <- function(coord, scale, aesthetic){ggplot2:::expand_default(scale)}
+
+#' @S3method coord_train ternary
+coord_train.ternary <- function(coord, scales){
+  ret <- c(ggplot2:::train_cartesian(scales$x, coord$limits$x, "x"),
+           ggplot2:::train_cartesian(scales$y, coord$limits$y, "y"))
+  ret <- ret[c("x.range","y.range")]
+  ret
+}
+
+##' @S3method coord_aspect tern
+coord_aspect.ternary <- function(coord, details){sin(pi/3)}
+
+#' @S3method coord_distance ternary
+coord_distance.ternary <- function(coord,x,y,details){ggplot2:::coord_distance.cartesian(coord,x,y,details)}
+
+
+##-----------------------------------------------------------------------
+## FOR RENDERING COMPONENTS.
+#' @S3method coord_render_axis_v ternary
+coord_render_axis_v.ternary <- function(coord, details, theme) {
+  ##NOT USED. RENDERED IN ggtern.build.R
+  ggplot2:::zeroGrob()
+}
+#' @S3method coord_render_axis_h polar
+coord_render_axis_h.ternary <- function(coord, details, theme) {
+  ##NOT USED. RENDERED IN ggtern.build.R
+  ggplot2:::zeroGrob()
+}
+#' @S3method coord_render_fg ternary
+coord_render_fg.ternary <- function(coord,details,theme){
+  ##NOT USED. RENDERED IN ggtern.build.R
+  ggplot2:::zeroGrob()
+}
+#' @S3method coord_render_bg ternary
 coord_render_bg.ternary <- function(coord,details,theme){
   items <- list()
   
@@ -117,80 +207,6 @@ coord_render_bg.ternary <- function(coord,details,theme){
   #render.
   ggplot2:::ggname("background",gTree(children = do.call("gList", items)))
 }
-
-scale_transform.ternary <- function(){writeLines("scale_transform.ternary")}
-
-#' @S3method rename_data ternary
-rename_data.ternary <- function(coord,data){
-  tryCatch({
-    to <- c("T","L","R"); 
-    names(to) <- c(coord$T,coord$L,coord$R)
-    rename(data,to,warn_missing=FALSE)
-  },error=function(e){
-    stop(e)
-  })
-}
-
-#' @S3method coord_transform ternary
-coord_transform.ternary <- function(coord, data, details){
-  bup    <- data #Original Data Backup.
-  data   <- rename_data.ternary(coord, data)
-  ix.tern <- c("T","L","R")
-  ix.cart <- c("x","y")
-  
-  #Get the extremes to determine if points are outside the plot area.
-  data.extremes <-get_tern_extremes(coord)
-  data.extremes <-transform_tern_to_cart(data = data.extremes[,ix.tern],
-                                         Tlim = coord$limits$T,
-                                         Llim = coord$limits$L,
-                                         Rlim = coord$limits$R)[,c("x","y")]
-  
-  if(length(which(ix.tern %in% colnames(data))) == length(ix.tern)){
-    ##Execute the transformation to cartesian
-    tmp    <- transform_tern_to_cart(data = data[,ix.tern],
-                                     Tlim = coord$limits$T,
-                                     Llim = coord$limits$L,
-                                     Rlim = coord$limits$R)
-    ##and update cartesian.
-    data$x <- tmp$x
-    data$y <- tmp$y
-    
-    #only keep records in poly
-    if(getOption("tern.discard.external")){
-      in.poly <- apply(data[,c("x","y")],1,function(P){point_in_triangle(as.numeric(P),
-                                                                       x=as.numeric(data.extremes$x),
-                                                                       y=as.numeric(data.extremes$y))})
-      data <- data[which(in.poly),]
-    }
-    
-  }else if(length(which(ix.cart %in% colnames(bup))) == length(ix.cart)){
-    data <- bup
-    writeLines("Ternary plot requires x, y and z aesthetics, however, reverting to cartesian.") 
-  }else{
-    stop("Neither Ternary or Cartesian Data has been provided.")
-  }
-  
-  data <- ggplot2:::coord_transform.cartesian(coord,data,details)
-  data
-}
-
-#' @S3method coord_expand_defaults ternary
-coord_expand_defaults.ternary <- function(coord, scale, aesthetic){ggplot2:::expand_default(scale)}
-
-#' @S3method coord_train ternary
-coord_train.ternary <- function(coord, scales){
-  ret <- c(ggplot2:::train_cartesian(scales$x, coord$limits$x, "x"),
-           ggplot2:::train_cartesian(scales$y, coord$limits$y, "y"))
-  ret
-}
-
-##' @S3method coord_aspect tern
-coord_aspect.ternary <- function(coord, details){sin(pi/3)}
-
-#' @S3method coord_distance ternary
-coord_distance.ternary <- function(coord,x,y,details){ ggplot2:::coord_distance.cartesian(coord,x,y,details)}
-
-
 
 
 

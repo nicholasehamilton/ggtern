@@ -22,17 +22,20 @@ ifthenelse <- function(x,a,b){
 #' @param ... not used
 #' @param strictly logical value representing whether inside is 'strictly' inside, meaning, 
 #' that a point lying on the edges or vertices is considered outside the triangle when strictly is \code{TRUE}.
+#' @param check logical validate input data or not.
 #' @examples
 #' P <- c(0,0); x <- c(0,2,1); y = c(0,0,1)
 #' point_in_triangle(P,x,y)
 #' @rdname PointInTriangle
 #' @export
-point_in_triangle <- function(P,x,y,...,strictly=FALSE){
-  if(!is.numeric(x) | !is.numeric(y))stop("x and y must be numeric")
-  if(length(x) != 3 | length(y) != 3)stop("x and y must be of length 3.")
-  if(!is.numeric(P)) stop("P must be numeric")
-  if(length(P) != 2) stop("P must be of length 2")
-  if(!is.logical(strictly))strictly=FALSE
+point_in_triangle <- function(P,x,y,...,strictly=FALSE,check=TRUE){
+  if(check){
+    if(!is.numeric(x) | !is.numeric(y))stop("x and y must be numeric")
+    if(length(x) != 3 | length(y) != 3)stop("x and y must be of length 3.")
+    if(!is.numeric(P)) stop("P must be numeric")
+    if(length(P) != 2) stop("P must be of length 2")
+    if(!is.logical(strictly))strictly=FALSE
+  }
   
   #Create source points
   v.A = c(x[1],y[1]);
@@ -233,17 +236,120 @@ calc_element_plot <- function(element,theme=theme_update(),...,plot=NULL,verbose
 }
 
 #Modified Coordinate transform 
-.coord_transform_existing <- ggplot2:::coord_transform
-coord_transform <- function(...,discard=TRUE){
-  if(!is.logical(discard))stop("discard parameter must be logical")
-  options("tern.discard.external"=discard[1])
-  .coord_transform_existing(...)
+#.coord_transform_existing <- ggplot2:::coord_transform
+#coord_transform <- function(...,discard=TRUE){
+#  if(!is.logical(discard))stop("discard parameter must be logical")
+#  options("tern.discard.external"=discard[1])
+#  .coord_transform_existing(...)
+#}
+
+
+#' Search for Named Object
+#' 
+#' \code{find_global} is a function that conducts a named search for the \code{name} object instance, within the \code{env} environment. 
+#' If an instance doesn't exist within the \code{env} environment, a search is then conducted within the \code{ggtern} and \code{ggplot2} namespaces \emph{(in that order)}.
+#' 
+#' This is a modified version of the original source as provided in \code{ggplot2}, which has the same functionality, however, the modification is such that the function
+#' now additionally searches within the \code{ggtern} namespace prior to the \code{ggplot2} namespace.
+#' @param name character name of object to search for
+#' @param env environment to search within as first priority
+#' @examples find_global('scale_x_continuous')
+#' @return Instance of the named object (if it exists), or \code{NULL} (if it does not).
+#' @export
+find_global <- function (name, env=environment()){  
+  if(!is.character(name)){stop("'name' must be provided as a character")}
+  if(!inherits(environment(),"environment")){stop("'env' must inherit the environment class")}
+  if (exists(name, env)){return(get(name, env))}
+  nsenv <- asNamespace("ggtern")
+    if(exists(name, nsenv)){return(get(name, nsenv))}
+  nsenv <- asNamespace("ggplot2")
+    if(exists(name, nsenv)){return(get(name, nsenv))}
+  NULL
 }
 
+trytransform <- function(data){
+  ##--------------------------------------------------------------------------------------------------------
+  ##Hack for ternary plots need to transform to cartesian PRIOR to smoothing -- NH
+  bup <- data #BACKUP
+  lp <- last_plot()
+  tryCatch({
+    if(inherits(lp,"ggtern")){
+      data[,c("x","y")] = transform_tern_to_cart(T=data[,lp$coord$T],L=data[,lp$coord$L],R=data[,lp$coord$R])
+    }
+  },error=function(e){
+    return(bup)
+  })
+  return(data)
+}
 
+removeoutside <- function(data){
+  bup <- data
+  lp <- last_plot()
+  tryCatch({
+    if(inherits(lp,"ggtern")){ #ONLY FOR ggtern object
+      if(class(data) != "data.frame"){return(data)}
+      if(length(which(c("x","y") %in% names(data))) != 2){warning("x and y are required"); return(data)}
+      tri <- transform_tern_to_cart(data=get_tern_extremes(last_plot()))
+      ix <- point.in.polygon(data$x,data$y,tri$x,tri$y)
+      return(data[which(ix > 0),])
+    }
+  },error=function(e){
+    #do nothing
+  })
+  return(bup)
+}
 
+sinkdensity <- function(df,remove=T){
+  if(class(df) != "data.frame"){return(df)}
+  bup <- df
+  lp <- last_plot()
+  tryCatch({
+    if(inherits(lp,"ggtern")){ #ONLY FOR ggtern object
+      #ix  <- expand.grid(x=1:length(dens$x),y=1:length(dens$y))
+      tri <- transform_tern_to_cart(data=get_tern_extremes(lp))
+        #OLD CODE...
+        #print(system.time(ix$inorout <- apply(ix,1,function(x){1.0*point_in_triangle(P=c(dens$x[x[1]],dens$y[x[2]]),x=tri$x,y=tri$y,strictly=TRUE,check=FALSE)})))
+      inorout <- point.in.polygon(df$x,df$y,tri$x,tri$y)
+      inorout[which(inorout > 0)] <- 1
+      if(remove){
+        df <- df[which(inorout > 0),]
+      }else{
+        df[which(inorout <= 0),which(names(df) == "z")] <- 0
+      }
+      #dens$z <- dens$z*matrix(ix$inorout,length(dens$x),length(dens$y))
+    }
+  },error=function(e){
+    message(e)
+    df <- bup
+  })
+  df
+}
 
+overridelabs <- function(...){
+  args <- list(...)
+  ix.new <- c("T","L","R")
+  ix.old <- c("x","y","z")
+  for(i in 1:length(ix.new)){
+    n <- ix.new[i]
+    o <- ix.old[i]
+    if(n %in% names(args)){
+      #args[n] <- NULL
+      args[[o]] <- n
+    }
+  }
+  print(args)
+  args
+}
 
+ternlabs <- function(plot){
+  .val <- function(desired,fallback=""){ifthenelse(is.character(desired),desired,fallback)}
+  EX     <- plot$labels
+  LABELS <- labs( T=.val(EX$T,.val(EX[[plot$coordinates$T]],"T")),
+                  L=.val(EX$L,.val(EX[[plot$coordinates$L]],"L")),
+                  R=.val(EX$R,.val(EX[[plot$coordinates$R]],"R")),
+                  W=.val(EX$W,""))
+  LABELS
+}
 
 
 

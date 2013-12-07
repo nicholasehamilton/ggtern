@@ -59,9 +59,4 @@ percent_custom <- function(x){labs(W=as.character(x))}
 #' @export
 custom_percent <- function(x){labs(W=as.character(x))}
 
-#Create Dummy Plot
-#plot <- ggtern(data=data.frame(THS=1,LHS=0,RHS=0),aes(x=THS,y=LHS,z=RHS))
-#Add the Various Suffixes
-#$plot + percent_weight()
-
 
