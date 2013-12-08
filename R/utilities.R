@@ -13,6 +13,11 @@ ifthenelse <- function(x,a,b){
   if(x){a}else{b}
 }
 
+is.numeric.or <- function(a,b){
+  if(!is.numeric(b)){stop("b must be numeric")}
+  ifthenelse(is.numeric(a),a,b)
+}
+
 #' ggtern Utilities
 #' 
 #' returns first argument if ternary and second if not. Used for creating variable required aes mappings when hacking ggplot2 for ternary plots.
@@ -21,7 +26,6 @@ ifthenelse <- function(x,a,b){
 #' @rdname utilities
 #' @export
 geomvaraes <- function(ternreqaes,ggplotreqaes){
-  chk <- getOption("tern.plot")
   if(!is.logical(chk)){
     ggplotreqaes
   }else if(chk){
@@ -29,55 +33,6 @@ geomvaraes <- function(ternreqaes,ggplotreqaes){
   }else{
     ggpotreqaes
   }
-}
-
-
-#' Point In Triangle
-#' 
-#' \code{point_in_triangle} is a function that determines if point is contained by a triangle via the Barycentric Technique
-#' @param P numeric vector of length 2 [x,y], representing the point to test
-#' @param x numeric vector of length 3, representing the x coordinates of the triangle
-#' @param y numeric vector of length 3, representing the y coordinates of the triangle
-#' @param ... not used
-#' @param strictly logical value representing whether inside is 'strictly' inside, meaning, 
-#' that a point lying on the edges or vertices is considered outside the triangle when strictly is \code{TRUE}.
-#' @param check logical validate input data or not.
-#' @examples
-#' P <- c(0,0); x <- c(0,2,1); y = c(0,0,1)
-#' point_in_triangle(P,x,y)
-#' @rdname PointInTriangle
-#' @export
-point_in_triangle <- function(P,x,y,...,strictly=FALSE,check=TRUE){
-  if(check){
-    if(!is.numeric(x) | !is.numeric(y))stop("x and y must be numeric")
-    if(length(x) != 3 | length(y) != 3)stop("x and y must be of length 3.")
-    if(!is.numeric(P)) stop("P must be numeric")
-    if(length(P) != 2) stop("P must be of length 2")
-    if(!is.logical(strictly))strictly=FALSE
-  }
-  
-  #Create source points
-  v.A = c(x[1],y[1]);
-  v.B = c(x[2],y[2]);
-  v.C = c(x[3],y[3]);
-  
-  #Create the vectors relative to A
-  v0=v.C-v.A 
-  v1=v.B-v.A
-  v2=P  -v.A
-  
-  #Evaluate
-  dot00 = v0 %*% v0; dot01 = v0 %*% v1; dot02 = v0 %*% v2; dot11 = v1 %*% v1; dot12 = v1 %*% v2
-  denom = (dot00 * dot11 - dot01 * dot01)
-  u     = (dot11 * dot02 - dot01 * dot12) / denom
-  v     = (dot00 * dot12 - dot01 * dot02) / denom
-  
-  #Yes or No...
-  ret <- ifthenelse(!strictly[1],
-                    (u >= 0) & (v >= 0) & (u + v <= 1),
-                    (u >= 0) & (v >= 0) & (u + v <  1))
-  
-  return(as.logical(ret))
 }
 
 #' ggtern Utiltities
@@ -283,7 +238,10 @@ trytransform <- function(data){
   lp <- last_plot()
   tryCatch({
     if(inherits(lp,"ggtern")){
-      data[,c("x","y")] = transform_tern_to_cart(T=data[,lp$coord$T],L=data[,lp$coord$L],R=data[,lp$coord$R])
+      T <- lp$coord$T
+      L <- lp$coord$L
+      R <- lp$coord$R
+      data[,c("x","y")] = transform_tern_to_cart(T=data[,T],L=data[,L],R=data[,R])
     }
   },error=function(e){
     return(bup)
