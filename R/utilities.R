@@ -13,6 +13,25 @@ ifthenelse <- function(x,a,b){
   if(x){a}else{b}
 }
 
+#' ggtern Utilities
+#' 
+#' returns first argument if ternary and second if not. Used for creating variable required aes mappings when hacking ggplot2 for ternary plots.
+#' @param ternreqaes first argument
+#' @param ggplotreqaes second argument
+#' @rdname utilities
+#' @export
+geomvaraes <- function(ternreqaes,ggplotreqaes){
+  chk <- getOption("tern.plot")
+  if(!is.logical(chk)){
+    ggplotreqaes
+  }else if(chk){
+    ternreqaes
+  }else{
+    ggpotreqaes
+  }
+}
+
+
 #' Point In Triangle
 #' 
 #' \code{point_in_triangle} is a function that determines if point is contained by a triangle via the Barycentric Technique
@@ -117,7 +136,7 @@ get_tern_extremes <- function(plot,coordinates=plot$coordinates,verbose=F){
 #' 
 #' \code{transform_tern_to_cart(...)} is a function that takes input numeric vectors for the \code{T}, \code{L} and \code{R} species, 
 #' or, alternatively, a data.frame with columns \code{T}, \code{L} and \code{R} (Mandatory Column Names), and, transforms the data from the ternary space, 
-#' to the cartesian space where \code{x} and \code{y} are in the range \code{[0,1]} and \code{[0,\eqn{sin(\pi/3)}]} respectively.
+#' to the cartesian space where \code{x} and \code{y} are in the range \code{[0,1]} and [0,\eqn{sin(\pi/3)}] respectively.
 #' The limits for \code{T}, \code{L} and \code{R} \strong{MAY NOT NECESSARILY} be in the range \code{[0,1]}, however, this is the default range.
 #' 
 #' Since the constituents of each ternary points must sum to \code{1.0}, the user has the option to scale the data so that this is satisfied. 
@@ -131,9 +150,9 @@ get_tern_extremes <- function(plot,coordinates=plot$coordinates,verbose=F){
 #' 
 #' By the above statement, the following constraints must hold \code{TRUE}: 
 #' \enumerate{
-#'  \item{\code{\strong{max(Tlim)} + min(Llim) + min(Rlim) = 1} AND}
-#'  \item{\code{min(Tlim) + \strong{max(Llim)} + min(Rlim) = 1} AND}
-#'  \item{\code{min(Tlim) + min(Llim) + \strong{max(Rlim)} = 1}}
+#'  \item{\strong{max(Tlim)} + \code{min(Llim) + min(Rlim) = 1} AND}
+#'  \item{\code{min(Tlim)} + \strong{max(Llim)} + \code{min(Rlim) = 1} AND}
+#'  \item{\code{min(Tlim) + min(Llim)} + \strong{max(Rlim)} = 1}
 #' }
 #' 
 #' @param T the concentrations of the \strong{Top} species on the ternary diagram
@@ -142,6 +161,7 @@ get_tern_extremes <- function(plot,coordinates=plot$coordinates,verbose=F){
 #' @param data object of type \code{data.frame} containing columns \code{T}, \code{L} and \code{R}. If not specified (Default), 
 #' it will be produced from the \code{T}, \code{L} and \code{R} parameters for use in the function.
 #' @param scale logical indicating whether the concentrations should be scaled to sum to unity.
+#' @param ... not used
 #' @return \code{data.frame} object with columns \code{x} and \code{y} representing the transformed coordinates, and, number of rows
 #' equal to that of the \code{data} argument. In other words, a '1 to 1' transformation from the ternary to the cartesian space. 
 #' @examples
@@ -183,9 +203,9 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE
   
   
   #Do the actual transformation
-  out.Y <- d[,1]*tan(pi*60/180)*0.5
-  out.X <- d[,3] + out.Y*tan(30*pi/180)
-  
+  out.Y <- d[,1]*tan(pi/3)*0.5
+  out.X <- d[,3] + out.Y*tan(pi/6)
+   
   return(data.frame(x=out.X,y=out.Y))
 }
 
@@ -194,7 +214,6 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE
 #' \code{arrow.label.formatter} is a function that formats the labels directly adjacent to the axes on a ternary plot.
 #' @param label character label
 #' @param suffix chacater suffix behind each label
-#' @param .... not used
 #' @param sep the seperator between label and suffix 
 #' @rdname utilities
 #' @examples arrow.label.formatter("TOP","Wt.%",sep="/")
@@ -219,8 +238,7 @@ arrow.label.formatter <- function(label,suffix="",...,sep="/"){
 #' @seealso \code{\link[ggplot2]{calc_element}}
 #' @param element the element name to calculate
 #' @param theme the theme to inherit from
-#' @param plot either \code{gg}, \code{ggplot}, \code{ggtern} or \code{NULL} objects.
-#' @param verbose logical indicating verbose reporting to console
+#' @param ... not used
 #' @rdname utilities
 #' @export
 calc_element_plot <- function(element,theme=theme_update(),...,plot=NULL,verbose=F){
@@ -234,15 +252,6 @@ calc_element_plot <- function(element,theme=theme_update(),...,plot=NULL,verbose
   ret.theme <- ggplot2:::calc_element(element,theme=theme,     verbose=verbose) 
   ifthenelse(!identical(ret.plot,NULL),ret.plot,ret.theme)
 }
-
-#Modified Coordinate transform 
-#.coord_transform_existing <- ggplot2:::coord_transform
-#coord_transform <- function(...,discard=TRUE){
-#  if(!is.logical(discard))stop("discard parameter must be logical")
-#  options("tern.discard.external"=discard[1])
-#  .coord_transform_existing(...)
-#}
-
 
 #' Search for Named Object
 #' 

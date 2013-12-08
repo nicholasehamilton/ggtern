@@ -1,5 +1,4 @@
 .onLoad <- function(libname, pkgname){
-  library(scales)
   
   # do whatever needs to be done when the package is loaded
   # some people use it to bombard users with 
@@ -17,6 +16,8 @@
   .theme_hack()
   .aes_hack()
   .smooth_hack()
+  .geom_hack()
   
   options("tern.discard.external"=TRUE)
+  options("tern.plot"=TRUE)
 }

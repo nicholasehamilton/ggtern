@@ -13,6 +13,7 @@
 #' 
 #' @param showarrows logical whether to show the axis directional arrows
 #' @param padding the padding around the plot area to make provision for axis labels, ticks and arrows, relative to the cartesian plane.
+#' @param arrowsep the distance between ternary axis and ternary arrows
 #' @param arrowstart the proportion along the ternary axis to start the directional arrow
 #' @param arrowfinish the proportion along the ternary axis to stop the directional arrow
 #' @param ticklength.major the length of the major ternary ticks as an euclidean distance 

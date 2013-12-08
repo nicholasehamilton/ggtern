@@ -10,6 +10,7 @@
 #' @export
 #' @method print ggplot
 print.ggtern <- function(x, newpage = is.null(vp), vp = NULL, ...) {  
+  options("tern.plot"=TRUE)
   ggplot2:::set_last_plot(x)
   if (newpage) grid.newpage()
   
@@ -24,6 +25,7 @@ print.ggtern <- function(x, newpage = is.null(vp), vp = NULL, ...) {
     grid.draw(gtable) 
     upViewport()
   }
+  options("tern.plot"=FALSE)
   invisible(data)
 }
 
@@ -38,4 +40,7 @@ plot.ggtern <- print.ggtern
 #' @param x ggplot2 object
 #' @keywords internal
 #' @export
-ggternGrob <- function(x) {ggtern_gtable(ggtern_build(x))}
+ggternGrob <- function(x) {
+  writeLines("Producing Grob")
+  ggtern_gtable(ggtern_build(x))
+}

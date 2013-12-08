@@ -15,6 +15,9 @@
   provision for axis labels, ticks and arrows, relative to
   the cartesian plane.}
 
+  \item{arrowsep}{the distance between ternary axis and
+  ternary arrows}
+
   \item{arrowstart}{the proportion along the ternary axis
   to start the directional arrow}
 

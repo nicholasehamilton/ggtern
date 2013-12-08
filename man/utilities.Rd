@@ -1,11 +1,14 @@
 \name{ifthenelse}
 \alias{arrow.label.formatter}
 \alias{calc_element_plot}
+\alias{geomvaraes}
 \alias{get_tern_extremes}
 \alias{ifthenelse}
 \title{ggtern Utilities}
 \usage{
   ifthenelse(x, a, b)
+
+  geomvaraes(ternreqaes, ggplotreqaes)
 
   get_tern_extremes(plot, coordinates = plot$coordinates,
     verbose = F)
@@ -22,6 +25,10 @@
 
   \item{b}{value to return when false}
 
+  \item{ternreqaes}{first argument}
+
+  \item{ggplotreqaes}{second argument}
+
   \item{plot}{ggtern object}
 
   \item{coordinates}{ggtern coordinate system, inheriting
@@ -34,19 +41,13 @@
 
   \item{suffix}{chacater suffix behind each label}
 
-  \item{....}{not used}
-
   \item{sep}{the seperator between label and suffix}
 
   \item{element}{the element name to calculate}
 
   \item{theme}{the theme to inherit from}
 
-  \item{plot}{either \code{gg}, \code{ggplot},
-  \code{ggtern} or \code{NULL} objects.}
-
-  \item{verbose}{logical indicating verbose reporting to
-  console}
+  \item{...}{not used}
 }
 \value{
   data.frame representing the T, L and R amounts (Columns)
@@ -58,6 +59,10 @@
   \code{x}, \code{a} and \code{b} and returns \code{a} when
   \code{x} is \code{TRUE} otherwise \code{b} (when \code{x}
   is \code{FALSE})
+
+  returns first argument if ternary and second if not. Used
+  for creating variable required aes mappings when hacking
+  ggplot2 for ternary plots.
 
   \code{get_tern_extremes} determines the limiting ternary
   coordinates given input plot or coordinates. In the event

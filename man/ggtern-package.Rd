@@ -27,6 +27,4 @@ Literature to come
 \seealso{
   \code{\link{ggplot2}}
 }
-\examples{
-Examples to come
-}
+\examples{}

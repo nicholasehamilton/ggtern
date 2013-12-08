@@ -24,6 +24,8 @@
 
   \item{scale}{logical indicating whether the
   concentrations should be scaled to sum to unity.}
+
+  \item{...}{not used}
 }
 \value{
   \code{data.frame} object with columns \code{x} and
@@ -39,11 +41,10 @@
   with columns \code{T}, \code{L} and \code{R} (Mandatory
   Column Names), and, transforms the data from the ternary
   space, to the cartesian space where \code{x} and \code{y}
-  are in the range \code{[0,1]} and
-  \code{[0,\eqn{sin(\pi/3)}]} respectively. The limits for
-  \code{T}, \code{L} and \code{R} \strong{MAY NOT
-  NECESSARILY} be in the range \code{[0,1]}, however, this
-  is the default range.
+  are in the range \code{[0,1]} and [0,\eqn{sin(\pi/3)}]
+  respectively. The limits for \code{T}, \code{L} and
+  \code{R} \strong{MAY NOT NECESSARILY} be in the range
+  \code{[0,1]}, however, this is the default range.
 }
 \details{
   Since the constituents of each ternary points must sum to
@@ -63,11 +64,11 @@
   extremes should meet at the vertices of the plot area.
 
   By the above statement, the following constraints must
-  hold \code{TRUE}: \enumerate{
-  \item{\code{\strong{max(Tlim)} + min(Llim) + min(Rlim) =
-  1} AND} \item{\code{min(Tlim) + \strong{max(Llim)} +
-  min(Rlim) = 1} AND} \item{\code{min(Tlim) + min(Llim) +
-  \strong{max(Rlim)} = 1}} }
+  hold \code{TRUE}: \enumerate{ \item{\strong{max(Tlim)} +
+  \code{min(Llim) + min(Rlim) = 1} AND}
+  \item{\code{min(Tlim)} + \strong{max(Llim)} +
+  \code{min(Rlim) = 1} AND} \item{\code{min(Tlim) +
+  min(Llim)} + \strong{max(Rlim)} = 1} }
 }
 \examples{
 #Species Concentrations

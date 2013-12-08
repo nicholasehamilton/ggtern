@@ -2,7 +2,6 @@ ggtern_build <- function(plot){
   
   #IF WE HAVE TERNARY OPTIONS SOMEWHERE...  
   if("ggtern" %in% class(plot) & ("gg" %in% class(plot) | "ggplot" %in% class(plot))){
-    
     ##Check that there are layers.
     if(length(plot$layers) == 0){stop("No layers in plot",call.=F)}
     
@@ -24,16 +23,10 @@ ggtern_build <- function(plot){
     plot$coordinates$limits$y <- plot$coordinates$limits$y + c(-PADDING,PADDING)
     
     ##Update the coordinates limits from the scales.
-    for(X in c("T","L","R")){lim <- plot$scales$get_scales(X)$limits; plot$coordinates$limits[[X]] <- ifthenelse(is.numeric(lim),lim,c(0,1))}
-    
-    #THE UNORTHADOX TERNARY COMPONENTS 
-    tern.layer <- list(ternarrows(plot),ternlabels(plot),ternTicksGridAndAxes(plot))
-    
-    ##INSERT COMPONENTS UNDERNEATH LAYERS...
-    plot$layers <- c(tern.layer,plot$layers)
-    
-    ##Destroy cartesian theme elements.
-    plot <- plot + .theme_wipecartesian()
+    for(X in c("T","L","R")){
+      lim <- plot$scales$get_scales(X)$limits; 
+      plot$coordinates$limits[[X]] <- ifthenelse(is.numeric(lim),lim,c(0,1))
+    }
   }
   
   ##Execute the normal  building process.

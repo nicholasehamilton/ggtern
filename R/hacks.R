@@ -1,10 +1,3 @@
-##Hack the coord_transform function.
-.utilities_hack <- function(){
-  unlockBinding("coord_transform", asNamespace("ggplot2"))
-    assign("coord_transform", coord_transform, asNamespace("ggplot2"))
-  lockBinding("coord_transform", asNamespace("ggplot2"))
-}
-
 ##Hack into the theme elements.
 .theme_hack <- function(){
   unlockBinding(".element_tree", asNamespace("ggplot2"))
@@ -35,4 +28,20 @@
   unlockBinding("contour_lines", asNamespace("ggplot2"))
     assign("contour_lines", contour_lines, asNamespace("ggplot2"))
   lockBinding("contour_lines", asNamespace("ggplot2"))
+}
+
+.geom_hack <- function(){
+  unlockBinding("GeomPath", asNamespace("ggplot2"))
+    assign("GeomPath", GeomPath, asNamespace("ggplot2"))
+  lockBinding("GeomPath", asNamespace("ggplot2"))
+  
+  unlockBinding("GeomPolygon", asNamespace("ggplot2"))
+    assign("GeomPolygon", GeomPolygon, asNamespace("ggplot2"))
+  lockBinding("GeomPolygon", asNamespace("ggplot2"))
+}
+
+.ggplot_hack <- function(){
+  unlockBinding("ggplot", asNamespace("ggplot2"))
+  assign("ggplot", ggplot, asNamespace("ggplot2"))
+  lockBinding("ggplot", asNamespace("ggplot2"))
 }

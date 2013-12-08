@@ -8,9 +8,15 @@
 #'@export
 ggtern <- function(...){
   plot <- ggplot(...)
-  plot <- plot + theme_tern_gray() #DEFAULT
+  plot <- plot + theme_tern_gray() + coord_tern() + .theme_wipecartesian() #DEFAULT
   class(plot) <- c("ggtern",class(plot))
+  options("tern.plot"=TRUE)
   plot
+}
+
+ggplot <- function(...){
+  options("tern.plot"=FALSE)
+  ggplot2:::ggplot(...)
 }
 
 
