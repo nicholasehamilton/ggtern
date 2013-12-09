@@ -31,13 +31,6 @@
 }
 
 .geom_hack <- function(){
-  #unlockBinding("GeomPath", asNamespace("ggplot2"))
-  #  assign("GeomPath", GeomPath, asNamespace("ggplot2"))
-  #lockBinding("GeomPath", asNamespace("ggplot2"))
-  
-  #unlockBinding("GeomPolygon", asNamespace("ggplot2"))
-  #  assign("GeomPolygon", GeomPolygon, asNamespace("ggplot2"))
-  #lockBinding("GeomPolygon", asNamespace("ggplot2"))
   unlockBinding("GeomSegment", asNamespace("ggplot2"))
     assign("GeomSegment", GeomSegment, asNamespace("ggplot2"))
   lockBinding("GeomSegment", asNamespace("ggplot2"))
@@ -51,11 +44,5 @@
   unlockBinding("ggplot_build", asNamespace("ggplot2"))
   assign("ggplot_build", ggplot_build, asNamespace("ggplot2"))
   lockBinding("ggplot_build", asNamespace("ggplot2"))
-}
-
-.coord_hack <- function(){
-  #unlockBinding("coord_munch", asNamespace("ggplot2"))
-  #assign("coord_munch", coord_munch, asNamespace("ggplot2"))
-  #lockBinding("coord_munch", asNamespace("ggplot2"))
 }
 

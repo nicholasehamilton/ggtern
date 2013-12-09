@@ -17,7 +17,6 @@
   .aes_hack()
   .smooth_hack()
   .geom_hack()
-  .coord_hack()
   
   options("tern.discard.external"=TRUE)
 }

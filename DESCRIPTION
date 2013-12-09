@@ -29,7 +29,7 @@ Collate:
   'tern-limits.R'
   'coord-tern.R'
   'geom-smooth.R'
-  'geom-segment-tern.R'
+  'geom-segment.R'
   'stat-smooth.R'
   'stat-density-2d.R'
   'stat-contour.R'
