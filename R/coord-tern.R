@@ -37,6 +37,7 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=c(0,1),L
     T = T, 
     L = L,
     R = R,
+    required_aes=c("x","y","z"),
     limits = list(x = xlim, 
                   y = ylim,
                   T = Tlim,
@@ -46,15 +47,21 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=c(0,1),L
   )
 }
 
+#' @S3method is.linear cartesian
+is.linear.ternary <- function(coord) TRUE
 
 #' @S3method rename_data ternary
 rename_data.ternary <- function(coord,data){
+  bup <- data
   tryCatch({
-    to <- c("T","L","R"); 
-    names(to) <- c(coord$T,coord$L,coord$R)
-    data <- rename(data,to,warn_missing=FALSE)
+    to   <- c("T","L","R"); 
+    frm  <- c(coord$T,coord$L,coord$R)
+    if(length(which(!frm %in% names(data))) == 0){
+      names(to) <- frm
+      data <- rename(data,to,warn_missing=FALSE)
+    }
   },error=function(e){
-    stop(e)
+    return(bup)
   })
   data
 }
@@ -63,19 +70,19 @@ rename_data.ternary <- function(coord,data){
 coord_range.ternary <- function(coord, scales){}
 
 #' @S3method coord_transform ternary
-coord_transform.ternary <- function(coord, data, details){    
+coord_transform.ternary <- function(coord, data, details, verbose=F,revertToCart=T,adjustCart=T){
   bup    <- data #Original Data Backup.
-  data   <- rename_data.ternary(coord, data)
-  ix.tern <- c("T","L","R"); 
-  ix.cart <- c("x","y")
-  
-  if(length(which(ix.tern %in% colnames(data))) == length(ix.tern)){
+  tryCatch({
+    ggplot2:::check_required_aesthetics(coord$required_aes, names(data),"coord_tern")
+    data   <- rename_data.ternary(coord, data)
+    ix.tern <- c("T","L","R"); 
+    ix.cart <- c("x","y")
     ##Execute the transformation to cartesian
-    data[,c("x","y")] <- transform_tern_to_cart(data = data[,ix.tern],
-                                     Tlim = coord$limits$T,
-                                     Llim = coord$limits$L,
-                                     Rlim = coord$limits$R)[,c("x","y")]
-    
+    data[,c("x","y")] <- transform_tern_to_cart(
+      data = data[,ix.tern],
+      Tlim = coord$limits$T,
+      Llim = coord$limits$L,
+      Rlim = coord$limits$R)[,c("x","y")]
     #only keep records in poly
     if(getOption("tern.discard.external")){
       #Get the extremes to determine if points are outside the plot area.
@@ -84,13 +91,20 @@ coord_transform.ternary <- function(coord, data, details){
       in.poly <- point.in.polygon(data$x,data$y,as.numeric(data.extremes$x),as.numeric(data.extremes$y))
       data <- data[which(in.poly > 0),]
     }
-  }else if(length(which(ix.cart %in% colnames(bup))) == length(ix.cart)){
-    data <- bup; #writeLines("Ternary plot requires x, y and z aesthetics, however, reverting to cartesian.") 
+  },error=function(e){
+    if(!revertToCart){
+      stop(as.character(e))
+    }
+    if(verbose){
+      writeLines(as.character(e))
+    }
+    data <- bup
+  })
+  if(adjustCart){
+    ggplot2:::coord_transform.cartesian(coord,data,details)
   }else{
-    stop("Neither Ternary or Cartesian Data has been provided.")
+    data
   }
-  data <- ggplot2:::coord_transform.cartesian(coord,data,details)
-  data
 }
 
 #' @S3method coord_expand_defaults ternary
@@ -98,9 +112,11 @@ coord_expand_defaults.ternary <- function(coord, scale, aesthetic){ggplot2:::exp
 
 #' @S3method coord_train ternary
 coord_train.ternary <- function(coord, scales){
-  ret <- c(ggplot2:::train_cartesian(scales$x, coord$limits$x, "x"),
-           ggplot2:::train_cartesian(scales$y, coord$limits$y, "y"))
-  ret <- ret[c("x.range","y.range")]
+  p <- max(last_plot()$theme$ternary.options$padding,0)  #PADDING
+  h <- max(last_plot()$theme$ternary.options$hshift, 0)  #hshift
+  v <- max(last_plot()$theme$ternary.options$vshift, 0)  #vshift
+  ret <- c(ggplot2:::train_cartesian(scales$x, coord$limits$x + c(-p,p) - h, "x"),
+           ggplot2:::train_cartesian(scales$y, coord$limits$y + c(-p,p) - v, "y"))[c("x.range","y.range")]
   ret
 }
 
@@ -215,30 +231,30 @@ coord_render_bg.ternary <- function(coord,details,theme){
     ##BYPASS IF NULL
   }else if(plot$theme$ternary.options$showarrows){
     #get the extermes
-    D <- get_tern_extremes(coord)
+    #D <- get_tern_extremes(coord)
     
     #The basic data.
-    d.f <- D[c(1,2,3),]
-    d.s <- D[c(3,1,2),]; rownames(d.s) <- rownames(d.f) #Correct rownames
+    d.f <- data.extreme[c(1,2,3),]
+    d.s <- data.extreme[c(3,1,2),]; rownames(d.s) <- rownames(d.f) #Correct rownames
     d.diff <- d.f - d.s
     
     #Cut down to relative proportion.
-    e <- calc_element_plot("ternary.options",theme=theme_update(),verbose=F,plot=plot)
+    e <- calc_element_plot("ternary.options",theme=theme,verbose=F,plot=NULL)
     d.f <- d.f - (1-max(min(e$arrowfinish,1.0),0.0))*d.diff
     d.s <- d.s +   (min(max(e$arrowstart, 0.0),1.0))*d.diff
     
     ##TRANSFORM
-    options("tern.discard.external"=FALSE)
+    #options("tern.discard.external"=FALSE)
       d <- rbind(d.s,d.f)
-      d <- transform_tern_to_cart(data=d)
-      d <- ggplot2:::coord_transform.cartesian(coord,d,details)
-    options("tern.discard.external"=TRUE)
+      #d <- transform_tern_to_cart(data=d)
+      #d <- ggplot2:::coord_transform.cartesian(coord,d,details)
+    #options("tern.discard.external"=TRUE)
     
     ix <- which(colnames(d) %in% c("x","y"))
     d <- cbind(d[1:3,ix],
                d[4:6,ix]);
     colnames(d) <- c("x","y","xend","yend")
-    rownames(d) <- rownames(D)
+    rownames(d) <- c("AT.T","AT.L","AT.R")
     
     #MOVE the Arrows Off the Axes.
     d[c("AT.T","AT.L","AT.R"),"angle"] <- c(0,120,240)
@@ -330,11 +346,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   if(!inherits(plot,"ggtern")){
     #BYPASS
   }else{
-    options("tern.discard.external"=FALSE)
-      d <- get_tern_extremes(coord)
-      d <- transform_tern_to_cart(data=d)
-      d <- ggplot2:::coord_transform.cartesian(coord,d,details)
-    options("tern.discard.external"=TRUE)
+    d = data.extreme
     
     #Modify the labels accordingly....
     LABELS  <- ternlabs(plot)
@@ -398,7 +410,8 @@ coord_render_bg.ternary <- function(coord,details,theme){
     tl.minor <- .vett.tl(calc_element_plot("ternary.options",theme=theme)$ticklength.minor)
     
     #THE TIPS OF THE TERNARY PLOT AREA
-    d.extremes <- get_tern_extremes(coord)
+    #d.extremes <- get_tern_extremes(coord)
+    d.extremes <- data.extreme; rownames(d.extremes) <- c("AT.T","AT.L","AT.R")
     
     #ASSEMBLE THE GRID DATA.
     .getData <- function(X,existing=NULL,major=TRUE,angle=0){
@@ -433,19 +446,21 @@ coord_render_bg.ternary <- function(coord,details,theme){
       ##Start and finish positions of scale.
       ix.order  <- c("T","L","R")
       ix.at     <- c("AT.T","AT.L","AT.R")
+      out       <- c("x","y")
       
       #FOR TICKS
-      ix.s <- which(ix.order == X); ix.f <- if(ix.s == 1){3}else{ix.s-1}
+      ix.s <- which(ix.order == X); 
+      ix.f <- if(ix.s == 1){3}else{ix.s-1}
       finish <- as.numeric(d.extremes[ix.at[ix.s],])
       start  <- as.numeric(d.extremes[ix.at[ix.f],])
-      
-      for(i in 1:length(ix.order)){new[,ix.order[i]] <- new$Prop*(finish[i]-start[i]) + start[i]}
+      for(i in 1:length(out)){new[,out[i]] <- new$Prop*(finish[i]-start[i]) + start[i]}
       
       #FOR GRID
-      ix.s <- which(ix.order == X); ix.f <- if(ix.s == 3){1}else{ix.s+1}
+      ix.s <- which(ix.order == X); 
+      ix.f <- if(ix.s == 3){1}else{ix.s+1}
       finish <- as.numeric(d.extremes[ix.at[ix.s],])
       start  <- as.numeric(d.extremes[ix.at[ix.f],])
-      for(i in 1:length(ix.order)){new[,paste0("grid.",ix.order[i],".end")] <- new$Prop*(finish[i]-start[i]) + start[i]}
+      for(i in 1:length(out)){new[,paste0(out[i],"end.grid")] <- new$Prop*(finish[i]-start[i]) + start[i]}
       
       #The tick angles.
       new$Angle <- angle
@@ -459,20 +474,6 @@ coord_render_bg.ternary <- function(coord,details,theme){
     d <- .getData("T",d,T,angle=  0); d <- .getData("T",d,F,angle=  0); 
     d <- .getData("L",d,T,angle=120); d <- .getData("L",d,F,angle=120); 
     d <- .getData("R",d,T,angle=240); d <- .getData("R",d,F,angle=240);
-    
-    ##Grid data
-    d.g  <- d[,c("grid.T.end","grid.L.end","grid.R.end")]; colnames(d.g) <- c("T","L","R"); 
-    
-    ##Do the coordinate transformation
-    options("tern.discard.external"=FALSE)
-      d <- cbind(d,transform_tern_to_cart(T=d$T,L=d$L,R=d$R))
-      d <- ggplot2:::coord_transform.cartesian(coord,d,details)
-      
-      d.g <- cbind(d.g,transform_tern_to_cart(T=d.g$T,L=d.g$L,R=d.g$R))
-      d.g <- ggplot2:::coord_transform.cartesian(coord,d.g,details)[,c("x","y")]
-      colnames(d.g) <- c("xend.grid","yend.grid");
-      d   <- cbind(d,d.g) ##Join
-    options("tern.discard.external"=TRUE)
     
     ##Determine the tick finish positions for segments.
     d$xend <- cos(d$Angle*pi/180)*d$TickLength + d$x
@@ -557,15 +558,10 @@ coord_render_bg.ternary <- function(coord,details,theme){
     }
     
     #PROCESS TICKS AND LABELS
-    for(n in unique(d$NameTicks)){items <- .render.ticks(name=n,items=items,d=d[which(d$NameTicks == n),])}
-    for(n in unique(d$NameText)){ items <- .render.labels(name=n,items=items,d=d[which(d$NameText == n),])}
-    for(n in unique(d$NameGrid)){ items <- .render.grid(name=n,items=items,d=d[which(d$NameGrid == n),])}
+    for(n in unique(d$NameTicks)){items <- .render.ticks( name=n,items=items,d=d[which(d$NameTicks == n),])}
+    for(n in unique(d$NameText)){ items <- .render.labels(name=n,items=items,d=d[which(d$NameText  == n),])}
+    for(n in unique(d$NameGrid)){ items <- .render.grid(  name=n,items=items,d=d[which(d$NameGrid  == n),])}
   }
-  
-  
-  
-  
-  
   
   #render.
   ggplot2:::ggname("background",gTree(children = do.call("gList", items)))

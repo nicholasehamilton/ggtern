@@ -5,24 +5,18 @@ GeomPolygon <- proto(ggplot2:::Geom, {
     n <- nrow(data)
     if (n == 1) return()
     
-    ##-----------------------------------------------------------------------------------------
-    ##HACK FOR TERNARY PLOT
-    if(inherits(coordinates,"ternary")){
-      data   <- rename_data.ternary(coordinates, data)
-      data[,c("x","y")] <- transform_tern_to_cart(data = data[,c("T","L","R")],
-                                                  Tlim = coordinates$limits$T,
-                                                  Llim = coordinates$limits$L,
-                                                  Rlim = coordinates$limits$R)[,c("x","y")]
-      data <- data[,which(!colnames(data) %in% c("T","L","R"))]
-    }
-    ##-----------------------------------------------------------------------------------------
-    
     # Check if group is numeric, to make polygonGrob happy (factors are numeric,
     # but is.numeric() will report FALSE because it actually checks something else)
     if (mode(data$group) != "numeric") data$group <- factor(data$group)
     
-    munched <- coord_munch(coordinates, data, scales)
+    ##-----------------------------------------------------------------------------------------
+    ##HACK FOR TERNARY PLOT
+    #is.tern <- inherits(coordinates,"ternary")
+    #if(is.tern){data = ggplot2:::coord_transform(coordinates,data,scales)}
+    ###-----------------------------------------------------------------------------------------
+    
     # Sort by group to make sure that colors, fill, etc. come in same order
+    munched <- coord_munch(coordinates, data, scales) #MODIFIED coord_munch
     munched <- munched[order(munched$group), ]
     
     # For gpar(), there is one entry per polygon (not one entry per point).

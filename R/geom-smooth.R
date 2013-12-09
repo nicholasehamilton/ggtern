@@ -16,7 +16,6 @@ geom_smooth <- function (mapping = NULL, data = NULL, stat = "smooth", position 
 GeomSmooth <- proto(ggplot2:::Geom, {
   objname <- "smooth"
   draw <- function(., data, scales, coordinates,limitarea=F,...) { 
-    
     #HACK
     if(limitarea){
       if(inherits(last_plot(),"ggtern")){
@@ -24,12 +23,10 @@ GeomSmooth <- proto(ggplot2:::Geom, {
       }
     }
     
-    
     ribbon <- transform(data, colour = NA)
     path   <- transform(data, alpha  = NA)
     
     has_ribbon <- function(x) !is.null(data$ymax) && !is.null(data$ymin)
-    
     gList(
       if (has_ribbon(data)) GeomRibbon$draw(ribbon, scales, coordinates),
       GeomLine$draw(path, scales, coordinates)
@@ -55,5 +52,4 @@ GeomSmooth <- proto(ggplot2:::Geom, {
       GeomPath$draw_legend(data, ...)
     }
   }
-  
 })

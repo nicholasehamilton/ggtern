@@ -2,9 +2,10 @@
 \alias{element_ternary}
 \title{Theme element: ternary structure}
 \usage{
-  element_ternary(showarrows = TRUE, padding = 0.15,
+  element_ternary(showarrows = TRUE, padding = 0.1,
     arrowsep = 0.075, arrowstart = 0.25,
-    arrowfinish = 0.75, ticklength.major = 0.02,
+    arrowfinish = 0.75, vshift = 0.25 * padding,
+    hshift = 0, ticklength.major = 0.02,
     ticklength.minor = 0.01)
 }
 \arguments{
@@ -23,6 +24,10 @@
 
   \item{arrowfinish}{the proportion along the ternary axis
   to stop the directional arrow}
+
+  \item{vshift}{shift the plot area vertically}
+
+  \item{hshift}{shift the plot area horizontally}
 
   \item{ticklength.major}{the length of the major ternary
   ticks as an euclidean distance relative to the x and y

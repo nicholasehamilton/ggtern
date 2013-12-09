@@ -59,8 +59,14 @@
 .element_tree$panel.background.tern <- ggplot2:::el_def("element_rect", "rect")
 
 
-#FUNCTION TO CLEAR THE EXISTING CARTESIAN THEME ELEMENTS
-.theme_wipecartesian <- function(){
+#' Ternary Theme Elements
+#' 
+#' \code{theme_nocart} is a functino that returns empty theme elemens for the standard cartesian memebers, including
+#' panel.background, panel.border, panel.grid.major, panel.grid.minor, axis.ticks, axis.text.x, axis.text.y, axis.title.x, 
+#' axis.title.y are all set to blank
+#' @rdname terntheme
+#' @export
+theme_nocart <- function(){
   theme(
     panel.background     = element_blank(),
     panel.border         = element_blank(),

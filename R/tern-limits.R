@@ -7,12 +7,13 @@
 #' @param L numeric value of the maximum L species scale value
 #' @param R numeric value of the maximum R species scale value
 #' @param ... other arguments to pass to ALL of \code{scale_X_continuous}, where \code{X = T, L, R}
+#' @param verbose report the solved values
 #' @seealso \code{\link{scale_T_continuous}}, \code{\link{scale_L_continuous}} and \code{\link{scale_R_continuous}}
 #' @examples 
 #' plot <- ggtern(data=data.frame(x=runif(100),y=runif(100),z=runif(100)),aes(x,y,z)) + geom_point() + tern_limits(0.7,0.3,0.4)
 #' plot
 #' @export
-tern_limits <- function(T=1,L=1,R=1,...){
+tern_limits <- function(T=1,L=1,R=1,...,verbose=F){
   ret <- list()
   tryCatch({
     if(!is.numeric(T) | !is.numeric(L) | !is.numeric(R)){stop("T, L and R input parameters must be a numeric scalar.")}
@@ -30,10 +31,12 @@ tern_limits <- function(T=1,L=1,R=1,...){
     v <- c(1-T,1-L,1-R)
     
     #solve
-    minima <- solve(d,v)
-    
-    #check validity
-    if(min(minima) < 0 | max(minima) > 1.0){stop("Invalid Maximum T, L and R values.")}
+    minima <- round(solve(d,v),3)
+    if(verbose){
+      print(minima)
+    }else if(min(minima) < 0 | max(minima) > 1.0){
+      stop("Invalid Maximum T, L and R values.")
+    }
     
     #Return.
     ret <- list( scale_T_continuous(limits=c(minima[1],T),...),

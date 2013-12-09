@@ -16,16 +16,20 @@
 #' @param arrowsep the distance between ternary axis and ternary arrows
 #' @param arrowstart the proportion along the ternary axis to start the directional arrow
 #' @param arrowfinish the proportion along the ternary axis to stop the directional arrow
+#' @param vshift shift the plot area vertically
+#' @param hshift shift the plot area horizontally
 #' @param ticklength.major the length of the major ternary ticks as an euclidean distance 
 #' relative to the x and y limits of the cartesian plot area. 
 #' @param ticklength.minor the length of the minor ternary ticks as an euclidean distance 
 #' relative to the x and y limits of the cartesian plot area.
 #' @export
 element_ternary <- function(showarrows       =TRUE,
-                            padding          =0.15,
+                            padding          =0.10,
                             arrowsep         =0.075,
                             arrowstart       =0.25,
                             arrowfinish      =0.75,
+                            vshift           =0.25*padding,
+                            hshift           =0,
                             ticklength.major =0.020,
                             ticklength.minor =0.010){
   structure(
@@ -34,6 +38,8 @@ element_ternary <- function(showarrows       =TRUE,
          showarrows      = showarrows,
          arrowstart      = min(arrowstart,arrowfinish),
          arrowfinish     = max(arrowstart,arrowfinish),
+         vshift          = vshift,
+         hshift          = hshift,
          ticklength.major= ticklength.major,
          ticklength.minor= ticklength.minor),
     class = c("element_ternary")

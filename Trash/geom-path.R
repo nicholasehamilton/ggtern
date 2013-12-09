@@ -8,15 +8,9 @@ GeomPath <- proto(ggplot2:::Geom, {
     
     ##-----------------------------------------------------------------------------------------
     ##HACK FOR TERNARY PLOT
-    if(inherits(coordinates,"ternary")){
-      data   <- rename_data.ternary(coordinates, data)
-      data[,c("x","y")] <- transform_tern_to_cart(data = data[,c("T","L","R")],
-                                                  Tlim = coordinates$limits$T,
-                                                  Llim = coordinates$limits$L,
-                                                  Rlim = coordinates$limits$R)[,c("x","y")]
-      data <- data[,which(!colnames(data) %in% c("T","L","R"))]
-    }
-    ##-----------------------------------------------------------------------------------------
+    #is.tern <- inherits(coordinates,"ternary")
+    #if(is.tern){data = ggplot2:::coord_transform(coordinates,data,scales)}
+    ###-----------------------------------------------------------------------------------------
     
     keep <- function(x) {
       # from first non-missing to last non-missing
@@ -37,11 +31,11 @@ GeomPath <- proto(ggplot2:::Geom, {
   
     
     if (!all(kept) && !na.rm) {
-      warning("Removed ", sum(!kept), " rows containing missing values", 
-              " (geom_path).", call. = FALSE)
+      warning("Removed ", sum(!kept), " rows containing missing values", " (geom_path).", call. = FALSE)
     }
     
     munched <- coord_munch(coordinates, data, scales)
+    print(munched)
     
     # Silently drop lines with less than two points, preserving order
     rows <- ave(seq_len(nrow(munched)), munched$group, FUN = length)

@@ -1,11 +1,9 @@
 StatSmooth <- proto(ggplot2:::Stat, {
   objname <- "smooth"
   calculate_groups <- function(., data, scales, method=ifthenelse(inherits(last_plot(),"ggtern"),"lm","auto"), formula=y~x, ...){
-    
     #HACK
     data <- trytransform(data)
     if(inherits(last_plot(),"ggtern")){if(identical(method,lm)){method="lm"}}
-    
     rows <- daply(data, .(group), function(df) length(unique(df$x)))
     if (all(rows == 1) && length(rows) > 1) {
       message("geom_smooth: Only one unique x value each group.", 
@@ -34,7 +32,6 @@ StatSmooth <- proto(ggplot2:::Stat, {
     }
     
     if (method == "gam") try_require("mgcv")
-    
     .super$calculate_groups(., data, scales, method = method, formula = formula, ...)
   }
   
@@ -68,7 +65,6 @@ StatSmooth <- proto(ggplot2:::Stat, {
     method.special <- function(...) 
       method(formula, data=data, weights=weight, ...)
     model <- safe.call(method.special, list(...), names(formals(method)))
-    
     predictdf(model, xseq, se, level)
   }
   

@@ -2,7 +2,7 @@
 \alias{tern_limits}
 \title{Restrict Ternary Limits}
 \usage{
-  tern_limits(T = 1, L = 1, R = 1, ...)
+  tern_limits(T = 1, L = 1, R = 1, ..., verbose = F)
 }
 \arguments{
   \item{T}{numeric value of the maximum T species scale
@@ -16,6 +16,8 @@
 
   \item{...}{other arguments to pass to ALL of
   \code{scale_X_continuous}, where \code{X = T, L, R}}
+
+  \item{verbose}{report the solved values}
 }
 \description{
   Appends new T, L and R ternary continuous scales, where
