@@ -83,54 +83,68 @@ theme_nocart <- function(){
 #helper function
 .theme_tern      <- function(col.BG="grey90",col.T="darkred",col.L="darkgreen",col.R="darkblue"){
   
-  ##CUSTOMIZE
-  default    <- theme_update()
-  size.title <- max(default$axis.title.x$size,5)
-  size.text  <- max(default$axis.text.x$size, 3)
+  #THE BASE THEME
+  base <- theme_gray()
   
-  theme(
-    legend.background       = element_blank(),
-    ternary.options         = element_ternary(),
-    panel.background.tern   = element_rect(fill=col.BG,color=NA),
-    axis.tern               = element_line(size=0.5,linetype="solid"),
-    axis.tern.line          = element_line(),
-    axis.tern.line.T        = element_line(colour=col.T),
-    axis.tern.line.L        = element_line(colour=col.L),
-    axis.tern.line.R        = element_line(colour=col.R),
+  #TEXT SIZES
+  size.title     <- 12
+  size.text      <- 10
+  size.ticklabels<- 8
+  
+  #NO CARTESIAN
+  base$panel.background        = element_blank()
+  base$panel.border            = element_blank()
+  base$panel.grid.major        = element_blank() 
+  base$panel.grid.minor        = element_blank() 
+  base$axis.ticks              = element_blank() 
+  base$axis.text.x             = element_blank() 
+  base$axis.text.y             = element_blank()
+  base$axis.title.x            = element_blank() 
+  base$axis.title.y            = element_blank()
+  
+  base$legend.background       = element_blank()
+  base$ternary.options         = element_ternary()
+  base$panel.background.tern   = element_rect(fill=col.BG,color=NA)
+  base$axis.tern               = element_line(size=0.5,linetype="solid")
+  base$axis.tern.line          = element_line()
+  base$axis.tern.line.T        = element_line(colour=col.T)
+  base$axis.tern.line.L        = element_line(colour=col.L)
+  base$axis.tern.line.R        = element_line(colour=col.R)
     
-    axis.tern.arrow         = element_line(lineend=arrow(length=unit(2.5,"mm"))),
-    axis.tern.arrow.T       = element_line(colour=col.T),
-    axis.tern.arrow.L       = element_line(colour=col.L),
-    axis.tern.arrow.R       = element_line(colour=col.R),
+  base$axis.tern.arrow         = element_line(lineend=arrow(length=unit(2.5,"mm")))
+  base$axis.tern.arrow.T       = element_line(colour=col.T)
+  base$axis.tern.arrow.L       = element_line(colour=col.L)
+  base$axis.tern.arrow.R       = element_line(colour=col.R)
     
-    axis.tern.text          = element_text(size=size.text,face="plain"),
-    axis.tern.text.T        = element_text(colour=col.T,vjust=0.5,hjust=-0.2,angle=0),
-    axis.tern.text.L        = element_text(colour=col.L,vjust=0.5,hjust=1.2,angle=-60),
-    axis.tern.text.R        = element_text(colour=col.R,vjust=0.5,hjust=1.2,angle=60),
+  base$axis.tern.text          = element_text(size=size.ticklabels,face="plain")
+  base$axis.tern.text.T        = element_text(colour=col.T,vjust=0.5,hjust=-0.2,angle=0)
+  base$axis.tern.text.L        = element_text(colour=col.L,vjust=0.5,hjust=1.2,angle=-60)
+  base$axis.tern.text.R        = element_text(colour=col.R,vjust=0.5,hjust=1.2,angle=60)
     
-    axis.tern.arrow.text    = element_text(size=size.text,hjust=0.5),
-    axis.tern.arrow.text.T  = element_text(colour=col.T,  vjust=-0.2,angle=-60),
-    axis.tern.arrow.text.L  = element_text(colour=col.L,vjust=-0.2,angle=60),
-    axis.tern.arrow.text.R  = element_text(colour=col.R, vjust=1.2, angle=0),
+  base$axis.tern.arrow.text    = element_text(size=size.text,hjust=0.5)
+  base$axis.tern.arrow.text.T  = element_text(colour=col.T,  vjust=-0.2,angle=-60)
+  base$axis.tern.arrow.text.L  = element_text(colour=col.L,vjust=-0.2,angle=60)
+  base$axis.tern.arrow.text.R  = element_text(colour=col.R, vjust=1.2, angle=0)
     
-    axis.tern.title   = element_text(size=5, angle=0,face="bold",hjust=0.5 ,vjust=0.5),
-    axis.tern.title.T = element_text(colour=col.T,vjust=-0.5),
-    axis.tern.title.L = element_text(colour=col.L,hjust=1.4),
-    axis.tern.title.R = element_text(colour=col.R,hjust=-0.4),
+  base$axis.tern.title         = element_text(size  =size.title, angle=0,face="bold",hjust=0.5 ,vjust=0.5)
+  base$axis.tern.title.T       = element_text(colour=col.T,vjust=-0.5)
+  base$axis.tern.title.L       = element_text(colour=col.L,hjust=1.4)
+  base$axis.tern.title.R       = element_text(colour=col.R,hjust=-0.4)
     
-    panel.grid.tern         = element_line(colour="black"),
-    panel.grid.tern.major   = element_line(size=0.25, linetype="longdash"),
-    panel.grid.tern.major.T = element_line(colour=col.T),
-    panel.grid.tern.major.L = element_line(colour=col.L),
-      panel.grid.tern.major.R = element_line(colour=col.R),
-      panel.grid.tern.minor   = element_line(size=0.10, linetype="dotted",colour="black"),
+  base$panel.grid.tern         = element_line(colour="black")
+  base$panel.grid.tern.major   = element_line(size=0.25, linetype="longdash")
+  base$panel.grid.tern.major.T = element_line(colour=col.T)
+  base$panel.grid.tern.major.L = element_line(colour=col.L)
+  base$panel.grid.tern.major.R = element_line(colour=col.R)
+  base$panel.grid.tern.minor   = element_line(size=0.10, linetype="dotted",colour="black")
       
-      axis.tern.ticks.major   = element_line(size=0.25),
-      axis.tern.ticks.major.T = element_line(colour=col.T),
-      axis.tern.ticks.major.L = element_line(colour=col.L),
-      axis.tern.ticks.major.R = element_line(colour=col.R),
-      axis.tern.ticks.minor   = element_line(size=0.10,colour="black")
-    )
+  base$axis.tern.ticks.major   = element_line(size=0.25)
+  base$axis.tern.ticks.major.T = element_line(colour=col.T)
+  base$axis.tern.ticks.major.L = element_line(colour=col.L)
+  base$axis.tern.ticks.major.R = element_line(colour=col.R)
+  base$axis.tern.ticks.minor   = element_line(size=0.10,colour="black")
+  
+  base
 }
 
 #some custom themes
@@ -138,4 +152,10 @@ theme_tern_rgbg  <- function(){.theme_tern(col.BG="gray90")}
 theme_tern_rgbw  <- function(){.theme_tern(col.BG="white")}
 theme_tern_bw    <- function(){.theme_tern("white","black","black","black")}
 theme_tern_gray  <- function(){.theme_tern(col.BG="grey90",col.T="black",col.L="black",col.R="black")}
+
+
+
+
+
+
 
