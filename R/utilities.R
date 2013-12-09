@@ -18,6 +18,8 @@ is.numeric.or <- function(a,b){
   ifthenelse(is.numeric(a),a,b)
 }
 
+"%||%" <- function(a, b) {if (!is.null(a)) a else b}
+
 #' ggtern Utilities
 #' 
 #' returns first argument if ternary and second if not. Used for creating variable required aes mappings when hacking ggplot2 for ternary plots.

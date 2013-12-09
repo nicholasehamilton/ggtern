@@ -12,7 +12,7 @@ GeomSegment <- proto(ggplot2:::Geom, {
     data <- remove_missing(data, na.rm = na.rm,c(required_aes,"linetype", "size", "shape"),name = "geom_segment")
     if (empty(data)) return(zeroGrob())
     
-    if (is.linear(coordinates)) {
+    if(is.linear(coordinates)) {
       #SPLIT The data by required aes.
       mid <- length(required_aes)/2
       data.start <- data[,required_aes[1:mid]]

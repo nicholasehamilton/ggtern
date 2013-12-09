@@ -1,0 +1,59 @@
+train_position_ternary <- function(panel, T_scale, L_scale, R_scale) {
+  if(is.null(panel$T_scales) && !is.null(T_scale)){
+    panel$T_scales <- ggplot2:::scale_clone(T_scale)
+  }
+  if(is.null(panel$L_scales) && !is.null(L_scale)){
+    panel$L_scales <- ggplot2:::scale_clone(L_scale)
+  }
+  if(is.null(panel$R_scales) && !is.null(R_scale)){
+    panel$R_scales <- ggplot2:::scale_clone(R_scale)
+  }
+  panel
+}
+
+panel_scales <- function(panel, i) {
+  this_panel <- panel$layout[panel$layout$PANEL == i, ]
+  scales <- list(
+    x = panel$x_scales[[this_panel$SCALE_X]],
+    y = panel$y_scales[[this_panel$SCALE_Y]],
+    T = panel$T_scales,
+    L = panel$L_scales,
+    R = panel$R_scales,
+    W = panel$Wlabel
+  )    
+  scales[sapply(scales, is.null)] <- NULL
+  scales
+}
+
+# Compute ranges and dimensions of each panel, using the coord.
+train_ranges <- function(panel, coord) {
+  compute_range <- function(ix, iy) {
+    scales <- list(x = panel$x_scales[[ix]], 
+                   y = panel$y_scales[[iy]],
+                   T = panel$T_scales,
+                   L = panel$L_scales,
+                   R = panel$R_scales,
+                   W = panel$Wlabel)
+    scales[sapply(scales, is.null)] <- NULL
+    
+    # TODO: change coord_train method to take individual x and y scales
+    ggplot2:::coord_train(coord, scales)
+  }
+  
+  panel$ranges <- Map(compute_range,panel$layout$SCALE_X, panel$layout$SCALE_Y)
+  panel
+}
+
+Tlabel <- function(panel, labels) {
+  (panel$T_scales[[1]]$name %||% labels$T) %||% labels$x
+}
+Llabel <- function(panel, labels) {
+  (panel$L_scales[[1]]$name %||% labels$L) %||% labels$y
+}
+Rlabel <- function(panel, labels) {
+  (panel$R_scales[[1]]$name %||% labels$R) %||% labels$z
+}
+Wlabel <- function(panel, labels) {
+  (panel$W %||% labels$W) %||% ""
+}
+

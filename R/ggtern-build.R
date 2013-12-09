@@ -23,6 +23,12 @@ ggplot_build <- function(plot) {
     }
   }
   
+  # Initialise panels, add extra data for margins & missing facetting
+  # variables, and add on a PANEL variable to data
+  panel <- ggplot2:::new_panel()
+  #... CONTINUED BELOW...
+  
+  
   ##-------------------------------------------------------------------------------
   #IF WE HAVE TERNARY OPTIONS SOMEWHERE...  
   if(inherits(plot,"ggtern")){
@@ -34,16 +40,27 @@ ggplot_build <- function(plot) {
     
     ##Add the missing scales
     ggplot2:::scales_add_missing(plot,scales.tern,environment())
+    scales <- plot$scales
+    scale_T <- function() scales$get_scales("T")
+    scale_L <- function() scales$get_scales("L")
+    scale_R <- function() scales$get_scales("R")
     
     ##Add the ternary fixed coordinates if it doesn't exist
-    if(!inherits(plot$coordinates,"ternary")){
-      plot <- plot + coord_tern()
+    if(!inherits(plot$coordinates,"ternary")){plot <- plot + coord_tern()}
+    
+    ##Update the scales limits from the coordinate
+    for(X in scales.tern){
+      lim <- plot$scales$get_scales(X)$limits 
+      plot$coordinates$limits[[X]] <- is.numeric.or(lim,c(0,1))
     }
     
-    ##Update the coordinates limits from the scales.
-    for(X in scales.tern){
-      plot$coordinates$limits[[X]] <- is.numeric.or(plot$scales$get_scales(X)$limits,c(0,1))
-    }
+    #THESE ARE A BIT OF A HACK. NORMALLY THIS INFO IS HANDLED IN THE GRID ARCHITECTURE.
+    #BUT THIS IS ONE WAY OF PASSING IT THROUGH...
+    panel <- train_position_ternary(panel,scale_T(),scale_L(),scale_R())
+    panel$T_scales$name = Tlabel(panel,plot$labels)
+    panel$L_scales$name = Llabel(panel,plot$labels)
+    panel$R_scales$name = Rlabel(panel,plot$labels)
+    panel$Wlabel        = Wlabel(panel,plot$labels)
   }
   
   layers <- plot$layers
@@ -59,9 +76,7 @@ ggplot_build <- function(plot) {
     out
   }
   
-  # Initialise panels, add extra data for margins & missing facetting
-  # variables, and add on a PANEL variable to data
-  panel <- ggplot2:::new_panel()
+  #CONTINUED FROM ABOVE
   panel <- ggplot2:::train_layout(panel, plot$facet, layer_data, plot$data)
   data  <- ggplot2:::map_layout(panel, plot$facet, layer_data, plot$data)
   
@@ -99,6 +114,7 @@ ggplot_build <- function(plot) {
   # displayed, or does it include the range of underlying data
   ggplot2:::reset_scales(panel)
   panel <- ggplot2:::train_position(panel, data, scale_x(), scale_y())
+  
   data  <- ggplot2:::map_position(panel, data, scale_x(), scale_y())
   
   # Train and map non-position scales

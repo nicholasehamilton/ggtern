@@ -48,3 +48,6 @@ tern_limits <- function(T=1,L=1,R=1,...,verbose=F){
   
   return(ret)
 }
+#Aliases
+limit_tern <- function(...){tern_limits(...)}
+tern_limit <- function(...){tern_limits(...)}

@@ -23,6 +23,7 @@ Collate:
   'labs-atomic-weight-percent.R'
   'aes.R'
   'scales.R'
+  'panel.R'
   'ggtern.R'
   'ggtern-build.R'
   'tern-render.R'

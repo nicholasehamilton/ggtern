@@ -36,10 +36,21 @@
   lockBinding("GeomSegment", asNamespace("ggplot2"))
 }
 
+.panel_hack <- function(){
+  #PANEL TRAINING
+  unlockBinding("panel_scales", asNamespace("ggplot2"))
+  assign("panel_scales", panel_scales, asNamespace("ggplot2"))
+  lockBinding("panel_scales", asNamespace("ggplot2"))
+  
+  unlockBinding("train_ranges", asNamespace("ggplot2"))
+  assign("train_ranges", train_ranges, asNamespace("ggplot2"))
+  lockBinding("train_ranges", asNamespace("ggplot2"))
+}
+
 .ggplot_hack <- function(){
-  unlockBinding("ggplot", asNamespace("ggplot2"))
-  assign("ggplot", ggplot, asNamespace("ggplot2"))
-  lockBinding("ggplot", asNamespace("ggplot2"))
+  #unlockBinding("ggplot", asNamespace("ggplot2"))
+  #assign("ggplot", ggplot, asNamespace("ggplot2"))
+  #lockBinding("ggplot", asNamespace("ggplot2"))
   
   unlockBinding("ggplot_build", asNamespace("ggplot2"))
   assign("ggplot_build", ggplot_build, asNamespace("ggplot2"))

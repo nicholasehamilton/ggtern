@@ -17,6 +17,12 @@
   .aes_hack()
   .smooth_hack()
   .geom_hack()
+  .ggplot_hack()
+  .panel_hack()
   
+  #Global Setting.
   options("tern.discard.external"=TRUE)
+  
+  #DEFAULT THEME
+  #theme_set(theme_tern_rgbw())
 }

@@ -8,12 +8,15 @@
 #'@export
 ggtern <- function(...){
   plot <- ggplot(...)
-  plot <- plot + theme_tern_gray() + coord_tern() + theme_nocart()
+  
+  theme_set(theme_tern_gray())
+  plot <- plot + coord_tern() + theme_update()
   class(plot) <- c("ggtern",class(plot))
   plot
 }
 
 ggplot <- function(...){
+  theme_set(theme_gray())
   ggplot2:::ggplot(...)
 }
 
