@@ -1,14 +1,18 @@
 Package: ggtern
 Type: Package
-Title: An extension to ggplot, to create ternary plots
+Title: An extension to ggplot, to create ternary plots.
 Version: 1.0
 Date: 2013-11-15
-Author: Nicholas Hamilton
+Author: Nicholas Hamilton <n.hamilton@student.unsw.edu.au>df
 Maintainer: Nicholas Hamilton <n.hamilton@student.unsw.edu.au>
-Description: More about what it does (maybe more than one line)
+Description: Extends the functionality of ggpot2 to be able to plot ternary 
+             diagrams for a subset of the ggplot2 geometries. 
+             For further examples and documentation,proceed to the ggtern website.
 License: GPL-2
 Depends:
   ggplot2(>= 0.9.3.1),
+  stats,
+  methods,
   proto,
   grid,
   scales,
@@ -16,7 +20,12 @@ Depends:
   gtable,
   MASS,
   sp
+Enhances: ggplot2
+License: GPL-2
+URL: http://www.ggtern.com
+LazyData: true
 Collate:
+  'ggtern-internal.R'
   'element_ternary.R'
   'utilities.R'
   'strip-unapproved.R'

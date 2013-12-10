@@ -5,6 +5,7 @@
 #' @param minor_breaks the minor breaks
 #' @param labels the major labels
 #' @param limits the range of the scale
+#' @param name the name of the scale
 #' @rdname ternaryscales
 #' @export
 scale_L_continuous <- function(name=NULL,breaks=pretty(c(0,1),n=10),minor_breaks=pretty(c(0,1),n=20),labels=waiver(),limits=waiver()){

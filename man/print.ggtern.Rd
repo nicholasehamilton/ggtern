@@ -2,7 +2,7 @@
 \alias{print.ggtern}
 \title{Draw plot on current graphics device.}
 \usage{
-  \method{print}{ggplot} (x, newpage = is.null(vp),
+  \method{print}{ggtern} (x, newpage = is.null(vp),
     vp = NULL, ...)
 }
 \arguments{
@@ -17,5 +17,4 @@
 \description{
   Draw plot on current graphics device.
 }
-\keyword{hplot}
 

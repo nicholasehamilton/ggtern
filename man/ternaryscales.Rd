@@ -27,6 +27,8 @@
   \item{labels}{the major labels}
 
   \item{limits}{the range of the scale}
+
+  \item{name}{the name of the scale}
 }
 \description{
   \code{scale_L_continuous} creates a continuous scale for

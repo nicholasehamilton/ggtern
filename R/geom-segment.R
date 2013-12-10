@@ -1,3 +1,8 @@
+#' Internal Function
+#' 
+#' @name GeomSegment
+#' @aliases ggtern-internal
+#' @export
 GeomSegment <- proto(ggplot2:::Geom, {
   objname <- "segment"
   

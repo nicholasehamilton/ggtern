@@ -58,7 +58,7 @@ ggplot_build <- function(plot) {
     ##Update the scales limits from the coordinate
     for(X in scales.tern){
       lim <- plot$scales$get_scales(X)$limits 
-      plot$coordinates$limits[[X]] <- is.numeric.or(lim,c(0,1))
+      plot$coordinates$limits[[X]] <- is.numericor(lim,c(0,1))
     }
     #STORE COORDINATES FOR USE BY OTHER METHODS.
     set_last_coord(plot$coordinates)
@@ -66,10 +66,10 @@ ggplot_build <- function(plot) {
     #THESE ARE A BIT OF A HACK. NORMALLY THIS INFO IS HANDLED IN THE GRID ARCHITECTURE.
     #BUT THIS IS ONE WAY OF PASSING IT THROUGH...
     panel <- train_position_ternary(panel,scale_T(),scale_L(),scale_R())
-    panel$T_scales$name = Tlabel(panel,plot$labels)
-    panel$L_scales$name = Llabel(panel,plot$labels)
-    panel$R_scales$name = Rlabel(panel,plot$labels)
-    panel$Wlabel        = Wlabel(panel,plot$labels)
+    panel$T_scales$name = .Tlabel(panel,plot$labels)
+    panel$L_scales$name = .Llabel(panel,plot$labels)
+    panel$R_scales$name = .Rlabel(panel,plot$labels)
+    panel$Wlabel        = .Wlabel(panel,plot$labels)
   }else{
     set_last_coord(NULL)
   }

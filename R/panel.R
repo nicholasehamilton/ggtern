@@ -44,19 +44,19 @@ train_ranges <- function(panel, coord) {
   panel
 }
 
-Tlabel <- function(panel, labels) {
+.Tlabel <- function(panel, labels) {
   #ix <- get_last_coord()$T
   panel$T_scales$name  %||% labels$T %||% labels$x
 }
-Llabel <- function(panel, labels) {
+.Llabel <- function(panel, labels) {
   #ix <- get_last_coord()$L
   panel$L_scales$name %||% labels$L %||% labels$y
 }
-Rlabel <- function(panel, labels) {
+.Rlabel <- function(panel, labels) {
   #ix <- get_last_coord()$R
   panel$R_scales$name %||% labels$R %||% labels$z
 } 
-Wlabel <- function(panel, labels) {
+.Wlabel <- function(panel, labels) {
   (panel$W %||% labels$W) %||% ""
 }
 

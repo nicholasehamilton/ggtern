@@ -4,6 +4,14 @@
 \usage{
   strip_unapproved(layers)
 }
+\arguments{
+  \item{layers}{list of the layers to strip unnaproved
+  layers from.}
+}
+\value{
+  list of approved layers (may be empty if none are
+  approved)
+}
 \description{
   \code{strip_unapproved} is a function which essentially
   'deletes' layers from the current ternary plot, if such

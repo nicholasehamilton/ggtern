@@ -1,14 +1,14 @@
 \name{ifthenelse}
 \alias{arrow.label.formatter}
 \alias{calc_element_plot}
-\alias{geomvaraes}
 \alias{get_tern_extremes}
 \alias{ifthenelse}
+\alias{is.numericor}
 \title{ggtern Utilities}
 \usage{
   ifthenelse(x, a, b)
 
-  geomvaraes(ternreqaes, ggplotreqaes)
+  is.numericor(a, b)
 
   get_tern_extremes(plot, coordinates = plot$coordinates,
     verbose = F)
@@ -24,10 +24,6 @@
   \item{a}{value to return when true}
 
   \item{b}{value to return when false}
-
-  \item{ternreqaes}{first argument}
-
-  \item{ggplotreqaes}{second argument}
 
   \item{plot}{ggtern object}
 
@@ -50,6 +46,9 @@
   \item{...}{not used}
 }
 \value{
+  numeric object \code{a} if \code{a} is numeric, else,
+  \code{b}
+
   data.frame representing the T, L and R amounts (Columns)
   at each of the tips (extremes) of the ternary plot area
   (Rows)
@@ -60,9 +59,11 @@
   \code{x} is \code{TRUE} otherwise \code{b} (when \code{x}
   is \code{FALSE})
 
-  returns first argument if ternary and second if not. Used
-  for creating variable required aes mappings when hacking
-  ggplot2 for ternary plots.
+  \code{is.numericor} is a convenience function that checks
+  the first argument (\code{a}) to see if it is numeric,
+  and, if it is not, returns the second argument
+  (\code{b}), else, returns the first argument. Will throw
+  error if \code{b} is not numeric
 
   \code{get_tern_extremes} determines the limiting ternary
   coordinates given input plot or coordinates. In the event

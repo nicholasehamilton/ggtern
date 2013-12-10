@@ -2,13 +2,9 @@
 
 #' Draw plot on current graphics device.
 #'
-#' @param x plot to display
-#' @param newpage draw new (empty) page first?
-#' @param vp viewport to draw plot in
-#' @param ... other arguments not used by this method
-#' @keywords hplot
+#' @inheritParams print.ggplot
 #' @export
-#' @method print ggplot
+#' @method print ggtern
 print.ggtern <- function(x, newpage = is.null(vp), vp = NULL, ...) {  
   print.ggplot(x=x,newpage=newpage,vp=NULL,...)
 }

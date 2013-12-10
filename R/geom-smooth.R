@@ -15,6 +15,11 @@ geom_smooth <- function (mapping = NULL, data = NULL, stat = "smooth", position 
   GeomSmooth$new(mapping = mapping, data = data, stat = stat, position = position,limitarea=limitarea,fullrange=fullrange,...)
 }
 
+#' Internal Function
+#' 
+#' @name GeomSmooth
+#' @aliases ggtern-internal
+#' @export
 GeomSmooth <- proto(ggplot2:::Geom, {
   objname <- "smooth"
   draw <- function(., data, scales, coordinates,limitarea=F,...) { 

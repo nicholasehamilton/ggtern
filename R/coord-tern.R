@@ -15,8 +15,8 @@
 coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1)) {
   
   ##Validate x and y lims...
-  xlim <- is.numeric.or(xlim,c(0,1)); xlim <- sort(xlim); 
-  ylim <- is.numeric.or(ylim,c(0,1)); ylim <- sort(ylim);
+  xlim <- is.numericor(xlim,c(0,1)); xlim <- sort(xlim); 
+  ylim <- is.numericor(ylim,c(0,1)); ylim <- sort(ylim);
   
   ##Put into correct aspect.
   if(diff(xlim) != diff(ylim)){
@@ -47,7 +47,7 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=c(0,1),L
   )
 }
 
-#' @S3method is.linear cartesian
+#' @S3method is.linear ternary
 is.linear.ternary <- function(coord) TRUE
 
 #' @S3method rename_data ternary
@@ -65,11 +65,6 @@ rename_data.ternary <- function(coord,data){
   })
   data
 }
-
-#' @S3method coord_range ternary
-#coord_range.ternary <- function(coord, scales){
-#  ggplot2:::coord_range.cartesian(coord,scales)
-#}
 
 #' @S3method coord_transform ternary
 coord_transform.ternary <- function(coord, data, details, verbose=F,revertToCart=T,adjustCart=T,discard=getOption("tern.discard.external")){
@@ -146,7 +141,7 @@ coord_train.ternary <- function(coord, scales){
   ret
 }
 
-##' @S3method coord_aspect tern
+##' @S3method coord_aspect ternary
 coord_aspect.ternary <- function(coord, details){sin(pi/3)}
 
 #' @S3method coord_distance ternary
@@ -160,7 +155,7 @@ coord_render_axis_v.ternary <- function(coord, details, theme) {
   ##NOT USED. RENDERED IN ggtern.build.R
   ggplot2:::zeroGrob()
 }
-#' @S3method coord_render_axis_h polar
+#' @S3method coord_render_axis_h ternary
 coord_render_axis_h.ternary <- function(coord, details, theme) {
   ##NOT USED. RENDERED IN ggtern.build.R
   ggplot2:::zeroGrob()

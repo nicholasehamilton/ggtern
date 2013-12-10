@@ -13,29 +13,20 @@ ifthenelse <- function(x,a,b){
   if(x){a}else{b}
 }
 
-is.numeric.or <- function(a,b){
+#' ggtern Utilities
+#' 
+#' \code{is.numericor} is a convenience function that checks the first argument (\code{a}) to see if it is numeric, and, 
+#' if it is not, returns the second argument (\code{b}), else, returns the first argument. Will throw error if \code{b} is
+#' not numeric
+#' @return numeric object \code{a} if \code{a} is numeric, else, \code{b}
+#' @rdname utilities
+#' @export
+is.numericor <- function(a,b){
+  if(missing(b)){stop("b must be provided")}
   if(!is.numeric(b)){stop("b must be numeric")}
   ifthenelse(is.numeric(a),a,b)
 }
-
 "%||%" <- function(a, b) {if (!is.null(a)) a else b}
-
-#' ggtern Utilities
-#' 
-#' returns first argument if ternary and second if not. Used for creating variable required aes mappings when hacking ggplot2 for ternary plots.
-#' @param ternreqaes first argument
-#' @param ggplotreqaes second argument
-#' @rdname utilities
-#' @export
-geomvaraes <- function(ternreqaes,ggplotreqaes){
-  if(!is.logical(chk)){
-    ggplotreqaes
-  }else if(chk){
-    ternreqaes
-  }else{
-    ggpotreqaes
-  }
-}
 
 #' ggtern Utiltities
 #' 
@@ -119,6 +110,9 @@ get_tern_extremes <- function(plot,coordinates=plot$coordinates,verbose=F){
 #' it will be produced from the \code{T}, \code{L} and \code{R} parameters for use in the function.
 #' @param scale logical indicating whether the concentrations should be scaled to sum to unity.
 #' @param ... not used
+#' @param Tlim the limits of the top axis
+#' @param Llim the limits of the left axis
+#' @param Rlim the limits of the right axis
 #' @return \code{data.frame} object with columns \code{x} and \code{y} representing the transformed coordinates, and, number of rows
 #' equal to that of the \code{data} argument. In other words, a '1 to 1' transformation from the ternary to the cartesian space. 
 #' @examples
@@ -290,31 +284,6 @@ sinkdensity <- function(df,remove=T){
     df <- bup
   })
   df
-}
-
-overridelabs <- function(...){
-  args <- list(...)
-  ix.new <- c("T","L","R")
-  ix.old <- c("x","y","z")
-  for(i in 1:length(ix.new)){
-    n <- ix.new[i]
-    o <- ix.old[i]
-    if(n %in% names(args)){
-      #args[n] <- NULL
-      args[[o]] <- n
-    }
-  }
-  args
-}
-
-ternlabs <- function(plot){
-  .val <- function(desired,fallback=""){ifthenelse(is.character(desired),desired,fallback)}
-  EX     <- plot$labels
-  LABELS <- labs( T=.val(EX$T,.val(EX[[plot$coordinates$T]],"T")),
-                  L=.val(EX$L,.val(EX[[plot$coordinates$L]],"L")),
-                  R=.val(EX$R,.val(EX[[plot$coordinates$R]],"R")),
-                  W=.val(EX$W,""))
-  LABELS
 }
 
 

@@ -27,6 +27,8 @@
 #'  \item{rug}
 #' }
 #' The balance of the available geometries to ggplot2 are either dissaproved, or, work in progress with regards to this package.
+#' @param layers list of the layers to strip unnaproved layers from.
+#' @return list of approved layers (may be empty if none are approved)
 #' @export
 strip_unapproved <- function(layers){
   ##Remove Unapproved Ternary Layers:

@@ -56,10 +56,6 @@
 }
 
 .ggplot_hack <- function(){
-  #unlockBinding("ggplot", asNamespace("ggplot2"))
-  #assign("ggplot", ggplot, asNamespace("ggplot2"))
-  #lockBinding("ggplot", asNamespace("ggplot2"))
-  
   unlockBinding("ggplot_build", asNamespace("ggplot2"))
   assign("ggplot_build", ggplot_build, asNamespace("ggplot2"))
   lockBinding("ggplot_build", asNamespace("ggplot2"))

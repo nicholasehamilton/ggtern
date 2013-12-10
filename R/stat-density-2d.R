@@ -1,7 +1,18 @@
+#' 2d density estimation.
+#'
+#' @inheritParams ggplot2::stat_density2d
+#' @importFrom MASS kde2d
+#' @export
+#' @seealso \code{\link[ggplot2]{stat_density2d}}
 stat_density2d <- function (mapping = NULL, data = NULL, geom = "density2d", position = "identity", na.rm = FALSE, contour = TRUE, n = 100, ...) {
   StatDensity2d$new(mapping = mapping, data = data,geom=geom,geometry=geom,position = position, na.rm = na.rm, contour = contour, n = n,...)
 }
 
+#' Internal Function
+#' 
+#' @name StatDensity2d
+#' @aliases ggtern-internal
+#' @export
 StatDensity2d <- proto(ggplot2:::Stat, {
   objname <- "density2d"
   

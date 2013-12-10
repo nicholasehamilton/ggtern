@@ -26,6 +26,12 @@
   concentrations should be scaled to sum to unity.}
 
   \item{...}{not used}
+
+  \item{Tlim}{the limits of the top axis}
+
+  \item{Llim}{the limits of the left axis}
+
+  \item{Rlim}{the limits of the right axis}
 }
 \value{
   \code{data.frame} object with columns \code{x} and
