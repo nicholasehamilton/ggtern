@@ -13,15 +13,7 @@ ifthenelse <- function(x,a,b){
   if(x){a}else{b}
 }
 
-#' ggtern Utilities
-#' 
-#' \code{is.numericor} is a convenience function that checks the first argument (\code{a}) to see if it is numeric, and, 
-#' if it is not, returns the second argument (\code{b}), else, returns the first argument. Will throw error if \code{b} is
-#' not numeric
-#' @return numeric object \code{a} if \code{a} is numeric, else, \code{b}
-#' @rdname utilities
-#' @export
-is.numericor <- function(a,b){
+.is.numericor <- function(a,b){
   if(missing(b)){stop("b must be provided")}
   if(!is.numeric(b)){stop("b must be numeric")}
   ifthenelse(is.numeric(a),a,b)
@@ -162,14 +154,14 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE
 
 #' ggtern Utilities
 #' 
-#' \code{arrow.label.formatter} is a function that formats the labels directly adjacent to the axes on a ternary plot.
+#' \code{arrow_label_formatter} is a function that formats the labels directly adjacent to the axes on a ternary plot.
 #' @param label character label
 #' @param suffix chacater suffix behind each label
 #' @param sep the seperator between label and suffix 
 #' @rdname utilities
-#' @examples arrow.label.formatter("TOP","Wt.%",sep="/")
+#' @examples arrow_label_formatter("TOP","Wt.%",sep="/")
 #' @export
-arrow.label.formatter <- function(label,suffix="",...,sep="/"){
+arrow_label_formatter <- function(label,suffix="",...,sep="/"){
   if(missing(label))stop("label cannot be missing")
   if(!is.character(label) | !is.character(suffix) | !is.character(sep))stop("label, sep and suffix must be characters")
   if(missing(suffix)){

@@ -25,5 +25,5 @@ Literature to come
 }
 \keyword{ package }
 \seealso{
-  \code{\link{ggplot2}}
+  \code{\link{ggplot2}} 
 }

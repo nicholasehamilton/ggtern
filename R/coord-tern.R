@@ -12,11 +12,12 @@
 #' @param Llim the range of L in the ternary space
 #' @param Rlim the range of R in the ternary space
 #' @return ternary coordinate system object.
+#' @export
 coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1)) {
   
   ##Validate x and y lims...
-  xlim <- is.numericor(xlim,c(0,1)); xlim <- sort(xlim); 
-  ylim <- is.numericor(ylim,c(0,1)); ylim <- sort(ylim);
+  xlim <- .is.numericor(xlim,c(0,1)); xlim <- sort(xlim); 
+  ylim <- .is.numericor(ylim,c(0,1)); ylim <- sort(ylim);
   
   ##Put into correct aspect.
   if(diff(xlim) != diff(ylim)){
@@ -47,11 +48,8 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=c(0,1),L
   )
 }
 
-#' @S3method is.linear ternary
-is.linear.ternary <- function(coord) TRUE
-
-#' @S3method rename_data ternary
-rename_data.ternary <- function(coord,data){
+#helper function
+.rename_data_ternary <- function(coord,data){
   bup <- data
   tryCatch({
     to   <- c("T","L","R"); 
@@ -66,12 +64,37 @@ rename_data.ternary <- function(coord,data){
   data
 }
 
+#' S3 Method Is Linear
+#'
+#' @param coord coordinate system
+#' @param data input data
+#' @param details scales details
+#' @param verbose verbose reporting
+#' @param revertToCart fall back to cartesian data if error
+#' @param adjustCart adjust for the cartesian scale or not
+#' @param discard throw away data outside the plotting perimeter
+#' @param scales plot scales 
+#' @param scale plot scale
+#' @param aesthetic mappings
+#' @param x data
+#' @param y data
+#' @param theme net theme
+#' @rdname coord
+#' @keywords internal
+#' @method is.linear ternary
+#' @S3method is.linear ternary
+is.linear.ternary <- function(coord) TRUE
+
+#' S3 Method Coordinate Transform
+#'
+#' @rdname coord
+#' @method coord_transform ternary
 #' @S3method coord_transform ternary
 coord_transform.ternary <- function(coord, data, details, verbose=F,revertToCart=T,adjustCart=T,discard=getOption("tern.discard.external")){
   bup    <- data #Original Data Backup.
   tryCatch({
     ggplot2:::check_required_aesthetics(coord$required_aes, names(data),"coord_tern")
-    data   <- rename_data.ternary(coord, data)
+    data   <- .rename_data_ternary(coord, data)
     ix.tern <- c("T","L","R"); 
     ix.cart <- c("x","y")
     
@@ -114,6 +137,10 @@ coord_transform.ternary <- function(coord, data, details, verbose=F,revertToCart
   }
 }
 
+#' S3 Method Expand Deraults
+#'
+#' @rdname coord
+#' @method coord_expand_defaults ternary
 #' @S3method coord_expand_defaults ternary
 coord_expand_defaults.ternary <- function(coord, scale, aesthetic){
   ret <- ggplot2:::expand_default(scale)
@@ -121,6 +148,10 @@ coord_expand_defaults.ternary <- function(coord, scale, aesthetic){
   ret
 }
 
+#' S3 Method Coordinate Train
+#'
+#' @rdname coord
+#' @method coord_train ternary
 #' @S3method coord_train ternary
 coord_train.ternary <- function(coord, scales){
   el <- calc_element_plot("ternary.options",theme=theme_update(),verbose=F,plot=last_plot())
@@ -141,30 +172,55 @@ coord_train.ternary <- function(coord, scales){
   ret
 }
 
+#' S3 Method Coordinate Aspect
+#'
+#' @rdname coord
+#' @method coord_aspect ternary
 ##' @S3method coord_aspect ternary
 coord_aspect.ternary <- function(coord, details){sin(pi/3)}
 
+#' S3 Method Coordinate Distance
+#'
+#' @rdname coord
+#' @method coord_distance ternary
 #' @S3method coord_distance ternary
 coord_distance.ternary <- function(coord,x,y,details){ggplot2:::coord_distance.cartesian(coord,x,y,details)}
 
 
-##-----------------------------------------------------------------------
-## FOR RENDERING COMPONENTS.
+#' S3 Method Render Vertical Axis
+#'
+#' @rdname coord
+#' @method coord_render_axis_v ternary
 #' @S3method coord_render_axis_v ternary
 coord_render_axis_v.ternary <- function(coord, details, theme) {  
   ##NOT USED. RENDERED IN ggtern.build.R
   ggplot2:::zeroGrob()
 }
+
+#' S3 Method Render Horizontal Axis
+#'
+#' @rdname coord
+#' @method coord_render_axis_h ternary
 #' @S3method coord_render_axis_h ternary
 coord_render_axis_h.ternary <- function(coord, details, theme) {
   ##NOT USED. RENDERED IN ggtern.build.R
   ggplot2:::zeroGrob()
 }
+
+#' S3 Method Render Foreground
+#'
+#' @rdname coord
+#' @method coord_render_fg ternary
 #' @S3method coord_render_fg ternary
 coord_render_fg.ternary <- function(coord,details,theme){
   ##NOT USED. RENDERED IN ggtern.build.R
   ggplot2:::zeroGrob()
 }
+
+#' S3 Method Render Background
+#'
+#' @rdname coord
+#' @method coord_render_bg ternary
 #' @S3method coord_render_bg ternary
 coord_render_bg.ternary <- function(coord,details,theme){
   items <- list()
@@ -313,7 +369,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
         hjust     <- e$hjust
         vjust     <- e$vjust
         angle     <- e$angle
-        grob      <- textGrob( label = arrow.label.formatter(d$L[ix],d$W[ix]), 
+        grob      <- textGrob( label = arrow_label_formatter(d$L[ix],d$W[ix]), 
                                x     = d$xmn[ix], 
                                y     = d$ymn[ix], 
                                hjust = hjust, 

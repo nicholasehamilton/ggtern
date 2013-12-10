@@ -1,19 +1,16 @@
 \name{ifthenelse}
-\alias{arrow.label.formatter}
+\alias{arrow_label_formatter}
 \alias{calc_element_plot}
 \alias{get_tern_extremes}
 \alias{ifthenelse}
-\alias{is.numericor}
 \title{ggtern Utilities}
 \usage{
   ifthenelse(x, a, b)
 
-  is.numericor(a, b)
-
   get_tern_extremes(plot, coordinates = plot$coordinates,
     verbose = F)
 
-  arrow.label.formatter(label, suffix = "", ..., sep = "/")
+  arrow_label_formatter(label, suffix = "", ..., sep = "/")
 
   calc_element_plot(element, theme = theme_update(), ...,
     plot = NULL, verbose = F)
@@ -46,9 +43,6 @@
   \item{...}{not used}
 }
 \value{
-  numeric object \code{a} if \code{a} is numeric, else,
-  \code{b}
-
   data.frame representing the T, L and R amounts (Columns)
   at each of the tips (extremes) of the ternary plot area
   (Rows)
@@ -59,17 +53,11 @@
   \code{x} is \code{TRUE} otherwise \code{b} (when \code{x}
   is \code{FALSE})
 
-  \code{is.numericor} is a convenience function that checks
-  the first argument (\code{a}) to see if it is numeric,
-  and, if it is not, returns the second argument
-  (\code{b}), else, returns the first argument. Will throw
-  error if \code{b} is not numeric
-
   \code{get_tern_extremes} determines the limiting ternary
   coordinates given input plot or coordinates. In the event
   that the
 
-  \code{arrow.label.formatter} is a function that formats
+  \code{arrow_label_formatter} is a function that formats
   the labels directly adjacent to the axes on a ternary
   plot.
 
@@ -83,7 +71,7 @@
 \examples{
 ifthenelse(TRUE,1,0)
 get_tern_extremes(coordinates = coord_tern())
-arrow.label.formatter("TOP","Wt.\%",sep="/")
+arrow_label_formatter("TOP","Wt.\%",sep="/")
 }
 \seealso{
   \code{\link[ggplot2]{calc_element}}
