@@ -38,18 +38,3 @@ print.ggplot <- function(x, newpage = is.null(vp), vp = NULL, ...) {
   }
   invisible(data)
 }
-
-#' @rdname print.ggtern
-#' @method plot ggplot
-#' @export
-plot.ggtern <- print.ggtern
-
-
-#' Generate a ggplot2 plot grob.
-#' 
-#' @param x ggplot2 object
-#' @keywords internal
-#' @export
-ggternGrob <- function(x) {
-  ggtern_gtable(ggtern_build(x))
-}

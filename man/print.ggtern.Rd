@@ -1,12 +1,8 @@
 \name{print.ggtern}
-\alias{plot.ggtern}
 \alias{print.ggtern}
 \title{Draw plot on current graphics device.}
 \usage{
   \method{print}{ggplot} (x, newpage = is.null(vp),
-    vp = NULL, ...)
-
-  \method{plot}{ggplot} (x, newpage = is.null(vp),
     vp = NULL, ...)
 }
 \arguments{

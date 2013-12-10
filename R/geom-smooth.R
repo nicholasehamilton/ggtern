@@ -6,6 +6,8 @@
 #' @param limitarea logical value to indicate whether smoothed data is discared outside of the ternary plot area, when this is set to \code{TRUE}, 
 #' the value of \code{fullrange} has no meaning, since the full-range becomes essentially becomes limited by the ternary plot area. 
 #' When set to \code{FALSE}, \code{fullarea} behaves as per normal.
+#' @param fullrange extend the range to the edge of the plotting panel.
+#' @inheritParams ggplot2::geom_smooth
 #' @export
 geom_smooth <- function (mapping = NULL, data = NULL, stat = "smooth", position = "identity",limitarea=T,fullrange=F,...) { 
   limitarea <- ifthenelse(!is.logical(limitarea),T,limitarea[1])
