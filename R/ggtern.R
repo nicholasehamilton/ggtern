@@ -6,19 +6,7 @@
 #'@param ... same arguments as passed through to ggplot
 #'@seealso \code{\link{ggplot}}
 #'@export
-ggtern <- function(...){
-  plot <- ggplot(...)
-  
-  theme_set(theme_tern_gray())
-  plot <- plot + coord_tern() + theme_update()
-  class(plot) <- c("ggtern",class(plot))
-  plot
-}
-
-ggplot <- function(...){
-  theme_set(theme_gray())
-  ggplot2:::ggplot(...)
-}
+ggtern <- function(...){ggplot(...) + coord_tern()}
 
 
 

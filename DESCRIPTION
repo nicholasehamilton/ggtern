@@ -19,6 +19,7 @@ Depends:
 Collate:
   'element_ternary.R'
   'utilities.R'
+  'strip-unapproved.R'
   'theme.R'
   'labs-atomic-weight-percent.R'
   'aes.R'
@@ -35,4 +36,5 @@ Collate:
   'stat-density-2d.R'
   'stat-contour.R'
   'hacks.R'
+  'global.R'
   'onLoad.R'

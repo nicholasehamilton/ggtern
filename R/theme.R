@@ -80,6 +80,23 @@ theme_nocart <- function(){
   )
 }
 
+
+
+.theme_arrows <- function(show){
+  if(!is.logical(show)){show=TRUE}
+  show=show[1]
+  current <- theme_get()
+  e <- current$ternary.options
+  if(inherits(e,"element_ternary")){
+    e$showarrows <- show
+    return(theme(ternary.options=e))
+  }else{
+    theme(ternary.options=element_ternary(showarrows=show))
+  }
+}
+theme_noarrows   <- function(){.theme_arrows(FALSE)}
+theme_showarrows <- function(){.theme_arrows(TRUE)}
+
 #helper function
 .theme_tern      <- function(col.BG="grey90",col.T="darkred",col.L="darkgreen",col.R="darkblue"){
   
@@ -152,6 +169,38 @@ theme_tern_rgbg  <- function(){.theme_tern(col.BG="gray90")}
 theme_tern_rgbw  <- function(){.theme_tern(col.BG="white")}
 theme_tern_bw    <- function(){.theme_tern("white","black","black","black")}
 theme_tern_gray  <- function(){.theme_tern(col.BG="grey90",col.T="black",col.L="black",col.R="black")}
+
+.theme_new <- (function() {
+  theme.tern <- theme_tern_gray()
+  theme      <- theme_gray()
+  list(
+    get = function(){
+      ifthenelse(inherits(last_plot(),"ggtern"),theme.tern,theme)
+    },
+    set = function(new) {
+      ifthenelse(inherits(last_plot(),"ggtern"),{
+        missing <- setdiff(names(theme_tern_gray()), names(new))
+        if (length(missing) > 0) {
+          warning("New theme missing the following elements: ",paste(missing, collapse = ", "), call. = FALSE)
+        }
+        old <- theme.tern
+        theme.tern <<- new
+        invisible(old)
+      },{
+        missing <- setdiff(names(theme_gray()), names(new))
+        if (length(missing) > 0) {
+          warning("New theme missing the following elements: ",
+                  paste(missing, collapse = ", "), call. = FALSE)
+        }
+        old <- theme
+        theme <<- new
+        invisible(old)
+      })
+    }
+  )
+})()
+theme_get <- .theme_new$get
+theme_set <- .theme_new$set
 
 
 

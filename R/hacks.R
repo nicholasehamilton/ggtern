@@ -3,6 +3,14 @@
   unlockBinding(".element_tree", asNamespace("ggplot2"))
     assign(".element_tree", .element_tree, asNamespace("ggplot2"))
   lockBinding(".element_tree", asNamespace("ggplot2"))
+  
+  unlockBinding("theme_get", asNamespace("ggplot2"))
+   assign("theme_get", theme_get, asNamespace("ggplot2"))
+  lockBinding("theme_get", asNamespace("ggplot2"))
+  
+  unlockBinding("theme_set", asNamespace("ggplot2"))
+    assign("theme_set", theme_set, asNamespace("ggplot2"))
+  lockBinding("theme_set", asNamespace("ggplot2"))
 }
 
 #Hack into the aesthetics.

@@ -9,22 +9,33 @@ StatDensity2d <- proto(ggplot2:::Stat, {
   default_aes <- function(.) aes(colour = "#3366FF", size = 0.5)
   required_aes <- c("x", "y")
   
-  calculate <- function(., data, scales, na.rm = FALSE, contour = TRUE, n = 100,geometry="density2d",...) {
+  calculate <- function(., data, scales, na.rm = FALSE, contour = TRUE, n = 100, geometry="density2d",...) {
+    
+    ##NEW ENSURE MORE THAN 1 ROW
+    if(nrow(data) <= 1){
+      grp <- unique(data$group)
+      pan <- unique(data$PANEL)
+      sfx <- ifthenelse(!is.null(grp) & !is.null(pan),paste0(" (Panel ",pan,", Group ",grp,") ")," ")
+      warning(paste0(.$objname,sfx,"must have more than 1 row, stripping from plot."),call.=F)
+      return(data.frame())
+    }
+    
     #HACK FOR TERNARY
-    data <- trytransform(data)
+    data <- trytransform(data,scales=scales,coord=get_last_coord())
     
     df <- data.frame(data[, c("x", "y")])
     df <- remove_missing(df, na.rm, name = "stat_density2d", finite = TRUE)
     
     ##HACK... ensure goes right to edge...
     if(inherits(last_plot(),"ggtern")){
-      xlim <- c(0,1); ylim <- c(0,1)
+      xlim <- c(0,1); 
+      ylim <- c(0,1)
     }else{
-      xlim <- scale_dimension(scales$x); ylim <- scale_dimension(scales$y)
+      xlim <- scale_dimension(scales$x); 
+      ylim <- scale_dimension(scales$y)
     }
     
     dens <- safe.call(kde2d, list(x = df$x, y = df$y, n = n,lims = c(xlim,ylim), ...))
-    
     df <- with(dens, data.frame(expand.grid(x = x, y = y), z = as.vector(z)))
     
     #TERNARY HACK REMOVES ITEMS IF NOT POLYGON, ELSE SETS Z to 0, 

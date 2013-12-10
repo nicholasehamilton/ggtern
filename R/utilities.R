@@ -233,22 +233,20 @@ find_global <- function (name, env=environment()){
   NULL
 }
 
-trytransform <- function(data){
-  ##--------------------------------------------------------------------------------------------------------
-  ##Hack for ternary plots need to transform to cartesian PRIOR to smoothing -- NH
-  bup <- data #BACKUP
-  lp <- last_plot()
+
+trytransform <- function(data,lp=last_plot(),...,coord=lp$coordinates,scales=lp$scales){
   tryCatch({
-    if(inherits(lp,"ggtern")){
-      T <- lp$coord$T
-      L <- lp$coord$L
-      R <- lp$coord$R
-      data[,c("x","y")] = transform_tern_to_cart(T=data[,T],L=data[,L],R=data[,R])
+    if(inherits(lp,"ggtern")){   
+      return(transform_tern_to_cart( T=data[,coord$T],
+                                     L=data[,coord$L],
+                                     R=data[,coord$R],
+                                     Tlim=coord$limits$T,
+                                     Llim=coord$limits$L,
+                                     Rlim=coord$limits$R))
+      #return(coord_transform.ternary(coord=coord,data=data))
     }
-  },error=function(e){
-    return(bup)
-  })
-  return(data)
+  },error=function(e){warning(e)})
+  data
 }
 
 removeoutside <- function(data){
@@ -306,7 +304,6 @@ overridelabs <- function(...){
       args[[o]] <- n
     }
   }
-  print(args)
   args
 }
 

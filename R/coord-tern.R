@@ -15,15 +15,15 @@
 coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1)) {
   
   ##Validate x and y lims...
-  xlim <- ifthenelse(!is.numeric(xlim),c(0,1),xlim)
-  ylim <- ifthenelse(!is.numeric(ylim),c(0,1),ylim)
-  xlim <- sort(xlim); ylim <- sort(ylim);
+  xlim <- is.numeric.or(xlim,c(0,1)); xlim <- sort(xlim); 
+  ylim <- is.numeric.or(ylim,c(0,1)); ylim <- sort(ylim);
+  
+  ##Put into correct aspect.
   if(diff(xlim) != diff(ylim)){
     warning("Error in xlim and ylim ratios, adjusting ymax to maintain aspect.",call.=FALSE)
     ylim <- c(min(ylim),min(ylim) + diff(xlim))
   }
   ylim <- c(min(ylim),min(ylim) + diff(ylim)*coord_aspect.ternary())
-  
   
   all.coords <- c("x","y","z")
   if(length(which(!c(T,L,R) %in% all.coords)) > 0){stop("Options for T, L and R are x,y and z")}
@@ -72,23 +72,31 @@ rename_data.ternary <- function(coord,data){
 #}
 
 #' @S3method coord_transform ternary
-coord_transform.ternary <- function(coord, data, details, verbose=F,revertToCart=T,adjustCart=T){
+coord_transform.ternary <- function(coord, data, details, verbose=F,revertToCart=T,adjustCart=T,discard=getOption("tern.discard.external")){
   bup    <- data #Original Data Backup.
   tryCatch({
     ggplot2:::check_required_aesthetics(coord$required_aes, names(data),"coord_tern")
     data   <- rename_data.ternary(coord, data)
     ix.tern <- c("T","L","R"); 
     ix.cart <- c("x","y")
+    
+    ix.T <- "T"#names(which(coord == "x")[1])
+    ix.L <- "L"#names(which(coord == "y")[1])
+    ix.R <- "R"#names(which(coord == "z")[1])
+    
     ##Execute the transformation to cartesian
     data[,c("x","y")] <- transform_tern_to_cart(
       data = data[,ix.tern],
-      Tlim = coord$limits$T,
-      Llim = coord$limits$L,
-      Rlim = coord$limits$R)[,c("x","y")]
+      Tlim = coord$limits[[ix.T]],
+      Llim = coord$limits[[ix.L]],
+      Rlim = coord$limits[[ix.R]])[,c("x","y")]
     #only keep records in poly
-    if(getOption("tern.discard.external")){
+    if(discard){
       #Get the extremes to determine if points are outside the plot area.
-      data.extremes <-transform_tern_to_cart(data = get_tern_extremes(coord)[,ix.tern],Tlim = coord$limits$T,Llim = coord$limits$L,Rlim = coord$limits$R)[,c("x","y")]
+      data.extremes <-transform_tern_to_cart(data = get_tern_extremes(coord)[,ix.tern],
+                                             Tlim = coord$limits[[ix.T]],
+                                             Llim = coord$limits[[ix.L]],
+                                             Rlim = coord$limits[[ix.R]])[,c("x","y")]
       data[,c("x","y")] <- round(data[,c("x","y")],3)
       in.poly <- point.in.polygon(data$x,data$y,as.numeric(data.extremes$x),as.numeric(data.extremes$y))
       data <- data[which(in.poly > 0),]
@@ -102,15 +110,21 @@ coord_transform.ternary <- function(coord, data, details, verbose=F,revertToCart
     }
     data <- bup
   })
-  if(adjustCart){
+  
+  ##Default is to execute the cartesian transformation (DEFAULT)
+  if(adjustCart & !missing(details)){
     ggplot2:::coord_transform.cartesian(coord,data,details)
-  }else{
+  }else{ ##however sometimes (say in an intermediate step), we may wish to suppress.
     data
   }
 }
 
 #' @S3method coord_expand_defaults ternary
-coord_expand_defaults.ternary <- function(coord, scale, aesthetic){ggplot2:::expand_default(scale)}
+coord_expand_defaults.ternary <- function(coord, scale, aesthetic){
+  ret <- ggplot2:::expand_default(scale)
+  print(ret)
+  ret
+}
 
 #' @S3method coord_train ternary
 coord_train.ternary <- function(coord, scales){
@@ -336,7 +350,9 @@ coord_render_bg.ternary <- function(coord,details,theme){
   #--------------------------------------------------
   #LABELS
   d = data.extreme
-  d$L  <- as.character(c(details$Tlabel,details$Llabel,details$Rlabel))
+  d$L  <- as.character(c(details$Tlabel,
+                         details$Llabel,
+                         details$Rlabel))
   ##Function to create new axis grob
   .render <- function(name,ix,items){
     tryCatch({  
@@ -450,9 +466,15 @@ coord_render_bg.ternary <- function(coord,details,theme){
   
   ##get the base data.
   d <- NULL
-  d <- .getData("T",d,T,angle=  0); d <- .getData("T",d,F,angle=  0); 
-  d <- .getData("L",d,T,angle=120); d <- .getData("L",d,F,angle=120); 
-  d <- .getData("R",d,T,angle=240); d <- .getData("R",d,F,angle=240);
+  #TOP
+  d <- .getData("T",d,T,angle=  0); #MAJOR 
+  d <- .getData("T",d,F,angle=  0); #MINOR
+  #LEFT
+  d <- .getData("L",d,T,angle=120); 
+  d <- .getData("L",d,F,angle=120); 
+  #RIGHT
+  d <- .getData("R",d,T,angle=240); 
+  d <- .getData("R",d,F,angle=240);
   
   ##Determine the tick finish positions for segments.
   d$xend <- cos(d$Angle*pi/180)*d$TickLength + d$x

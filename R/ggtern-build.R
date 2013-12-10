@@ -12,6 +12,7 @@
 #' @keywords internal
 #' @export
 ggplot_build <- function(plot) {
+  
   if (length(plot$layers) == 0) stop("No layers in plot", call.=FALSE)
   plot <- ggplot2:::plot_clone(plot)
   
@@ -32,11 +33,17 @@ ggplot_build <- function(plot) {
   ##-------------------------------------------------------------------------------
   #IF WE HAVE TERNARY OPTIONS SOMEWHERE...  
   if(inherits(plot,"ggtern")){
+    ##Strip Unapproved Ternary Layers
+    plot$layers <- strip_unapproved(plot$layers)
+    
     ##Check that there are layers.
-    if(length(plot$layers) == 0){stop("No layers in plot",call.=F)}
+    if(length(plot$layers) == 0){stop("No layers in plot",call.=F)}  
     
     #The ternary axis names.
     scales.tern <- c("T","L","R")
+    
+    #names(which(plot$coordinates=="y"))
+    ix <- function(x){names(plot$coordinates)[which(plot$coordinates == x)]}
     
     ##Add the missing scales
     ggplot2:::scales_add_missing(plot,scales.tern,environment())
@@ -53,6 +60,8 @@ ggplot_build <- function(plot) {
       lim <- plot$scales$get_scales(X)$limits 
       plot$coordinates$limits[[X]] <- is.numeric.or(lim,c(0,1))
     }
+    #STORE COORDINATES FOR USE BY OTHER METHODS.
+    set_last_coord(plot$coordinates)
     
     #THESE ARE A BIT OF A HACK. NORMALLY THIS INFO IS HANDLED IN THE GRID ARCHITECTURE.
     #BUT THIS IS ONE WAY OF PASSING IT THROUGH...
@@ -61,6 +70,8 @@ ggplot_build <- function(plot) {
     panel$L_scales$name = Llabel(panel,plot$labels)
     panel$R_scales$name = Rlabel(panel,plot$labels)
     panel$Wlabel        = Wlabel(panel,plot$labels)
+  }else{
+    set_last_coord(NULL)
   }
   
   layers <- plot$layers

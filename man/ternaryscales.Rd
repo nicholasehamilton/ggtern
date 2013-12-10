@@ -4,20 +4,20 @@
 \alias{scale_T_continuous}
 \title{Ternary Continuous Scales}
 \usage{
-  scale_L_continuous(name = NA,
+  scale_L_continuous(name = NULL,
     breaks = pretty(c(0, 1), n = 10),
     minor_breaks = pretty(c(0, 1), n = 20),
-    labels = waiver(), limits = c(0, 1))
+    labels = waiver(), limits = waiver())
 
-  scale_T_continuous(name = NA,
+  scale_T_continuous(name = NULL,
     breaks = pretty(c(0, 1), n = 10),
     minor_breaks = pretty(c(0, 1), n = 20),
-    labels = waiver(), limits = c(0, 1))
+    labels = waiver(), limits = waiver())
 
-  scale_R_continuous(name = NA,
+  scale_R_continuous(name = NULL,
     breaks = pretty(c(0, 1), n = 10),
     minor_breaks = pretty(c(0, 1), n = 20),
-    labels = waiver(), limits = c(0, 1))
+    labels = waiver(), limits = waiver())
 }
 \arguments{
   \item{breaks}{the major breaks}
