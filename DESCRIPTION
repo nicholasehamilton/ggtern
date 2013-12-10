@@ -25,12 +25,11 @@ License: GPL-2
 URL: http://www.ggtern.com
 LazyData: true
 Collate:
-  'ggtern-internal.R'
   'element_ternary.R'
   'utilities.R'
   'strip-unapproved.R'
   'theme.R'
-  'labs-atomic-weight-percent.R'
+  'labs-pcnt.R'
   'aes.R'
   'scales.R'
   'panel.R'

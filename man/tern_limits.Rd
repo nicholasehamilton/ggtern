@@ -1,8 +1,17 @@
 \name{tern_limits}
+\alias{limit_tern}
+\alias{limits_tern}
+\alias{tern_limit}
 \alias{tern_limits}
 \title{Restrict Ternary Limits}
 \usage{
   tern_limits(T = 1, L = 1, R = 1, ..., verbose = F)
+
+  limits_tern(...)
+
+  limit_tern(...)
+
+  tern_limit(...)
 }
 \arguments{
   \item{T}{numeric value of the maximum T species scale
@@ -20,12 +29,23 @@
   \item{verbose}{report the solved values}
 }
 \description{
-  Appends new T, L and R ternary continuous scales, where
-  the maximum scale value is specified, and, where the
-  minimums for each are solved.
+  \code{tern_limits} (or its aliasses) appends new
+  \code{T}, \code{L} and \code{R} ternary continuous
+  scales, where the maximum scale value is specified, and,
+  where the minimums for each are solved.
+
+  \code{limits_tern} is an alias for \code{tern_limits}
+
+  \code{limit_tern} is an alias for \code{tern_limits}
+
+  \code{tern_limit} is an alias for \code{tern_limits}
 }
 \examples{
-plot <- ggtern(data=data.frame(x=runif(100),y=runif(100),z=runif(100)),aes(x,y,z)) + geom_point() + tern_limits(0.7,0.3,0.4)
+plot <- ggtern(data=data.frame(x=runif(100),
+                               y=runif(100),
+                               z=runif(100)), aes(x,y,z)) +
+        geom_point() +
+        tern_limits(0.7,0.3,0.4)
 plot
 }
 \seealso{

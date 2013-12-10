@@ -65,7 +65,7 @@ ggplot_build <- function(plot) {
     
     #THESE ARE A BIT OF A HACK. NORMALLY THIS INFO IS HANDLED IN THE GRID ARCHITECTURE.
     #BUT THIS IS ONE WAY OF PASSING IT THROUGH...
-    panel <- train_position_ternary(panel,scale_T(),scale_L(),scale_R())
+    panel <- .train_position_ternary(panel,scale_T(),scale_L(),scale_R())
     panel$T_scales$name = .Tlabel(panel,plot$labels)
     panel$L_scales$name = .Llabel(panel,plot$labels)
     panel$R_scales$name = .Rlabel(panel,plot$labels)

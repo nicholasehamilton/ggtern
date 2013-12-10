@@ -246,7 +246,7 @@ find_global <- function (name, env=environment()){
   data
 }
 
-removeoutside <- function(data){
+.remove_outside <- function(data){
   bup <- data
   lp <- last_plot()
   tryCatch({
@@ -263,7 +263,7 @@ removeoutside <- function(data){
   return(bup)
 }
 
-sinkdensity <- function(df,remove=T){
+.sink_density <- function(df,remove=T){
   if(class(df) != "data.frame"){return(df)}
   bup <- df
   lp <- last_plot()

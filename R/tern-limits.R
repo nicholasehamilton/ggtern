@@ -1,8 +1,7 @@
-
-
 #' Restrict Ternary Limits
 #' 
-#' Appends new T, L and R ternary continuous scales, where the maximum scale value is specified, and, where the minimums for each are solved.
+#' \code{tern_limits} (or its aliasses) appends new \code{T}, \code{L} and \code{R} ternary continuous scales, 
+#' where the maximum scale value is specified, and, where the minimums for each are solved.
 #' @param T numeric value of the maximum T species scale value
 #' @param L numeric value of the maximum L species scale value
 #' @param R numeric value of the maximum R species scale value
@@ -10,8 +9,13 @@
 #' @param verbose report the solved values
 #' @seealso \code{\link{scale_T_continuous}}, \code{\link{scale_L_continuous}} and \code{\link{scale_R_continuous}}
 #' @examples 
-#' plot <- ggtern(data=data.frame(x=runif(100),y=runif(100),z=runif(100)),aes(x,y,z)) + geom_point() + tern_limits(0.7,0.3,0.4)
+#' plot <- ggtern(data=data.frame(x=runif(100),
+#'                                y=runif(100),
+#'                                z=runif(100)), aes(x,y,z)) + 
+#'         geom_point() + 
+#'         tern_limits(0.7,0.3,0.4)
 #' plot
+#' @rdname tern_limits
 #' @export
 tern_limits <- function(T=1,L=1,R=1,...,verbose=F){
   ret <- list()
@@ -48,6 +52,29 @@ tern_limits <- function(T=1,L=1,R=1,...,verbose=F){
   
   return(ret)
 }
-#Aliases
+
+#'Restrict Ternary Limits
+#'
+#'\code{limits_tern} is an alias for \code{tern_limits}
+#'@inheritParams tern_limits
+#'@rdname tern_limits
+#'@export 
+limits_tern <- function(...){tern_limits(...)}
+
+#'Restrict Ternary Limits
+#'
+#'\code{limit_tern} is an alias for \code{tern_limits}
+#'@inheritParams tern_limits
+#'@rdname tern_limits
+#'@export 
 limit_tern <- function(...){tern_limits(...)}
+
+#'Restrict Ternary Limits
+#'
+#'\code{tern_limit} is an alias for \code{tern_limits}
+#'@inheritParams tern_limits
+#'@rdname tern_limits
+#'@export 
 tern_limit <- function(...){tern_limits(...)}
+
+

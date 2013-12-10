@@ -61,7 +61,7 @@
 
 #' Ternary Theme Elements
 #' 
-#' \code{theme_nocart} is a functino that returns empty theme elemens for the standard cartesian memebers, including
+#' \code{theme_nocart} is a function that returns empty theme elemens for the standard cartesian memebers, including
 #' panel.background, panel.border, panel.grid.major, panel.grid.minor, axis.ticks, axis.text.x, axis.text.y, axis.title.x, 
 #' axis.title.y are all set to blank
 #' @rdname terntheme
@@ -94,7 +94,19 @@ theme_nocart <- function(){
     theme(ternary.options=element_ternary(showarrows=show))
   }
 }
+
+#' Ternary Theme Elements
+#' 
+#' \code{theme_noarrows} is a function that apepnds to the current theme a flag to switch OFF the ternary arrows
+#' @rdname terntheme
+#' @export
 theme_noarrows   <- function(){.theme_arrows(FALSE)}
+
+#' Ternary Theme Elements
+#' 
+#' \code{theme_showarrows} is a function that apepnds to the current theme a flag to switch ON the ternary arrows
+#' @rdname terntheme
+#' @export
 theme_showarrows <- function(){.theme_arrows(TRUE)}
 
 #helper function
@@ -164,10 +176,32 @@ theme_showarrows <- function(){.theme_arrows(TRUE)}
   base
 }
 
-#some custom themes
+#' Ternary Theme Elements
+#' 
+#' \code{theme_tern_rgbg} ternary theme, red green blue with gray background
+#' @rdname terntheme
+#' @export
 theme_tern_rgbg  <- function(){.theme_tern(col.BG="gray90")}
+
+#' Ternary Theme Elements
+#' 
+#' \code{theme_tern_rgbw} ternary theme, red green blue with white background
+#' @rdname terntheme
+#' @export
 theme_tern_rgbw  <- function(){.theme_tern(col.BG="white")}
+
+#' Ternary Theme Elements
+#' 
+#' \code{theme_tern_bw} ternary theme black and white
+#' @rdname terntheme
+#' @export
 theme_tern_bw    <- function(){.theme_tern("white","black","black","black")}
+
+#' Ternary Theme Elements
+#' 
+#' \code{theme_tern_gray} ternary theme, gray theme
+#' @rdname terntheme
+#' @export
 theme_tern_gray  <- function(){.theme_tern(col.BG="grey90",col.T="black",col.L="black",col.R="black")}
 
 .theme_new <- (function() {

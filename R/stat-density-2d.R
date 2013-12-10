@@ -5,15 +5,10 @@
 #' @export
 #' @seealso \code{\link[ggplot2]{stat_density2d}}
 stat_density2d <- function (mapping = NULL, data = NULL, geom = "density2d", position = "identity", na.rm = FALSE, contour = TRUE, n = 100, ...) {
-  StatDensity2d$new(mapping = mapping, data = data,geom=geom,geometry=geom,position = position, na.rm = na.rm, contour = contour, n = n,...)
+  ggplot2:::StatDensity2d$new(mapping = mapping, data = data,geom=geom,geometry=geom,position = position, na.rm = na.rm, contour = contour, n = n,...)
 }
 
-#' Internal Function
-#' 
-#' @name StatDensity2d
-#' @aliases ggtern-internal
-#' @export
-StatDensity2d <- proto(ggplot2:::Stat, {
+.StatDensity2d <- proto(ggplot2:::Stat, {
   objname <- "density2d"
   
   default_geom <- function(.) GeomDensity2d
@@ -22,19 +17,20 @@ StatDensity2d <- proto(ggplot2:::Stat, {
   
   calculate <- function(., data, scales, na.rm = FALSE, contour = TRUE, n = 100, geometry="density2d",...) {
     
-    
     ##--------------------------------------------------------------------
     ##NEW ENSURE MORE THAN 1 ROW
-    if(nrow(data) <= 1){
-      grp <- unique(data$group)
-      pan <- unique(data$PANEL)
-      sfx <- ifthenelse(!is.null(grp) & !is.null(pan),paste0(" (Panel ",pan,", Group ",grp,") ")," ")
-      warning(paste0(.$objname,sfx,"must have more than 1 row, stripping from plot."),call.=F)
-      return(data.frame())
+    last_coord <- get_last_coord()
+    if(inherits(last_coord,"ternary")){
+      if(nrow(data) <= 1){
+        grp <- unique(data$group)
+        pan <- unique(data$PANEL)
+        sfx <- ifthenelse(!is.null(grp) & !is.null(pan),paste0(" (Panel ",pan,", Group ",grp,") ")," ")
+        warning(paste0(.$objname,sfx,"must have more than 1 row, stripping from plot."),call.=F)
+        return(data.frame())
+      }
+      data <- ggtern:::.trytransform(data,scales=scales,coord=get_last_coord())
     }
-    data <- ggtern:::.trytransform(data,scales=scales,coord=get_last_coord())
     ##--------------------------------------------------------------------
-    
     
     df <- data.frame(data[, c("x", "y")])
     df <- remove_missing(df, na.rm, name = "stat_density2d", finite = TRUE)
@@ -51,9 +47,11 @@ StatDensity2d <- proto(ggplot2:::Stat, {
     dens <- safe.call(kde2d, list(x = df$x, y = df$y, n = n,lims = c(xlim,ylim), ...))
     df <- with(dens, data.frame(expand.grid(x = x, y = y), z = as.vector(z)))
     
+    ##--------------------------------------------------------------------
     #TERNARY HACK REMOVES ITEMS IF NOT POLYGON, ELSE SETS Z to 0, 
     #for points outside ternary plot area...
-    df <- sinkdensity(df,remove=!identical(geometry,"polygon"))
+    if(inherits(last_coord,"ternary")){df <- ggtern:::.sink_density(df,remove=!identical(geometry,"polygon"))}
+    ##--------------------------------------------------------------------
     
     df$group <- data$group[1]
     

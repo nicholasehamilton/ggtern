@@ -1,4 +1,4 @@
-train_position_ternary <- function(panel, T_scale, L_scale, R_scale) {
+.train_position_ternary <- function(panel, T_scale, L_scale, R_scale) {
   if(is.null(panel$T_scales) && !is.null(T_scale)){
     panel$T_scales <- ggplot2:::scale_clone(T_scale)
   }
@@ -11,7 +11,7 @@ train_position_ternary <- function(panel, T_scale, L_scale, R_scale) {
   panel
 }
 
-panel_scales <- function(panel, i) {
+.panel_scales <- function(panel, i) {
   this_panel <- panel$layout[panel$layout$PANEL == i, ]
   scales <- list(
     x = panel$x_scales[[this_panel$SCALE_X]],
@@ -26,7 +26,7 @@ panel_scales <- function(panel, i) {
 }
 
 # Compute ranges and dimensions of each panel, using the coord.
-train_ranges <- function(panel, coord) {
+.train_ranges <- function(panel, coord) {
   compute_range <- function(ix, iy) {
     scales <- list(x = panel$x_scales[[ix]], 
                    y = panel$y_scales[[iy]],

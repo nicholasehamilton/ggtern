@@ -12,21 +12,16 @@
 geom_smooth <- function (mapping = NULL, data = NULL, stat = "smooth", position = "identity",limitarea=T,fullrange=F,...) { 
   limitarea <- ifthenelse(!is.logical(limitarea),T,limitarea[1])
   fullrange <- ifthenelse(limitarea,TRUE,fullrange) #FORCE FULL RANGE IN ORDER TO BE ABLE TO TRUNCATE
-  GeomSmooth$new(mapping = mapping, data = data, stat = stat, position = position,limitarea=limitarea,fullrange=fullrange,...)
+  ggtern:::.GeomSmooth$new(mapping = mapping, data = data, stat = stat, position = position,limitarea=limitarea,fullrange=fullrange,...)
 }
 
-#' Internal Function
-#' 
-#' @name GeomSmooth
-#' @aliases ggtern-internal
-#' @export
-GeomSmooth <- proto(ggplot2:::Geom, {
+.GeomSmooth <- proto(ggplot2:::Geom, {
   objname <- "smooth"
   draw <- function(., data, scales, coordinates,limitarea=F,...) { 
     #HACK
     if(limitarea){
       if(inherits(last_plot(),"ggtern")){
-        data <- removeoutside(data)
+        data <- ggtern:::.remove_outside(data)
       }
     }
     

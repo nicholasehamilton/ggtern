@@ -13,14 +13,14 @@
 #' plot + percent_weight()
 #' plot + percent_atomic()
 #' plot + percent_custom("Percentage")
-#' @rdname labsatomicweightpercent
+#' @rdname labs_pcnt
 #' @export
 percent_weight <- function(){labs(W="Wt. %")}
 
 #' Atomic, Weight or Custom Percentage Suffix
 #' 
 #' @description \code{weight_percent} is an alias for \code{percent_weight()}
-#' @rdname labsatomicweightpercent
+#' @rdname labs_pcnt
 #' @export
 weight_percent <- percent_weight
 
@@ -28,7 +28,7 @@ weight_percent <- percent_weight
 #' 
 #' 
 #' @description \code{percent_atomic} adds 'At. \%' to the arrow marker label as a suffix
-#' @rdname labsatomicweightpercent
+#' @rdname labs_pcnt
 #' @export
 percent_atomic <- function(){labs(W="At. %")}
 
@@ -36,7 +36,7 @@ percent_atomic <- function(){labs(W="At. %")}
 #' 
 #' 
 #' @description \code{atomic_percent} is an alias for \code{percent_atomic()}
-#' @rdname labsatomicweightpercent
+#' @rdname labs_pcnt
 #' @export
 atomic_percent <- percent_atomic
 
@@ -45,7 +45,7 @@ atomic_percent <- percent_atomic
 #' 
 #' @description \code{percent_custom} adds a custom suffix to the arrow label marker.
 #' @param x the custom suffix
-#' @rdname labsatomicweightpercent
+#' @rdname labs_pcnt
 #' @export
 percent_custom <- function(x){labs(W=as.character(x))}
 
@@ -53,7 +53,7 @@ percent_custom <- function(x){labs(W=as.character(x))}
 #' 
 #' 
 #' @description \code{custom_percent} is an alias for \code{percent_custom()}
-#' @rdname labsatomicweightpercent
+#' @rdname labs_pcnt
 #' @export
 custom_percent <- function(x){labs(W=as.character(x))}
 
