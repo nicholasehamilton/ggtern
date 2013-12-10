@@ -43,7 +43,6 @@ Collate:
   'geom-segment.R'
   'stat-smooth.R'
   'stat-density-2d.R'
-  'stat-contour.R'
   'hacks.R'
   'global.R'
   'onLoad.R'

@@ -1,9 +1,13 @@
-StatSmooth <- proto(ggplot2:::Stat, {
+.StatSmooth <- proto(ggplot2:::Stat, {
   objname <- "smooth"
   calculate_groups <- function(., data, scales, method=ifthenelse(inherits(last_plot(),"ggtern"),"lm","auto"), formula=y~x, ...){
+    
+    #---------------------------------------------------------------------------
     #HACK
-    data <- trytransform(data)
+    data <- ggtern:::.trytransform(data)
     if(inherits(last_plot(),"ggtern")){if(identical(method,lm)){method="lm"}}
+    #---------------------------------------------------------------------------
+    
     rows <- daply(data, .(group), function(df) length(unique(df$x)))
     if (all(rows == 1) && length(rows) > 1) {
       message("geom_smooth: Only one unique x value each group.", 

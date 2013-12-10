@@ -43,7 +43,7 @@ strip_unapproved <- function(layers){
           #IT IS OK
         }else{
           #IT IS NOT OK
-          writeLines(paste0("Removing Layer ",cnt,". '",name,"'' is not an approved proto (for ternary plots) under the present ggtern package ",
+          writeLines(paste0("Removing Layer ",cnt,". '",name,"' is not an approved proto (for ternary plots) under the present ggtern package ",
                             ifthenelse(name %in% .dissaproved,", furthermore, it is FORBIDDEN!",".")))
           layers[[ix]] <- NULL
         }

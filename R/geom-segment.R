@@ -1,9 +1,4 @@
-#' Internal Function
-#' 
-#' @name GeomSegment
-#' @aliases ggtern-internal
-#' @export
-GeomSegment <- proto(ggplot2:::Geom, {
+.GeomSegment <- proto(ggplot2:::Geom, {
   objname <- "segment"
   
   draw <- function(., data, scales, coordinates, arrow = NULL, lineend = "butt", na.rm = FALSE, ...){

@@ -22,6 +22,8 @@ StatDensity2d <- proto(ggplot2:::Stat, {
   
   calculate <- function(., data, scales, na.rm = FALSE, contour = TRUE, n = 100, geometry="density2d",...) {
     
+    
+    ##--------------------------------------------------------------------
     ##NEW ENSURE MORE THAN 1 ROW
     if(nrow(data) <= 1){
       grp <- unique(data$group)
@@ -30,9 +32,9 @@ StatDensity2d <- proto(ggplot2:::Stat, {
       warning(paste0(.$objname,sfx,"must have more than 1 row, stripping from plot."),call.=F)
       return(data.frame())
     }
+    data <- ggtern:::.trytransform(data,scales=scales,coord=get_last_coord())
+    ##--------------------------------------------------------------------
     
-    #HACK FOR TERNARY
-    data <- trytransform(data,scales=scales,coord=get_last_coord())
     
     df <- data.frame(data[, c("x", "y")])
     df <- remove_missing(df, na.rm, name = "stat_density2d", finite = TRUE)

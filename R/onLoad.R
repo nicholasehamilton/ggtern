@@ -12,17 +12,9 @@
   packageStartupMessage("|                                                        |")
   packageStartupMessage("+--------------------------------------------------------+")
   
-  #Hack Hackidie hack hack hack.
-  .theme_hack()
-  .aes_hack()
-  .smooth_hack()
-  .geom_hack()
-  .ggplot_hack()
-  .panel_hack()
+  #Update ggplot2 Methods.
+  suppressWarnings(.push_tweaks())
   
   #Global Setting.
   options("tern.discard.external"=TRUE)
-  
-  #DEFAULT THEME
-  #theme_set(theme_tern_rgbw())
 }

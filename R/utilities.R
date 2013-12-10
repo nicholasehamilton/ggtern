@@ -228,18 +228,21 @@ find_global <- function (name, env=environment()){
 }
 
 
-trytransform <- function(data,lp=last_plot(),...,coord=lp$coordinates,scales=lp$scales){
+.trytransform <- function(data,lp=last_plot(),...,coord=lp$coordinates,scales=lp$scales){
+  bup <- data
   tryCatch({
-    if(inherits(lp,"ggtern")){   
-      return(transform_tern_to_cart( T=data[,coord$T],
-                                     L=data[,coord$L],
-                                     R=data[,coord$R],
-                                     Tlim=coord$limits$T,
-                                     Llim=coord$limits$L,
-                                     Rlim=coord$limits$R))
-      #return(coord_transform.ternary(coord=coord,data=data))
+    if(inherits(lp,"ggtern")){  
+      data[,c("x","y")] <- transform_tern_to_cart( T=data[,coord$T],
+                                                   L=data[,coord$L],
+                                                   R=data[,coord$R],
+                                                   Tlim=coord$limits$T,
+                                                   Llim=coord$limits$L,
+                                                   Rlim=coord$limits$R)[,c("x","y")]
     }
-  },error=function(e){warning(e)})
+  },error=function(e){
+    warning(e)
+    data <- bup
+  })
   data
 }
 

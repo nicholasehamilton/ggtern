@@ -199,8 +199,8 @@ theme_tern_gray  <- function(){.theme_tern(col.BG="grey90",col.T="black",col.L="
     }
   )
 })()
-theme_get <- .theme_new$get
-theme_set <- .theme_new$set
+.theme_get <- .theme_new$get
+.theme_set <- .theme_new$set
 
 
 
