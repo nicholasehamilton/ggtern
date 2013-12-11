@@ -281,7 +281,13 @@ trytransform <- function(data,...,coord,scales){
   }
 }
 
-.remove_outside <- function(data){
+#' Remove Data out of Range
+#' 
+#' Internal Function
+#' @param data data.frame
+#' @returns data.frame
+#' @export
+remove_outside <- function(data){
   bup <- data
   lp <- last_plot()
   tryCatch({
@@ -298,7 +304,15 @@ trytransform <- function(data,...,coord,scales){
   return(bup)
 }
 
-.sink_density <- function(df,remove=T){
+
+#' Sink Density Data 
+#' 
+#' Internal Function
+#' @param df data.frame
+#' @param remove boolean remove or make zero
+#' @returns data.frame
+#' @export
+sink_density <- function(df,remove=TRUE){
   if(class(df) != "data.frame"){return(df)}
   bup <- df
   lp <- last_plot()

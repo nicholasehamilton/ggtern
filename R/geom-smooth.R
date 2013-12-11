@@ -21,7 +21,7 @@ geom_smooth <- function (mapping = NULL, data = NULL, stat = "smooth", position 
     #HACK
     if(limitarea){
       if(inherits(last_plot(),"ggtern")){
-        data <- ggtern:::.remove_outside(data)
+        data <- remove_outside(data)
       }
     }
     

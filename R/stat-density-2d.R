@@ -52,7 +52,7 @@ stat_density2d <- function (mapping = NULL, data = NULL, geom = "density2d", pos
     ##--------------------------------------------------------------------
     #TERNARY HACK REMOVES ITEMS IF NOT POLYGON, ELSE SETS Z to 0, 
     #for points outside ternary plot area...
-    if(inherits(last_coord,"ternary")){df <- ggtern:::.sink_density(df,remove=!identical(geometry,"polygon"))}
+    if(inherits(last_coord,"ternary")){df <- sink_density(df,remove=!identical(geometry,"polygon"))}
     ##--------------------------------------------------------------------
     
     df$group <- data$group[1]
