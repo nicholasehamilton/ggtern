@@ -9,8 +9,8 @@
 #' @param fullrange extend the range to the edge of the plotting panel.
 #' @inheritParams ggplot2::geom_smooth
 #' @export
-geom_smooth <- function (mapping = NULL, data = NULL, stat = "smooth", position = "identity",limitarea=T,fullrange=F,...) { 
-  limitarea <- ifthenelse(!is.logical(limitarea),T,limitarea[1])
+geom_smooth <- function (mapping = NULL, data = NULL, stat = "smooth", position = "identity",limitarea=TRUE,fullrange=FALSE,...) { 
+  limitarea <- ifthenelse(!is.logical(limitarea),TRUE,limitarea[1])
   fullrange <- ifthenelse(limitarea,TRUE,fullrange) #FORCE FULL RANGE IN ORDER TO BE ABLE TO TRUNCATE
   ggtern:::.GeomSmooth$new(mapping = mapping, data = data, stat = stat, position = position,limitarea=limitarea,fullrange=fullrange,...)
 }
