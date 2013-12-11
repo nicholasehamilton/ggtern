@@ -9,6 +9,9 @@
 
   \item{remove}{boolean remove or make zero}
 }
+\value{
+  data.frame
+}
 \description{
   Internal Function
 }
