@@ -39,12 +39,11 @@
 #'\code{ggtern} is a method which is a convenience wrapper for \code{ggplot(...) + coord_tern()}
 #'@author Written and Maintained by Nicholas Hamilton <n.hamilton@@student.unsw.edu.au>
 #'
-#'@section Main Constructor Options:
 #'\code{ggtern} is a function, analogous to \code{ggplot}, which creates an object of class \code{ggtern} (which inherits \code{ggplot}).
 #'@param ... same arguments as passed through to ggplot
 #'@inheritParams ggplot2::ggplot
 #'@usage ggtern(...)
-#'@example /example/mainexamples.R
+#'@example tests/mainexamples.R
 #'@export
 ggtern <- function(...){ggplot(...) + coord_tern()}
 

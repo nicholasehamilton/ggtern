@@ -50,11 +50,6 @@
   \code{ggtern} is a method which is a convenience wrapper
   for \code{ggplot(...) + coord_tern()}
 }
-\section{Main Constructor Options}{
-  \code{ggtern} is a function, analogous to \code{ggplot},
-  which creates an object of class \code{ggtern} (which
-  inherits \code{ggplot}).
-}
 \examples{
 ##-----------------------------------------------
 ## DUMMY DATA
@@ -274,5 +269,9 @@ ggtern(data=DATA.RANDOM,mapping=aes(x,y,z)) +
 \author{
   Written and Maintained by Nicholas Hamilton
   <n.hamilton@student.unsw.edu.au>
+
+  \code{ggtern} is a function, analogous to \code{ggplot},
+  which creates an object of class \code{ggtern} (which
+  inherits \code{ggplot}).
 }
 
