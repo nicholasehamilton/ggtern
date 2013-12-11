@@ -279,7 +279,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
                                 id   = data.background$id,
                                 gp   = gpar(  col  = colour,
                                               fill = alpha(fill,alpha),
-                                              lwd  = size * ggplot2:::.pt,
+                                              lwd  = size * find_global(".pt"),
                                               lty  = linetype
                                 )
       )
@@ -310,7 +310,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
         gp = gpar(col = colour, 
                   lty = linetype,
                   lineend=lineend,
-                  lwd = size*ggplot2:::.pt)
+                  lwd = size*find_global(".pt"))
       )
       
       ##Add to the items.
@@ -392,7 +392,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
           gp = gpar(col    = colour, 
                     lty    = linetype,
                     lineend="butt",
-                    lwd    = size*ggplot2:::.pt)
+                    lwd    = size*find_global(".pt"))
         )
         ##Add to the items.
         items[[length(items) + 1]] <- grob
@@ -420,7 +420,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
                                rot   = angle + d$A[ix], 
                                default.units="native", 
                                gp   = gpar(col        = colour, 
-                                           fontsize   = size,# * ggplot2:::.pt,
+                                           fontsize   = size,
                                            fontfamily = family, 
                                            fontface   = face, 
                                            lineheight = lineheight))
@@ -467,7 +467,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
                              vjust=vjust, 
                              rot  =angle,
                              gp   = gpar(col      = colour, 
-                                         fontsize   = size, #* ggplot2:::.pt,
+                                         fontsize   = size,
                                          fontfamily = family, 
                                          fontface   = face, 
                                          lineheight = lineheight))
@@ -594,7 +594,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
         gp = gpar(col     = colour, 
                   lty     = linetype,
                   lineend = lineend,
-                  lwd     = size*ggplot2:::.pt)
+                  lwd     = size*find_global(".pt"))
       )
       ##Add to the items.
       items[[length(items) + 1]] <- grob
@@ -622,7 +622,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
                              vjust=vjust, 
                              rot  =angle, 
                              gp   = gpar(col      = colour, 
-                                         fontsize   = size, #* ggplot2:::.pt,
+                                         fontsize   = size,
                                          fontfamily = family, 
                                          fontface   = face, 
                                          lineheight = lineheight))
@@ -648,7 +648,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
         gp = gpar(col     = colour, 
                   lty     = linetype,
                   lineend = lineend,
-                  lwd     = size*ggplot2:::.pt)
+                  lwd     = size*find_global(".pt"))
       )
       ##Add to the items.
       items[[length(items) + 1]] <- grob
