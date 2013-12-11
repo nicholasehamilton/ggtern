@@ -10,8 +10,9 @@
 #' @param ... other arguments as per \code{\link[ggplot2]{aes}}
 #' @seealso Parent \code{\link[ggplot2]{aes}} function.
 aes <- function(x,y,z,...) {
-  aes <- structure(as.list(match.call()[-1]), class="uneval")
-  ggplot2:::rename_aes(aes)
+  X <- structure(as.list(match.call()[-1]), class="uneval")
+  do.call(find_global("rename_aes"),args=list(x=X))
+  #ggplot2:::rename_aes(X)
 }
 
 .all_aesthetics <- ggplot2:::.all_aesthetics
