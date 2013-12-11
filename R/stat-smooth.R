@@ -6,7 +6,7 @@
     #HACK
     lc <- get_last_coord()
     if(inherits(lc,"ternary")){
-      data <- ggtern:::.trytransform(data,scales=scales,coord=lc)
+      data <- trytransform(data,scales=scales,coord=lc)
       if(identical(method,lm)){method="lm"}
     }
     #---------------------------------------------------------------------------

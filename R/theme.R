@@ -15,8 +15,7 @@
 #' To see a graphical representation of the inheritance tree, see the
 #' last example below.
 #'
-#' @alias theme 
-#' @alias theme-tern
+#' @aliases theme theme-tern
 #' @name theme
 #' @section New/Additional Inheritance Structures:
 #' Based on the \code{ggplot2} existing structure (\code{\link[ggplot2]{theme}}), 

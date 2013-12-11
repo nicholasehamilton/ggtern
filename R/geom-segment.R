@@ -39,7 +39,7 @@
       return(with(data, 
                   segmentsGrob(x, y, xend, yend, default.units="native",
                                gp = gpar(col=alpha(colour, alpha), fill = alpha(colour, alpha),
-                                         lwd=size *find_global(".pt"), lty=linetype, lineend = lineend),
+                                         lwd=size*.pt, lty=linetype, lineend = lineend),
                                arrow = arrow)
       ))
     }

@@ -241,6 +241,9 @@ coord_render_bg.ternary <- function(coord,details,theme){
   #CLOCKWISE ROTATION OR NOT
   clockwise <- coord$clockwise
   
+  #constant
+  .pt = find_global(".pt")
+  
   if(!is.logical(clockwise)){clockwise=F}else{clockwise=clockwise[1]}
   angles    <- ifthenelse(clockwise,c(-180,-60,60),c(0,120,240))
   
@@ -279,7 +282,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
                                 id   = data.background$id,
                                 gp   = gpar(  col  = colour,
                                               fill = alpha(fill,alpha),
-                                              lwd  = size * find_global(".pt"),
+                                              lwd  = size *.pt,
                                               lty  = linetype
                                 )
       )
@@ -310,7 +313,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
         gp = gpar(col = colour, 
                   lty = linetype,
                   lineend=lineend,
-                  lwd = size*find_global(".pt"))
+                  lwd = size*.pt)
       )
       
       ##Add to the items.
@@ -392,7 +395,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
           gp = gpar(col    = colour, 
                     lty    = linetype,
                     lineend="butt",
-                    lwd    = size*find_global(".pt"))
+                    lwd    = size*.pt)
         )
         ##Add to the items.
         items[[length(items) + 1]] <- grob
@@ -594,7 +597,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
         gp = gpar(col     = colour, 
                   lty     = linetype,
                   lineend = lineend,
-                  lwd     = size*find_global(".pt"))
+                  lwd     = size*.pt)
       )
       ##Add to the items.
       items[[length(items) + 1]] <- grob
@@ -648,7 +651,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
         gp = gpar(col     = colour, 
                   lty     = linetype,
                   lineend = lineend,
-                  lwd     = size*find_global(".pt"))
+                  lwd     = size*.pt)
       )
       ##Add to the items.
       items[[length(items) + 1]] <- grob

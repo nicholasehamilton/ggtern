@@ -233,7 +233,18 @@ find_global <- function (name, env=environment()){
 }
 
 
-.trytransform <- function(data,...,coord,scales){
+#' Try and Transform Ternary Data
+#' 
+#' \code{trytransform} is an internal function which attempts to make ternary transformation. 
+#' If fails, the original data is returned
+#' @param data the dataset
+#' @param coord the coordinates
+#' @param scales the scales
+#' @param ... not used
+#' @return transformed data
+#' @keywords internal
+#' @export
+trytransform <- function(data,...,coord,scales){
   if(missing(coord) | missing(scales)){stop("coord and scales are required")}
   bup <- data
   tryCatch({

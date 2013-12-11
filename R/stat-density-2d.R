@@ -28,7 +28,7 @@ stat_density2d <- function (mapping = NULL, data = NULL, geom = "density2d", pos
         warning(paste0(.$objname,sfx,"must have more than 1 row, stripping from plot."),call.=F)
         return(data.frame())
       }
-      data <- ggtern:::.trytransform(data,scales=scales,coord=get_last_coord())
+      data <- trytransform(data,scales=scales,coord=get_last_coord())
     }
     ##--------------------------------------------------------------------
     

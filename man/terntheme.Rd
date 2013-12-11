@@ -1,5 +1,6 @@
 \name{theme}
 \alias{theme}
+\alias{theme-tern}
 \alias{theme_noarrows}
 \alias{theme_nocart}
 \alias{theme_showarrows}
