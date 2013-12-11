@@ -10,16 +10,12 @@ Description: Extends the functionality of ggpot2 to be able to plot ternary
              For further examples and documentation,proceed to the ggtern website.
 License: GPL-2
 Depends:
-  ggplot2(>= 0.9.3.1),
-  stats,
-  methods,
+  ggplot2(>= 0.9.3.1)
+Imports:
   proto,
-  grid,
-  scales,
   plyr,
-  gtable,
-  MASS,
-  sp
+  stats,
+  gtable
 Enhances: ggplot2
 License: GPL-2
 URL: http://www.ggtern.com
