@@ -10,12 +10,16 @@ Description: Extends the functionality of ggpot2 to be able to plot ternary
              For further examples and documentation,proceed to the ggtern website.
 License: GPL-2
 Depends:
-  ggplot2(>= 0.9.3.1)
+  ggplot2(>= 0.9.3.1),
+  proto
 Imports:
-  proto,
   plyr,
   stats,
-  gtable
+  gtable,
+  MASS,
+  sp,
+  scales,
+  reshape
 Enhances: ggplot2
 License: GPL-2
 URL: http://www.ggtern.com
@@ -39,6 +43,6 @@ Collate:
   'geom-segment.R'
   'stat-smooth.R'
   'stat-density-2d.R'
-  'hacks.R'
+  'modified-original.R'
   'global.R'
   'onLoad.R'

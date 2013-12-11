@@ -60,7 +60,7 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Lli
     frm  <- c(coord$T,coord$L,coord$R)
     if(length(which(!frm %in% names(data))) == 0){
       names(to) <- frm
-      data <- rename(data,to,warn_missing=FALSE)
+      data <- rename(data,to)#,warn_missing=FALSE)
     }
   },error=function(e){
     return(bup)
