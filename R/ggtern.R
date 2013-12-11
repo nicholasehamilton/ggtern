@@ -2,17 +2,8 @@
 #'Ternary Diagrams in R
 #'
 #'Ternary diagrams are used frequently in materials science to graph compositional features for mixtures of three different elements or compounds.
-#'It is based (extends) the very popular \code{\link{ggplot}} package, which is an implementation of Wilkinsons "The Grammar of Graphics".
+#'This package is based (extends) the very popular \code{\link{ggplot}} package, which is an implementation of Wilkinsons "The Grammar of Graphics".
 #'
-#'\tabular{ll}{
-#' Package: \tab ggtern\cr
-#' Type: \tab Package\cr
-#' Version: \tab 1.0\cr
-#' Date: \tab 2013-11-15\cr
-#' License: \tab GPL-2\cr
-#' }
-#' 
-#' @author Written and Maintained by Nicholas Hamilton <n.hamilton@@student.unsw.edu.au>
 #' @section Valid Geometries for ggtern:
 #'ggplot2, using the \code{\link{grid}} and \code{\link{proto}} architectures, makes provision for a many number of geometries to be added 
 #'progressively in \emph{'layers'} to a given base plot. In this version 1.0 (the first release of this package), some of the 

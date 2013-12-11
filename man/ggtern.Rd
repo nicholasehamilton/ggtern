@@ -10,15 +10,10 @@
 \description{
   Ternary diagrams are used frequently in materials science
   to graph compositional features for mixtures of three
-  different elements or compounds. It is based (extends)
-  the very popular \code{\link{ggplot}} package, which is
-  an implementation of Wilkinsons "The Grammar of
+  different elements or compounds. This package is based
+  (extends) the very popular \code{\link{ggplot}} package,
+  which is an implementation of Wilkinsons "The Grammar of
   Graphics".
-}
-\details{
-  \tabular{ll}{ Package: \tab ggtern\cr Type: \tab
-  Package\cr Version: \tab 1.0\cr Date: \tab 2013-11-15\cr
-  License: \tab GPL-2\cr }
 }
 \section{Valid Geometries for ggtern}{
   ggplot2, using the \code{\link{grid}} and
@@ -289,9 +284,5 @@ ggtern(data=DATA.RANDOM,mapping=aes(x,y,z)) +
  tern_limits(labels=c(0,10,20,"","","","","",80,90,100)) + #AFFECT ALL SCALES
  theme(ternary.options=element_ternary(arrowsep=0.03,arrowstart=0.25,arrowfinish=0.75))
 }
-}
-\author{
-  Written and Maintained by Nicholas Hamilton
-  <n.hamilton@student.unsw.edu.au>
 }
 
