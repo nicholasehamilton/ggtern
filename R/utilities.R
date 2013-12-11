@@ -204,8 +204,8 @@ calc_element_plot <- function(element,theme=theme_update(),...,plot=NULL,verbose
     }
   }
   if(!is.character(element))stop("element name must be specified as character")
-  ret.plot  <- ggplot2:::calc_element(element,theme=plot$theme,verbose=verbose)
-  ret.theme <- ggplot2:::calc_element(element,theme=theme,     verbose=verbose) 
+  ret.plot  <- ggplot2::calc_element(element,theme=plot$theme,verbose=verbose)
+  ret.theme <- ggplot2::calc_element(element,theme=theme,     verbose=verbose) 
   ifthenelse(!identical(ret.plot,NULL),ret.plot,ret.theme)
 }
 
