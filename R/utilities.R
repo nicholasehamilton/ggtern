@@ -310,7 +310,7 @@ remove_outside <- function(data){
 #' Internal Function
 #' @param df data.frame
 #' @param remove boolean remove or make zero
-#' @returns data.frame
+#' @return data.frame
 #' @export
 sink_density <- function(df,remove=TRUE){
   if(class(df) != "data.frame"){return(df)}
