@@ -69,19 +69,19 @@ DATA.POLY   <- data.frame(x=c(.8,.1,.1),
 DATA.POLY2  <- data.frame(x=c(.7,.1,.3),
                           y=c(.1,.8,.2),
                           z=c(.2,.1,.5))
-DATA.RANDOM <- data.frame(x     = runif(100),
-                          y     = runif(100),
-                          z     = runif(100),
-                          Value = runif(100,1,10),
-                          GroupA= as.factor(round(runif(100,1,2))),
-                          GroupB= as.factor(round(runif(100,1,2))),
-                          Group = as.factor(as.integer(runif(100,1,4))))
-DATA.RANDOM2 <- data.frame(x=runif(100),
-                           y=runif(100),
-                           z=runif(100),
-                           colour=runif(100),
-                           groupA=rep(paste(c("A1","A2"),""),50)[sample(50)],
-                           groupB=rep(paste(c("B1","B2"),""),50)[sample(50)])
+DATA.RANDOM <- data.frame(x     = runif(50),
+                          y     = runif(50),
+                          z     = runif(50),
+                          Value = runif(50,1,10),
+                          GroupA= as.factor(round(runif(50,1,2))),
+                          GroupB= as.factor(round(runif(50,1,2))),
+                          Group = as.factor(as.integer(runif(50,1,4))))
+DATA.RANDOM2 <- data.frame(x=runif(50),
+                           y=runif(50),
+                           z=runif(50),
+                           colour=runif(50),
+                           groupA=rep(paste(c("A1","A2"),""),25)[sample(25)],
+                           groupB=rep(paste(c("B1","B2"),""),25)[sample(25)])
 
 ##-----------------------------------------------
 ## CONSTRUCTION -- NOTE x, y and z aesthetics.
@@ -98,22 +98,28 @@ plot
 ## MODIFY LABELS
 ##-----------------------------------------------
 plot + labs(x="XA",y="YA",z="ZA") #Ternary Axis Method 1
-plot + labs(T="XB",L="YB",R="ZB") #Ternary Axis Method 2
+
+#additional commands
+#plot + labs(T="XB",L="YB",R="ZB") #Ternary Axis Method 2
 
 ##-----------------------------------------------
 ## Arrow Label Suffix
 ##-----------------------------------------------
 plot + labs(W="SUFFIX")           #Suffix 
 plot + atomic_percent()
-plot + weight_percent()
-plot + custom_percent("CUSTOM")
+
+#additional commands
+#plot + weight_percent()
+#plot + custom_percent("CUSTOM")
 
 ##-----------------------------------------------
 ## Clockwise / Anticlockwise
 ##-----------------------------------------------
 plot + tern_clockwise()        # -- (1)
 plot + tern_anticlockwise()    # -- (2)
-plot + tern_counterclockwise() #alias to #2
+
+#additional commands
+#plot + tern_counterclockwise() #alias to #2
 
 ##-----------------------------------------------
 ## Axis Limitations / Restrictions
@@ -122,29 +128,35 @@ plot + coord_tern(Tlim=c(.3,1),
                   Llim=c(0,.7),
                   Rlim=c(0,.7))
 plot + tern_limits(1,.7,.7)    #More Convenient
-plot + tern_limit(1,.7,.7)     #Alias 1
-plot + limit_tern(1,.7,.7)     #Alias 2
-plot + limits_tern(1,.7,.7)    #Alias 3
+
+#additional commands
+#plot + tern_limit(1,.7,.7)     #Alias 1
+#plot + limit_tern(1,.7,.7)     #Alias 2
+#plot + limits_tern(1,.7,.7)    #Alias 3
 
 ##-----------------------------------------------
 ## Demonstration of Focussing on Region
 ##-----------------------------------------------
 ggtern(data=data.frame(x=c(.8,.3,.3),
-                               y=c(.1,.6,.1),
-                               z=c(.1,.1,.6)),aes(x=x,y=y,z=z)) + 
+                       y=c(.1,.6,.1),
+                       z=c(.1,.1,.6)),
+       aes(x=x,y=y,z=z)) + 
   geom_polygon(color="red",alpha=0.25,size=2,linetype=2) + 
   geom_point(size=3,color="magenta",fill="yellow",shape=21) + 
   labs(title="Region to Focus")
+#focus
 last_plot() + coord_tern(Tlim=c(.3,.8),Llim=c(.1,0.6),Rlim=c(.1,0.6)) + 
               labs(title="Region After Focus")
 
 ##-----------------------------------------------
 ## Custom Themes
 ##-----------------------------------------------
-plot + theme_tern_gray()
-plot + theme_tern_bw()
 plot + theme_tern_rgbw()
-plot + theme_tern_rgbg()
+
+#Additional themes
+#plot + theme_tern_bw()
+#plot + theme_tern_gray()
+#plot + theme_tern_rgbg()
 
 ##-----------------------------------------------
 ## Use of Color Aesthetics -- Just like Normal!
@@ -167,7 +179,9 @@ plot
 ##-----------------------------------------------
 ## Use of geom_point and geom_path
 ##-----------------------------------------------
-plot <- ggtern(data=DATA.RANDOM2,aes(x,y,z)) + geom_point() + geom_path()
+plot <- ggtern(data=DATA.RANDOM2,aes(x,y,z)) + 
+        geom_point() + 
+        geom_path()
 plot
 
 ##-----------------------------------------------
@@ -189,7 +203,10 @@ ggplot(data=DATA.POLY2,
                     limitarea=FALSE,
                     se=FALSE,
                     fullrange=TRUE,
-              color="magenta",size=1,linetype=3)
+                    color="magenta",
+                    size=1,
+                    n=25,
+                    linetype=3)
 
 ##-----------------------------------------------
 ## Use of Segment (req. z and zend aesthetics)
@@ -204,51 +221,27 @@ ggtern(data=data.frame(A=0.6,B=0.2,C=0.2,
 ##-----------------------------------------------
 ggtern(data=DATA.RANDOM,aes(x,y,z,color=Group)) + 
                geom_point() + 
-               geom_smooth(aes(Group=Group),size=2) + 
+               geom_smooth(aes(Group=Group),size=2,n=25) + 
                theme_tern_bw()
 
 ##-----------------------------------------------
 ## Use of geom_density2d
 ##-----------------------------------------------
-#density2d with contours
+#density2d with polygon and contours,n=25 for speed
 ggtern(data=DATA.RANDOM,aes(x,y,z)) + 
   geom_point() +
-  geom_density2d()
-
-#density2d with polygon
-ggtern(data=DATA.RANDOM,aes(x,y,z)) + 
-  geom_point() +
-  stat_density2d(geom="polygon",aes(fill=..level..,alpha=..level..))
+  stat_density2d(geom="polygon",aes(fill=..level..,alpha=..level..),n=25) +
+  geom_density2d(color="red",linetype=2,n=25)
+  
 
 ##-----------------------------------------------
 ## Use of Faceting
 ##-----------------------------------------------
 ggtern(data=DATA.RANDOM,aes(x,y,z)) + facet_grid(GroupA~GroupB) + 
-  stat_density2d(geom="polygon",aes(fill=..level..,alpha=..level..)) +
+  stat_density2d(geom="polygon",aes(fill=..level..,alpha=..level..),n=25) +
   geom_point() + 
+  scale_fill_gradient(low="blue",high="red") + 
   labs(title="Example of Faceting",fill="Fill Metric",alpha="Alpha Metric")
-
-#Different colours
-last_plot() + scale_fill_gradient(low="blue",high="red")
-
-##-----------------------------------------------
-## More Facetting
-##-----------------------------------------------
-plot <- ggtern(data=DATA.RANDOM2,mapping=aes(x=x,y=y,z=z)) + 
-  labs(title ="Example Ternary Plots w/ Faceting",
-       fill  ="Fill Metric",
-       color ="Color Metric",
-       alpha ="Alpha Metric",
-       x     ="T",
-       y     ="L",
-       z     ="R") + 
-  stat_density2d(fullrange=TRUE,n=200,geom="polygon",
-                 aes(fill=..level..,alpha=..level..)) + 
-  theme_tern_rgbw() + 
-  atomic_percent() + 
-  geom_point(size=3,shape=16,aes(colour=factor(paste0(groupA,"/",groupB))))
-plot + facet_grid(groupA~groupB)
-plot + facet_wrap(groupA~groupB)
 
 ##-----------------------------------------------
 ## Zoom in on particular region.
