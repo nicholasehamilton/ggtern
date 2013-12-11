@@ -11,11 +11,14 @@
 #' @param Tlim the range of T in the ternary space
 #' @param Llim the range of L in the ternary space
 #' @param Rlim the range of R in the ternary space
+#' @param clockwise logical (default \code{FALSE}) indicating whether the precession of axes is clockwise (\code{TRUE}) or counter-clockwise (\code{FALSE}).
 #' @return ternary coordinate system object.
 #' @export
-coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1)) {
+coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Llim=NULL,Rlim=NULL,clockwise=FALSE) {
   
   ##Validate x and y lims...
+  xlim <- ifthenelse(!is.numeric(xlim) & is.numeric(ylim),ylim,xlim)
+  ylim <- ifthenelse(!is.numeric(ylim) & is.numeric(xlim),xlim,ylim)
   xlim <- .is.numericor(xlim,c(0,1)); xlim <- sort(xlim); 
   ylim <- .is.numericor(ylim,c(0,1)); ylim <- sort(ylim);
   
@@ -38,7 +41,7 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=c(0,1),L
     T = T, 
     L = L,
     R = R,
-    clockwise =FALSE,
+    clockwise = ifthenelse(!is.logical(clockwise),FALSE,clockwise[1]),
     limits = list(x = xlim, 
                   y = ylim,
                   T = Tlim,

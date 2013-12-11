@@ -4,8 +4,11 @@
     
     #---------------------------------------------------------------------------
     #HACK
-    data <- ggtern:::.trytransform(data)
-    if(inherits(last_plot(),"ggtern")){if(identical(method,lm)){method="lm"}}
+    lc <- get_last_coord()
+    if(inherits(lc,"ternary")){
+      data <- ggtern:::.trytransform(data,scales=scales,coord=lc)
+      if(identical(method,lm)){method="lm"}
+    }
     #---------------------------------------------------------------------------
     
     rows <- daply(data, .(group), function(df) length(unique(df$x)))

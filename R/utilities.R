@@ -253,6 +253,23 @@ find_global <- function (name, env=environment()){
   data
 }
 
+#select appropriate limits. internal
+.select.lim <- function(a,b,default=c(0,1)){
+  if(identical(a,default))a=waiver()
+  if(identical(b,default))b=waiver()
+  if(identical(a,b)){
+    .is.numericor(a,default)
+  }else if(!is.numeric(a) & is.numeric(b)){
+    b
+  }else if(is.numeric(a) & !is.numeric(b)){
+    a
+  }else{
+    a <- ifthenelse(is.numeric(a),a,default)
+    b <- ifthenelse(is.numeric(b),b,default)
+    c(min(a,b),max(a,b))
+  }
+}
+
 .remove_outside <- function(data){
   bup <- data
   lp <- last_plot()

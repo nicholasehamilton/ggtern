@@ -1,7 +1,7 @@
-\name{ternary_clockwise}
+\name{tern_clockwise}
 \alias{tern_anticlockwise}
+\alias{tern_clockwise}
 \alias{tern_counterclockwise}
-\alias{ternary_clockwise}
 \title{Direction of Ternary Rotation}
 \usage{
   tern_clockwise()
@@ -26,7 +26,7 @@ plot <- ggtern(data=data.frame(x=1,y=1,z=1),aes(x,y,z)) +
                   tern_clockwise()
 plot <- ggtern(data=data.frame(x=1,y=1,z=1),aes(x,y,z)) +
                   geom_point() +
-                  tern_antiwise()
+                  tern_anticlockwise()
 plot <- ggtern(data=data.frame(x=1,y=1,z=1),aes(x,y,z)) +
                   geom_point() +
                   tern_counterclockwise()

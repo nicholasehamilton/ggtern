@@ -3,8 +3,8 @@
 \title{Ternary Coordinate System}
 \usage{
   coord_tern(T = "x", L = "y", R = "z", xlim = c(0, 1),
-    ylim = c(0, 1), Tlim = c(0, 1), Llim = c(0, 1),
-    Rlim = c(0, 1))
+    ylim = c(0, 1), Tlim = NULL, Llim = NULL, Rlim = NULL,
+    clockwise = FALSE)
 }
 \arguments{
   \item{T}{the Top Mapping (default x)}
@@ -22,6 +22,10 @@
   \item{Llim}{the range of L in the ternary space}
 
   \item{Rlim}{the range of R in the ternary space}
+
+  \item{clockwise}{logical (default \code{FALSE})
+  indicating whether the precession of axes is clockwise
+  (\code{TRUE}) or counter-clockwise (\code{FALSE}).}
 }
 \value{
   ternary coordinate system object.
