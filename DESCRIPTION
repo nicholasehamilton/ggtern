@@ -1,7 +1,7 @@
 Package: ggtern
 Type: Package
 Title: An extension to ggplot, to create ternary plots.
-Version: 1.0
+Version: 1.0.0.1
 Date: 2013-11-15
 Author: Nicholas Hamilton <n.hamilton@student.unsw.edu.au>df
 Maintainer: Nicholas Hamilton <n.hamilton@student.unsw.edu.au>
