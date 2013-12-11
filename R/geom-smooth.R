@@ -12,10 +12,12 @@
 geom_smooth <- function (mapping = NULL, data = NULL, stat = "smooth", position = "identity",limitarea=TRUE,fullrange=FALSE,...) { 
   limitarea <- ifthenelse(!is.logical(limitarea),TRUE,limitarea[1])
   fullrange <- ifthenelse(limitarea,TRUE,fullrange) #FORCE FULL RANGE IN ORDER TO BE ABLE TO TRUNCATE
-  ggtern:::.GeomSmooth$new(mapping = mapping, data = data, stat = stat, position = position,limitarea=limitarea,fullrange=fullrange,...)
+  GeomSmoothMod$new(mapping = mapping, data = data, stat = stat, position = position,limitarea=limitarea,fullrange=fullrange,...)
 }
 
-.GeomSmooth <- proto(ggplot2:::Geom, {
+#' Modified Geom Smooth Proto
+#' @export
+GeomSmoothMod <- proto(ggplot2:::Geom, {
   objname <- "smooth"
   draw <- function(., data, scales, coordinates,limitarea=F,...) { 
     #HACK

@@ -285,7 +285,7 @@ trytransform <- function(data,...,coord,scales){
 #' 
 #' Internal Function
 #' @param data data.frame
-#' @returns data.frame
+#' @return data.frame
 #' @export
 remove_outside <- function(data){
   bup <- data

@@ -7,6 +7,9 @@
 \arguments{
   \item{data}{data.frame}
 }
+\value{
+  data.frame
+}
 \description{
   Internal Function
 }
