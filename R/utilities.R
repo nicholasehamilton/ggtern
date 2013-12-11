@@ -46,7 +46,7 @@ get_tern_extremes <- function(plot,coordinates=plot$coordinates,verbose=F){
   ret <- data.frame(T=c(max(Tlim),min(Tlim),min(Tlim)),
                     L=c(min(Llim),max(Llim),min(Llim)),
                     R=c(min(Rlim),min(Rlim),max(Rlim)))
-  
+    
   rownames(ret) <- c("AT.T","AT.L","AT.R")
   
   #Check
@@ -105,6 +105,7 @@ get_tern_extremes <- function(plot,coordinates=plot$coordinates,verbose=F){
 #' @param Tlim the limits of the top axis
 #' @param Llim the limits of the left axis
 #' @param Rlim the limits of the right axis
+#' @param cw based on clockwise (TRUE) or anti-clockwise(FALSE) axis precession.
 #' @return \code{data.frame} object with columns \code{x} and \code{y} representing the transformed coordinates, and, number of rows
 #' equal to that of the \code{data} argument. In other words, a '1 to 1' transformation from the ternary to the cartesian space. 
 #' @examples
@@ -115,9 +116,13 @@ get_tern_extremes <- function(plot,coordinates=plot$coordinates,verbose=F){
 #' #Transform
 #' transform_tern_to_cart(T,L,R)
 #' @export
-transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE,...,Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1)){
+transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE,...,Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1),cw=TRUE){
   if(class(data) != "data.frame")stop("data must be of type 'data.frame'")
   if(length(which(c("T","L","R") %in% colnames(data))) < 3) stop("data must contain columns T, L and R")
+  
+  Tlim <- sort(Tlim)
+  Rlim <- sort(Rlim)
+  Llim <- sort(Llim)
   
   d <- data; s <- rowSums(d);
   
@@ -133,9 +138,9 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE
   }
   
   .adj <- function(input,lim){
-    MIN <- min(lim)
-    MAX <- max(lim)
-    ret <- (input-MIN)/(MAX - MIN)
+    a   <- lim[1]
+    b   <- lim[length(lim)]
+    ret <- (input-a)/(b - a)
     ret
   }
   
@@ -144,11 +149,19 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE
   d$L <- .adj(d$L,Llim)
   d$R <- .adj(d$R,Rlim)
   
+  .calcy <- function(clockwise){
+    d$T*tan(pi/3)*0.5
+  }
+  .calcx <- function(y,clockwise){
+    if(!clockwise){
+      return(d$R + y*tan(pi/6))
+    }else{
+      return(1 - d$R - y*tan(pi/6))
+    }
+  }
+  out.Y <- .calcy(clockwise=cw)
+  out.X <- .calcx(y=out.Y,clockwise=cw)
   
-  #Do the actual transformation
-  out.Y <- d[,1]*tan(pi/3)*0.5
-  out.X <- d[,3] + out.Y*tan(pi/6)
-   
   return(data.frame(x=out.X,y=out.Y))
 }
 
@@ -220,16 +233,18 @@ find_global <- function (name, env=environment()){
 }
 
 
-.trytransform <- function(data,lp=last_plot(),...,coord=lp$coordinates,scales=lp$scales){
+.trytransform <- function(data,...,coord,scales){
+  if(missing(coord) | missing(scales)){stop("coord and scales are required")}
   bup <- data
   tryCatch({
-    if(inherits(lp,"ggtern")){  
+    if(inherits(coord,"ternary")){  
       data[,c("x","y")] <- transform_tern_to_cart( T=data[,coord$T],
                                                    L=data[,coord$L],
                                                    R=data[,coord$R],
                                                    Tlim=coord$limits$T,
                                                    Llim=coord$limits$L,
-                                                   Rlim=coord$limits$R)[,c("x","y")]
+                                                   Rlim=coord$limits$R,
+                                                   cw=coord$clockwise)[,c("x","y")]
     }
   },error=function(e){
     warning(e)

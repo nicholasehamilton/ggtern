@@ -37,10 +37,12 @@ stat_density2d <- function (mapping = NULL, data = NULL, geom = "density2d", pos
     
     ##HACK... ensure goes right to edge...
     if(inherits(last_plot(),"ggtern")){
-      xlim <- c(0,1); 
+      #print(scales$x)
+      #print(get_last_coord())
+      xlim <- c(0,1)
       ylim <- c(0,1)
     }else{
-      xlim <- scale_dimension(scales$x); 
+      xlim <- scale_dimension(scales$x)
       ylim <- scale_dimension(scales$y)
     }
     

@@ -1,7 +1,42 @@
+#' New Theme Elements
+#' 
+#' 
+#' Use this function to modify theme settings.
+#'
+#' Theme elements can inherit properties from other theme elements.
+#' For example, \code{axis.title.x} inherits from \code{axis.title}, 
+#' which in turn inherits from \code{text}. All text elements inherit
+#' directly or indirectly from \code{text}; all lines inherit from
+#' \code{line}, and all rectangular objects inherit from \code{rect}.
+#'
+#' For more examples of modifying properties using inheritance, see
+#' \code{\link{+.gg}} and \code{\link{\%+replace\%}}.
+#'
+#' To see a graphical representation of the inheritance tree, see the
+#' last example below.
+#'
+#' @alias theme 
+#' @alias theme-tern
+#' @name theme
+#' @section New/Additional Inheritance Structures:
+#' Based on the \code{ggplot2} existing structure (\code{\link[ggplot2]{theme}}), 
+#' The new individual theme elements for the ternary plot are as follows:
+#' 
+#' \tabular{lll}{
+#'   \strong{NAME}   \tab \strong{DESCRIPTION}       \tab \strong{(INHERITS)}      \cr
+#'   ternary.options \tab ternary specific options   \tab (\code{element_ternary}) \cr
+#'   axis.tern       \tab base line for ternary plot \tab (\code{element_line})    \cr
+#' }
+#' @rdname terntheme
+NULL
+
+
 .element_tree <- ggplot2:::.element_tree #DUPLICATE
 
 #TERNARY OPTIONS.
 .element_tree$ternary.options = ggplot2:::el_def("element_ternary","")
+
+#.element_tree$ternary.options.clockwise  = ggplot2:::el_def("logical","")
 
 ##AXIS ARROWS
 .element_tree$axis.tern         = ggplot2:::el_def("element_line", "line")
@@ -61,6 +96,7 @@
 
 #' Ternary Theme Elements
 #' 
+#' @section Clearing the Usual Cartesian Elements:
 #' \code{theme_nocart} is a function that returns empty theme elemens for the standard cartesian memebers, including
 #' panel.background, panel.border, panel.grid.major, panel.grid.minor, axis.ticks, axis.text.x, axis.text.y, axis.title.x, 
 #' axis.title.y are all set to blank
@@ -146,14 +182,14 @@ theme_showarrows <- function(){.theme_arrows(TRUE)}
   base$axis.tern.arrow.R       = element_line(colour=col.R)
     
   base$axis.tern.text          = element_text(size=size.ticklabels,face="plain")
-  base$axis.tern.text.T        = element_text(colour=col.T,vjust=0.5,hjust=-0.2,angle=0)
-  base$axis.tern.text.L        = element_text(colour=col.L,vjust=0.5,hjust=1.2,angle=-60)
-  base$axis.tern.text.R        = element_text(colour=col.R,vjust=0.5,hjust=1.2,angle=60)
+  base$axis.tern.text.T        = element_text(colour=col.T,vjust=0.5,hjust=-0.2,angle =0)
+  base$axis.tern.text.L        = element_text(colour=col.L,vjust=0.5,hjust=1.2, angle =0)
+  base$axis.tern.text.R        = element_text(colour=col.R,vjust=0.5,hjust=1.2, angle =0)
     
   base$axis.tern.arrow.text    = element_text(size=size.text,hjust=0.5)
-  base$axis.tern.arrow.text.T  = element_text(colour=col.T,  vjust=-0.2,angle=-60)
-  base$axis.tern.arrow.text.L  = element_text(colour=col.L,vjust=-0.2,angle=60)
-  base$axis.tern.arrow.text.R  = element_text(colour=col.R, vjust=1.2, angle=0)
+  base$axis.tern.arrow.text.T  = element_text(colour=col.T,  vjust=-0.2,angle =0)
+  base$axis.tern.arrow.text.L  = element_text(colour=col.L,vjust=-0.2,  angle =0)
+  base$axis.tern.arrow.text.R  = element_text(colour=col.R, vjust=1.2,  angle =0)
     
   base$axis.tern.title         = element_text(size  =size.title, angle=0,face="bold",hjust=0.5 ,vjust=0.5)
   base$axis.tern.title.T       = element_text(colour=col.T,vjust=-0.5)

@@ -24,7 +24,7 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=c(0,1),L
     warning("Error in xlim and ylim ratios, adjusting ymax to maintain aspect.",call.=FALSE)
     ylim <- c(min(ylim),min(ylim) + diff(xlim))
   }
-  ylim <- c(min(ylim),min(ylim) + diff(ylim)*coord_aspect.ternary())
+  ylim <- c(min(ylim), min(ylim) + diff(ylim)*coord_aspect.ternary())
   
   all.coords <- c("x","y","z")
   if(length(which(!c(T,L,R) %in% all.coords)) > 0){stop("Options for T, L and R are x,y and z")}
@@ -38,6 +38,7 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=c(0,1),L
     T = T, 
     L = L,
     R = R,
+    clockwise =FALSE,
     limits = list(x = xlim, 
                   y = ylim,
                   T = Tlim,
@@ -98,23 +99,29 @@ coord_transform.ternary <- function(coord, data, details, verbose=F,revertToCart
     ix.tern <- c("T","L","R"); 
     ix.cart <- c("x","y")
     
-    ix.T <- "T"#names(which(coord == "x")[1])
-    ix.L <- "L"#names(which(coord == "y")[1])
-    ix.R <- "R"#names(which(coord == "z")[1])
+    ix.T <- "T"
+    ix.L <- "L"
+    ix.R <- "R"
+    
+    clockwise = coord$clockwise;
     
     ##Execute the transformation to cartesian
     data[,c("x","y")] <- transform_tern_to_cart(
       data = data[,ix.tern],
       Tlim = coord$limits[[ix.T]],
       Llim = coord$limits[[ix.L]],
-      Rlim = coord$limits[[ix.R]])[,c("x","y")]
+      Rlim = coord$limits[[ix.R]],
+      cw   = clockwise
+      )[,c("x","y")]
     #only keep records in poly
     if(discard){
       #Get the extremes to determine if points are outside the plot area.
       data.extremes <-transform_tern_to_cart(data = get_tern_extremes(coord)[,ix.tern],
                                              Tlim = coord$limits[[ix.T]],
                                              Llim = coord$limits[[ix.L]],
-                                             Rlim = coord$limits[[ix.R]])[,c("x","y")]
+                                             Rlim = coord$limits[[ix.R]],
+                                             cw   = clockwise
+                                             )[,c("x","y")]
       data[,c("x","y")] <- round(data[,c("x","y")],3)
       in.poly <- point.in.polygon(data$x,data$y,as.numeric(data.extremes$x),as.numeric(data.extremes$y))
       data <- data[which(in.poly > 0),]
@@ -144,7 +151,6 @@ coord_transform.ternary <- function(coord, data, details, verbose=F,revertToCart
 #' @S3method coord_expand_defaults ternary
 coord_expand_defaults.ternary <- function(coord, scale, aesthetic){
   ret <- ggplot2:::expand_default(scale)
-  print(ret)
   ret
 }
 
@@ -177,7 +183,7 @@ coord_train.ternary <- function(coord, scales){
 #' @rdname coord
 #' @method coord_aspect ternary
 ##' @S3method coord_aspect ternary
-coord_aspect.ternary <- function(coord, details){sin(pi/3)}
+coord_aspect.ternary <- function(coord, details){sin(60*pi/180)}
 
 #' S3 Method Coordinate Distance
 #'
@@ -225,11 +231,30 @@ coord_render_fg.ternary <- function(coord,details,theme){
 coord_render_bg.ternary <- function(coord,details,theme){
   items <- list()
   
+  Tlim <- coord$limits$T
+  Llim <- coord$limits$L
+  Rlim <- coord$limits$R
+  
+  #CLOCKWISE ROTATION OR NOT
+  clockwise <- coord$clockwise
+  
+  if(!is.logical(clockwise)){clockwise=F}else{clockwise=clockwise[1]}
+  angles    <- ifthenelse(clockwise,c(-180,-60,60),c(0,120,240))
+  
+  angles.text <- ifthenelse(clockwise,c(0,-60,60),c(0,-60,60))
+  angles.arrowmarker <- ifthenelse(clockwise,c(60,0,-60),c(-60,60,0))
+  
   #The limits.
-  data.extreme <- data.frame(T=c(1,0,0),L=c(0,1,0),R=c(0,0,1))
-  data.extreme <- transform_tern_to_cart(data=data.extreme)
+  data.extreme <- get_tern_extremes(coordinates=coord)
+  data.extreme <- transform_tern_to_cart(data=data.extreme,Tlim=Tlim,Llim=Llim,Rlim=Rlim,cw=clockwise)
   data.extreme <- ggplot2:::coord_transform.cartesian(coord,data.extreme,details)
   rownames(data.extreme) <- c("AT.T","AT.L","AT.R")
+  
+  #not used yet.
+  d.angles <- cbind(data.extreme[c(2,3,1),],data.extreme);
+  rownames(d.angles) <- rownames(data.extreme)
+  colnames(d.angles) <- c("x","y","xend","yend")
+  d.angles$angle <- atan((d.angles$yend - d.angles$y) / (d.angles$xend - d.angles$x))*180/pi
   
   #--------------------------------------------------
   #BACKGROUND...
@@ -292,9 +317,16 @@ coord_render_bg.ternary <- function(coord,details,theme){
   }
   
   #process the axes
-  items <- .renderB("axis.tern.line.T",3,1,items)
-  items <- .renderB("axis.tern.line.L",1,2,items)
-  items <- .renderB("axis.tern.line.R",2,3,items)
+  if(clockwise){
+    items <- .renderB("axis.tern.line.T",3,1,items)
+    items <- .renderB("axis.tern.line.L",2,3,items)
+    items <- .renderB("axis.tern.line.R",1,2,items)
+  }else{
+    items <- .renderB("axis.tern.line.T",3,1,items)
+    items <- .renderB("axis.tern.line.L",1,2,items)
+    items <- .renderB("axis.tern.line.R",2,3,items)
+  }
+  
   
   #--------------------------------------------------
   #ARROWS
@@ -303,13 +335,20 @@ coord_render_bg.ternary <- function(coord,details,theme){
     #bypass
   }else if(e){
     #The basic data.
-    d.f <- data.extreme[c(1,2,3),]
-    d.s <- data.extreme[c(3,1,2),]; rownames(d.s) <- rownames(d.f) #Correct rownames
+    if(clockwise){
+      d.f <- data.extreme[c(1,3,2),]
+      d.s <- data.extreme[c(3,2,1),];
+    }else{
+      d.f <- data.extreme[c(1,2,3),]
+      d.s <- data.extreme[c(3,1,2),];
+    }
+    
+    rownames(d.s) <- rownames(d.f) #Correct rownames
     d.diff <- d.f - d.s
     
     #Cut down to relative proportion.
     e <- calc_element_plot("ternary.options",theme=theme,verbose=F,plot=NULL)
-    d.f <- d.f - (1-max(min(e$arrowfinish,1.0),0.0))*d.diff
+    d.f <- d.f -   (1-max(min(e$arrowfinish,1.0),0.0))*d.diff
     d.s <- d.s +   (min(max(e$arrowstart, 0.0),1.0))*d.diff
     d <- rbind(d.s,d.f)
     
@@ -320,7 +359,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
     rownames(d) <- c("AT.T","AT.L","AT.R")
     
     #MOVE the Arrows Off the Axes.
-    d[c("AT.T","AT.L","AT.R"),"angle"] <- c(0,120,240)
+    d[c("AT.T","AT.L","AT.R"),"angle"]    <- angles
     d[c("AT.T","AT.L","AT.R"),"arrowsep"] <- ifthenelse(is.numeric(e$arrowsep),e$arrowsep[1],0)
     d[,c("x","xend")] <- d[,c("x","xend")] + cos(pi*d$angle/180)*d$arrowsep
     d[,c("y","yend")] <- d[,c("y","yend")] + sin(pi*d$angle/180)*d$arrowsep
@@ -330,6 +369,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
     d$ymn   <- rowMeans(d[,c("y","yend")])
     d$L     <- as.character(c(details$Tlabel,details$Llabel,details$Rlabel))
     d$W     <- as.character(c(details$Wlabel))
+    d$A     <- angles.arrowmarker
     
     ##Function to create new axis grob
     .render.arrow <- function(name,ix,items){
@@ -357,6 +397,8 @@ coord_render_bg.ternary <- function(coord,details,theme){
       return(items)
     }
     
+    .hjust.flip    <- function(x,clockwise){if(clockwise){0.5 - (x - 0.5)}else{x}}
+    
     ##Function to create new axis grob
     .render.label <- function(name,ix,items){
       tryCatch({  
@@ -367,14 +409,14 @@ coord_render_bg.ternary <- function(coord,details,theme){
         family    <- e$family
         face      <- e$face
         hjust     <- e$hjust
-        vjust     <- e$vjust
+        vjust     <- ifthenelse(identical(name,"axis.tern.arrow.text.T"),e$vjust,.hjust.flip(e$vjust,clockwise=clockwise))
         angle     <- e$angle
         grob      <- textGrob( label = arrow_label_formatter(d$L[ix],d$W[ix]), 
                                x     = d$xmn[ix], 
                                y     = d$ymn[ix], 
                                hjust = hjust, 
                                vjust = vjust, 
-                               rot   = angle, 
+                               rot   = angle + d$A[ix], 
                                default.units="native", 
                                gp   = gpar(col        = colour, 
                                            fontsize   = size,# * ggplot2:::.pt,
@@ -400,10 +442,10 @@ coord_render_bg.ternary <- function(coord,details,theme){
   
   #--------------------------------------------------
   #LABELS
-  d = data.extreme
-  d$L  <- as.character(c(details$Tlabel,
-                         details$Llabel,
-                         details$Rlabel))
+  if(clockwise){d = data.extreme[c(1,3,2),]}else{d = data.extreme}
+  d$L  <- as.character(c(details$Tlabel,details$Llabel,details$Rlabel))
+  
+  
   ##Function to create new axis grob
   .render <- function(name,ix,items){
     tryCatch({  
@@ -413,7 +455,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
       lineheight<- e$lineheight
       family    <- ifthenelse(is.character(e$family),e$family,"sans")
       face      <- e$face
-      hjust     <- e$hjust
+      hjust     <- e$hjust #.hjust.flip(e$hjust,clockwise=clockwise)
       vjust     <- e$vjust
       angle     <- e$angle
       grob      <- textGrob( label = d$L[ix], 
@@ -453,7 +495,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   d.extremes <- data.extreme; 
   
   #ASSEMBLE THE GRID DATA.
-  .getData <- function(X,existing=NULL,major=TRUE,angle=0){
+  .getData <- function(X,existing=NULL,major=TRUE,angle=0,angle.text=0){
     breaks <- if(major){details[[paste0(X,".major_source")]]}else{details[[paste0(X,".minor_source")]]}
     labels <- if(major){details[[paste0(X,".labels")]]}else{""}
     
@@ -474,13 +516,15 @@ coord_render_bg.ternary <- function(coord,details,theme){
     new <- data.frame(ID = id,Scale=X,Breaks=breaks,Labels=labels,Major=major)
     
     #The max/min limits.
-    MAX <- max(limits); 
-    MIN <- min(limits)
+    b <- limits[length(limits)]
+    a <- limits[1]
+    #MAX <- max(limits); 
+    #MIN <- min(limits)
     
-    new <- new[which(new$Breaks > 1.001*MIN & new$Breaks <= MAX),]
+    new <- new[which(new$Breaks > 1.001*min(b,a) & new$Breaks <= max(b,a)),]
     
-    new$Lower=MIN
-    new$Upper=MAX
+    new$Lower=a
+    new$Upper=b
     new$Prop = (new$Breaks - new$Lower) / (new$Upper - new$Lower) #The relative position
     new$TickLength = abs(diff(limits))*if(major){tl.major}else{tl.minor}
     
@@ -491,41 +535,42 @@ coord_render_bg.ternary <- function(coord,details,theme){
     
     ##Start and finish positions of scale.
     ix.order  <- c("T","L","R")
-    ix.at     <- c("AT.T","AT.L","AT.R")
+    ix.at     <- ifthenelse(clockwise,c("AT.T","AT.R","AT.L"),c("AT.T","AT.L","AT.R"))
     out       <- c("x","y")
     
     #FOR TICKS
     ix.s <- which(ix.order == X); 
-    ix.f <- if(ix.s == 1){3}else{ix.s-1}
+    ix.f <- ifthenelse(clockwise,if(ix.s == 3){1}else{ix.s+1},if(ix.s == 1){3}else{ix.s-1})
     finish <- as.numeric(d.extremes[ix.at[ix.s],])
     start  <- as.numeric(d.extremes[ix.at[ix.f],])
     for(i in 1:length(out)){new[,out[i]] <- new$Prop*(finish[i]-start[i]) + start[i]}
     
     #FOR GRID
     ix.s <- which(ix.order == X); 
-    ix.f <- if(ix.s == 3){1}else{ix.s+1}
+    ix.f <- ifthenelse(clockwise,if(ix.s == 1){3}else{ix.s-1},if(ix.s == 3){1}else{ix.s+1})
     finish <- as.numeric(d.extremes[ix.at[ix.s],])
     start  <- as.numeric(d.extremes[ix.at[ix.f],])
     for(i in 1:length(out)){new[,paste0(out[i],"end.grid")] <- new$Prop*(finish[i]-start[i]) + start[i]}
     
     #The tick angles.
     new$Angle <- angle
+    new$Angle.Text <- angle.text
     
     ##ADD TO EXISTING
     rbind(existing,new)
-  }  
+  }
   
   ##get the base data.
   d <- NULL
   #TOP
-  d <- .getData("T",d,T,angle=  0); #MAJOR 
-  d <- .getData("T",d,F,angle=  0); #MINOR
+  d <- .getData("T",d,T,angle=  angles[1],angles.text[1]); #MAJOR 
+  d <- .getData("T",d,F,angle=  angles[1],angles.text[1]); #MINOR
   #LEFT
-  d <- .getData("L",d,T,angle=120); 
-  d <- .getData("L",d,F,angle=120); 
+  d <- .getData("L",d,T,angle=  angles[2],angles.text[2]); 
+  d <- .getData("L",d,F,angle=  angles[2],angles.text[2]); 
   #RIGHT
-  d <- .getData("R",d,T,angle=240); 
-  d <- .getData("R",d,F,angle=240);
+  d <- .getData("R",d,T,angle=  angles[3],angles.text[3]); 
+  d <- .getData("R",d,F,angle=  angles[3],angles.text[3]);
   
   ##Determine the tick finish positions for segments.
   d$xend <- cos(d$Angle*pi/180)*d$TickLength + d$x
@@ -555,7 +600,8 @@ coord_render_bg.ternary <- function(coord,details,theme){
     },error = function(e){ warning(e)})
     return(items)
   }
-  .render.labels <- function(name,items,d){
+  
+  .render.labels <- function(name,items,d){    
     tryCatch({  
       e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
       colour    <- e$colour
@@ -564,9 +610,9 @@ coord_render_bg.ternary <- function(coord,details,theme){
       lineheight<- ifthenelse(is.numeric(e$lineheight),e$lineheight,1)
       family    <- ifthenelse(is.character(e$family),e$family,"sans")
       face      <- e$face
-      hjust     <- ifthenelse(is.numeric(e$hjust),e$hjust,0)
+      hjust     <- .hjust.flip(ifthenelse(is.numeric(e$hjust),e$hjust,0),clockwise=clockwise)
       vjust     <- ifthenelse(is.numeric(e$vjust),e$vjust,0)
-      angle     <- ifthenelse(is.numeric(e$angle),e$angle,0)
+      angle     <- ifthenelse(is.numeric(e$angle),e$angle,0) + unique(d$Angle.Text)[1]
       grob      <- textGrob( label = as.character(d$Labels), 
                              x = d$xend, 
                              y = d$yend, 

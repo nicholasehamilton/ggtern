@@ -60,6 +60,7 @@ ggplot_build <- function(plot) {
       lim <- plot$scales$get_scales(X)$limits 
       plot$coordinates$limits[[X]] <- .is.numericor(lim,c(0,1))
     }
+    
     #STORE COORDINATES FOR USE BY OTHER METHODS.
     set_last_coord(plot$coordinates)
     

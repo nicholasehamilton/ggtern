@@ -1,5 +1,6 @@
 \name{ggtern-package}
 \alias{ggtern-package}
+\alias{ggtern}
 \docType{package}
 \title{
 An extension to ggplot2 for ternary diagrams
@@ -25,5 +26,6 @@ Literature to come
 }
 \keyword{ package }
 \seealso{
-  \code{\link{ggplot2}} 
+
+  Get started: \code{\link{ggtern_constructor}}, and \code{\link{ggplot2}}.
 }

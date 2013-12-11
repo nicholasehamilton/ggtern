@@ -26,8 +26,8 @@
 element_ternary <- function(showarrows       =TRUE,
                             padding          =0.10,
                             arrowsep         =0.075,
-                            arrowstart       =0.25,
-                            arrowfinish      =0.75,
+                            arrowstart       =0.3,
+                            arrowfinish      =0.7,
                             vshift           =0.25*padding,
                             hshift           =0,
                             ticklength.major =0.020,
@@ -45,3 +45,6 @@ element_ternary <- function(showarrows       =TRUE,
     class = c("element_ternary")
   )
 }
+
+
+

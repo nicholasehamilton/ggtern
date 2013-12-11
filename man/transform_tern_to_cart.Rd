@@ -4,7 +4,8 @@
 \usage{
   transform_tern_to_cart(T, L, R,
     data = data.frame(T = T, L = L, R = R), scale = TRUE,
-    ..., Tlim = c(0, 1), Llim = c(0, 1), Rlim = c(0, 1))
+    ..., Tlim = c(0, 1), Llim = c(0, 1), Rlim = c(0, 1),
+    cw = TRUE)
 }
 \arguments{
   \item{T}{the concentrations of the \strong{Top} species
@@ -32,6 +33,9 @@
   \item{Llim}{the limits of the left axis}
 
   \item{Rlim}{the limits of the right axis}
+
+  \item{cw}{based on clockwise (TRUE) or
+  anti-clockwise(FALSE) axis precession.}
 }
 \value{
   \code{data.frame} object with columns \code{x} and

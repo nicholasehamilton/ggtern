@@ -30,6 +30,7 @@ Collate:
   'strip-unapproved.R'
   'theme.R'
   'labs-pcnt.R'
+  'tern-clockwise.R'
   'aes.R'
   'scales.R'
   'panel.R'
