@@ -313,7 +313,7 @@ find_global <- function (name, env=environment()){
   df
 }
 
-
+.hjust.flip    <- function(x,clockwise){if(clockwise){0.5 - (x - 0.5)}else{x}}
 
 
 

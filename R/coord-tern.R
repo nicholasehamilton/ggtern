@@ -94,7 +94,7 @@ is.linear.ternary <- function(coord) TRUE
 #' @rdname coord
 #' @method coord_transform ternary
 #' @S3method coord_transform ternary
-coord_transform.ternary <- function(coord, data, details, verbose=F,revertToCart=T,adjustCart=T,discard=getOption("tern.discard.external")){
+coord_transform.ternary <- function(coord, data, details, verbose=FALSE,revertToCart=TRUE,adjustCart=TRUE,discard=getOption("tern.discard.external")){
   bup    <- data #Original Data Backup.
   tryCatch({
     ggplot2:::check_required_aesthetics(coord$required_aes, names(data),"coord_tern")
@@ -399,8 +399,6 @@ coord_render_bg.ternary <- function(coord,details,theme){
       },error = function(e){ warning(e)})
       return(items)
     }
-    
-    .hjust.flip    <- function(x,clockwise){if(clockwise){0.5 - (x - 0.5)}else{x}}
     
     ##Function to create new axis grob
     .render.label <- function(name,ix,items){

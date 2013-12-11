@@ -14,7 +14,8 @@
   \method{is.linear}{ternary} (coord)
 
   \method{coord_transform}{ternary} (coord, data, details,
-    verbose = F, revertToCart = T, adjustCart = T,
+    verbose = FALSE, revertToCart = TRUE,
+    adjustCart = TRUE,
     discard = getOption("tern.discard.external"))
 
   \method{coord_expand_defaults}{ternary} (coord, scale,
