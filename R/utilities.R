@@ -257,16 +257,18 @@ trytransform <- function(data,...,coord,scales){
   bup <- data
   tryCatch({
     if(inherits(coord,"ternary")){  
-      data[,c("x","y")] <- transform_tern_to_cart( T=data[,coord$T],
+      res <- transform_tern_to_cart(               T=data[,coord$T],
                                                    L=data[,coord$L],
                                                    R=data[,coord$R],
                                                    Tlim=coord$limits$T,
                                                    Llim=coord$limits$L,
                                                    Rlim=coord$limits$R,
                                                    cw=coord$clockwise)[,c("x","y")]
+      data <- cbind(res,data[,which(!colnames(data) %in% c(coord$T,coord$L,coord$R))])
     }
   },error=function(e){
     warning(e)
+    message(e)
     data <- bup
   })
   data

@@ -21,12 +21,8 @@ GeomSmoothMod <- proto(ggplot2:::Geom, {
   objname <- "smooth"
   draw <- function(., data, scales, coordinates,limitarea=F,...) { 
     
-    #HACK
-    if(limitarea){
-      if(inherits(get_last_coord(),"ternary")){
-        data <- remove_outside(data)
-      }
-    }
+    #HACK 4 GGTERN
+    if(limitarea & inherits(get_last_coord(),"ternary")){data <- remove_outside(data)}
     
     ribbon <- transform(data, colour = NA)
     path   <- transform(data, alpha  = NA)

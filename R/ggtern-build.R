@@ -40,7 +40,7 @@ ggplot_build <- function(plot) {
     if(length(plot$layers) == 0){stop("No layers in plot",call.=F)}  
     
     #The ternary axis names.
-    scales.tern <- c("T","L","R")
+    scales.tern <- c("T","L","R","x","y")
     
     #names(which(plot$coordinates=="y"))
     ix <- function(x){names(plot$coordinates)[which(plot$coordinates == x)]}

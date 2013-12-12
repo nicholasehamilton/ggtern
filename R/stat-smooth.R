@@ -1,16 +1,6 @@
 .StatSmooth <- proto(ggplot2:::Stat, {
   objname <- "smooth"
   calculate_groups <- function(., data, scales, method=ifthenelse(inherits(last_plot(),"ggtern"),"lm","auto"), formula=y~x, ...){
-    
-    #---------------------------------------------------------------------------
-    #HACK
-    lc <- get_last_coord()
-    if(inherits(lc,"ternary")){
-      data <- trytransform(data,scales=scales,coord=lc)
-      if(identical(method,lm)){method="lm"}
-    }
-    #---------------------------------------------------------------------------
-    
     rows <- daply(data, .(group), function(df) length(unique(df$x)))
     if (all(rows == 1) && length(rows) > 1) {
       message("geom_smooth: Only one unique x value each group.", 
@@ -49,25 +39,39 @@
       return(data.frame())
     }
     
-    if (is.null(data$weight)) data$weight <- 1
-    
-    if (is.null(xseq)) {
-      if (is.integer(data$x)) {
-        if (fullrange) {
-          xseq <- scale_dimension(scales$x, c(0, 0))
-        } else {
-          xseq <- sort(unique(data$x))
-        } 
-      } else {
-        if (fullrange) {
-          range <- scale_dimension(scales$x, c(0, 0))
-        } else {
-          range <- range(data$x, na.rm=TRUE)  
-        } 
+    #---------------------------------------------------------------------------
+    #HACK 4 ggtern
+    lc <- get_last_coord()
+    if(inherits(lc,"ternary")){
+      data <- trytransform(data,scales=scales,coord=lc)
+      if(identical(method,lm)){method="lm"}
+      if(is.null(xseq)){
+        if(fullrange){range=lc$limits$x}else{range=range(data$x, na.rm=TRUE)}
         xseq <- seq(range[1], range[2], length=n)
-      } 
+      }
+    }else{
+      #---------------------------------------------------------------------------
+      #RESUME
+      if (is.null(xseq)) {
+        if (is.integer(data$x)) {
+          if (fullrange) {
+            range <- scale_dimension(scales$x, c(0, 0))
+          } else {
+            xseq <- sort(unique(data$x))
+          } 
+        } else {
+          if (fullrange) {
+            range <- scale_dimension(scales$x, c(0, 0))
+          } else {
+            range <- range(data$x, na.rm=TRUE)  
+          } 
+          xseq <- seq(range[1], range[2], length=n)
+        } 
+      }
     }
+    
     if (is.character(method)) method <- match.fun(method)
+    if (is.null(data$weight)) data$weight <- 1
     
     method.special <- function(...) 
       method(formula, data=data, weights=weight, ...)
