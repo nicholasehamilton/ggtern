@@ -20,9 +20,10 @@ geom_smooth <- function (mapping = NULL, data = NULL, stat = "smooth", position 
 GeomSmoothMod <- proto(ggplot2:::Geom, {
   objname <- "smooth"
   draw <- function(., data, scales, coordinates,limitarea=F,...) { 
+    
     #HACK
     if(limitarea){
-      if(inherits(last_plot(),"ggtern")){
+      if(inherits(get_last_coord(),"ternary")){
         data <- remove_outside(data)
       }
     }

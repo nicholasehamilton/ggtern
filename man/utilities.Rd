@@ -7,8 +7,7 @@
 \usage{
   ifthenelse(x, a, b)
 
-  get_tern_extremes(plot, coordinates = plot$coordinates,
-    verbose = F)
+  get_tern_extremes(coordinates, verbose = F, expand = 0)
 
   arrow_label_formatter(label, suffix = "", ..., sep = "/")
 
@@ -22,13 +21,13 @@
 
   \item{b}{value to return when false}
 
-  \item{plot}{ggtern object}
-
   \item{coordinates}{ggtern coordinate system, inheriting
   "ternary" and "coord" classes.}
 
   \item{verbose}{logical indicating verbose reporting to
   console}
+
+  \item{expand}{numeric value to}
 
   \item{label}{character label}
 
@@ -39,6 +38,9 @@
   \item{element}{the element name to calculate}
 
   \item{theme}{the theme to inherit from}
+
+  \item{plot}{the plot to check locally for theme element,
+  NULL is ok.}
 
   \item{...}{not used}
 }
@@ -54,8 +56,7 @@
   is \code{FALSE})
 
   \code{get_tern_extremes} determines the limiting ternary
-  coordinates given input plot or coordinates. In the event
-  that the
+  coordinates given input coordinates.
 
   \code{arrow_label_formatter} is a function that formats
   the labels directly adjacent to the axes on a ternary

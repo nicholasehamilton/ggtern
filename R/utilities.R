@@ -22,25 +22,29 @@ ifthenelse <- function(x,a,b){
 
 #' ggtern Utiltities
 #' 
-#' \code{get_tern_extremes} determines the limiting ternary coordinates given input plot or coordinates. In the event that the 
-#' @param plot ggtern object
+#' \code{get_tern_extremes} determines the limiting ternary coordinates given input coordinates.
 #' @param coordinates ggtern coordinate system, inheriting "ternary" and "coord" classes.
 #' @param verbose logical indicating verbose reporting to console
+#' @param expand numeric value to 
 #' @examples get_tern_extremes(coordinates = coord_tern())
 #' @return data.frame representing the T, L and R amounts (Columns) at each of the tips (extremes) of the ternary plot area (Rows)
 #' @rdname utilities
 #' @export
-get_tern_extremes <- function(plot,coordinates=plot$coordinates,verbose=F){
-  if(!missing(plot)){
-    if(inherits(plot,"ternary") & inherits(plot,"coord")){
-      coordinates <- plot
-    }
-  }
+get_tern_extremes <- function(coordinates,verbose=F,expand=0){
+  expand = max(0,.is.numericor(expand[1],0)); 
+  expand <- c(-expand/2,expand)
+  
+  #if(!missing(plot)){
+  #  if(inherits(plot,"ternary") & inherits(plot,"coord")){
+  #    coordinates <- plot
+  #  }
+  #}
+  
   if(!inherits(coordinates,"ternary") & !inherits(coordinates,"coord"))stop("coordinates must be ternary coordinates")
   
-  Tlim <- coordinates$limits$T; if(!is.numeric(Tlim)){Tlim <- c(0,1)} 
-  Llim <- coordinates$limits$L; if(!is.numeric(Llim)){Llim <- c(0,1)} 
-  Rlim <- coordinates$limits$R; if(!is.numeric(Rlim)){Rlim <- c(0,1)} 
+  Tlim <- coordinates$limits$T; if(!is.numeric(Tlim)){Tlim <- c(0,1)};Tlim <- Tlim + expand 
+  Llim <- coordinates$limits$L; if(!is.numeric(Llim)){Llim <- c(0,1)};Llim <- Llim + expand
+  Rlim <- coordinates$limits$R; if(!is.numeric(Rlim)){Rlim <- c(0,1)};Rlim <- Rlim + expand 
   
   #get the data.
   ret <- data.frame(T=c(max(Tlim),min(Tlim),min(Tlim)),
@@ -50,16 +54,19 @@ get_tern_extremes <- function(plot,coordinates=plot$coordinates,verbose=F){
   rownames(ret) <- c("AT.T","AT.L","AT.R")
   
   #Check
-  agg <- apply(ret,1,sum)
+  agg <- round(apply(ret,1,sum),3)
+  err <- 0.001
+  ix  <- which(agg > 1.0+err | agg < 1.0-err)
+  
   report.data <- data.frame(ret,Total=agg);
   rownames(report.data) <- paste("At Point:",   c("T","L","R"))
   colnames(report.data) <- c("T Amt.","L Amt.","R Amt.","Tot. Amt.")
-  if(length(which(agg != 1.0)) > 0){
+  if(length(ix) > 0){
       writeLines("ATTENTION: Non-Default Ternary Limits Do not Sum to Unity!")
       print(report.data)
       stop("Extremes must sum to unity.")
   }
-  if(min(agg) < 0 | max(ret) > 1){
+  if(min(agg) < 0 - min(expand) | max(ret) > 1 + max(expand)){
     writeLines("ATTENTION: Non-Default Ternary Limits are outside [0,1]")
     print(report.data)
     stop("Negative Values, or Values > 1 are Not Acceptable")
@@ -194,6 +201,7 @@ arrow_label_formatter <- function(label,suffix="",...,sep="/"){
 #' @seealso \code{\link[ggplot2]{calc_element}}
 #' @param element the element name to calculate
 #' @param theme the theme to inherit from
+#' @param plot the plot to check locally for theme element, NULL is ok.
 #' @param ... not used
 #' @rdname utilities
 #' @export
@@ -294,7 +302,7 @@ remove_outside <- function(data){
     if(inherits(lp,"ggtern")){ #ONLY FOR ggtern object
       if(class(data) != "data.frame"){return(data)}
       if(length(which(c("x","y") %in% names(data))) != 2){warning("x and y are required"); return(data)}
-      tri <- transform_tern_to_cart(data=get_tern_extremes(last_plot()))
+      tri <- transform_tern_to_cart(data=get_tern_extremes(get_last_coord()))
       ix <- point.in.polygon(data$x,data$y,tri$x,tri$y)
       return(data[which(ix > 0),])
     }
@@ -319,7 +327,7 @@ sink_density <- function(df,remove=TRUE){
   tryCatch({
     if(inherits(lp,"ggtern")){ #ONLY FOR ggtern object
       #ix  <- expand.grid(x=1:length(dens$x),y=1:length(dens$y))
-      tri <- transform_tern_to_cart(data=get_tern_extremes(lp))
+      tri <- transform_tern_to_cart(data=get_tern_extremes(get_last_coord()))
         #OLD CODE...
         #print(system.time(ix$inorout <- apply(ix,1,function(x){1.0*point_in_triangle(P=c(dens$x[x[1]],dens$y[x[2]]),x=tri$x,y=tri$y,strictly=TRUE,check=FALSE)})))
       inorout <- point.in.polygon(df$x,df$y,tri$x,tri$y)

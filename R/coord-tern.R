@@ -118,15 +118,24 @@ coord_transform.ternary <- function(coord, data, details, verbose=FALSE,revertTo
       )[,c("x","y")]
     #only keep records in poly
     if(discard){
-      #Get the extremes to determine if points are outside the plot area.
-      data.extremes <-transform_tern_to_cart(data = get_tern_extremes(coord)[,ix.tern],
+      #EXPAND THE MAX LIMITS
+      TOLLERANCE <- 0.01
+      
+      #Get the extremes (PLUS TOLLERANCE) to determine if points are outside the plot area.
+      xtrm <- get_tern_extremes(coord,expand=TOLLERANCE)[,ix.tern]
+      
+      #Transform extremes to cartesian space
+      data.extremes <-transform_tern_to_cart(data = xtrm,
                                              Tlim = coord$limits[[ix.T]],
                                              Llim = coord$limits[[ix.L]],
                                              Rlim = coord$limits[[ix.R]],
                                              cw   = clockwise
                                              )[,c("x","y")]
-      data[,c("x","y")] <- round(data[,c("x","y")],3)
+      
+      #In polygon or not
       in.poly <- point.in.polygon(data$x,data$y,as.numeric(data.extremes$x),as.numeric(data.extremes$y))
+      
+      #Discard
       data <- data[which(in.poly > 0),]
     }
   },error=function(e){
