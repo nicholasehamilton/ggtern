@@ -6,6 +6,9 @@
 \alias{theme_showarrows}
 \alias{theme_tern_bw}
 \alias{theme_tern_gray}
+\alias{theme_tern_nogrid}
+\alias{theme_tern_nogrid_major}
+\alias{theme_tern_nogrid_minor}
 \alias{theme_tern_rgbg}
 \alias{theme_tern_rgbw}
 \title{New Theme Elements}
@@ -23,6 +26,12 @@
   theme_tern_bw()
 
   theme_tern_gray()
+
+  theme_tern_nogrid_minor()
+
+  theme_tern_nogrid_major()
+
+  theme_tern_nogrid()
 }
 \description{
   Use this function to modify theme settings.
@@ -44,6 +53,13 @@
   \code{theme_tern_bw} ternary theme black and white
 
   \code{theme_tern_gray} ternary theme, gray theme
+
+  \code{theme_tern_nogrid} ternary theme, no minor grids.
+
+  \code{theme_tern_nogrid} ternary theme, no major grids.
+
+  \code{theme_tern_nogrid} ternary theme, no major or minor
+  grids.
 }
 \details{
   Theme elements can inherit properties from other theme

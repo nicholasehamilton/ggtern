@@ -83,9 +83,10 @@ NULL
 
 .element_tree$panel.grid.tern.major.T = ggplot2:::el_def("element_line", "panel.grid.tern.major")
 .element_tree$panel.grid.tern.minor.T = ggplot2:::el_def("element_line", "panel.grid.tern.minor")
-.element_tree$panel.grid.tern.major.L = ggplot2:::el_def("element_line", "panel.grid.tern.major")
 
+.element_tree$panel.grid.tern.major.L = ggplot2:::el_def("element_line", "panel.grid.tern.major")
 .element_tree$panel.grid.tern.minor.L = ggplot2:::el_def("element_line", "panel.grid.tern.minor")
+
 .element_tree$panel.grid.tern.major.R = ggplot2:::el_def("element_line", "panel.grid.tern.major")
 .element_tree$panel.grid.tern.minor.R = ggplot2:::el_def("element_line", "panel.grid.tern.minor")
 
@@ -238,6 +239,44 @@ theme_tern_bw    <- function(){.theme_tern("white","black","black","black")}
 #' @rdname terntheme
 #' @export
 theme_tern_gray  <- function(){.theme_tern(col.BG="grey90",col.T="black",col.L="black",col.R="black")}
+
+#' Ternary Theme Elements
+#' 
+#' \code{theme_tern_nogrid} ternary theme, no minor grids.
+#' @rdname terntheme
+#' @export
+theme_tern_nogrid_minor <- function(){
+  theme(panel.grid.tern.minor=element_blank(),
+        panel.grid.tern.minor.T=element_blank(),
+        panel.grid.tern.minor.L=element_blank(),
+        panel.grid.tern.minor.R=element_blank()
+  ) 
+}
+
+#' Ternary Theme Elements
+#' 
+#' \code{theme_tern_nogrid} ternary theme, no major grids.
+#' @rdname terntheme
+#' @export
+theme_tern_nogrid_major <- function(){
+    theme(panel.grid.tern.major=element_blank(),
+          panel.grid.tern.major.T=element_blank(),
+          panel.grid.tern.major.L=element_blank(),
+          panel.grid.tern.major.R=element_blank()
+    ) 
+}
+
+#' Ternary Theme Elements
+#' 
+#' \code{theme_tern_nogrid} ternary theme, no major or minor grids.
+#' @rdname terntheme
+#' @export
+theme_tern_nogrid <- function(){
+  list(
+    theme_tern_nogrid_minor(),
+    theme_tern_nogrid_major()
+  )
+}
 
 .theme_new <- (function() {
   theme.tern <- theme_tern_gray()

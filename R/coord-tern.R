@@ -647,23 +647,27 @@ coord_render_bg.ternary <- function(coord,details,theme){
   .render.grid <- function(name,items,d){
     tryCatch({  
       e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
-      colour   <- e$colour
-      size     <- e$size
-      linetype <- e$linetype
-      lineend  <- e$lineend
-      grob     <- segmentsGrob(
-        x0 = d$x, 
-        x1 = d$xend.grid,
-        y0 = d$y, 
-        y1 = d$yend.grid,
-        default.units="native",
-        gp = gpar(col     = colour, 
-                  lty     = linetype,
-                  lineend = lineend,
-                  lwd     = size*.pt)
-      )
-      ##Add to the items.
-      items[[length(items) + 1]] <- grob
+      if(!identical(e,element_blank())){
+        colour   <- e$colour
+        size     <- max(e$size,0)
+        if(size > 0){
+          linetype <- e$linetype
+          lineend  <- e$lineend
+          grob     <- segmentsGrob(
+            x0 = d$x, 
+            x1 = d$xend.grid,
+            y0 = d$y, 
+            y1 = d$yend.grid,
+            default.units="native",
+            gp = gpar(col     = colour, 
+                      lty     = linetype,
+                      lineend = lineend,
+                      lwd     = size*.pt)
+          )
+          ##Add to the items.
+          items[[length(items) + 1]] <- grob
+        }
+      }
     },error = function(e){ warning(e)})
     return(items)
   }
