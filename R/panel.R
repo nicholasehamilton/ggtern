@@ -37,7 +37,7 @@
     scales[sapply(scales, is.null)] <- NULL
     
     # TODO: change coord_train method to take individual x and y scales
-    ggplot2:::coord_train(coord, scales)
+    ggint$coord_train(coord, scales)
   }
   
   panel$ranges <- Map(compute_range,panel$layout$SCALE_X, panel$layout$SCALE_Y)
