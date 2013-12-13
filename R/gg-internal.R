@@ -11,7 +11,8 @@
                 "new_panel",
                 "train_layout",
                 "map_layout",
-                "new_panel"
+                "new_panel",
+                "train_position"
 ) 
 .internals <- unique(.internals)
 ggint <- structure(

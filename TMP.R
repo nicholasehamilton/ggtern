@@ -223,3 +223,9 @@ ggtern(data=DATA.RANDOM,mapping=aes(x,y,z)) +
   theme_tern_rgbw() +
   tern_limits(labels=c(0,10,20,"","","","","",80,90,100)) + #AFFECT ALL SCALES
   theme(ternary.options=element_ternary(arrowsep=0.03,arrowstart=0.25,arrowfinish=0.75))
+
+
+
+data(Feldspar)
+summary(Feldspar)
+ggtern(data=Feldspar,aes(x=An,y=Ab,z=Or)) + geom_point() + geom_smooth(aes(group=Feldspar)) + geom_density2d()
