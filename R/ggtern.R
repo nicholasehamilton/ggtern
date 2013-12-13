@@ -25,6 +25,10 @@
 #'when rendering takes place (notifying the user to such effect). The reason for this is that subtle 'patches' have been applied, which are mainly to do with 
 #'the transformation procedures when incorporating a 'third' dimention. \strong{NB:} In the future, others may be made available once patched.
 #'
+#'@section New Theme Elements and Heirarchies:
+#'\code{ggtern} implements many new theme elements and heirarchies which can be tailored on a case-by-case basis. 
+#'The full list of new elements can is provided \link[=newelements]{HERE}.
+#'
 #'@section Modification to Required Aesthetics:
 #'Each geometry has a pre-determined set of \strong{required} aesthetics. These have been modifid such that where \code{x} and \code{y} were previously 
 #'required, now an additional \code{z} aesthetic is required (\code{geom_segment} now requires \code{z} and \code{zend}). 
@@ -33,9 +37,6 @@
 #'
 #'\code{ggtern} is a method which is a convenience wrapper for \code{ggplot(...) + coord_tern()}, and, analogous to \code{ggplot}, 
 #'which creates an object of class \code{ggtern} (which inherits \code{ggplot}).
-#'@param ... same arguments as passed through to ggplot
-#'@inheritParams ggplot2::ggplot
-#'@usage ggtern(...)
 #'@examples
 #' \donttest{
 #'##-----------------------------------------------
@@ -265,8 +266,9 @@
 #'  tern_limits(labels=c(0,10,20,"","","","","",80,90,100)) + #AFFECT ALL SCALES 
 #'  theme(ternary.options=element_ternary(arrowsep=0.03,arrowstart=0.25,arrowfinish=0.75))
 #' }
+#'@inheritParams ggplot2::ggplot
 #'@export
-ggtern <- function(...){ggplot(...) + coord_tern()}
+ggtern <- function(data=NULL,...){ggplot(data=data,...) + coord_tern()}
 
 
 

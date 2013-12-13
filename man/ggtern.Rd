@@ -2,10 +2,12 @@
 \alias{ggtern}
 \title{Ternary Diagrams in R}
 \usage{
-  ggtern(...)
+  ggtern(data = NULL, ...)
 }
 \arguments{
-  \item{...}{same arguments as passed through to ggplot}
+  \item{data}{default data set}
+
+  \item{...}{other arguments passed to specific methods}
 }
 \description{
   Ternary diagrams are used frequently in materials science
@@ -39,6 +41,13 @@
   are mainly to do with the transformation procedures when
   incorporating a 'third' dimention. \strong{NB:} In the
   future, others may be made available once patched.
+}
+
+\section{New Theme Elements and Heirarchies}{
+  \code{ggtern} implements many new theme elements and
+  heirarchies which can be tailored on a case-by-case
+  basis. The full list of new elements can is provided
+  \link[=newelements]{HERE}.
 }
 
 \section{Modification to Required Aesthetics}{
