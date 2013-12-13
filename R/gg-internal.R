@@ -1,11 +1,14 @@
+.internals <- c(".all_aesthetics",
+                "check_required_aesthetics",
+                "set_last_plot",
+                "coord_transform.cartesian",
+                "scale_clone",
+                "coord_train",
+                "expand_default",
+                "plot_clone",
+                "train_cartesian"
+)
 ggint <- structure(
-  list(
-    .all_aesthetics           = getFromNamespace(".all_aesthetics","ggplot2"),
-    check_required_aesthetics = getFromNamespace("check_required_aesthetics","ggplot2"),
-    set_last_plot             = getFromNamespace("set_last_plot","ggplot2"),
-    coord_transform.cartesian = getFromNamespace("coord_transform.cartesian","ggplot2"),
-    scale_clone               = getFromNamespace("scale_clone","ggplot2"),
-    coord_train               = getFromNamespace("coord_train","ggplot2"),
-    expand_default            = getFromNamespace("expand_default","ggplot2")
-  ),class=c("internal")
+  mapply(function(.internals, i) getFromNamespace(i,"ggplot2"),.internals, .internals),
+  class=c("internal")
 )

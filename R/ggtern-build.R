@@ -14,7 +14,7 @@
 ggplot_build <- function(plot) {
   
   if (length(plot$layers) == 0) stop("No layers in plot", call.=FALSE)
-  plot <- ggplot2:::plot_clone(plot)
+  plot <- ggint$plot_clone(plot)
   
   #if we have ternary coordinate system but not ternary plot class, make it ternary.
   if(inherits(plot$coordinates,"ternary")){

@@ -179,12 +179,12 @@ coord_train.ternary <- function(coord, scales){
   v <- max(el$vshift, 0)  #vshift
   
   #trimmed down cartesian coords
-  ret <- c(ggplot2:::train_cartesian(scales$x, coord$limits$x + c(-p,p) - h, "x"),
-           ggplot2:::train_cartesian(scales$y, coord$limits$y + c(-p,p) - v, "y"))[c("x.range","y.range")]
+  ret <- c(ggint$train_cartesian(scales$x, coord$limits$x + c(-p,p) - h, "x"),
+           ggint$train_cartesian(scales$y, coord$limits$y + c(-p,p) - v, "y"))[c("x.range","y.range")]
   #detailed ternary coords
   IX <- c("T","L","R")
   for(ix in IX) #breaks, ticks etc...
-    ret <- c(ret,ggplot2:::train_cartesian(scales[[ix]],coord$limits[ix],ix))
+    ret <- c(ret,ggint$train_cartesian(scales[[ix]],coord$limits[ix],ix))
   for(ix in IX) #labels
     ret[paste0(ix,"label")] <- scales[[ix]]$name
   ret$Wlabel = scales$W
