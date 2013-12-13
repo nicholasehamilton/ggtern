@@ -11,13 +11,21 @@
 #' Modifying the newly created items requires the same procedures as introduced in the ggplot2 \code{\link[ggplot2]{theme}} documentation.
 #' Some convenience functions have been also newly created, proceed to \code{\link{convenience}} for additional information.
 #'
+<<<<<<< HEAD
 #' @aliases themeelements elements newelements theme-tern newthemes newtheme
+=======
+#' @aliases theme theme-tern newthemes newtheme
+>>>>>>> 00e90db8f98ca66bd772802073585f727bff81f7
 #' @aliases ternary.options axis.tern axis.tern.arrow axis.tern.arrow.T axis.tern.arrow.L axis.tern.arrow.R panel.background.tern axis.tern.line axis.tern.line.T 
 #' axis.tern.line.L axis.tern.line.R axis.tern.text axis.tern.text.T axis.tern.text.L axis.tern.text.R axis.tern.arrow.text axis.tern.arrow.text.T axis.tern.arrow.text.L
 #' axis.tern.arrow.text.R axis.tern.title axis.tern.title.T axis.tern.title.L axis.tern.title.R axis.tern.ticks axis.tern.ticks.major axis.tern.ticks.major.T axis.tern.ticks.major.L
 #' axis.tern.ticks.major.R axis.tern.ticks.minor axis.tern.ticks.minor.T axis.tern.ticks.minor.L axis.tern.ticks.minor.R panel.grid.tern panel.grid.tern.major
 #' panel.grid.tern.major.T panel.grid.tern.major.L panel.grid.tern.major.R panel.grid.tern.minor panel.grid.tern.minor.T panel.grid.tern.minor.L panel.grid.tern.minor.R
+<<<<<<< HEAD
 #' @name themeelements
+=======
+#' @name theme
+>>>>>>> 00e90db8f98ca66bd772802073585f727bff81f7
 #' @section New/Additional Inheritance Structures:
 #' Based on the \code{ggplot2} existing structure (\code{\link[ggplot2]{theme}}), the new individual theme elements for the ternary plot are as follows:
 #' 
