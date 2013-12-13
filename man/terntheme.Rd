@@ -1,65 +1,53 @@
 \name{theme}
+\alias{axis.tern}
+\alias{axis.tern.arrow}
+\alias{axis.tern.arrow.L}
+\alias{axis.tern.arrow.R}
+\alias{axis.tern.arrow.T}
+\alias{axis.tern.arrow.text}
+\alias{axis.tern.arrow.text.L}
+\alias{axis.tern.arrow.text.R}
+\alias{axis.tern.arrow.text.T}
+\alias{axis.tern.line}
+\alias{axis.tern.line.L}
+\alias{axis.tern.line.R}
+\alias{axis.tern.line.T}
+\alias{axis.tern.text}
+\alias{axis.tern.text.L}
+\alias{axis.tern.text.R}
+\alias{axis.tern.text.T}
+\alias{axis.tern.ticks}
+\alias{axis.tern.ticks.major}
+\alias{axis.tern.ticks.major.L}
+\alias{axis.tern.ticks.major.R}
+\alias{axis.tern.ticks.major.T}
+\alias{axis.tern.ticks.minor}
+\alias{axis.tern.ticks.minor.L}
+\alias{axis.tern.ticks.minor.R}
+\alias{axis.tern.ticks.minor.T}
+\alias{axis.tern.title}
+\alias{axis.tern.title.L}
+\alias{axis.tern.title.R}
+\alias{axis.tern.title.T}
+\alias{newtheme}
+\alias{newthemes}
+\alias{panel.background.tern}
+\alias{panel.grid.tern}
+\alias{panel.grid.tern.major}
+\alias{panel.grid.tern.major.L}
+\alias{panel.grid.tern.major.R}
+\alias{panel.grid.tern.major.T}
+\alias{panel.grid.tern.minor}
+\alias{panel.grid.tern.minor.L}
+\alias{panel.grid.tern.minor.R}
+\alias{panel.grid.tern.minor.T}
+\alias{ternary.options}
 \alias{theme}
 \alias{theme-tern}
-\alias{theme_noarrows}
-\alias{theme_nocart}
-\alias{theme_showarrows}
-\alias{theme_tern_bw}
-\alias{theme_tern_gray}
-\alias{theme_tern_nogrid}
-\alias{theme_tern_nogrid_major}
-\alias{theme_tern_nogrid_minor}
-\alias{theme_tern_rgbg}
-\alias{theme_tern_rgbw}
 \title{New Theme Elements}
-\usage{
-  theme_nocart()
-
-  theme_noarrows()
-
-  theme_showarrows()
-
-  theme_tern_rgbg()
-
-  theme_tern_rgbw()
-
-  theme_tern_bw()
-
-  theme_tern_gray()
-
-  theme_tern_nogrid_minor()
-
-  theme_tern_nogrid_major()
-
-  theme_tern_nogrid()
-}
 \description{
-  Use this function to modify theme settings.
-
-  Ternary Theme Elements
-
-  \code{theme_noarrows} is a function that apepnds to the
-  current theme a flag to switch OFF the ternary arrows
-
-  \code{theme_showarrows} is a function that apepnds to the
-  current theme a flag to switch ON the ternary arrows
-
-  \code{theme_tern_rgbg} ternary theme, red green blue with
-  gray background
-
-  \code{theme_tern_rgbw} ternary theme, red green blue with
-  white background
-
-  \code{theme_tern_bw} ternary theme black and white
-
-  \code{theme_tern_gray} ternary theme, gray theme
-
-  \code{theme_tern_nogrid} ternary theme, no minor grids.
-
-  \code{theme_tern_nogrid} ternary theme, no major grids.
-
-  \code{theme_tern_nogrid} ternary theme, no major or minor
-  grids.
+  \code{ggtern} creates many new theme elements and
+  inheritances, the following is an outline:
 }
 \details{
   Theme elements can inherit properties from other theme
@@ -70,31 +58,135 @@
   \code{line}, and all rectangular objects inherit from
   \code{rect}.
 
-  For more examples of modifying properties using
-  inheritance, see \code{\link{+.gg}} and
-  \code{\link{\%+replace\%}}.
-
-  To see a graphical representation of the inheritance
-  tree, see the last example below.
+  Modifying the newly created items requires the same
+  procedures as introduced in the ggplot2
+  \code{\link[ggplot2]{theme}} documentation. Some
+  convenience functions have been also newly created,
+  proceed to \code{\link{convenience}} for additional
+  information.
 }
 \section{New/Additional Inheritance Structures}{
   Based on the \code{ggplot2} existing structure
-  (\code{\link[ggplot2]{theme}}), The new individual theme
+  (\code{\link[ggplot2]{theme}}), the new individual theme
   elements for the ternary plot are as follows:
 
-  \tabular{lll}{ \strong{NAME} \tab \strong{DESCRIPTION}
-  \tab \strong{(INHERITS)} \cr ternary.options \tab ternary
-  specific options \tab (\code{element_ternary}) \cr
-  axis.tern \tab base line for ternary plot \tab
-  (\code{element_line}) \cr }
-}
+  \tabular{llll}{ \strong{NAME} \tab \strong{DESCRIPTION}
+  \tab \strong{OBJECT} \tab \strong{INHERITS} \cr
+  \code{ternary.options} \tab Ternary specific options \tab
+  \code{\link{element_ternary}} \tab \cr
+  \code{panel.background.tern**} \tab Background of Ternary
+  Plot Area \tab \code{\link{element_rect}} \tab
+  \code{rect} \cr \code{axis.tern} \tab Base line for
+  ggtern object \tab \code{\link{element_line}} \tab
+  \code{line} \cr \code{axis.tern.arrow} \tab Base line for
+  ternary arrows \tab \code{\link{element_line}} \tab
+  \code{axis.tern} \cr \code{axis.tern.arrow.T} \tab
+  Specific line for TOP ternary arrow \tab
+  \code{\link{element_line}} \tab \code{axis.tern.arrow}
+  \cr \code{axis.tern.arrow.L} \tab Specific line for LHS
+  ternary arrow \tab \code{\link{element_line}} \tab
+  \code{axis.tern.arrow} \cr \code{axis.tern.arrow.R} \tab
+  Specific line for RHS ternary arrow \tab
+  \code{\link{element_line}} \tab \code{axis.tern.arrow}
+  \cr \code{axis.tern.line} \tab Base line for ternary axes
+  \tab \code{\link{element_line}} \tab \code{axis.tern} \cr
+  \code{axis.tern.line.T} \tab Specific line for TOP
+  ternary axis \tab \code{\link{element_line}} \tab
+  \code{axis.tern.line} \cr \code{axis.tern.line.L} \tab
+  Specific line for LHS ternary axis \tab
+  \code{\link{element_line}} \tab \code{axis.tern.line} \cr
+  \code{axis.tern.line.R} \tab Specific line for RHS
+  ternary axis \tab \code{\link{element_line}} \tab
+  \code{axis.tern.line} \cr \code{axis.tern.text} \tab Base
+  text for ggtern object \tab \code{\link{element_text}}
+  \tab \code{text} \cr \code{axis.tern.text.T} \tab
+  Specific text for TOP species \tab
+  \code{\link{element_text}} \tab \code{axis.tern.text} \cr
+  \code{axis.tern.text.L} \tab Specific text for LHS
+  species \tab \code{\link{element_text}} \tab
+  \code{axis.tern.text} \cr \code{axis.tern.text.R} \tab
+  Specific text for RHS species \tab
+  \code{\link{element_text}} \tab \code{axis.tern.text} \cr
+  \code{axis.tern.arrow.text} \tab Base text for arrow
+  labels \tab \code{\link{element_text}} \tab
+  \code{axis.tern.text} \cr \code{axis.tern.arrow.text.T}
+  \tab Specific text for TOP arrow label \tab
+  \code{\link{element_text}} \tab
+  \code{axis.tern.arrow.text} \cr
+  \code{axis.tern.arrow.text.L} \tab Specific text for LHS
+  arrow label \tab \code{\link{element_text}} \tab
+  \code{axis.tern.arrow.text} \cr
+  \code{axis.tern.arrow.text.R} \tab Specific text for RHS
+  arrow label \tab \code{\link{element_text}} \tab
+  \code{axis.tern.arrow.text} \cr \code{axis.tern.title}
+  \tab Base text for Apex Labels \tab
+  \code{\link{element_text}} \tab \code{axis.tern.text} \cr
+  \code{axis.tern.title.T} \tab Specific text for TOP Apex
+  Label \tab \code{\link{element_text}} \tab
+  \code{axis.tern.title} \cr \code{axis.tern.title.L} \tab
+  Specific text for LHS Apex Label \tab
+  \code{\link{element_text}} \tab \code{axis.tern.title}
+  \cr \code{axis.tern.title.R} \tab Specific text for RHS
+  Apex Label \tab \code{\link{element_text}} \tab
+  \code{axis.tern.title} \cr
 
-\section{Clearing the Usual Cartesian Elements}{
-  \code{theme_nocart} is a function that returns empty
-  theme elemens for the standard cartesian memebers,
-  including panel.background, panel.border,
-  panel.grid.major, panel.grid.minor, axis.ticks,
-  axis.text.x, axis.text.y, axis.title.x, axis.title.y are
-  all set to blank
+  \code{axis.tern.ticks} \tab Base ticks for ggtern object
+  \tab \code{\link{element_line}} \tab \code{axis.tern} \cr
+  \code{axis.tern.ticks.major} \tab Base Major ticks for
+  ggtern object \tab \code{\link{element_line}} \tab
+  \code{axis.tern.ticks} \cr \code{axis.tern.ticks.major.T}
+  \tab Major ticks for TOP Axis \tab
+  \code{\link{element_line}} \tab
+  \code{axis.tern.ticks.major} \cr
+  \code{axis.tern.title.major.L} \tab Major ticks for LHS
+  Axis \tab \code{\link{element_line}} \tab
+  \code{axis.tern.ticks.major} \cr
+  \code{axis.tern.title.major.R} \tab Major ticks for RHS
+  Axis \tab \code{\link{element_line}} \tab
+  \code{axis.tern.ticks.major} \cr
+  \code{axis.tern.ticks.minor} \tab Base Minor ticks for
+  ggtern object \tab \code{\link{element_line}} \tab
+  \code{axis.tern.ticks} \cr \code{axis.tern.ticks.minor.T}
+  \tab Minor ticks for TOP Axis \tab
+  \code{\link{element_line}} \tab
+  \code{axis.tern.ticks.minor} \cr
+  \code{axis.tern.title.minor.L} \tab Minor ticks for LHS
+  Axis \tab \code{\link{element_line}} \tab
+  \code{axis.tern.ticks.minor} \cr
+  \code{axis.tern.title.minor.R} \tab Minor ticks for RHS
+  Axis \tab \code{\link{element_line}} \tab
+  \code{axis.tern.ticks.minor} \cr \code{panel.grid.tern}
+  \tab Base gridline for ggtern object \tab
+  \code{\link{element_line}} \tab \code{axis.tern} \cr
+  \code{panel.grid.tern.major} \tab Base major gridline
+  \tab \code{\link{element_line}} \tab
+  \code{panel.grid.tern} \cr \code{panel.grid.tern.major.T}
+  \tab Major gridline for TOP Axis \tab
+  \code{\link{element_line}} \tab
+  \code{panel.grid.tern.major} \cr
+  \code{panel.grid.tern.major.L} \tab Major gridline for
+  LHS Axis \tab \code{\link{element_line}} \tab
+  \code{panel.grid.tern.major} \cr
+  \code{panel.grid.tern.major.R} \tab Major gridline for
+  RHS Axis \tab \code{\link{element_line}} \tab
+  \code{panel.grid.tern.major} \cr
+  \code{panel.grid.tern.minor} \tab Base major gridline
+  \tab \code{\link{element_line}} \tab
+  \code{panel.grid.tern} \cr \code{panel.grid.tern.minor.T}
+  \tab Minor gridline for TOP Axis \tab
+  \code{\link{element_line}} \tab
+  \code{panel.grid.tern.minor} \cr
+  \code{panel.grid.tern.minor.L} \tab Minor gridline for
+  LHS Axis \tab \code{\link{element_line}} \tab
+  \code{panel.grid.tern.minor} \cr
+  \code{panel.grid.tern.minor.R} \tab Minor gridline for
+  RHS Axis \tab \code{\link{element_line}} \tab
+  \code{panel.grid.tern.minor} \cr } ** \strong{NB:} For
+  \code{panel.background.tern}, whilst the ternary area is
+  'triangular' per-se, \code{\link{element_rect}} has been
+  used, as it actually holds NO information regarding the
+  geometry (width, height), only fill, color, size and
+  linetype border (ie the style of how it will be
+  rendered).
 }
 

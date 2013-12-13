@@ -29,6 +29,7 @@ Collate:
   'utilities.R'
   'strip-unapproved.R'
   'theme.R'
+  'theme-convenience.R'
   'labs-pcnt.R'
   'labs-new.R'
   'tern-clockwise.R'

@@ -20,7 +20,7 @@ ggplot_build <- function(plot) {
   if(inherits(plot$coordinates,"ternary")){
     if(!inherits(plot,"ggtern")){
       class(plot) <- c("ggtern",class(plot))
-      plot <- plot + theme_nocart()
+      plot <- plot + .theme_nocart()
     }
   }
   
