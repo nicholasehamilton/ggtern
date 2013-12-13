@@ -1,4 +1,4 @@
-.StatSmooth <- proto(ggplot2:::Stat, {
+.StatSmooth <- proto(ggint$Stat, {
   objname <- "smooth"
   calculate_groups <- function(., data, scales, method=ifthenelse(inherits(last_plot(),"ggtern"),"lm","auto"), formula=y~x, ...){
     rows <- daply(data, .(group), function(df) length(unique(df$x)))
