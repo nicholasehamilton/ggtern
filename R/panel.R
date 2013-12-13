@@ -1,12 +1,12 @@
 .train_position_ternary <- function(panel, T_scale, L_scale, R_scale) {
   if(is.null(panel$T_scales) && !is.null(T_scale)){
-    panel$T_scales <- ggplot2:::scale_clone(T_scale)
+    panel$T_scales <- ggint$scale_clone(T_scale)
   }
   if(is.null(panel$L_scales) && !is.null(L_scale)){
-    panel$L_scales <- ggplot2:::scale_clone(L_scale)
+    panel$L_scales <- ggint$scale_clone(L_scale)
   }
   if(is.null(panel$R_scales) && !is.null(R_scale)){
-    panel$R_scales <- ggplot2:::scale_clone(R_scale)
+    panel$R_scales <- ggint$scale_clone(R_scale)
   }
   panel
 }

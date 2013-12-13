@@ -14,4 +14,4 @@ aes <- function(x,y,z,...) {
   do.call(find_global("rename_aes"),args=list(x=X))
 }
 
-.all_aesthetics <- c(.ggint$.all_aesthetics,"T","L","R","zend")
+.all_aesthetics <- c(ggint$.all_aesthetics,"T","L","R","zend")

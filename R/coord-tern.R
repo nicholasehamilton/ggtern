@@ -97,7 +97,7 @@ is.linear.ternary <- function(coord) TRUE
 coord_transform.ternary <- function(coord, data, details, verbose=FALSE,revertToCart=TRUE,adjustCart=TRUE,discard=getOption("tern.discard.external")){
   bup    <- data #Original Data Backup.
   tryCatch({
-    .ggint$check_required_aesthetics(coord$required_aes, names(data),"coord_tern")
+    ggint$check_required_aesthetics(coord$required_aes, names(data),"coord_tern")
     data   <- .rename_data_ternary(coord, data)
     ix.tern <- c("T","L","R"); 
     ix.cart <- c("x","y")
@@ -150,7 +150,7 @@ coord_transform.ternary <- function(coord, data, details, verbose=FALSE,revertTo
   
   ##Default is to execute the cartesian transformation (DEFAULT)
   if(adjustCart & !missing(details)){
-    ggplot2:::coord_transform.cartesian(coord,data,details)
+    ggint$coord_transform.cartesian(coord,data,details)
   }else{ ##however sometimes (say in an intermediate step), we may wish to suppress.
     data
   }
@@ -266,7 +266,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   #The limits.
   data.extreme <- get_tern_extremes(coordinates=coord)
   data.extreme <- transform_tern_to_cart(data=data.extreme,Tlim=Tlim,Llim=Llim,Rlim=Rlim,cw=clockwise)
-  data.extreme <- ggplot2:::coord_transform.cartesian(coord,data.extreme,details)
+  data.extreme <- ggint$coord_transform.cartesian(coord,data.extreme,details)
   rownames(data.extreme) <- c("AT.T","AT.L","AT.R")
   
   #not used yet.

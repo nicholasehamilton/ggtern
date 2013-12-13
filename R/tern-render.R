@@ -19,7 +19,7 @@ print.ggtern <- function(x, newpage = is.null(vp), vp = NULL, ...) {
 #' @export
 #' @method print ggplot
 print.ggplot <- function(x, newpage = is.null(vp), vp = NULL, ...) {
-  .ggint$set_last_plot(x)
+  ggint$set_last_plot(x)
   if (newpage) grid.newpage()
   
   data <- ggplot_build(x)
