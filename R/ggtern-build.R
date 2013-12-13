@@ -98,7 +98,7 @@ ggplot_build <- function(plot) {
   data <- lapply(data, ggint$add_group)
   
   # Transform all scales
-  data <- lapply(data, ggplot2:::scales_transform_df, scales = scales)
+  data <- lapply(data, ggint$scales_transform_df, scales = scales)
   
   # Map and train positions so that statistics have access to ranges
   # and all positions are numeric
@@ -138,7 +138,7 @@ ggplot_build <- function(plot) {
   }
   
   # Train coordinate system
-  panel <- ggplot2:::train_ranges(panel, plot$coordinates)
+  panel <- ggint$train_ranges(panel, plot$coordinates)
   list(data = data, panel = panel, plot = plot)
 }
 

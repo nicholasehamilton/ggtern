@@ -14,6 +14,6 @@
   assignInNamespace("StatDensity2d",ggint$StatDensity2d,"ggplot2")
 
   assignInNamespace("panel_scales",.panel_scales,"ggplot2")
-  assignInNamespace("train_ranges",.train_ranges,"ggplot2")
+  assignInNamespace("train_ranges",ggint$train_ranges,"ggplot2")
 }
 

@@ -9,7 +9,7 @@ stat_density2d <- function (mapping = NULL, data = NULL, geom = "density2d", pos
   ggint$StatDensity2d$new(mapping = mapping, data = data,geom=geom,geometry=geom,position = position, na.rm = na.rm, contour = contour, n = n,...)
 }
 
-ggint$StatDensity2d <- proto(ggplot2:::Stat, {
+ggint$StatDensity2d <- proto(ggint$Stat, {
   objname <- "density2d"
   
   default_geom <- function(.) GeomDensity2d

@@ -14,7 +14,8 @@
                 "new_panel",
                 "train_position",
                 "Stat",
-                "add_group"
+                "add_group",
+                "scales_transform_df"
 ) 
 .internals <- unique(.internals)
 ggint <- structure(
