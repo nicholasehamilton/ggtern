@@ -7,7 +7,11 @@
                 "expand_default",
                 "plot_clone",
                 "train_cartesian",
-                "scales_add_missing"
+                "scales_add_missing",
+                "ggname",
+                "new_panel",
+                "train_layout",
+                "map_layout"
 )
 ggint <- structure(
   mapply(function(.internals, i) getFromNamespace(i,"ggplot2"),.internals, .internals),

@@ -682,7 +682,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   for(n in unique(d$NameGrid)){ items <- .render.grid(  name=n,items=items,d=d[which(d$NameGrid  == n),])}
   
   #render.
-  ggplot2:::ggname("background",gTree(children = do.call("gList", items)))
+  ggint$ggname("background",gTree(children = do.call("gList", items)))
 }
 
 

@@ -26,7 +26,7 @@ ggplot_build <- function(plot) {
   
   # Initialise panels, add extra data for margins & missing facetting
   # variables, and add on a PANEL variable to data
-  panel <- ggplot2:::new_panel()
+  panel <- ggint$new_panel()
   #... CONTINUED BELOW...
   
   
@@ -90,8 +90,8 @@ ggplot_build <- function(plot) {
   }
   
   #CONTINUED FROM ABOVE
-  panel <- ggplot2:::train_layout(panel, plot$facet, layer_data, plot$data)
-  data  <- ggplot2:::map_layout(panel, plot$facet, layer_data, plot$data)
+  panel <- ggint$train_layout(panel, plot$facet, layer_data, plot$data)
+  data  <- ggint$map_layout(panel, plot$facet, layer_data, plot$data)
   
   # Compute aesthetics to produce data with generalised variable names
   data <- dlapply(function(d, p) p$compute_aesthetics(d, plot))  
