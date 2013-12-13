@@ -115,7 +115,7 @@ ggplot_build <- function(plot) {
   data <- lapply(data, ggplot2:::order_groups)
   
   # Make sure missing (but required) aesthetics are added
-  ggint$cales_add_missing(plot, c("x", "y"))
+  ggplot2:::scales_add_missing(plot, c("x", "y"))
   
   # Reparameterise geoms from (e.g.) y and width to ymin and ymax
   data <- dlapply(function(d, p) p$reparameterise(d))

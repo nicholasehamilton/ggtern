@@ -1,5 +1,4 @@
 .internals <- c(".all_aesthetics",
-                "check_required_aesthetics",
                 "set_last_plot",
                 "coord_transform.cartesian",
                 "scale_clone",
@@ -11,8 +10,10 @@
                 "ggname",
                 "new_panel",
                 "train_layout",
-                "map_layout"
-)
+                "map_layout",
+                "new_panel"
+) 
+.internals <- unique(.internals)
 ggint <- structure(
   mapply(function(.internals, i) getFromNamespace(i,"ggplot2"),.internals, .internals),
   class=c("internal")
