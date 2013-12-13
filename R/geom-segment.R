@@ -10,7 +10,7 @@
     
     ##REMOVE MISSING DATA.
     data <- remove_missing(data, na.rm = na.rm,c(required_aes,"linetype", "size", "shape"),name = "geom_segment")
-    if (empty(data)) return(zeroGrob())
+    if (empty(data)) return(.zeroGrob)
     
     if(is.linear(coordinates)) {
       #SPLIT The data by required aes.
@@ -30,7 +30,7 @@
                       rownames(data))
       
       #If no entries, return empty grob
-      if(length(ix) == 0){return(zeroGrob())}
+      if(length(ix) == 0){return(.zeroGrob)}
       
       #assembole
       data <- cbind(data[ix,which(!colnames(data) %in% required_aes)],data.start[ix,],data.end[ix,])

@@ -46,15 +46,15 @@
 
 .Tlabel <- function(panel, labels) {
   #ix <- get_last_coord()$T
-  panel$T_scales$name  %||% labels$T %||% labels$x
+  panel$T_scales$name  %||% labels$T %||% labels$x %||% "T"
 }
 .Llabel <- function(panel, labels) {
   #ix <- get_last_coord()$L
-  panel$L_scales$name %||% labels$L %||% labels$y
+  panel$L_scales$name %||% labels$L %||% labels$y  %||% "L"
 }
 .Rlabel <- function(panel, labels) {
   #ix <- get_last_coord()$R
-  panel$R_scales$name %||% labels$R %||% labels$z
+  panel$R_scales$name %||% labels$R %||% labels$z  %||% "R"
 } 
 .Wlabel <- function(panel, labels) {
   (panel$W %||% labels$W) %||% ""

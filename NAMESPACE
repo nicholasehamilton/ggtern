@@ -1,6 +1,7 @@
 exportPattern("^[[:alpha:]]+")
 importFrom(sp,point.in.polygon)
 importFrom(grid,arrow)
+importFrom(grid,grob)
 importFrom(grid,unit)
 importFrom(grid,grid.newpage)
 importFrom(grid,polygonGrob)

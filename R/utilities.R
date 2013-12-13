@@ -351,6 +351,16 @@ sink_density <- function(df,remove=TRUE){
 .hjust.flip    <- function(x,clockwise){if(clockwise){0.5 - (x - 0.5)}else{x}}
 
 
+# Euclidean distance between points.
+# NA indicates a break / terminal points
+.dist_euclidean <- function(x, y) {
+  n <- length(x) 
+  sqrt((x[-n] - x[-1]) ^ 2 + (y[-n] - y[-1]) ^ 2)
+}
+
+.zeroGrob <- grob(cl = "zeroGrob", name = "NULL")
+
+
 
 
 

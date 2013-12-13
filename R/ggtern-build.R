@@ -94,7 +94,7 @@ ggplot_build <- function(plot) {
   data  <- ggplot2:::map_layout(panel, plot$facet, layer_data, plot$data)
   
   # Compute aesthetics to produce data with generalised variable names
-  data <- dlapply(function(d, p) p$compute_aesthetics(d, plot))
+  data <- dlapply(function(d, p) p$compute_aesthetics(d, plot))  
   data <- lapply(data, ggplot2:::add_group)
   
   # Transform all scales
@@ -110,6 +110,7 @@ ggplot_build <- function(plot) {
   
   # Apply and map statistics
   data <- ggplot2:::calculate_stats(panel, data, layers)
+  
   data <- dlapply(function(d, p) p$map_statistic(d, plot)) 
   data <- lapply(data, ggplot2:::order_groups)
   
@@ -127,7 +128,6 @@ ggplot_build <- function(plot) {
   # displayed, or does it include the range of underlying data
   ggplot2:::reset_scales(panel)
   panel <- ggplot2:::train_position(panel, data, scale_x(), scale_y())
-  
   data  <- ggplot2:::map_position(panel, data, scale_x(), scale_y())
   
   # Train and map non-position scales
@@ -139,7 +139,6 @@ ggplot_build <- function(plot) {
   
   # Train coordinate system
   panel <- ggplot2:::train_ranges(panel, plot$coordinates)
-  
   list(data = data, panel = panel, plot = plot)
 }
 

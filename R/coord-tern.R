@@ -172,21 +172,22 @@ coord_expand_defaults.ternary <- function(coord, scale, aesthetic){
 #' @method coord_train ternary
 #' @S3method coord_train ternary
 coord_train.ternary <- function(coord, scales){
-  el <- calc_element_plot("ternary.options",theme=theme_update(),verbose=F,plot=last_plot())
   
+  el <- calc_element_plot("ternary.options",theme=theme_update(),verbose=F,plot=last_plot())
   p <- max(el$padding,0)  #PADDING
   h <- max(el$hshift, 0)  #hshift
   v <- max(el$vshift, 0)  #vshift
-
+  
+  #trimmed down cartesian coords
   ret <- c(ggplot2:::train_cartesian(scales$x, coord$limits$x + c(-p,p) - h, "x"),
-           ggplot2:::train_cartesian(scales$y, coord$limits$y + c(-p,p) - v, "y"),
-           ggplot2:::train_cartesian(scales$T, coord$limits$T,               "T"),
-           ggplot2:::train_cartesian(scales$L, coord$limits$L,               "L"),
-           ggplot2:::train_cartesian(scales$R, coord$limits$R,               "R"))
-  ret$Tlabel = ifthenelse(is.null(scales$T$name),"T",scales$T$name)
-  ret$Llabel = ifthenelse(is.null(scales$L$name),"L",scales$L$name)
-  ret$Rlabel = ifthenelse(is.null(scales$R$name),"R",scales$R$name)
-  ret$Wlabel = ifthenelse(is.null(scales$W),"",scales$W)
+           ggplot2:::train_cartesian(scales$y, coord$limits$y + c(-p,p) - v, "y"))[c("x.range","y.range")]
+  #detailed ternary coords
+  IX <- c("T","L","R")
+  for(ix in IX) #breaks, ticks etc...
+    ret <- c(ret,ggplot2:::train_cartesian(scales[[ix]],coord$limits[ix],ix))
+  for(ix in IX) #labels
+    ret[paste0(ix,"label")] <- scales[[ix]]$name
+  ret$Wlabel = scales$W
   ret
 }
 
@@ -202,7 +203,10 @@ coord_aspect.ternary <- function(coord, details){sin(60*pi/180)}
 #' @rdname coord
 #' @method coord_distance ternary
 #' @S3method coord_distance ternary
-coord_distance.ternary <- function(coord,x,y,details){ggplot2:::coord_distance.cartesian(coord,x,y,details)}
+coord_distance.ternary <- function(coord,x,y,details){
+  max_dist <- .dist_euclidean(details$x.range, details$y.range)
+  .dist_euclidean(x, y) / max_dist
+}
 
 
 #' S3 Method Render Vertical Axis
@@ -212,7 +216,7 @@ coord_distance.ternary <- function(coord,x,y,details){ggplot2:::coord_distance.c
 #' @S3method coord_render_axis_v ternary
 coord_render_axis_v.ternary <- function(coord, details, theme) {  
   ##NOT USED. RENDERED IN ggtern.build.R
-  ggplot2:::zeroGrob()
+  .zeroGrob
 }
 
 #' S3 Method Render Horizontal Axis
@@ -222,7 +226,7 @@ coord_render_axis_v.ternary <- function(coord, details, theme) {
 #' @S3method coord_render_axis_h ternary
 coord_render_axis_h.ternary <- function(coord, details, theme) {
   ##NOT USED. RENDERED IN ggtern.build.R
-  ggplot2:::zeroGrob()
+  .zeroGrob
 }
 
 #' S3 Method Render Foreground
@@ -232,7 +236,7 @@ coord_render_axis_h.ternary <- function(coord, details, theme) {
 #' @S3method coord_render_fg ternary
 coord_render_fg.ternary <- function(coord,details,theme){
   ##NOT USED. RENDERED IN ggtern.build.R
-  ggplot2:::zeroGrob()
+  .zeroGrob
 }
 
 #' S3 Method Render Background

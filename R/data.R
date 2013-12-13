@@ -6,5 +6,9 @@
 #' @format 1 row per Feldspar composition
 #' @source Elkin and Groves, 1990
 #' @author Nick Hamilton
+#' @examples
+#' data(Feldspar)
+#' summary(Feldspar)
+#' ggtern(data=Feldspar,aes(x=An,y=Ab,z=Or)) + geom_point()
 #' @export
 NULL
