@@ -6,7 +6,8 @@
                 "coord_train",
                 "expand_default",
                 "plot_clone",
-                "train_cartesian"
+                "train_cartesian",
+                "scales_add_missing"
 )
 ggint <- structure(
   mapply(function(.internals, i) getFromNamespace(i,"ggplot2"),.internals, .internals),
