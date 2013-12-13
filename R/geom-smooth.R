@@ -16,7 +16,7 @@ geom_smooth <- function (mapping = NULL, data = NULL, stat = "smooth", position 
 }
 
 #' Modified Geom Smooth Proto
-#' @export
+#' @rdname undocumented
 GeomSmoothMod <- proto(Geom, {
   objname <- "smooth"
   draw <- function(., data, scales, coordinates,limitarea=F,...) { 

@@ -1,13 +1,9 @@
-#' ggtern Utilities
+
+
+#' Internal Function
 #' 
 #' \code{ifthenelse} function takes input arguments \code{x}, \code{a} and \code{b} and returns \code{a} 
-#' when \code{x} is \code{TRUE} otherwise \code{b} (when \code{x} is \code{FALSE})
-#' @param x logical tern
-#' @param a value to return when true
-#' @param b value to return when false
-#' @export
-#' @rdname utilities
-#' @examples ifthenelse(TRUE,1,0)
+#' @rdname undocumented
 ifthenelse <- function(x,a,b){
   if(!is.logical(x))stop("x argument must be logical")
   if(x){a}else{b}
@@ -20,7 +16,7 @@ ifthenelse <- function(x,a,b){
 }
 "%||%" <- function(a, b) {if (!is.null(a)) a else b}
 
-#' ggtern Utiltities
+#' Internal Function
 #' 
 #' \code{get_tern_extremes} determines the limiting ternary coordinates given input coordinates.
 #' @param coordinates ggtern coordinate system, inheriting "ternary" and "coord" classes.
@@ -28,7 +24,7 @@ ifthenelse <- function(x,a,b){
 #' @param expand numeric value to 
 #' @examples get_tern_extremes(coordinates = coord_tern())
 #' @return data.frame representing the T, L and R amounts (Columns) at each of the tips (extremes) of the ternary plot area (Rows)
-#' @rdname utilities
+#' @rdname undocumented
 #' @export
 get_tern_extremes <- function(coordinates,verbose=F,expand=0){
   expand = max(0,.is.numericor(expand[1],0)); 
@@ -172,13 +168,13 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE
   return(data.frame(x=out.X,y=out.Y))
 }
 
-#' ggtern Utilities
+#' Internal Function
 #' 
 #' \code{arrow_label_formatter} is a function that formats the labels directly adjacent to the axes on a ternary plot.
 #' @param label character label
 #' @param suffix chacater suffix behind each label
 #' @param sep the seperator between label and suffix 
-#' @rdname utilities
+#' @rdname undocumented
 #' @examples arrow_label_formatter("TOP","Wt.%",sep="/")
 #' @export
 arrow_label_formatter <- function(label,suffix="",...,sep="/"){
@@ -193,7 +189,7 @@ arrow_label_formatter <- function(label,suffix="",...,sep="/"){
   }
 }
 
-#' Utilities
+#' Internal Function
 #' 
 #' \code{calc_element_plot} Calculate the element properties, by inheriting properties from its parents, 
 #' and compares to whether the local plot overrides this value. Based largely off the \code{\link[ggplot2]{calc_element}} 
@@ -203,7 +199,7 @@ arrow_label_formatter <- function(label,suffix="",...,sep="/"){
 #' @param theme the theme to inherit from
 #' @param plot the plot to check locally for theme element, NULL is ok.
 #' @param ... not used
-#' @rdname utilities
+#' @rdname undocumented
 #' @export
 calc_element_plot <- function(element,theme=theme_update(),...,plot=NULL,verbose=F){
   if(!is.null(plot)){
@@ -217,7 +213,7 @@ calc_element_plot <- function(element,theme=theme_update(),...,plot=NULL,verbose
   ifthenelse(!identical(ret.plot,NULL),ret.plot,ret.theme)
 }
 
-#' Search for Named Object
+#' Internal Function
 #' 
 #' \code{find_global} is a function that conducts a named search for the \code{name} object instance, within the \code{env} environment. 
 #' If an instance doesn't exist within the \code{env} environment, a search is then conducted within the \code{ggtern} and \code{ggplot2} namespaces \emph{(in that order)}.
@@ -227,8 +223,8 @@ calc_element_plot <- function(element,theme=theme_update(),...,plot=NULL,verbose
 #' @param name character name of object to search for
 #' @param env environment to search within as first priority
 #' @examples find_global('scale_x_continuous')
+#' @rdname undocumented
 #' @return Instance of the named object (if it exists), or \code{NULL} (if it does not).
-#' @export
 find_global <- function (name, env=environment()){  
   if(!is.character(name)){stop("'name' must be provided as a character")}
   if(!inherits(environment(),"environment")){stop("'env' must inherit the environment class")}
@@ -241,7 +237,7 @@ find_global <- function (name, env=environment()){
 }
 
 
-#' Try and Transform Ternary Data
+#' Internal Function
 #' 
 #' \code{trytransform} is an internal function which attempts to make ternary transformation. 
 #' If fails, the original data is returned
@@ -251,6 +247,7 @@ find_global <- function (name, env=environment()){
 #' @param ... not used
 #' @return transformed data
 #' @keywords internal
+#' @rdname undocumented
 #' @export
 trytransform <- function(data,...,coord,scales){
   if(missing(coord) | missing(scales)){stop("coord and scales are required")}
@@ -291,11 +288,12 @@ trytransform <- function(data,...,coord,scales){
   }
 }
 
-#' Remove Data out of Range
+#' Internal Function
 #' 
 #' Internal Function
 #' @param data data.frame
 #' @return data.frame
+#' @rdname undocumented
 #' @export
 remove_outside <- function(data){
   bup <- data
@@ -315,12 +313,13 @@ remove_outside <- function(data){
 }
 
 
-#' Sink Density Data 
+#' Internal Function
 #' 
 #' Internal Function
 #' @param df data.frame
 #' @param remove boolean remove or make zero
 #' @return data.frame
+#' @rdname undocumented
 #' @export
 sink_density <- function(df,remove=TRUE){
   if(class(df) != "data.frame"){return(df)}
@@ -349,7 +348,7 @@ sink_density <- function(df,remove=TRUE){
 }
 
 .hjust.flip    <- function(x,clockwise){if(clockwise){0.5 - (x - 0.5)}else{x}}
-
+.zeroGrob <- grob(cl = "zeroGrob", name = "NULL")
 
 # Euclidean distance between points.
 # NA indicates a break / terminal points
@@ -358,18 +357,21 @@ sink_density <- function(df,remove=TRUE){
   sqrt((x[-n] - x[-1]) ^ 2 + (y[-n] - y[-1]) ^ 2)
 }
 
-.zeroGrob <- grob(cl = "zeroGrob", name = "NULL")
 
 
 
-# Check required aesthetics are present
-# This is used by geoms and stats to give a more helpful error message
-# when required aesthetics are missing.
+
+#' Internal Function
+#' 
+#' Check required aesthetics are present
+#' This is used by geoms and stats to give a more helpful error message
+#' when required aesthetics are missing.
 #
-# @param character vector of required aesthetics
-# @param character vector of present aesthetics
-# @param name of object for error message
-# @keyword internal
+#' @param character vector of required aesthetics
+#' @param character vector of present aesthetics
+#' @param name of object for error message
+#' @keywords internal
+#' @rdname undocumented
 check_required_aesthetics <- function(required, present, name) {
   missing_aes <- setdiff(required, present)
   if (length(missing_aes) == 0) return()

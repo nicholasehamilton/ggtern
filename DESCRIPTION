@@ -49,4 +49,5 @@ Collate:
   'stat-density-2d.R'
   'modified-original.R'
   'global.R'
+  'undocumented.R'
   'onLoad.R'
