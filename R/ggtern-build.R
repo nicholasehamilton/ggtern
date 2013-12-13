@@ -106,16 +106,16 @@ ggplot_build <- function(plot) {
   scale_y <- function() scales$get_scales("y")
   
   panel <- ggint$train_position(panel, data, scale_x(), scale_y())
-  data  <- ggplot2:::map_position(panel, data, scale_x(), scale_y())
+  data  <- ggint$map_position(panel, data, scale_x(), scale_y())
   
   # Apply and map statistics
-  data <- ggplot2:::calculate_stats(panel, data, layers)
+  data <- ggint$calculate_stats(panel, data, layers)
   
   data <- dlapply(function(d, p) p$map_statistic(d, plot)) 
-  data <- lapply(data, ggplot2:::order_groups)
+  data <- lapply(data, ggint$order_groups)
   
   # Make sure missing (but required) aesthetics are added
-  ggplot2:::scales_add_missing(plot, c("x", "y"))
+  ggint$scales_add_missing(plot, c("x", "y"))
   
   # Reparameterise geoms from (e.g.) y and width to ymin and ymax
   data <- dlapply(function(d, p) p$reparameterise(d))
@@ -126,15 +126,15 @@ ggplot_build <- function(plot) {
   # Reset position scales, then re-train and map.  This ensures that facets
   # have control over the range of a plot: is it generated from what's 
   # displayed, or does it include the range of underlying data
-  ggplot2:::reset_scales(panel)
+  ggint$reset_scales(panel)
   panel <- ggint$train_position(panel, data, scale_x(), scale_y())
-  data  <- ggplot2:::map_position(panel, data, scale_x(), scale_y())
+  data  <- ggint$map_position(panel, data, scale_x(), scale_y())
   
   # Train and map non-position scales
   npscales <- scales$non_position_scales()  
   if (npscales$n() > 0) {
-    lapply(data, ggplot2:::scales_train_df, scales = npscales)
-    data <- lapply(data, ggplot2:::scales_map_df, scales = npscales)
+    lapply(data, ggint$scales_train_df, scales = npscales)
+    data <- lapply(data, ggint$scales_map_df, scales = npscales)
   }
   
   # Train coordinate system

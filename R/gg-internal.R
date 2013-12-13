@@ -11,11 +11,17 @@
                 "new_panel",
                 "train_layout",
                 "map_layout",
+                "map_position",
                 "new_panel",
                 "train_position",
                 "Stat",
                 "add_group",
-                "scales_transform_df"
+                "scales_transform_df",
+                "reset_scales",
+                "scales_train_df",
+                "scales_map_df",
+                "order_groups",
+                "calculate_stats"
 ) 
 .internals <- unique(.internals)
 ggint <- structure(
