@@ -24,6 +24,7 @@ Enhances: ggplot2
 License: GPL-2
 URL: http://www.ggtern.com
 Collate:
+  'gg-internal.R'
   'data.R'
   'element_ternary.R'
   'utilities.R'

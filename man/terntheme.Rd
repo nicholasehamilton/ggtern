@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 \name{themeelements}
-=======
-\name{theme}
->>>>>>> 00e90db8f98ca66bd772802073585f727bff81f7
 \alias{axis.tern}
 \alias{axis.tern.arrow}
 \alias{axis.tern.arrow.L}
@@ -33,11 +29,8 @@
 \alias{axis.tern.title.L}
 \alias{axis.tern.title.R}
 \alias{axis.tern.title.T}
-<<<<<<< HEAD
 \alias{elements}
 \alias{newelements}
-=======
->>>>>>> 00e90db8f98ca66bd772802073585f727bff81f7
 \alias{newtheme}
 \alias{newthemes}
 \alias{panel.background.tern}
@@ -51,13 +44,9 @@
 \alias{panel.grid.tern.minor.R}
 \alias{panel.grid.tern.minor.T}
 \alias{ternary.options}
-<<<<<<< HEAD
-\alias{theme-tern}
-\alias{themeelements}
-=======
 \alias{theme}
 \alias{theme-tern}
->>>>>>> 00e90db8f98ca66bd772802073585f727bff81f7
+\alias{themeelements}
 \title{New Theme Elements}
 \description{
   \code{ggtern} creates many new theme elements and

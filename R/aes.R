@@ -12,8 +12,6 @@
 aes <- function(x,y,z,...) {
   X <- structure(as.list(match.call()[-1]), class="uneval")
   do.call(find_global("rename_aes"),args=list(x=X))
-  #ggplot2:::rename_aes(X)
 }
 
-.all_aesthetics <- ggplot2:::.all_aesthetics
-.all_aesthetics <- c(.all_aesthetics,"T","L","R","zend")
+.all_aesthetics <- c(.ggint$.all_aesthetics,"T","L","R","zend")
