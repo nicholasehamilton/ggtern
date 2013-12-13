@@ -12,7 +12,8 @@
                 "train_layout",
                 "map_layout",
                 "new_panel",
-                "train_position"
+                "train_position",
+                "StatDensity2d"
 ) 
 .internals <- unique(.internals)
 ggint <- structure(

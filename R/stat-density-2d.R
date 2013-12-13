@@ -5,7 +5,7 @@
 #' @export
 #' @seealso \code{\link[ggplot2]{stat_density2d}}
 stat_density2d <- function (mapping = NULL, data = NULL, geom = "density2d", position = "identity", na.rm = FALSE, contour = TRUE, n = 100, ...) {
-  ggplot2:::StatDensity2d$new(mapping = mapping, data = data,geom=geom,geometry=geom,position = position, na.rm = na.rm, contour = contour, n = n,...)
+  ggint$StatDensity2d$new(mapping = mapping, data = data,geom=geom,geometry=geom,position = position, na.rm = na.rm, contour = contour, n = n,...)
 }
 
 .StatDensity2d <- proto(ggplot2:::Stat, {
