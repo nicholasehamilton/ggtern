@@ -11,8 +11,7 @@
   #GEOMETRIES ETC.
   assignInNamespace("StatSmooth",.StatSmooth,"ggplot2")
   assignInNamespace("GeomSegment",.GeomSegment,"ggplot2")
-  assignInNamespace("StatDensity2d",.StatDensity2d,"ggplot2")
-  
+  assignInNamespace("StatDensity2d",ggint$StatDensity2d,"ggplot2")
 
   assignInNamespace("panel_scales",.panel_scales,"ggplot2")
   assignInNamespace("train_ranges",.train_ranges,"ggplot2")

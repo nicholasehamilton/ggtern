@@ -2,13 +2,14 @@
 #'
 #' @inheritParams ggplot2::stat_density2d
 #' @importFrom MASS kde2d
+#' @name stat_density2d
 #' @export
 #' @seealso \code{\link[ggplot2]{stat_density2d}}
 stat_density2d <- function (mapping = NULL, data = NULL, geom = "density2d", position = "identity", na.rm = FALSE, contour = TRUE, n = 100, ...) {
   ggint$StatDensity2d$new(mapping = mapping, data = data,geom=geom,geometry=geom,position = position, na.rm = na.rm, contour = contour, n = n,...)
 }
 
-.StatDensity2d <- proto(ggint$Stat, {
+ggint$StatDensity2d <- proto(ggplot2:::Stat, {
   objname <- "density2d"
   
   default_geom <- function(.) GeomDensity2d
