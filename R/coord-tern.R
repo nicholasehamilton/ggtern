@@ -97,7 +97,7 @@ is.linear.ternary <- function(coord) TRUE
 coord_transform.ternary <- function(coord, data, details, verbose=FALSE,revertToCart=TRUE,adjustCart=TRUE,discard=getOption("tern.discard.external")){
   bup    <- data #Original Data Backup.
   tryCatch({
-    ggplot2:::check_required_aesthetics(coord$required_aes, names(data),"coord_tern")
+    check_required_aesthetics(coord$required_aes, names(data),"coord_tern")
     data   <- .rename_data_ternary(coord, data)
     ix.tern <- c("T","L","R"); 
     ix.cart <- c("x","y")

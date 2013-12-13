@@ -1,4 +1,4 @@
-.GeomSegment <- proto(ggplot2:::Geom, {
+.GeomSegment <- proto(Geom, {
   objname <- "segment"
   
   draw <- function(., data, scales, coordinates, arrow = NULL, lineend = "butt", na.rm = FALSE, ...){
@@ -6,7 +6,7 @@
     ##DO THE VARIABLE AESTHETIC CHECK x and y for cartesian, and x,y,z for ternary...
     required_aes <- sort(unique(c(.$required_aes,coordinates$required_aes)))
     required_aes <- apply(merge(required_aes,c("","end")),1,function(x){paste(x,collapse="")})
-    ggplot2:::check_required_aesthetics(required_aes, names(data),"geom_segment")
+    check_required_aesthetics(required_aes, names(data),"geom_segment")
     
     ##REMOVE MISSING DATA.
     data <- remove_missing(data, na.rm = na.rm,c(required_aes,"linetype", "size", "shape"),name = "geom_segment")

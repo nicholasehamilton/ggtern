@@ -17,7 +17,7 @@ geom_smooth <- function (mapping = NULL, data = NULL, stat = "smooth", position 
 
 #' Modified Geom Smooth Proto
 #' @export
-GeomSmoothMod <- proto(ggplot2:::Geom, {
+GeomSmoothMod <- proto(Geom, {
   objname <- "smooth"
   draw <- function(., data, scales, coordinates,limitarea=F,...) { 
     

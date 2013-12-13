@@ -25,6 +25,7 @@ License: GPL-2
 URL: http://www.ggtern.com
 Collate:
   'gg-internal.R'
+  'geom.R'
   'data.R'
   'element_ternary.R'
   'utilities.R'

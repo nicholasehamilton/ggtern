@@ -362,6 +362,22 @@ sink_density <- function(df,remove=TRUE){
 
 
 
+# Check required aesthetics are present
+# This is used by geoms and stats to give a more helpful error message
+# when required aesthetics are missing.
+#
+# @param character vector of required aesthetics
+# @param character vector of present aesthetics
+# @param name of object for error message
+# @keyword internal
+check_required_aesthetics <- function(required, present, name) {
+  missing_aes <- setdiff(required, present)
+  if (length(missing_aes) == 0) return()
+  stop(name, " requires the following missing aesthetics: ", paste(missing_aes, collapse=", "), call. = FALSE)
+}
+
+
+
 
 
 
