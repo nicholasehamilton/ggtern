@@ -162,7 +162,7 @@ coord_transform.ternary <- function(coord, data, details, verbose=FALSE,revertTo
 #' @method coord_expand_defaults ternary
 #' @S3method coord_expand_defaults ternary
 coord_expand_defaults.ternary <- function(coord, scale, aesthetic){
-  ret <- ggplot2:::expand_default(scale)
+  ret <- ggint$expand_default(scale)
   ret
 }
 
