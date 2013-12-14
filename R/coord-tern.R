@@ -454,7 +454,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   
   
   ##Function to create new axis grob
-  .render <- function(name,ix,items){
+  .render <- function(name,ix,items,hshift=0,vshift=0){
     tryCatch({  
       e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
       colour    <- e$colour
@@ -466,8 +466,8 @@ coord_render_bg.ternary <- function(coord,details,theme){
       vjust     <- e$vjust
       angle     <- e$angle
       grob      <- textGrob( label = d$L[ix], 
-                             x = d$x[ix], 
-                             y = d$y[ix], 
+                             x = d$x[ix] + hshift, 
+                             y = d$y[ix] + vshift, 
                              default.units="native", 
                              hjust=hjust, 
                              vjust=vjust, 
@@ -485,9 +485,9 @@ coord_render_bg.ternary <- function(coord,details,theme){
   }
   
   #process the axes
-  items <- .render("axis.tern.title.T",1,items)
-  items <- .render("axis.tern.title.L",2,items)
-  items <- .render("axis.tern.title.R",3,items)
+  items <- .render("axis.tern.title.T",1,items,vshift= 0.01)
+  items <- .render("axis.tern.title.L",2,items,hshift=-0.01)
+  items <- .render("axis.tern.title.R",3,items,hshift= 0.01)
   
   #--------------------------------------------------
   #GRIDS

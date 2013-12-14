@@ -185,18 +185,18 @@ NULL
   
   base$axis.tern.text          = element_text(size=size.base,face="plain")
   base$axis.tern.text.T        = element_text(colour=col.T,vjust=0.5,hjust=-0.2,angle =0)
-  base$axis.tern.text.L        = element_text(colour=col.L,vjust=0.5,hjust=1.2, angle =0)
-  base$axis.tern.text.R        = element_text(colour=col.R,vjust=0.5,hjust=1.2, angle =0)
+  base$axis.tern.text.L        = element_text(colour=col.L,vjust=0.5,hjust= 1.2,angle =0)
+  base$axis.tern.text.R        = element_text(colour=col.R,vjust=0.5,hjust= 1.2,angle =0)
   
   base$axis.tern.arrow.text    = element_text(size=size.text,hjust=0.5)
-  base$axis.tern.arrow.text.T  = element_text(colour=col.T, vjust=-0.2,angle =0)
-  base$axis.tern.arrow.text.L  = element_text(colour=col.L, vjust=-0.2,  angle =0)
-  base$axis.tern.arrow.text.R  = element_text(colour=col.R, vjust=1.2,  angle =0)
+  base$axis.tern.arrow.text.T  = element_text(colour=col.T, vjust=-0.2, angle =0)
+  base$axis.tern.arrow.text.L  = element_text(colour=col.L, vjust=-0.2, angle =0)
+  base$axis.tern.arrow.text.R  = element_text(colour=col.R, vjust= 1.2, angle =0)
   
   base$axis.tern.title         = element_text(size  =size.title, angle=0,face="bold",hjust=0.5 ,vjust=0.5)
-  base$axis.tern.title.T       = element_text(colour=col.T,vjust=-0.5 )
-  base$axis.tern.title.L       = element_text(colour=col.L,hjust= 1.4 )
-  base$axis.tern.title.R       = element_text(colour=col.R,hjust=-0.4 )
+  base$axis.tern.title.T       = element_text(colour=col.T,vjust= 0.0)
+  base$axis.tern.title.L       = element_text(colour=col.L,hjust= 1.0)
+  base$axis.tern.title.R       = element_text(colour=col.R,hjust= 0.0)
   
   base$panel.grid.tern         = element_line(size=0.25,colour="black")
   base$panel.grid.tern.major   = element_line(linetype="longdash")
