@@ -20,7 +20,6 @@ Imports:
   sp,
   scales,
   reshape
-Enhances: ggplot2
 License: GPL-2
 URL: http://www.ggtern.com
 Collate:
