@@ -107,30 +107,20 @@ coord_transform.ternary <- function(coord, data, details, verbose=FALSE,revertTo
     ix.R <- "R"
     
     clockwise = coord$clockwise;
+    lim <- list(Tlim=coord$limits[[ix.T]],Llim=coord$limits[[ix.L]],Rlim=coord$limits[[ix.R]])
     
     ##Execute the transformation to cartesian
-    data[,c("x","y")] <- transform_tern_to_cart(
-      data = data[,ix.tern],
-      Tlim = coord$limits[[ix.T]],
-      Llim = coord$limits[[ix.L]],
-      Rlim = coord$limits[[ix.R]],
-      cw   = clockwise
-      )[,c("x","y")]
+    data[,c("x","y")] <- transform_tern_to_cart(data = data[,ix.tern],Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim,cw = clockwise)[,c("x","y")]
     #only keep records in poly
     if(discard){
       #EXPAND THE MAX LIMITS
-      TOLLERANCE <- 0.01
+      TOLLERANCE <- max(.is.numericor(getOption("tern.pip.tollerance"),0.01))*max(as.numeric(sapply(lim,function(x)diff(x))))
       
       #Get the extremes (PLUS TOLLERANCE) to determine if points are outside the plot area.
       xtrm <- get_tern_extremes(coord,expand=TOLLERANCE)[,ix.tern]
       
       #Transform extremes to cartesian space
-      data.extremes <-transform_tern_to_cart(data = xtrm,
-                                             Tlim = coord$limits[[ix.T]],
-                                             Llim = coord$limits[[ix.L]],
-                                             Rlim = coord$limits[[ix.R]],
-                                             cw   = clockwise
-                                             )[,c("x","y")]
+      data.extremes <-transform_tern_to_cart(data = xtrm,Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim,cw   = clockwise)[,c("x","y")]
       
       #In polygon or not
       in.poly <- point.in.polygon(data$x,data$y,as.numeric(data.extremes$x),as.numeric(data.extremes$y))
