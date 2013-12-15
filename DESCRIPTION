@@ -56,6 +56,7 @@ Collate:
   'stat-Tline.R'
   'stat-Lline.R'
   'stat-Rline.R'
+  'TRL-line.R'
   'modified-original.R'
   'global.R'
   'undocumented.R'
