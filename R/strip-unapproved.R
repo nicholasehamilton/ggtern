@@ -36,8 +36,8 @@ strip_unapproved <- function(layers){
   for(ix in L:1){ #backwards.
     if(inherits(layers[[ix]],"proto")){
       name <- layers[[ix]]$geom$objname
-      if(is.character(name)){
-        if(!name %in% .approved){
+      if(!is.character(name) | !name %in% .approved){
+        if(!){
           #IT IS NOT OK
           writeLines(paste0("Removing Layer ",(L - ix + 1),". '",name,"' is not an approved proto (for ternary plots) under the present ggtern package",
                             ifthenelse(name %in% .dissaproved,", furthermore, it is FORBIDDEN!",".")))

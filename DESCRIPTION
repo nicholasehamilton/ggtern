@@ -20,6 +20,8 @@ Imports:
   sp,
   scales,
   reshape
+Suggests:
+  grid
 License: GPL-2
 URL: http://www.ggtern.com
 Collate:
