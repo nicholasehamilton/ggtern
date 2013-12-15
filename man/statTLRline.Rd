@@ -1,4 +1,7 @@
 \name{statTLRline}
+\alias{Lline}
+\alias{Rline}
+\alias{Tline}
 \alias{geom_Lline}
 \alias{geom_Rline}
 \alias{geom_Tline}
@@ -25,6 +28,12 @@
 
   stat_Rline(mapping = NULL, data = NULL, geom = "Rline",
     position = "identity", Rintercept, ...)
+
+  Tline(Tintercept = NULL, ...)
+
+  Lline(Lintercept = NULL, ...)
+
+  Rline(Rintercept = NULL, ...)
 }
 \arguments{
   \item{Tintercept}{for geom_Tline and stat_Tline, the
@@ -68,10 +77,22 @@
   as such, rather, lines for constant values of one of the
   three species.
 }
+\section{Tline, Lline and Rline}{
+  Convenience functions, \code{Tline(...), Lline(...)} and
+  \code{Rline(...)} have been created so that constant
+  lines can be quickly created:
+}
 \examples{
+#Base usage
 ggtern()  +
  geom_Lline(Lintercept=0.5,color="red") +
  geom_Tline(Tintercept=0.5,color="green") +
  geom_Rline(Rintercept=0.5,color="blue")
+
+#Convenience Functions
+ggtern() +
+ Tline(0.5) +
+ Lline(0.5) +
+ Rline(0.5)
 }
 
