@@ -9,13 +9,12 @@ stat_density2d <- function (mapping = NULL, data = NULL, geom = "density2d", pos
   ggint$StatDensity2d$new(mapping = mapping, data = data,geom=geom,geometry=geom,position = position, na.rm = na.rm, contour = contour, n = n,...)
 }
 
-ggint$StatDensity2d <- proto(ggint$Stat, {
+ggint$StatDensity2d <- proto(Statnew, {
   objname <- "density2d"
   
   default_geom <- function(.) GeomDensity2d
   default_aes <- function(.) aes(colour = "#3366FF", size = 0.5)
   required_aes <- c("x", "y")
-  
   calculate <- function(., data, scales, na.rm = FALSE, contour = TRUE, n = 100, geometry="density2d",...) {
     
     ##--------------------------------------------------------------------
@@ -29,7 +28,7 @@ ggint$StatDensity2d <- proto(ggint$Stat, {
         warning(paste0(.$objname,sfx,"must have more than 1 row, stripping from plot."),call.=F)
         return(data.frame())
       }
-      data <- trytransform(data,scales=scales,coord=get_last_coord())
+      data <- trytransform(data,last_coord)
     }
     ##--------------------------------------------------------------------
     
@@ -46,14 +45,14 @@ ggint$StatDensity2d <- proto(ggint$Stat, {
       xlim <- scale_dimension(scales$x)
       ylim <- scale_dimension(scales$y)
     }
-    
     dens <- safe.call(kde2d, list(x = df$x, y = df$y, n = n,lims = c(xlim,ylim), ...))
     df <- with(dens, data.frame(expand.grid(x = x, y = y), z = as.vector(z)))
+    
     
     ##--------------------------------------------------------------------
     #TERNARY HACK REMOVES ITEMS IF NOT POLYGON, ELSE SETS Z to 0, 
     #for points outside ternary plot area...
-    if(inherits(last_coord,"ternary")){df <- sink_density(df,remove=!identical(geometry,"polygon"))}
+    if(inherits(last_coord,"ternary")){df <- sink_density(df,remove=!identical(geometry,"polygon"),coord=last_coord)}
     ##--------------------------------------------------------------------
     
     df$group <- data$group[1]

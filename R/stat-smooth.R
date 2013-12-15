@@ -1,4 +1,4 @@
-.StatSmooth <- proto(ggint$Stat, {
+ggint$StatSmooth <- proto(Statnew, {
   objname <- "smooth"
   calculate_groups <- function(., data, scales, method=ifthenelse(inherits(last_plot(),"ggtern"),"lm","auto"), formula=y~x, ...){
     rows <- daply(data, .(group), function(df) length(unique(df$x)))
@@ -43,7 +43,7 @@
     #HACK 4 ggtern
     lc <- get_last_coord()
     if(inherits(lc,"ternary")){
-      data <- trytransform(data,scales=scales,coord=lc)
+      data <- trytransform(data,lc)
       if(identical(method,lm)){method="lm"}
       if(is.null(xseq)){
         if(fullrange){range=lc$limits$x}else{range=range(data$x, na.rm=TRUE)}

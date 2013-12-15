@@ -119,7 +119,7 @@ get_tern_extremes <- function(coordinates,verbose=F,expand=0){
 #' #Transform
 #' transform_tern_to_cart(T,L,R)
 #' @export
-transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE,...,Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1),cw=TRUE){
+transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),...,Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1),cw=TRUE,scale=TRUE){
   if(class(data) != "data.frame")stop("data must be of type 'data.frame'")
   if(length(which(c("T","L","R") %in% colnames(data))) < 3) stop("data must contain columns T, L and R")
   
@@ -127,7 +127,8 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE
   Rlim <- sort(Rlim)
   Llim <- sort(Llim)
   
-  d <- data; s <- rowSums(d);
+  d <- data; 
+  s <- rowSums(d);
   
   #If scale to composition sum of 1
   if(scale){
@@ -140,27 +141,18 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),scale=TRUE
     for(i in 1:ncol(d)){d[,i] <- d[,i]/s}
   }
   
-  .adj <- function(input,lim){
-    a   <- lim[1]
-    b   <- lim[length(lim)]
-    ret <- (input-a)/(b - a)
-    ret
-  }
-  
   #Adjust for the Limits.
+  .adj <- function(input,lim){(input-lim[1])/(lim[length(lim)] - lim[1])}
   d$T <- .adj(d$T,Tlim)
   d$L <- .adj(d$L,Llim)
   d$R <- .adj(d$R,Rlim)
   
-  .calcy <- function(clockwise){
-    d$T*tan(pi/3)*0.5
-  }
+  .calcy <- function(clockwise){d$T*tan(pi/3)*0.5}
   .calcx <- function(y,clockwise){
-    if(!clockwise){
-      return(d$R + y*tan(pi/6))
-    }else{
-      return(1 - d$R - y*tan(pi/6))
-    }
+    if(!clockwise)
+      d$R + y*tan(pi/6)
+    else
+      1 - d$R - y*tan(pi/6)
   }
   out.Y <- .calcy(clockwise=cw)
   out.X <- .calcx(y=out.Y,clockwise=cw)
@@ -243,24 +235,18 @@ find_global <- function (name, env=environment()){
 #' If fails, the original data is returned
 #' @param data the dataset
 #' @param coord the coordinates
-#' @param scales the scales
-#' @param ... not used
 #' @return transformed data
 #' @keywords internal
 #' @rdname undocumented
 #' @export
-trytransform <- function(data,...,coord,scales){
-  if(missing(coord) | missing(scales)){stop("coord and scales are required")}
+trytransform <- function(data,coord){
+  if(missing(coord)){stop("coord are required")}
   bup <- data
+  
+  Tlim <- coord$limits$T; Llim <- coord$limits$L; Rlim <- coord$limits$R
   tryCatch({
     if(inherits(coord,"ternary")){  
-      res <- transform_tern_to_cart(               T=data[,coord$T],
-                                                   L=data[,coord$L],
-                                                   R=data[,coord$R],
-                                                   Tlim=coord$limits$T,
-                                                   Llim=coord$limits$L,
-                                                   Rlim=coord$limits$R,
-                                                   cw=coord$clockwise)[,c("x","y")]
+      res <- transform_tern_to_cart(T=data[,coord$T],L=data[,coord$L],R=data[,coord$R],Tlim=Tlim,Llim=Llim,Rlim=Rlim, cw=coord$clockwise)[,c("x","y")]
       data <- cbind(res,data[,which(!colnames(data) %in% c(coord$T,coord$L,coord$R))])
     }
   },error=function(e){
@@ -318,19 +304,16 @@ remove_outside <- function(data){
 #' Internal Function
 #' @param df data.frame
 #' @param remove boolean remove or make zero
+#' @param coord coordinates
 #' @return data.frame
 #' @rdname undocumented
 #' @export
-sink_density <- function(df,remove=TRUE){
+sink_density <- function(df,remove=TRUE,coord=stop("coord is required")){
   if(class(df) != "data.frame"){return(df)}
   bup <- df
-  lp <- last_plot()
   tryCatch({
-    if(inherits(lp,"ggtern")){ #ONLY FOR ggtern object
-      #ix  <- expand.grid(x=1:length(dens$x),y=1:length(dens$y))
-      tri <- transform_tern_to_cart(data=get_tern_extremes(get_last_coord()))
-        #OLD CODE...
-        #print(system.time(ix$inorout <- apply(ix,1,function(x){1.0*point_in_triangle(P=c(dens$x[x[1]],dens$y[x[2]]),x=tri$x,y=tri$y,strictly=TRUE,check=FALSE)})))
+    if(inherits(coord,"ternary")){ #ONLY FOR ggtern object
+      tri <- transform_tern_to_cart(data=get_tern_extremes(coord),Tlim=coord$limits$T,Llim=coord$limits$L,Rlim=coord$limits$R)
       inorout <- point.in.polygon(df$x,df$y,tri$x,tri$y)
       inorout[which(inorout > 0)] <- 1
       if(remove){
@@ -338,7 +321,6 @@ sink_density <- function(df,remove=TRUE){
       }else{
         df[which(inorout <= 0),which(names(df) == "z")] <- 0
       }
-      #dens$z <- dens$z*matrix(ix$inorout,length(dens$x),length(dens$y))
     }
   },error=function(e){
     message(e)
