@@ -15,6 +15,7 @@
                 "new_panel",
                 "train_position",
                 "Stat",
+                "GeomPath",
                 "add_group",
                 "scales_transform_df",
                 "reset_scales",
