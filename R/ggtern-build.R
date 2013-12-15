@@ -138,7 +138,7 @@ ggplot_build <- function(plot) {
   }
   
   # Train coordinate system
-  panel <- ggint$train_ranges(panel, plot$coordinates)
+  panel <- train_ranges(panel, plot$coordinates)
   list(data = data, panel = panel, plot = plot)
 }
 
