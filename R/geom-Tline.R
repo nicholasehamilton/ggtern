@@ -23,7 +23,7 @@
 #'  geom_Rline(Rintercept=0.5,color="blue")
 #'  
 #' #Convenience Functions
-#' ggtern() + 
+#' ggtern() +  
 #'  Tline(0.5,color="red") + 
 #'  Lline(0.5,color="green") + 
 #'  Rline(0.5,color="blue")
