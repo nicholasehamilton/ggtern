@@ -34,7 +34,7 @@ GeomSmoothMod <- proto(Geom, {
     )
   }
   guide_geom <- function(.) "smooth"
-  default_stat <- function(.) StatSmooth
+  default_stat <- function(.) ggint$StatSmooth
   required_aes <- c("x", "y")
   default_aes <- function(.) aes(colour="#3366FF", fill="grey60", size=0.5, linetype=1, weight=1, alpha=0.4)
   

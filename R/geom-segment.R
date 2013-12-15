@@ -1,4 +1,4 @@
-.GeomSegment <- proto(Geom, {
+ggint$GeomSegment <- proto(Geom, {
   objname <- "segment"
   
   draw <- function(., data, scales, coordinates, arrow = NULL, lineend = "butt", na.rm = FALSE, ...){
