@@ -5,7 +5,7 @@
                  "polygon",
                  "smooth",
                  "text",
-                 "density2d",
+                 "Density2dTern",
                  "rug",
                  "Tline",
                  "Lline",
@@ -22,7 +22,7 @@
 #' \itemize{
 #'  \item{point, path, segment and polygon}
 #'  \item{Tline, Lline and Rline}
-#'  \item{smooth and density2d}
+#'  \item{smooth and density2d-ggtern}
 #'  \item{text}
 #'  \item{rug}
 #' }
@@ -36,12 +36,12 @@ strip_unapproved <- function(layers){
   for(ix in L:1){ #backwards.
     if(inherits(layers[[ix]],"proto")){
       name <- layers[[ix]]$geom$objname
-      if(!is.character(name) | !name %in% .approved){
-        if(!){
-          #IT IS NOT OK
-          writeLines(paste0("Removing Layer ",(L - ix + 1),". '",name,"' is not an approved proto (for ternary plots) under the present ggtern package",
-                            ifthenelse(name %in% .dissaproved,", furthermore, it is FORBIDDEN!",".")))
-          layers[[ix]] <- NULL
+      if(is.character(name)){
+        if(!name %in% .approved){
+            #IT IS NOT OK
+            writeLines(paste0("Removing Layer ",(L - ix + 1),". '",name,"' is not an approved proto (for ternary plots) under the present ggtern package",
+                              ifthenelse(name %in% .dissaproved,", furthermore, it is FORBIDDEN!",".")))
+            layers[[ix]] <- NULL
         }
       }
     }

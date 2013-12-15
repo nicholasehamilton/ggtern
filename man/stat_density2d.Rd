@@ -1,9 +1,9 @@
 \name{stat_density2d}
 \alias{stat_density2d}
-\title{2d density estimation.}
+\title{2d density estimation - (ggtern version)}
 \usage{
   stat_density2d(mapping = NULL, data = NULL,
-    geom = "density2d", position = "identity",
+    geom = "Density2dTern", position = "identity",
     na.rm = FALSE, contour = TRUE, n = 100, ...)
 }
 \arguments{
@@ -33,9 +33,9 @@
   \code{\link{kde2d}}}
 }
 \description{
-  2d density estimation.
+  Patched version of the 2d density estimation.
 }
 \seealso{
-  \code{\link[ggplot2]{stat_density2d}}
+  \code{\link[ggtern]{stat_density2d}}
 }
 

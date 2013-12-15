@@ -18,9 +18,9 @@
   layers are not one of the approved layers. The current
   list of approved layers are as follows: \itemize{
   \item{point, path, segment and polygon} \item{Tline,
-  Lline and Rline} \item{smooth and density2d} \item{text}
-  \item{rug} } The balance of the available geometries to
-  ggplot2 are either dissaproved, or, work in progress with
-  regards to this package.
+  Lline and Rline} \item{smooth and density2d-ggtern}
+  \item{text} \item{rug} } The balance of the available
+  geometries to ggplot2 are either dissaproved, or, work in
+  progress with regards to this package.
 }
 

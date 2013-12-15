@@ -1,10 +1,12 @@
 \docType{data}
 \name{ifthenelse}
 \alias{Geom}
+\alias{GeomDensity2dTern}
 \alias{GeomLline}
 \alias{GeomRline}
 \alias{GeomSmoothMod}
 \alias{GeomTline}
+\alias{StatDensity2dTern}
 \alias{StatLline}
 \alias{StatRline}
 \alias{StatTline}
@@ -61,6 +63,10 @@
   GeomLline
 
   GeomRline
+
+  GeomDensity2dTern
+
+  StatDensity2dTern
 
   StatTline
 
