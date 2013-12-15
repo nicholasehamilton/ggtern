@@ -466,18 +466,17 @@ coord_render_bg.ternary <- function(coord,details,theme){
       vjust     <- e$vjust
       angle     <- e$angle
       grob      <- textGrob( label = d$L[ix], 
-                             x = d$x[ix] + hshift, 
-                             y = d$y[ix] + vshift, 
-                             default.units="native", 
+                             x = unit(d$x[ix] + hshift,"npc"), 
+                             y = unit(d$y[ix] + vshift,"npc"),
                              hjust=hjust, 
                              vjust=vjust, 
                              rot  =angle,
-                             gp   = gpar(col      = colour, 
+                             gp   = gpar(col        = colour, 
                                          fontsize   = size,
                                          fontfamily = family, 
                                          fontface   = face, 
                                          lineheight = lineheight))
-      
+      #print(convertWidth(widthDetails(grob), 'npc', TRUE))
       ##Add to the items.
       items[[length(items) + 1]] <- grob
     },error = function(e){ warning(e)})
