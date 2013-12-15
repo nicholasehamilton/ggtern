@@ -50,7 +50,7 @@ Collate:
   'geom-Tline.R'
   'geom-Lline.R'
   'geom-Rline.R'
-  'geom-path-density2d.R'
+  'geom-density2d.R'
   'stat-smooth.R'
   'stat-density-2d.R'
   'stat-Tline.R'

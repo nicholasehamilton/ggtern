@@ -1,6 +1,7 @@
 \name{geom_density2d}
+\alias{Density2dTern}
 \alias{geom_density2d}
-\title{Contours from a 2d density estimate.}
+\title{Contours from a 2d density estimate - (ggtern version)}
 \usage{
   geom_density2d(mapping = NULL, data = NULL,
     stat = "Density2dTern", position = "identity",
@@ -48,9 +49,6 @@
 \section{Aesthetics}{
   \Sexpr[results=rd,stage=build]{ggplot2:::rd_aesthetics("geom",
   "density2d")}
-}
-\examples{
-# See stat_density2d for examples
 }
 \seealso{
   \code{\link{geom_contour}} for contour drawing geom,
