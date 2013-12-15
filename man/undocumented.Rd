@@ -2,6 +2,7 @@
 \name{ifthenelse}
 \alias{Geom}
 \alias{GeomSmoothMod}
+\alias{Statnew}
 \alias{arrow_label_formatter}
 \alias{calc_element_plot}
 \alias{check_required_aesthetics}
