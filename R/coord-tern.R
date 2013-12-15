@@ -485,9 +485,10 @@ coord_render_bg.ternary <- function(coord,details,theme){
   }
   
   #process the axes
-  items <- .render("axis.tern.title.T",1,items,vshift= 0.01)
-  items <- .render("axis.tern.title.L",2,items,hshift=-0.01)
-  items <- .render("axis.tern.title.R",3,items,hshift= 0.01)
+  SHIFT <- 0.01
+  items <- .render("axis.tern.title.T",1,items,vshift=  SHIFT)
+  items <- .render("axis.tern.title.L",2,items,vshift= -SHIFT*tan(pi/6),hshift=-SHIFT)
+  items <- .render("axis.tern.title.R",3,items,vshift= -SHIFT*tan(pi/6),hshift= SHIFT)
   
   #--------------------------------------------------
   #GRIDS
