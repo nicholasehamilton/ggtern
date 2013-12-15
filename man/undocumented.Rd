@@ -1,7 +1,13 @@
 \docType{data}
 \name{ifthenelse}
 \alias{Geom}
+\alias{GeomLline}
+\alias{GeomRline}
 \alias{GeomSmoothMod}
+\alias{GeomTline}
+\alias{StatLline}
+\alias{StatRline}
+\alias{StatTline}
 \alias{Statnew}
 \alias{arrow_label_formatter}
 \alias{calc_element_plot}
@@ -49,6 +55,18 @@
   check_required_aesthetics(required, present, name)
 
   GeomSmoothMod
+
+  GeomTline
+
+  GeomLline
+
+  GeomRline
+
+  StatTline
+
+  StatLline
+
+  StatRline
 
   get_last_coord()
 
