@@ -38,11 +38,12 @@
 
   find_global(name, env = environment())
 
-  trytransform(data, ..., coord, scales)
+  trytransform(data, coord)
 
   remove_outside(data)
 
-  sink_density(df, remove = TRUE)
+  sink_density(df, remove = TRUE,
+    coord = stop("coord is required"))
 
   check_required_aesthetics(required, present, name)
 
@@ -85,15 +86,13 @@
 
   \item{coord}{the coordinates}
 
-  \item{scales}{the scales}
-
-  \item{...}{not used}
-
   \item{data}{data.frame}
 
   \item{df}{data.frame}
 
   \item{remove}{boolean remove or make zero}
+
+  \item{coord}{coordinates}
 
   \item{character}{vector of required aesthetics}
 

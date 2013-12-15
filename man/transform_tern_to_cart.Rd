@@ -3,9 +3,9 @@
 \title{Transform Ternary Coordinates to Cartesian Coordinates}
 \usage{
   transform_tern_to_cart(T, L, R,
-    data = data.frame(T = T, L = L, R = R), scale = TRUE,
-    ..., Tlim = c(0, 1), Llim = c(0, 1), Rlim = c(0, 1),
-    cw = TRUE)
+    data = data.frame(T = T, L = L, R = R), ...,
+    Tlim = c(0, 1), Llim = c(0, 1), Rlim = c(0, 1),
+    cw = TRUE, scale = TRUE)
 }
 \arguments{
   \item{T}{the concentrations of the \strong{Top} species
