@@ -1,3 +1,11 @@
+#' @rdname overloaded
+#' @inheritParams ggplot2::theme_update
+theme_update <- function(...) {
+  # Make a call to theme, then add to theme
+  theme_set(theme_get() %+replace% do.call(theme, list(...)))
+}
+
+
 #' New Theme Elements
 #' 
 #' \code{ggtern} creates many new theme elements and inheritances, the following is an outline:
@@ -75,145 +83,6 @@
 #' @rdname terntheme
 NULL
 
-#SEARCH FOR THE ORIGINAL FUNCTIONS
-ggint$.element_tree <- find_global(".element_tree")
-.el_def       <- find_global("el_def")
-
-#TERNARY OPTIONS.
-ggint$.element_tree$ternary.options = .el_def("element_ternary","element_ternary") #
-
-##TERNARY PANEL
-ggint$.element_tree$panel.background.tern <- .el_def("element_rect", "rect")
-
-##AXIS ARROWS
-ggint$.element_tree$axis.tern         = .el_def("element_line", "line") #
-ggint$.element_tree$axis.tern.arrow   = .el_def("element_line", "axis.tern") #
-ggint$.element_tree$axis.tern.arrow.T = .el_def("element_line", "axis.tern.arrow") #
-ggint$.element_tree$axis.tern.arrow.L = .el_def("element_line", "axis.tern.arrow") #
-ggint$.element_tree$axis.tern.arrow.R = .el_def("element_line", "axis.tern.arrow") #
-ggint$.element_tree$axis.tern.line    = .el_def("element_line", "axis.tern") #
-ggint$.element_tree$axis.tern.line.T  = .el_def("element_line", "axis.tern.line") #
-ggint$.element_tree$axis.tern.line.L  = .el_def("element_line", "axis.tern.line") #
-ggint$.element_tree$axis.tern.line.R  = .el_def("element_line", "axis.tern.line") #
-ggint$.element_tree$axis.tern.text    = .el_def("element_text", "text") #
-ggint$.element_tree$axis.tern.text.T  = .el_def("element_text", "axis.tern.text") #
-ggint$.element_tree$axis.tern.text.L  = .el_def("element_text", "axis.tern.text") #
-ggint$.element_tree$axis.tern.text.R  = .el_def("element_text", "axis.tern.text") #
-ggint$.element_tree$axis.tern.arrow.text     = .el_def("element_text", "axis.tern.text") #
-ggint$.element_tree$axis.tern.arrow.text.T   = .el_def("element_text", "axis.tern.arrow.text") #
-ggint$.element_tree$axis.tern.arrow.text.L   = .el_def("element_text", "axis.tern.arrow.text") #
-ggint$.element_tree$axis.tern.arrow.text.R   = .el_def("element_text", "axis.tern.arrow.text") #
-ggint$.element_tree$axis.tern.title          = .el_def("element_text", "axis.tern.text")#
-ggint$.element_tree$axis.tern.title.T        = .el_def("element_text", "axis.tern.title")#
-ggint$.element_tree$axis.tern.title.L        = .el_def("element_text", "axis.tern.title")#
-ggint$.element_tree$axis.tern.title.R        = .el_def("element_text", "axis.tern.title")#
-
-ggint$.element_tree$axis.tern.ticks          = .el_def("element_line", "axis.tern")#
-ggint$.element_tree$axis.tern.ticks.major    = .el_def("element_line", "axis.tern.ticks")#
-ggint$.element_tree$axis.tern.ticks.major.T  = .el_def("element_line", "axis.tern.ticks.major")#
-ggint$.element_tree$axis.tern.ticks.major.L  = .el_def("element_line", "axis.tern.ticks.major")#
-ggint$.element_tree$axis.tern.ticks.major.R  = .el_def("element_line", "axis.tern.ticks.major")#
-
-ggint$.element_tree$axis.tern.ticks.minor    = .el_def("element_line", "axis.tern.ticks")#
-ggint$.element_tree$axis.tern.ticks.minor.T  = .el_def("element_line", "axis.tern.ticks.minor")#
-ggint$.element_tree$axis.tern.ticks.minor.L  = .el_def("element_line", "axis.tern.ticks.minor")#
-ggint$.element_tree$axis.tern.ticks.minor.R  = .el_def("element_line", "axis.tern.ticks.minor")#
-
-ggint$.element_tree$panel.grid.tern          = .el_def("element_line", "axis.tern") #
-ggint$.element_tree$panel.grid.tern.major    = .el_def("element_line", "panel.grid.tern") #
-ggint$.element_tree$panel.grid.tern.major.T  = .el_def("element_line", "panel.grid.tern.major") #
-ggint$.element_tree$panel.grid.tern.major.L  = .el_def("element_line", "panel.grid.tern.major") #
-ggint$.element_tree$panel.grid.tern.major.R  = .el_def("element_line", "panel.grid.tern.major") #
-
-ggint$.element_tree$panel.grid.tern.minor    = .el_def("element_line", "panel.grid.tern") #
-ggint$.element_tree$panel.grid.tern.minor.T  = .el_def("element_line", "panel.grid.tern.minor") #
-ggint$.element_tree$panel.grid.tern.minor.L  = .el_def("element_line", "panel.grid.tern.minor") #
-ggint$.element_tree$panel.grid.tern.minor.R  = .el_def("element_line", "panel.grid.tern.minor") #
-
-
-#internal kills the cartesian elements.
-.theme_nocart <- function(){
-  theme(
-    panel.background     = element_blank(),
-    panel.border         = element_blank(),
-    panel.grid.major     = element_blank(), 
-    panel.grid.minor     = element_blank(), 
-    axis.ticks           = element_blank(), 
-    axis.text.x          = element_blank(), 
-    axis.text.y          = element_blank(),
-    axis.title.x         = element_blank(), 
-    axis.title.y         = element_blank()
-  )
-}
-
-#helper function
-.theme_tern      <- function(col.BG="grey90",col.T="darkred",col.L="darkgreen",col.R="darkblue"){
-  
-  #THE BASE THEME
-  base <- theme_gray() #like ggplot2, starts from gray theme.
-  
-  #TEXT SIZES
-  size.base      <- 8
-  size.text      <- 10
-  size.title     <- 12
-  
-  #NO CARTESIAN
-  base$panel.background        = element_blank()
-  base$panel.border            = element_blank()
-  base$panel.grid.major        = element_blank() 
-  base$panel.grid.minor        = element_blank() 
-  base$axis.ticks              = element_blank() 
-  base$axis.text.x             = element_blank() 
-  base$axis.text.y             = element_blank()
-  base$axis.title.x            = element_blank() 
-  base$axis.title.y            = element_blank()
-  
-  base$legend.background       = element_blank()
-  base$ternary.options         = element_ternary()
-  base$panel.background.tern   = element_rect(fill=col.BG,color=NA)
-  base$axis.tern               = element_line(size=0.5,linetype="solid")
-  base$axis.tern.line          = element_line()
-  base$axis.tern.line.T        = element_line(colour=col.T)
-  base$axis.tern.line.L        = element_line(colour=col.L)
-  base$axis.tern.line.R        = element_line(colour=col.R)
-  
-  base$axis.tern.arrow         = element_line(lineend=arrow(length=unit(2.5,"mm")))
-  base$axis.tern.arrow.T       = element_line(colour=col.T)
-  base$axis.tern.arrow.L       = element_line(colour=col.L)
-  base$axis.tern.arrow.R       = element_line(colour=col.R)
-  
-  base$axis.tern.text          = element_text(size=size.base,face="plain")
-  base$axis.tern.text.T        = element_text(colour=col.T,vjust=0.5,hjust=-0.2,angle =0)
-  base$axis.tern.text.L        = element_text(colour=col.L,vjust=0.5,hjust= 1.2,angle =0)
-  base$axis.tern.text.R        = element_text(colour=col.R,vjust=0.5,hjust= 1.2,angle =0)
-  
-  base$axis.tern.arrow.text    = element_text(size=size.text,hjust=0.5)
-  base$axis.tern.arrow.text.T  = element_text(colour=col.T, vjust=-0.2, angle =0)
-  base$axis.tern.arrow.text.L  = element_text(colour=col.L, vjust=-0.2, angle =0)
-  base$axis.tern.arrow.text.R  = element_text(colour=col.R, vjust= 1.2, angle =0)
-  
-  base$axis.tern.title         = element_text(size  =size.title, angle=0,face="bold",hjust=0.5 ,vjust=0.5)
-  base$axis.tern.title.T       = element_text(colour=col.T,vjust= 0.0)
-  base$axis.tern.title.L       = element_text(colour=col.L,hjust= 1.0)
-  base$axis.tern.title.R       = element_text(colour=col.R,hjust= 0.0)
-  
-  base$panel.grid.tern         = element_line(size=0.25,colour="black")
-  base$panel.grid.tern.major   = element_line(linetype="longdash")
-  base$panel.grid.tern.major.T = element_line(colour=col.T)
-  base$panel.grid.tern.major.L = element_line(colour=col.L)
-  base$panel.grid.tern.major.R = element_line(colour=col.R)
-  base$panel.grid.tern.minor   = element_line(size=0.10, linetype="dotted",colour="black")
-  
-  base$axis.tern.ticks         = element_line(size=0.25)
-  base$axis.tern.ticks.major   = element_line()
-  base$axis.tern.ticks.major.T = element_line(colour=col.T)
-  base$axis.tern.ticks.major.L = element_line(colour=col.L)
-  base$axis.tern.ticks.major.R = element_line(colour=col.R)
-  base$axis.tern.ticks.minor   = element_line(size=0.10,colour="black")
-  
-  base
-}
-
 #' @rdname terntheme
 #' @inheritParams ggplot2::theme
 #' @export
@@ -223,3 +92,176 @@ theme <- function(..., complete = FALSE) {
   mapply(validate_element, elements, names(elements))
   structure(elements, class = c("theme", "gg"), complete = complete)
 }
+
+#' Overloaded ggplot2 Functions
+#' 
+#' @rdname overloaded
+opts <- function(...) {
+  warning("opts is disabled in ggtern")
+  NULL
+}
+
+
+#' Overloaded ggplot2 Functions
+#' 
+#' \code{plot_theme} is a local copy of the method that determines the net theme between a plot and the current theme
+#' @param x gg object
+#' @rdname overloaded
+plot_theme <- function(x) {defaults(x$theme, ggtern::theme_get())}
+
+
+.theme_new <- (function() {
+  theme.tern <- theme_tern_gray()
+  theme      <- theme_gray()
+  list(
+    get = function(){
+      ifthenelse(inherits(get_last_coord(),"ternary"),theme.tern,theme)
+    },
+    set = function(new) {
+      ifthenelse(inherits(get_last_coord(), "ternary"),{
+        missing <- setdiff(names(theme_tern_gray()), names(new))
+        if (length(missing) > 0) {
+          warning("New theme missing the following elements: ",paste(missing, collapse = ", "), call. = FALSE)
+        }
+        old <- theme.tern
+        theme.tern <<- new
+        invisible(old)
+      },{
+        missing <- setdiff(names(theme_gray()), names(new))
+        if (length(missing) > 0) {
+          warning("New theme missing the following elements: ",
+                  paste(missing, collapse = ", "), call. = FALSE)
+        }
+        old <- theme
+        theme <<- new
+        invisible(old)
+      })
+    }
+  )
+})()
+
+#' @rdname overloaded
+#' @export
+theme_get <- .theme_new$get
+
+#' @rdname overloaded
+#' @export
+theme_set <- .theme_new$set
+
+#' Overloaded ggplot2 Functions
+#' 
+#' \code{"\%+replace\%"} replace operator
+#' @rdname overloaded 
+"%+replace%" <- function(e1, e2) {
+  if (!is.theme(e1) || !is.theme(e2)) {
+    stop("%+replace% requires two theme objects", call. = FALSE)
+  }
+  # Can't use modifyList here since it works recursively and drops NULLs
+  e1[names(e2)] <- e2
+  e1
+}
+
+#' Overloaded ggplot2 Functions
+#' 
+#' \code{update_theme} is a local copy of a ggplot2 function, which copies elements from the new theme into an old theme.
+#' @param oldtheme previous theme object
+#' @param newtheme new theme object
+#' @rdname overloaded
+update_theme <- function(oldtheme, newtheme) {
+  # If the newtheme is a complete one, don't bother searching
+  # the default theme -- just replace everything with newtheme
+  if (attr(newtheme, "complete"))
+    return(newtheme)
+  
+  # These are elements in newtheme that aren't already set in oldtheme.
+  # They will be pulled from the default theme.
+  newitems <- ! names(newtheme) %in% names(oldtheme)
+  newitem_names <- names(newtheme)[newitems]
+  oldtheme[newitem_names] <- theme_get()[newitem_names]
+  
+  # Update the theme elements with the things from newtheme
+  # Turn the 'theme' list into a proper theme object first, and preserve
+  # the 'complete' attribute. It's possible that oldtheme is an empty
+  # list, and in that case, set complete to FALSE.
+  oldtheme <- do.call(theme, c(oldtheme,complete = isTRUE(attr(oldtheme, "complete"))))
+  
+  oldtheme + newtheme
+}
+
+
+#' Calculate the element properties, by inheriting properties from its parents
+#'
+#' @inheritParams ggplot2::calc_element
+#' @seealso \code{\link[ggplot2]{calc_element}}
+#' @rdname overloaded
+calc_element <- function(element, theme, verbose = FALSE) {
+  if (verbose) message(element, " --> ", appendLF = FALSE)
+  
+  # If this is element_blank, don't inherit anything from parents
+  if (inherits(theme[[element]], "element_blank")) {
+    if (verbose) message("element_blank (no inheritance)")
+    return(theme[[element]])
+  }
+  
+  # If the element is defined (and not just inherited), check that
+  # it is of the class specified in .element_tree
+  if (!is.null(theme[[element]]) &&
+        !inherits(theme[[element]], ggint$.element_tree[[element]]$class)) {
+    stop(element, " should have class ", ggint$.element_tree[[element]]$class)
+  }
+  
+  # Get the names of parents from the inheritance tree
+  pnames <- ggint$.element_tree[[element]]$inherit
+  
+  # If no parents, this is a "root" node. Just return this element.
+  if (is.null(pnames)) {
+    # Check that all the properties of this element are non-NULL
+    nullprops <- vapply(theme[[element]], is.null, logical(1))
+    if (any(nullprops)) {
+      stop("Theme element '", element, "' has NULL property: ",
+           paste(names(nullprops)[nullprops], collapse = ", "))
+    }
+    
+    if (verbose) message("nothing (top level)")
+    return(theme[[element]])
+  }
+  
+  # Calculate the parent objects' inheritance
+  if (verbose) message(paste(pnames, collapse = ", "))
+  parents <- lapply(pnames, calc_element, theme, verbose)
+  
+  # Combine the properties of this element with all parents
+  Reduce(combine_elements, parents, theme[[element]])
+}
+
+
+
+#' Overloaded ggplot2 Functions
+#' 
+#' \code{combine_elements} is a local copy of method that combines two theme elements
+#' @rdname overloaded
+#' @param e1 first element
+#' @param e2 second element
+combine_elements <- function(e1, e2) {
+  
+  # If e2 is NULL, nothing to inherit
+  if (is.null(e2))  return(e1)
+  
+  # If e1 is NULL, or if e2 is element_blank, inherit everything from e2
+  if (is.null(e1) || inherits(e2, "element_blank"))  return(e2)
+  
+  # If e1 has any NULL properties, inherit them from e2
+  n <- vapply(e1[names(e2)], is.null, logical(1))
+  e1[n] <- e2[n]
+  
+  # Calculate relative sizes
+  if (ggint$is.rel(e1$size)) {
+    e1$size <- e2$size * unclass(e1$size)
+  }
+  
+  e1
+}
+
+
+
+

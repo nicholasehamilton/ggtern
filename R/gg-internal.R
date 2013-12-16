@@ -38,7 +38,8 @@
                 "add_theme",
                 "make_labels",
                 "update_guides",
-                "zeroGrob"
+                "zeroGrob",
+                "el_def"
 ) 
 .internals <- unique(.internals)
 
