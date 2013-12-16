@@ -41,6 +41,7 @@ Collate:
   'scales.R'
   'panel.R'
   'ggtern.R'
+  'kde2d-weighted.R'
   'ggtern-build.R'
   'tern-render.R'
   'tern-limits.R'
