@@ -8,7 +8,7 @@ Maintainer: Nicholas Hamilton <n.hamilton@student.unsw.edu.au>
 Description: ggtern is a package that extends the functionality of ggpot2, giving the capability to plot ternary 
              diagrams for (subset of) the ggplot2 proto geometries. 
              For further examples and documentation, please proceed to the ggtern website.
-License: GPL-2
+License: GPL-2 file LICENSE
 Depends:
   ggplot2(>= 0.9.3.1),
   proto
