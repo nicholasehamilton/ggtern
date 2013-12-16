@@ -54,9 +54,7 @@ ggint$.element_tree$panel.grid.tern.minor.L  = .el_def("element_line", "panel.gr
 ggint$.element_tree$panel.grid.tern.minor.R  = .el_def("element_line", "panel.grid.tern.minor") #
 
 
-#' Overloaded ggplot2 functions
-#' 
-#' \code{validate_element} is a function which checks the validity of a given theme element, against the elements table.
+#' @details \code{validate_element} is a function which checks the validity of a given theme element, against the elements table.
 #' Since the \code{.elements_tree} is an internal function, which is not exported, and modifications could not be made, 
 #' a new (and equivalent) \code{.element_tree} is created within ggtern.
 #' @param el the element

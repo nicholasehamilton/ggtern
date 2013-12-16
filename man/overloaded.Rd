@@ -5,6 +5,7 @@
 \alias{calc_element}
 \alias{combine_elements}
 \alias{opts}
+\alias{overloaded}
 \alias{plot_theme}
 \alias{theme_get}
 \alias{theme_set}
@@ -71,14 +72,19 @@
   inherits from}
 }
 \description{
+  The source of the following functions originate from
+  ggplot2, however, minor patches were required in order
+  for them to function under the ggplot2 framework. Patches
+  were mainly to do with handling the new theme elements
+  and heirarchies.
+}
+\details{
   \code{validate_element} is a function which checks the
   validity of a given theme element, against the elements
   table. Since the \code{.elements_tree} is an internal
   function, which is not exported, and modifications could
   not be made, a new (and equivalent) \code{.element_tree}
   is created within ggtern.
-
-  Overloaded ggplot2 Functions
 
   \code{plot_theme} is a local copy of the method that
   determines the net theme between a plot and the current
@@ -90,13 +96,11 @@
   function, which copies elements from the new theme into
   an old theme.
 
-  Calculate the element properties, by inheriting
-  properties from its parents
-
   \code{combine_elements} is a local copy of method that
   combines two theme elements
 
-  \code{"\%+\%"} add operator
+  \code{"\%+\%"} add operator no change other than
+  exporting from this namespace
 
   \code{add_ggplot} is a local copy of method that adds
   elements to a gg object.

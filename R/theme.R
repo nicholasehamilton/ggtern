@@ -1,4 +1,9 @@
+#' Overloaded ggplot2 functions
+#' 
+#' @description The source of the following functions originate from ggplot2, however, minor patches were required in order for them to function
+#' under the ggplot2 framework. Patches were mainly to do with handling the new theme elements and heirarchies. 
 #' @rdname overloaded
+#' @aliases overloaded
 #' @inheritParams ggplot2::theme_update
 theme_update <- function(...) {
   # Make a call to theme, then add to theme
@@ -93,8 +98,6 @@ theme <- function(..., complete = FALSE) {
   structure(elements, class = c("theme", "gg"), complete = complete)
 }
 
-#' Overloaded ggplot2 Functions
-#' 
 #' @rdname overloaded
 opts <- function(...) {
   warning("opts is disabled in ggtern")
@@ -102,9 +105,7 @@ opts <- function(...) {
 }
 
 
-#' Overloaded ggplot2 Functions
-#' 
-#' \code{plot_theme} is a local copy of the method that determines the net theme between a plot and the current theme
+#' @details \code{plot_theme} is a local copy of the method that determines the net theme between a plot and the current theme
 #' @param x gg object
 #' @rdname overloaded
 plot_theme <- function(x) {defaults(x$theme, ggtern::theme_get())}
@@ -148,9 +149,7 @@ theme_get <- .theme_new$get
 #' @export
 theme_set <- .theme_new$set
 
-#' Overloaded ggplot2 Functions
-#' 
-#' \code{"\%+replace\%"} replace operator
+#' @details \code{"\%+replace\%"} replace operator
 #' @rdname overloaded 
 "%+replace%" <- function(e1, e2) {
   if (!is.theme(e1) || !is.theme(e2)) {
@@ -161,9 +160,7 @@ theme_set <- .theme_new$set
   e1
 }
 
-#' Overloaded ggplot2 Functions
-#' 
-#' \code{update_theme} is a local copy of a ggplot2 function, which copies elements from the new theme into an old theme.
+#' @details \code{update_theme} is a local copy of a ggplot2 function, which copies elements from the new theme into an old theme.
 #' @param oldtheme previous theme object
 #' @param newtheme new theme object
 #' @rdname overloaded
@@ -189,8 +186,6 @@ update_theme <- function(oldtheme, newtheme) {
 }
 
 
-#' Calculate the element properties, by inheriting properties from its parents
-#'
 #' @inheritParams ggplot2::calc_element
 #' @seealso \code{\link[ggplot2]{calc_element}}
 #' @rdname overloaded
@@ -234,11 +229,7 @@ calc_element <- function(element, theme, verbose = FALSE) {
   Reduce(combine_elements, parents, theme[[element]])
 }
 
-
-
-#' Overloaded ggplot2 Functions
-#' 
-#' \code{combine_elements} is a local copy of method that combines two theme elements
+#' @details \code{combine_elements} is a local copy of method that combines two theme elements
 #' @rdname overloaded
 #' @param e1 first element
 #' @param e2 second element

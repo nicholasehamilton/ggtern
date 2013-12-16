@@ -1,4 +1,4 @@
-"+.gg" <- function(e1, e2) {  
+"+.gg" <- function(e1, e2){  
   # Get the name of what was passed in as e2, and pass along so that it
   # can be displayed in error messages
   e2name <- deparse(substitute(e2))
@@ -6,17 +6,11 @@
   else if (is.ggplot(e1)) add_ggplot(e1, e2, e2name)
 }
 
-#' Overloaded ggplot2 Functions
-#' 
-#' \code{"\%+\%"} add operator
+#' @details \code{"\%+\%"} add operator no change other than exporting from this namespace
 #' @rdname overloaded 
 "%+%" <- `+.gg`
 
-
-
-#' Overloaded ggplot2 Functions
-#' 
-#' \code{add_ggplot} is a local copy of method that adds elements to a gg object.
+#' @details \code{add_ggplot} is a local copy of method that adds elements to a gg object.
 #' @param p plot
 #' @param object to add
 #' @param objectname name of obeject
