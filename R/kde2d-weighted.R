@@ -3,7 +3,7 @@
 #' Based of an algorithm found online at \code{https://stat.ethz.ch/pipermail/r-help/2006-June/107405.html}.
 #' @aliases kde kde2dweighted
 #' @inheritParams MASS::kde2d
-#' @parm w numeric value or vector of same length as x (and y), for weighting.
+#' @param w numeric value or vector of same length as x (and y), for weighting.
 #' @seealso \code{\link{kde2d}}
 #' @export
 kde2d.weighted <- function (x, y, w, h, n = 25, lims = c(range(x), range(y))) {
