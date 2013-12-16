@@ -23,7 +23,8 @@
                 "scales_map_df",
                 "order_groups",
                 "TopLevel",
-                "compute_intercept"
+                "compute_intercept",
+                "combine_elements"
 ) 
 .internals <- unique(.internals)
 ggint <- structure(

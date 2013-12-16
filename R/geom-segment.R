@@ -1,6 +1,25 @@
+#' Single line segments (Ternary Version).
+#'
+#' Modified geom_segment geometry
+#' @section Aesthetics: 
+#' \Sexpr[results=rd,stage=build]{ggplot2:::rd_aesthetics("geom", "segment")}
+#' In addition, the Ternary Version Requires:
+#' \itemize{
+#'  \item \strong{z}
+#'  \item \strong{zend}
+#' }
+#'
+#' @inheritParams ggplot2::geom_segment
+#' @seealso \code{\link[ggplot2]{geom_segment}}
+#' @export
+geom_segment <- function (mapping = NULL, data = NULL, stat = "identity",
+                          position = "identity", arrow = NULL, lineend = "butt", na.rm = FALSE, ...) {
+  ggint$GeomSegment$new(mapping = mapping, data = data, stat = stat,
+                  position = position, arrow = arrow, lineend = lineend, na.rm = na.rm, ...)
+}
+
 ggint$GeomSegment <- proto(Geom, {
   objname <- "segment"
-  
   draw <- function(., data, scales, coordinates, arrow = NULL, lineend = "butt", na.rm = FALSE, ...){
     
     ##DO THE VARIABLE AESTHETIC CHECK x and y for cartesian, and x,y,z for ternary...
@@ -51,8 +70,6 @@ ggint$GeomSegment <- proto(Geom, {
     pieces <- pieces[order(pieces$group),]
     GeomPath$draw_groups(pieces, scales, coordinates, arrow = arrow, ...)
   }
-  
-  
   default_stat <- function(.) StatIdentity
   required_aes <- c("x", "y")
   default_aes <- function(.) aes(colour="black", size=0.5, linetype=1, alpha = NA)

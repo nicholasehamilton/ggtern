@@ -8,6 +8,9 @@
     lims = c(range(x), range(y)))
 }
 \arguments{
+  \item{w}{numeric value or vector of same length as x (and
+  y), for weighting.}
+
   \item{x}{ x coordinate of data }
 
   \item{y}{ y coordinate of data }

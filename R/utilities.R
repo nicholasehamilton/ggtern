@@ -200,8 +200,8 @@ calc_element_plot <- function(element,theme=theme_update(),...,plot=NULL,verbose
     }
   }
   if(!is.character(element))stop("element name must be specified as character")
-  ret.plot  <- ggplot2::calc_element(element,theme=plot$theme,verbose=verbose)
-  ret.theme <- ggplot2::calc_element(element,theme=theme,     verbose=verbose) 
+  ret.plot  <- ggint$calc_element(element,theme=plot$theme,verbose=verbose)
+  ret.theme <- ggint$calc_element(element,theme=theme,     verbose=verbose) 
   ifthenelse(!identical(ret.plot,NULL),ret.plot,ret.theme)
 }
 
@@ -358,6 +358,47 @@ check_required_aesthetics <- function(required, present, name) {
   missing_aes <- setdiff(required, present)
   if (length(missing_aes) == 0) return()
   stop(name, " requires the following missing aesthetics: ", paste(missing_aes, collapse=", "), call. = FALSE)
+}
+
+
+ggint$calc_element <- calc_element <- function(element, theme, verbose = FALSE) {
+  if (verbose) message(element, " --> ", appendLF = FALSE)
+  
+  # If this is element_blank, don't inherit anything from parents
+  if (inherits(theme[[element]], "element_blank")) {
+    if (verbose) message("element_blank (no inheritance)")
+    return(theme[[element]])
+  }
+  
+  # If the element is defined (and not just inherited), check that
+  # it is of the class specified in .element_tree
+  if (!is.null(theme[[element]]) &&
+        !inherits(theme[[element]], ggint$.element_tree[[element]]$class)) {
+    stop(element, " should have class ", ggint$.element_tree[[element]]$class)
+  }
+  
+  # Get the names of parents from the inheritance tree
+  pnames <- ggint$.element_tree[[element]]$inherit
+  
+  # If no parents, this is a "root" node. Just return this element.
+  if (is.null(pnames)) {
+    # Check that all the properties of this element are non-NULL
+    nullprops <- vapply(theme[[element]], is.null, logical(1))
+    if (any(nullprops)) {
+      stop("Theme element '", element, "' has NULL property: ",
+           paste(names(nullprops)[nullprops], collapse = ", "))
+    }
+    
+    if (verbose) message("nothing (top level)")
+    return(theme[[element]])
+  }
+  
+  # Calculate the parent objects' inheritance
+  if (verbose) message(paste(pnames, collapse = ", "))
+  parents <- lapply(pnames, ggint$calc_element, theme, verbose)
+  
+  # Combine the properties of this element with all parents
+  Reduce(ggint$combine_elements, parents, theme[[element]])
 }
 
 

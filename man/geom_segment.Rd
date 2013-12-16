@@ -1,0 +1,49 @@
+\name{geom_segment}
+\alias{geom_segment}
+\title{Single line segments (Ternary Version).}
+\usage{
+  geom_segment(mapping = NULL, data = NULL,
+    stat = "identity", position = "identity", arrow = NULL,
+    lineend = "butt", na.rm = FALSE, ...)
+}
+\arguments{
+  \item{mapping}{The aesthetic mapping, usually constructed
+  with \code{\link{aes}} or \code{\link{aes_string}}. Only
+  needs to be set at the layer level if you are overriding
+  the plot defaults.}
+
+  \item{data}{A layer specific dataset - only needed if you
+  want to override the plot defaults.}
+
+  \item{stat}{The statistical transformation to use on the
+  data for this layer.}
+
+  \item{position}{The position adjustment to use for
+  overlappling points on this layer}
+
+  \item{arrow}{specification for arrow heads, as created by
+  arrow()}
+
+  \item{lineend}{Line end style (round, butt, square)}
+
+  \item{na.rm}{If \code{FALSE} (the default), removes
+  missing values with a warning.  If \code{TRUE} silently
+  removes missing values.}
+
+  \item{...}{other arguments passed on to
+  \code{\link{layer}}. This can include aesthetics whose
+  values you want to set, not map. See \code{\link{layer}}
+  for more details.}
+}
+\description{
+  Modified geom_segment geometry
+}
+\section{Aesthetics}{
+  \Sexpr[results=rd,stage=build]{ggplot2:::rd_aesthetics("geom",
+  "segment")} In addition, the Ternary Version Requires:
+  \itemize{ \item \strong{z} \item \strong{zend} }
+}
+\seealso{
+  \code{\link[ggplot2]{geom_segment}}
+}
+
