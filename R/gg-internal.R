@@ -24,9 +24,25 @@
                 "order_groups",
                 "TopLevel",
                 "compute_intercept",
-                "combine_elements"
+                "combine_elements",
+                "is.rel",
+                "facet_render",
+                "coord_labels",
+                "xlabel",
+                "ylabel",
+                "element_render",
+                "build_guides",
+                "is.zero",
+                "plot_clone",
+                "set_last_plot",
+                "add_theme",
+                "make_labels",
+                "update_guides",
+                "zeroGrob"
 ) 
 .internals <- unique(.internals)
+
+
 ggint <- structure(
   mapply(function(.internals, i) getFromNamespace(i,"ggplot2"),.internals, .internals),
   class=c("internal")

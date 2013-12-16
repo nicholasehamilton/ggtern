@@ -26,13 +26,13 @@ NULL
 .theme_arrows <- function(show){
   if(!is.logical(show)){show=TRUE}
   show=show[1]
-  current <- theme_get()
+  current <- theme_update()
   e <- current$ternary.options
   if(inherits(e,"element_ternary")){
     e$showarrows <- show
     return(theme(ternary.options=e))
   }else{
-    theme(ternary.options=element_ternary(showarrows=show))
+    ggtern::theme(ternary.options=element_ternary(showarrows=show))
   }
 }
 
@@ -111,34 +111,3 @@ theme_anticlockwise <- function(){tern_anticlockwise()}
 #' @export
 theme_counterclockwise <- function(){tern_counterclockwise()}
 
-.theme_new <- (function() {
-  theme.tern <- theme_tern_gray()
-  theme      <- theme_gray()
-  list(
-    get = function(){
-      ifthenelse(inherits(last_plot(),"ggtern"),theme.tern,theme)
-    },
-    set = function(new) {
-      ifthenelse(inherits(last_plot(),"ggtern"),{
-        missing <- setdiff(names(theme_tern_gray()), names(new))
-        if (length(missing) > 0) {
-          warning("New theme missing the following elements: ",paste(missing, collapse = ", "), call. = FALSE)
-        }
-        old <- theme.tern
-        theme.tern <<- new
-        invisible(old)
-      },{
-        missing <- setdiff(names(theme_gray()), names(new))
-        if (length(missing) > 0) {
-          warning("New theme missing the following elements: ",
-                  paste(missing, collapse = ", "), call. = FALSE)
-        }
-        old <- theme
-        theme <<- new
-        invisible(old)
-      })
-    }
-  )
-})()
-.theme_get <- .theme_new$get
-.theme_set <- .theme_new$set

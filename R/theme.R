@@ -146,7 +146,6 @@ ggint$.element_tree$panel.grid.tern.minor.R  = .el_def("element_line", "panel.gr
   )
 }
 
-
 #helper function
 .theme_tern      <- function(col.BG="grey90",col.T="darkred",col.L="darkgreen",col.R="darkblue"){
   
@@ -215,4 +214,12 @@ ggint$.element_tree$panel.grid.tern.minor.R  = .el_def("element_line", "panel.gr
   base
 }
 
-
+#' @rdname terntheme
+#' @inheritParams ggplot2::theme
+#' @export
+theme <- function(..., complete = FALSE) {
+  elements <- list(...)
+  # Check that all elements have the correct class (element_text, unit, etc)
+  mapply(validate_element, elements, names(elements))
+  structure(elements, class = c("theme", "gg"), complete = complete)
+}

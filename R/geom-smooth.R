@@ -9,16 +9,16 @@
 #' @param fullrange extend the range to the edge of the plotting panel.
 #' @inheritParams ggplot2::geom_smooth
 #' @export
-geom_smooth <- function (mapping = NULL, data = NULL, stat = "smooth", position = "identity",limitarea=TRUE,fullrange=FALSE,...) { 
+geom_smooth <- function (mapping = NULL, data = NULL, stat = "smoothtern", position = "identity",limitarea=TRUE,fullrange=FALSE,...) { 
   limitarea <- ifthenelse(!is.logical(limitarea),TRUE,limitarea[1])
   fullrange <- ifthenelse(limitarea,TRUE,fullrange) #FORCE FULL RANGE IN ORDER TO BE ABLE TO TRUNCATE
-  GeomSmoothMod$new(mapping = mapping, data = data, stat = stat, position = position,limitarea=limitarea,fullrange=fullrange,...)
+  GeomSmoothtern$new(mapping = mapping, data = data, stat = stat, position = position,limitarea=limitarea,fullrange=fullrange,...)
 }
 
 #' Modified Geom Smooth Proto
 #' @rdname undocumented
-GeomSmoothMod <- proto(Geom, {
-  objname <- "smooth"
+GeomSmoothtern <- proto(Geom, {
+  objname <- "smoothtern"
   draw <- function(., data, scales, coordinates,limitarea=F,...) { 
     
     #HACK 4 GGTERN
@@ -34,11 +34,11 @@ GeomSmoothMod <- proto(Geom, {
     )
   }
   guide_geom <- function(.) "smooth"
-  default_stat <- function(.) ggint$StatSmooth
+  default_stat <- function(.) StatSmoothtern
   required_aes <- c("x", "y")
   default_aes <- function(.) aes(colour="#3366FF", fill="grey60", size=0.5, linetype=1, weight=1, alpha=0.4)
   
-  
+
   draw_legend <- function(., data, params, ...) {
     data <- aesdefaults(data, .$default_aes(), list(...))
     data$fill <- alpha(data$fill, data$alpha)

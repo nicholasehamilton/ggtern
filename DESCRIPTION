@@ -60,5 +60,6 @@ Collate:
   'TRL-line.R'
   'modified-original.R'
   'global.R'
+  'overloaded.R'
   'undocumented.R'
   'onLoad.R'

@@ -192,7 +192,6 @@ arrow_label_formatter <- function(label,suffix="",...,sep="/"){
 #' @param plot the plot to check locally for theme element, NULL is ok.
 #' @param ... not used
 #' @rdname undocumented
-#' @export
 calc_element_plot <- function(element,theme=theme_update(),...,plot=NULL,verbose=F){
   if(!is.null(plot)){
     if(!inherits(plot,"gg") & !inherits(plot,"ggplot") & !inherits(plot,"ggtern")){
@@ -200,8 +199,8 @@ calc_element_plot <- function(element,theme=theme_update(),...,plot=NULL,verbose
     }
   }
   if(!is.character(element))stop("element name must be specified as character")
-  ret.plot  <- ggint$calc_element(element,theme=plot$theme,verbose=verbose)
-  ret.theme <- ggint$calc_element(element,theme=theme,     verbose=verbose) 
+  ret.plot  <- calc_element(element,theme=plot$theme,verbose=verbose)
+  ret.theme <- calc_element(element,theme=theme,     verbose=verbose) 
   ifthenelse(!identical(ret.plot,NULL),ret.plot,ret.theme)
 }
 
@@ -238,7 +237,6 @@ find_global <- function (name, env=environment()){
 #' @return transformed data
 #' @keywords internal
 #' @rdname undocumented
-#' @export
 trytransform <- function(data,coord){
   if(missing(coord)){stop("coord are required")}
   bup <- data
@@ -280,7 +278,6 @@ trytransform <- function(data,coord){
 #' @param data data.frame
 #' @return data.frame
 #' @rdname undocumented
-#' @export
 remove_outside <- function(data){
   bup <- data
   lp <- last_plot()
@@ -307,7 +304,6 @@ remove_outside <- function(data){
 #' @param coord coordinates
 #' @return data.frame
 #' @rdname undocumented
-#' @export
 sink_density <- function(df,remove=TRUE,coord=stop("coord is required")){
   if(class(df) != "data.frame"){return(df)}
   bup <- df
@@ -339,10 +335,6 @@ sink_density <- function(df,remove=TRUE,coord=stop("coord is required")){
   sqrt((x[-n] - x[-1]) ^ 2 + (y[-n] - y[-1]) ^ 2)
 }
 
-
-
-
-
 #' Internal Function
 #' 
 #' Check required aesthetics are present
@@ -359,50 +351,6 @@ check_required_aesthetics <- function(required, present, name) {
   if (length(missing_aes) == 0) return()
   stop(name, " requires the following missing aesthetics: ", paste(missing_aes, collapse=", "), call. = FALSE)
 }
-
-
-ggint$calc_element <- calc_element <- function(element, theme, verbose = FALSE) {
-  if (verbose) message(element, " --> ", appendLF = FALSE)
-  
-  # If this is element_blank, don't inherit anything from parents
-  if (inherits(theme[[element]], "element_blank")) {
-    if (verbose) message("element_blank (no inheritance)")
-    return(theme[[element]])
-  }
-  
-  # If the element is defined (and not just inherited), check that
-  # it is of the class specified in .element_tree
-  if (!is.null(theme[[element]]) &&
-        !inherits(theme[[element]], ggint$.element_tree[[element]]$class)) {
-    stop(element, " should have class ", ggint$.element_tree[[element]]$class)
-  }
-  
-  # Get the names of parents from the inheritance tree
-  pnames <- ggint$.element_tree[[element]]$inherit
-  
-  # If no parents, this is a "root" node. Just return this element.
-  if (is.null(pnames)) {
-    # Check that all the properties of this element are non-NULL
-    nullprops <- vapply(theme[[element]], is.null, logical(1))
-    if (any(nullprops)) {
-      stop("Theme element '", element, "' has NULL property: ",
-           paste(names(nullprops)[nullprops], collapse = ", "))
-    }
-    
-    if (verbose) message("nothing (top level)")
-    return(theme[[element]])
-  }
-  
-  # Calculate the parent objects' inheritance
-  if (verbose) message(paste(pnames, collapse = ", "))
-  parents <- lapply(pnames, ggint$calc_element, theme, verbose)
-  
-  # Combine the properties of this element with all parents
-  Reduce(ggint$combine_elements, parents, theme[[element]])
-}
-
-
-
 
 
 

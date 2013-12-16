@@ -4,13 +4,15 @@
 \alias{GeomDensity2dtern}
 \alias{GeomLline}
 \alias{GeomRline}
-\alias{GeomSmoothMod}
+\alias{GeomSmoothtern}
 \alias{GeomTline}
 \alias{StatDensity2dtern}
 \alias{StatLline}
 \alias{StatRline}
+\alias{StatSmoothtern}
 \alias{StatTline}
 \alias{Statnew}
+\alias{arrow}
 \alias{arrow_label_formatter}
 \alias{calc_element_plot}
 \alias{calculate_stats}
@@ -31,7 +33,7 @@
 \format{proto object 
  $ draw        :function (., data, scales, coordinates, limitarea = F, ...)   
  $ default_stat:function (.)   
- $ objname     : chr "smooth" 
+ $ objname     : chr "smoothtern" 
  $ default_aes :function (.)   
  $ guide_geom  :function (.)   
  $ required_aes: chr [1:2] "x" "y" 
@@ -65,7 +67,7 @@
 
   train_ranges(panel, coord)
 
-  GeomSmoothMod
+  GeomSmoothtern
 
   GeomTline
 
@@ -74,6 +76,8 @@
   GeomRline
 
   GeomDensity2dtern
+
+  StatSmoothtern
 
   StatDensity2dtern
 
@@ -200,12 +204,16 @@
 
   Modified Geom Smooth Proto
 
+  Modified Stat Smooth Proto
+
   Internal functions to get and set the last coordinate
   system. An internal command for ggtern.
 
   \code{set_last_coord} set the last coordinate system.
 
   Internal Function
+
+  Exported instance of the imported grid arrow function
 }
 \details{
   This is a modified version of the original source as
@@ -225,6 +233,8 @@ find_global('scale_x_continuous')
 }
 \seealso{
   \code{\link[ggplot2]{calc_element}}
+
+  \code{\link[grid]{arrow}}
 }
 \keyword{datasets}
 \keyword{internal}

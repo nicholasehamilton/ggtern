@@ -2,9 +2,9 @@
 \alias{geom_smooth}
 \title{Add a smoothed conditional mean (MODIFIED)}
 \usage{
-  geom_smooth(mapping = NULL, data = NULL, stat = "smooth",
-    position = "identity", limitarea = TRUE,
-    fullrange = FALSE, ...)
+  geom_smooth(mapping = NULL, data = NULL,
+    stat = "smoothtern", position = "identity",
+    limitarea = TRUE, fullrange = FALSE, ...)
 }
 \arguments{
   \item{limitarea}{logical value to indicate whether

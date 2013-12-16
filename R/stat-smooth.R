@@ -1,5 +1,21 @@
-ggint$StatSmooth <- proto(Statnew, {
-  objname <- "smooth"
+#' Add a smoother. (Ternary Version)
+#' 
+#' Aids the eye in seeing patterns in the presence of overplotting
+#' @seealso \code{\link[ggplot2]{stat_smooth}}
+#' @inheritParams ggplot2::stat_smooth
+#' @export
+stat_smooth <- function (mapping = NULL, data = NULL, geom = "smoothtern", position = "identity", 
+                         method = "auto", formula = y ~ x, se = TRUE, n = 80, fullrange = FALSE, 
+                         level = 0.95, na.rm = FALSE, ...) { 
+  StatSmoothtern$new(mapping = mapping, data = data, geom = geom, position = position, 
+                 method = method, formula = formula, se = se, n = n, fullrange = fullrange, 
+                 level = level, na.rm = na.rm, ...)
+}
+
+#' Modified Stat Smooth Proto
+#' @rdname undocumented
+StatSmoothtern <- proto(Statnew, {
+  objname <- "smoothtern"
   calculate_groups <- function(., data, scales, method=ifthenelse(inherits(last_plot(),"ggtern"),"lm","auto"), formula=y~x, ...){
     rows <- daply(data, .(group), function(df) length(unique(df$x)))
     if (all(rows == 1) && length(rows) > 1) {
@@ -31,7 +47,6 @@ ggint$StatSmooth <- proto(Statnew, {
     if (method == "gam") try_require("mgcv")
     .super$calculate_groups(., data, scales, method = method, formula = formula, ...)
   }
-  
   calculate <- function(., data, scales, method="auto", formula=y~x, se = TRUE, n=80, fullrange=FALSE, xseq = NULL, level=0.95, na.rm = FALSE, ...) {
     data <- remove_missing(data, na.rm, c("x", "y"), name="stat_smooth")
     if (length(unique(data$x)) < 2) {
@@ -78,9 +93,8 @@ ggint$StatSmooth <- proto(Statnew, {
     model <- safe.call(method.special, list(...), names(formals(method)))
     predictdf(model, xseq, se, level)
   }
-  
   required_aes <- c("x", "y")
-  default_geom <- function(.) GeomSmooth
+  default_geom <- function(.) GeomSmoothtern
 })
 
 

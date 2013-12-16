@@ -7,3 +7,14 @@
 #' @param b argument b
 #' @param x argument x
 NULL
+
+
+#' Describe arrows to add to a line
+#' 
+#' Exported instance of the imported grid arrow function
+#' @seealso \code{\link[grid]{arrow}}
+#' @aliases arrow
+#' @name undocumented
+#' @rdname undocumented
+#' @export
+NULL
