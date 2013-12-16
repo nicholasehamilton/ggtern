@@ -5,7 +5,7 @@
                  "polygon",
                  "smooth",
                  "text",
-                 "Density2dTern",
+                 "density2dtern",
                  "rug",
                  "Tline",
                  "Lline",

@@ -1,27 +1,30 @@
 \docType{data}
 \name{ifthenelse}
 \alias{Geom}
-\alias{GeomDensity2dTern}
+\alias{GeomDensity2dtern}
 \alias{GeomLline}
 \alias{GeomRline}
 \alias{GeomSmoothMod}
 \alias{GeomTline}
-\alias{StatDensity2dTern}
+\alias{StatDensity2dtern}
 \alias{StatLline}
 \alias{StatRline}
 \alias{StatTline}
 \alias{Statnew}
 \alias{arrow_label_formatter}
 \alias{calc_element_plot}
+\alias{calculate_stats}
 \alias{check_required_aesthetics}
 \alias{find_global}
 \alias{get_last_coord}
 \alias{get_tern_extremes}
 \alias{ggint}
 \alias{ifthenelse}
+\alias{panel_scales}
 \alias{remove_outside}
 \alias{set_last_coord}
 \alias{sink_density}
+\alias{train_ranges}
 \alias{trytransform}
 \alias{undocumented}
 \title{Internal Function}
@@ -56,6 +59,12 @@
 
   check_required_aesthetics(required, present, name)
 
+  panel_scales(panel, i)
+
+  calculate_stats(panel, data, layers)
+
+  train_ranges(panel, coord)
+
   GeomSmoothMod
 
   GeomTline
@@ -64,9 +73,9 @@
 
   GeomRline
 
-  GeomDensity2dTern
+  GeomDensity2dtern
 
-  StatDensity2dTern
+  StatDensity2dtern
 
   StatTline
 
@@ -185,6 +194,9 @@
   Check required aesthetics are present This is used by
   geoms and stats to give a more helpful error message when
   required aesthetics are missing.
+
+  Compute ranges and dimensions of each panel, using the
+  coord.
 
   Modified Geom Smooth Proto
 

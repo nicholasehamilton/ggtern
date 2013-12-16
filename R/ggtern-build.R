@@ -109,7 +109,7 @@ ggplot_build <- function(plot) {
   data  <- ggint$map_position(panel, data, scale_x(), scale_y())
   
   # Apply and map statistics
-  data <- ggint$calculate_stats(panel, data, layers)
+  data <- calculate_stats(panel, data, layers)
   
   data <- dlapply(function(d, p) p$map_statistic(d, plot)) 
   data <- lapply(data, ggint$order_groups)

@@ -4,7 +4,7 @@
 \title{Contours from a 2d density estimate - (ggtern version)}
 \usage{
   geom_density2d(mapping = NULL, data = NULL,
-    stat = "Density2dTern", position = "identity",
+    stat = "density2dtern", position = "identity",
     lineend = "butt", linejoin = "round", linemitre = 1,
     na.rm = FALSE, ...)
 }
@@ -45,14 +45,13 @@
 }
 \details{
   This can be useful for dealing with overplotting.
+  Additional weight aesthetic permits better weighting if
+  desired
 }
 \section{Aesthetics}{
   \Sexpr[results=rd,stage=build]{ggplot2:::rd_aesthetics("geom",
-  "density2d")}
-}
-\seealso{
-  \code{\link{geom_contour}} for contour drawing geom,
-  \code{\link{stat_sum}} for another way of dealing with
-  overplotting
+  "density2d")} Additional optional aethetic in the patched
+  version (if not provided, existing behaviour applies)
+  \itemize{ \item \code{weight} }
 }
 

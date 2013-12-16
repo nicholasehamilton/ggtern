@@ -3,7 +3,7 @@
 \title{2d density estimation - (ggtern version)}
 \usage{
   stat_density2d(mapping = NULL, data = NULL,
-    geom = "Density2dTern", position = "identity",
+    geom = "density2dtern", position = "identity",
     na.rm = FALSE, contour = TRUE, n = 100, ...)
 }
 \arguments{
@@ -36,6 +36,6 @@
   Patched version of the 2d density estimation.
 }
 \seealso{
-  \code{\link[ggtern]{stat_density2d}}
+  \code{\link[ggtern]{geom_density2d}}
 }
 

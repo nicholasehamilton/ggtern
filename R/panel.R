@@ -11,7 +11,8 @@
   panel
 }
 
-.panel_scales <- function(panel, i) {
+#' @rdname undocumented
+panel_scales <- function(panel, i) {
   this_panel <- panel$layout[panel$layout$PANEL == i, ]
   scales <- list(
     x = panel$x_scales[[this_panel$SCALE_X]],
@@ -23,6 +24,22 @@
   )    
   scales[sapply(scales, is.null)] <- NULL
   scales
+}
+
+# Calculate statistics
+# 
+# @param layers list of layers
+# @param data a list of data frames (one for each layer)  
+#'@rdname undocumented
+calculate_stats <- function(panel, data, layers) {
+  lapply(seq_along(data), function(i) {
+    d <- data[[i]]
+    l <- layers[[i]]
+    ddply(d, "PANEL", function(panel_data) {
+      scales <- panel_scales(panel, panel_data$PANEL[1])
+      l$calc_statistic(panel_data, scales)
+    })    
+  }) 
 }
 
 #' Compute ranges and dimensions of each panel, using the coord.

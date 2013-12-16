@@ -13,10 +13,7 @@ Statnew <- proto(ggint$TopLevel, expr={
   required_aes <- c()
   
   aesthetics <- list()
-  calculate <- function(., data, scales, ...) {
-    writeLines("Original Calculate")
-  }
-  
+  calculate <- function(., data, scales, ...) {}
   calculate_groups <- function(., data, scales, ...) {
     if (empty(data)) return(data.frame())
     
@@ -56,5 +53,4 @@ Statnew <- proto(ggint$TopLevel, expr={
   new <- function(., mapping=aes(), data=NULL, geom=NULL, position=NULL, ...){
     do.call("layer", list(mapping=mapping, data=data, geom=geom, stat=., position=position, ...))
   }
-  
 })

@@ -22,7 +22,6 @@
                 "scales_train_df",
                 "scales_map_df",
                 "order_groups",
-                "calculate_stats",
                 "TopLevel",
                 "compute_intercept"
 ) 
