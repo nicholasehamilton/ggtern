@@ -9,7 +9,8 @@
                  "rug",
                  "Tline",
                  "Lline",
-                 "Rline")
+                 "Rline",
+                 "confidence")
 
 .dissaproved <- c("tile",
                   "violin")

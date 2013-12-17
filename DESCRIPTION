@@ -1,7 +1,7 @@
 Package: ggtern
 Type: Package
 Title: An extension to ggplot2, for the creation of ternary diagrams.
-Version: 1.0.1.0
+Version: 1.0.1.1
 Date: 2013-11-15
 Author: Nicholas Hamilton <n.hamilton@student.unsw.edu.au>
 Maintainer: Nicholas Hamilton <n.hamilton@student.unsw.edu.au>
@@ -19,7 +19,7 @@ Imports:
   MASS,
   sp,
   scales,
-  reshape,
+  reshape
 Suggests:
   grid
 License: GPL-2
@@ -39,6 +39,8 @@ Collate:
   'theme-convenience.R'
   'labs-pcnt.R'
   'labs-new.R'
+  'log-ratio-trans.R'
+  'mahalanobis.R'
   'tern-clockwise.R'
   'aes.R'
   'scales.R'
@@ -55,6 +57,7 @@ Collate:
   'geom-Tline.R'
   'geom-Lline.R'
   'geom-Rline.R'
+  'geom-confidence.R'
   'geom-density2d.R'
   'stat-smooth.R'
   'stat-density-2d.R'

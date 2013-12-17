@@ -25,14 +25,15 @@ NULL
 .theme_arrows <- function(show){
   if(!is.logical(show)){show=TRUE}
   show=show[1]
-  current <- ggtern:::theme_update()
+  current <- theme_update()
   e <- current$ternary.options
   if(inherits(e,"element_ternary")){
     e$showarrows <- show
   }else{
     e <- element_ternary(showarrows=show)
   }
-  theme_update() %+replace% theme(ternary.options=e)
+  #current %+replace% 
+  theme(ternary.options=e)
 }
 
 #' \code{theme_noarrows} is a function that apepnds to the current theme a flag to switch OFF the ternary arrows
@@ -49,7 +50,7 @@ theme_showarrows <- function(){.theme_arrows(TRUE)}
 #' @rdname modifyterntheme
 #' @export
 theme_tern_nogrid_minor <- function(){
-  theme_update() %+replace%
+  #theme_update() %+replace%
   theme(panel.grid.tern.minor=element_blank(),
         panel.grid.tern.minor.T=element_blank(),
         panel.grid.tern.minor.L=element_blank(),
@@ -61,7 +62,7 @@ theme_tern_nogrid_minor <- function(){
 #' @rdname modifyterntheme
 #' @export
 theme_tern_nogrid_major <- function(){
-  theme_update() %+replace%
+  #theme_update() %+replace%
   theme(panel.grid.tern.major=element_blank(),
         panel.grid.tern.major.T=element_blank(),
         panel.grid.tern.major.L=element_blank(),
@@ -73,9 +74,8 @@ theme_tern_nogrid_major <- function(){
 #' @rdname modifyterntheme
 #' @export
 theme_tern_nogrid <- function(){
-  theme_update() %+replace% 
-    theme_tern_nogrid_minor() %+replace% 
-    theme_tern_nogrid_major()
+  list(theme_tern_nogrid_minor(),
+       theme_tern_nogrid_major())
 }
 
 #' \code{theme_clockwise} is an alias for \code{\link{tern_clockwise}}

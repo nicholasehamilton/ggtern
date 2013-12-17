@@ -1,11 +1,13 @@
 \docType{data}
 \name{ifthenelse}
 \alias{Geom}
+\alias{GeomConfidence}
 \alias{GeomDensity2dtern}
 \alias{GeomLline}
 \alias{GeomRline}
 \alias{GeomSmoothtern}
 \alias{GeomTline}
+\alias{StatConfidence}
 \alias{StatDensity2dtern}
 \alias{StatLline}
 \alias{StatRline}
@@ -17,6 +19,7 @@
 \alias{calc_element_plot}
 \alias{calculate_stats}
 \alias{check_required_aesthetics}
+\alias{cullAndConstrain}
 \alias{find_global}
 \alias{get_last_coord}
 \alias{get_tern_extremes}
@@ -74,6 +77,12 @@
   GeomLline
 
   GeomRline
+
+  GeomConfidence
+
+  StatConfidence
+
+  cullAndConstrain(data)
 
   GeomDensity2dtern
 
