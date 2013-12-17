@@ -1,12 +1,13 @@
 #' Mahalanobis Distance
 #' 
-#' Modified version of the code provided in the \code{\link{chemometrics}} package
+#' Modified version of the code provided in the \code{\link[chemometrics]{drawMahal}} package
 #' @param x data
 #' @param x.mean mean value
 #' @param x.cov coveriance value
 #' @param whichlines the confidence values
 #' @param m the number of values to return for each line
 #' @return list containing mdX and mdY values.
+#' @rdname mahalanobis
 mahalanobisDistance <- function(x,x.mean,x.cov,whichlines=c(0.975,0.90,0.75),m=360){    
   mdX=matrix(NA,nrow=m,ncol=length(whichlines))
   mdY=matrix(NA,nrow=m,ncol=length(whichlines))

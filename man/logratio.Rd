@@ -1,6 +1,8 @@
 \name{isomLR}
 \alias{isomLR}
 \alias{isomLRinv}
+\alias{log-ratio}
+\alias{logratio}
 \title{Log-ratio Transformations}
 \usage{
   isomLR(x)

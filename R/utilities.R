@@ -148,12 +148,8 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),...,Tlim=c
   d$R <- .adj(d$R,Rlim)
   
   .calcy <- function(clockwise){d$T*tan(pi/3)*0.5}
-  .calcx <- function(y,clockwise){
-    if(!clockwise)
-      d$R + y*tan(pi/6)
-    else
-      1 - d$R - y*tan(pi/6)
-  }
+  .calcx <- function(y,clockwise){ifthenelse(!clockwise,d$R + y*tan(pi/6),1 - d$R - y*tan(pi/6))}
+  
   out.Y <- .calcy(clockwise=cw)
   out.X <- .calcx(y=out.Y,clockwise=cw)
   

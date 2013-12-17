@@ -21,6 +21,6 @@
 }
 \description{
   Modified version of the code provided in the
-  \code{\link{chemometrics}} package
+  \code{\link[chemometrics]{drawMahal}} package
 }
 

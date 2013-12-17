@@ -2,6 +2,7 @@
 #' 
 #' Log-ratio transformation, algorithm based on that provided in \code{\link[robCompositions]{isomLR}}
 #' @param  x 2D object to transform 
+#' @aliases log-ratio logratio
 #' @rdname logratio
 #' @return transformed data
 #' @references provided in \code{\link[robCompositions]{isomLR}}
