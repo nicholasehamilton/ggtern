@@ -29,13 +29,30 @@ GeomConfidence <- proto(Geom, {
     if (empty(data)) return(.zeroGrob)
     
     ##REMOVE MISSING DATA.
-    data <- remove_missing(data, na.rm = na.rm,c(required_aes,"linetype", "size", "shape"),name = "geom_confidence")
+    data <- remove_missing(data, na.rm = na.rm,c(required_aes),name = "geom_confidence")
     if (empty(data)) return(.zeroGrob)
-    GeomPolygon$draw(data=data, scales=scales, coordinates=coordinates, ...)
+    data.poly <- data; data.poly$colour=NA
+    
+    ##Create two grobsets, one for the polygon and the other for the paths.
+    polygrob <- .zeroGrob
+    pathgrob <- .zeroGrob
+    
+    #Check
+    colours <- unique(data$colour)
+    fills   <- unique(data$fill)
+    
+    if(length(colours) > 0 & length(colours) > length(which(is.na(colours))))
+      pathgrob <- GeomPath$draw(data=data, scales=scales, coordinates=coordinates, ...)
+    
+    if(length(fills) >0 & length(fills) > length(which(is.na(fills))))
+      polygrob <- GeomPolygon$draw(data=data.poly, scales=scales, coordinates=coordinates, ...)
+    
+    #return the complete grobs, paths on top of polygons.
+    gTree(children = gList(polygrob,pathgrob))
   }
   default_stat <- function(.) StatConfidence
   required_aes <- c("x", "y")
-  default_aes <- function(.) aes(colour=black, size=0.5, linetype=2,alpha = NA,fill="transparent")
+  default_aes <- function(.) aes(colour="black", size=0.5,linetype=2,alpha = NA,fill=NA)
   guide_geom <- function(.) "path"
 })
 
@@ -96,7 +113,7 @@ StatConfidence <- proto(ggint$Stat, {
     RESULT
   }
   default_geom <- function(.) GeomConfidence
-  default_aes <- function(.) aes(order =..level..)
+  default_aes <- function(.) aes(level =..level..)
   required_aes <- c("x", "y")
 })
 
@@ -106,22 +123,38 @@ cullAndConstrain <- function(data){
   lc <- get_last_coord()
   ##Remove data outside plotting area.
   if(inherits(lc,"ternary")){
-    TOL <- getOption("tern.pip.tollerance")
-    TLIM <- lc$limits$T; LLIM <- lc$limits$L; RLIM <- lc$limits$R
-    TTOL <- TOL*diff(TLIM); LTOL <- TOL*diff(LLIM); RTOL <- TOL*diff(RLIM)
+    .fnc <- function(data,TLR,xy,TOL = getOption("tern.pip.tollerance")){
+      if(nrow(data)==0){return(data)}
+      lim <- lc$limits[[TLR]]; tol <- TOL*diff(lim)
+      
+      #indexes to remove.
+      ix.rem <- which(data[,xy] < (max(lim)+0*tol) & data[,xy] > (min(lim)-0*tol))
+      
+      #assign new groups to be cut and re-evaluated.
+      #data$group.cut <- data$group
+      #id <- 1:nrow(data)
+      #if(length(ix.rem) > 0){
+      #  data <-  data[ix.rem,]; 
+      #  id   <- id[ix.rem]
+      #  r    <- nrow(data)
+      #  if(r > 1){
+      #    ix.breaks <- which(id[2:r] > (id[1:(r-1)] + 1))
+      #    if(length(ix.breaks) > 0){
+      #      ix.breaks <- ix.breaks + 1 #back to original indexes.
+      #      writeLines("Indexes To Regroup:")
+      #      print(ix.breaks)
+      #    }
+      #  }
+      #}
+      data <-  data[ix.rem,];
+      #data[,xy] <- pmax(pmin(data[,xy],max(lim)),min(lim))
+      data
+    }
+    data <- .fnc(data,"T","x")
+    data <- .fnc(data,"L","y")
+    data <- .fnc(data,"R","z")
     
-    #select in values in bound
-    data <- data[which(data$x < (max(TLIM)+TTOL) & data$x > (min(TLIM)-TTOL)),]
-    data <- data[which(data$y < (max(LLIM)+LTOL) & data$y > (min(LLIM)-LTOL)),]
-    data <- data[which(data$z < (max(RLIM)+RTOL) & data$z > (min(RLIM)-RTOL)),]
-    
-    #For values within the TOLerance, reduce or increase to the hard limit.
-    data$x <- pmin(data$x,max(TLIM)) 
-    data$x <- pmax(data$x,min(TLIM))
-    data$y <- pmin(data$y,max(LLIM)) 
-    data$y <- pmax(data$y,min(LLIM))
-    data$z <- pmin(data$z,max(RLIM)) 
-    data$z <- pmax(data$z,min(RLIM))
+    #print(apply(data[,c("x","y","z")],1,sum))
   }
   data
 }
