@@ -273,7 +273,6 @@ trytransform <- function(data,coord){
 #' @return data.frame
 #' @rdname undocumented
 remove_outside <- function(data){
-  print(data[1,])
   bup <- data
   lp <- last_plot()
   tryCatch({

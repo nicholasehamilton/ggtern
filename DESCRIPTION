@@ -19,8 +19,7 @@ Imports:
   proto,
   MASS,
   sp,
-  grid,
-  utils
+  grid
 License: GPL-2
 URL: http://www.ggtern.com
 Collate:

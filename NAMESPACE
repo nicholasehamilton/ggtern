@@ -1,5 +1,6 @@
 exportPattern("^[[:alpha:]]+")
 S3method("+",gg)
+import(ggplot2)
 import(grid)
 import(gtable)
 import(plyr)
