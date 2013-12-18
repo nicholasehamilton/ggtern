@@ -128,7 +128,11 @@ cullAndConstrain <- function(data){
       lim <- lc$limits[[TLR]]; tol <- TOL*diff(lim)
       
       #indexes to remove.
-      ix.rem <- which(data[,xy] < (max(lim)+0*tol) & data[,xy] > (min(lim)-0*tol))
+      is.in  <- data[,xy] <= (max(lim)+0*tol) & data[,xy] >= (min(lim)-0*tol)
+      L <- length(is.in)
+      is.in.L <- c(is.in[L],is.in[1:(L-1)])
+      is.in.R <- c(is.in[2:L],is.in[1])
+      ix.rem <- which(is.in | (!is.in & is.in.L) | (!is.in & is.in.R))
       
       #assign new groups to be cut and re-evaluated.
       #data$group.cut <- data$group
@@ -146,8 +150,14 @@ cullAndConstrain <- function(data){
       #    }
       #  }
       #}
-      data <-  data[ix.rem,];
+      data  <-  data[ix.rem,];
       #data[,xy] <- pmax(pmin(data[,xy],max(lim)),min(lim))
+      
+      #pos.ix         <- c("x","y","z")
+      #pos.oth        <- pos.ix[which(!pos.ix %in% xy)]
+      #agg.diff       <- apply(data[,pos.ix],1,sum)-1
+      #data[,pos.oth] <- data[,pos.oth] + agg.diff/2
+      
       data
     }
     data <- .fnc(data,"T","x")

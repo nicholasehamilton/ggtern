@@ -147,13 +147,18 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),...,Tlim=c
   d$L <- .adj(d$L,Llim)
   d$R <- .adj(d$R,Rlim)
   
-  .calcy <- function(clockwise){d$T*tan(pi/3)*0.5}
-  .calcx <- function(y,clockwise){ifthenelse(!clockwise,d$R + y*tan(pi/6),1 - d$R - y*tan(pi/6))}
+  #.calcy <- function(clockwise){d$T*tan(pi/3)*0.5}
+  #.calcx <- function(y,clockwise){ifthenelse(!clockwise,d$R + y*tan(pi/6),1 - d$R - y*tan(pi/6))}
   
-  out.Y <- .calcy(clockwise=cw)
-  out.X <- .calcx(y=out.Y,clockwise=cw)
+  #out.Y <- .calcy(clockwise=cw)
+  #out.X <- .calcx(y=out.Y,clockwise=cw)
   
-  return(data.frame(x=out.X,y=out.Y))
+  out.Y <- d$T*tan(pi/3)*0.5
+  out.X <- d$R + out.Y*tan(pi/6)
+  
+  
+  return(data.frame(x=out.X,
+                    y=out.Y))
 }
 
 #' Internal Function
@@ -275,6 +280,7 @@ trytransform <- function(data,coord){
 #' @return data.frame
 #' @rdname undocumented
 remove_outside <- function(data){
+  print(data[1,])
   bup <- data
   lp <- last_plot()
   tryCatch({
