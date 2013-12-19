@@ -64,6 +64,10 @@
 
   check_required_aesthetics(required, present, name)
 
+  get_last_coord()
+
+  set_last_coord(new)
+
   panel_scales(panel, i)
 
   calculate_stats(panel, data, layers)
@@ -95,10 +99,6 @@
   StatLline
 
   StatRline
-
-  get_last_coord()
-
-  set_last_coord(new)
 }
 \arguments{
   \item{coordinates}{ggtern coordinate system, inheriting
@@ -208,17 +208,17 @@
   geoms and stats to give a more helpful error message when
   required aesthetics are missing.
 
+  Internal functions to get and set the last coordinate
+  system. An internal command for ggtern.
+
+  \code{set_last_coord} set the last coordinate system.
+
   Compute ranges and dimensions of each panel, using the
   coord.
 
   Modified Geom Smooth Proto
 
   Modified Stat Smooth Proto
-
-  Internal functions to get and set the last coordinate
-  system. An internal command for ggtern.
-
-  \code{set_last_coord} set the last coordinate system.
 
   Internal Function
 

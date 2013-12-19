@@ -4,7 +4,7 @@
 \usage{
   coord_tern(T = "x", L = "y", R = "z", xlim = c(0, 1),
     ylim = c(0, 1), Tlim = NULL, Llim = NULL, Rlim = NULL,
-    clockwise = FALSE)
+    clockwise = getOption("tern.clockwise"))
 }
 \arguments{
   \item{T}{the Top Mapping (default x)}

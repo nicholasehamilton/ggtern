@@ -1,11 +1,17 @@
-\name{theme_tern_gray}
+\name{theme_gray}
 \alias{convenience}
 \alias{modifynewthemes}
 \alias{modifyterntheme}
 \alias{theme_anticlockwise}
+\alias{theme_bw}
 \alias{theme_clockwise}
 \alias{theme_counterclockwise}
+\alias{theme_gray}
+\alias{theme_grey}
 \alias{theme_noarrows}
+\alias{theme_rgb}
+\alias{theme_rgbg}
+\alias{theme_rgbw}
 \alias{theme_showarrows}
 \alias{theme_tern_bw}
 \alias{theme_tern_gray}
@@ -14,15 +20,15 @@
 \alias{theme_tern_nogrid_minor}
 \alias{theme_tern_rgbg}
 \alias{theme_tern_rgbw}
-\title{\code{theme_tern_gray} ternary theme, gray theme}
+\title{\code{theme_gray} ternary theme, gray theme}
 \usage{
-  theme_tern_gray(base_size = 12, base_family = "")
+  theme_gray(base_size = 12, base_family = "")
 
-  theme_tern_rgbg(base_size = 12, base_family = "")
+  theme_rgbg(base_size = 12, base_family = "")
 
-  theme_tern_rgbw(base_size = 12, base_family = "")
+  theme_rgbw(base_size = 12, base_family = "")
 
-  theme_tern_bw(base_size = 12, base_family = "")
+  theme_bw(base_size = 12, base_family = "")
 
   theme_noarrows()
 
@@ -46,7 +52,7 @@
   \item{base_family}{base font family}
 }
 \description{
-  \code{theme_tern_gray} ternary theme, gray theme
+  \code{theme_gray} ternary theme, gray theme
 
   \code{theme_tern_rgbg} ternary theme, red green blue with
   gray background
