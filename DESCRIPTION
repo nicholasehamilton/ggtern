@@ -1,7 +1,7 @@
 Package: ggtern
 Type: Package
 Title: An extension to ggplot2, for the creation of ternary diagrams.
-Version: 1.0.1.4
+Version: 1.0.2.0
 Date: 2013-11-15
 Author: Nicholas Hamilton <n.hamilton@student.unsw.edu.au>
 Maintainer: Nicholas Hamilton <n.hamilton@student.unsw.edu.au>
@@ -31,6 +31,8 @@ Collate:
   'element_ternary.R'
   'utilities.R'
   'strip-unapproved.R'
+  'coord-tern.R'
+  'global.R'
   'theme-defaults.R'
   'theme-elements.R'
   'theme.R'
@@ -49,7 +51,6 @@ Collate:
   'plot-construction.R'
   'tern-render.R'
   'tern-limits.R'
-  'coord-tern.R'
   'geom-smooth.R'
   'geom-segment.R'
   'geom-Tline.R'
@@ -64,6 +65,5 @@ Collate:
   'stat-Rline.R'
   'TRL-line.R'
   'modified-original.R'
-  'global.R'
   'undocumented.R'
   'onLoad.R'
