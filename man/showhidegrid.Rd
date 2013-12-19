@@ -1,6 +1,7 @@
 \name{theme_nogrid_minor}
 \alias{tern_hidegrid}
 \alias{tern_nogrid}
+\alias{tern_nogrid_major}
 \alias{tern_nogrid_minor}
 \alias{theme_hidegrid}
 \alias{theme_nogrid}

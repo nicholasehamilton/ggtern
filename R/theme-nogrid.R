@@ -20,7 +20,7 @@ tern_nogrid_minor <- theme_nogrid_minor
 
 #' \code{theme_nogrid_major} ternary theme, no major grids.
 #' @rdname showhidegrid
-#' @aliases theme_tern_nogrid_major theme_nogrid_major
+#' @aliases theme_tern_nogrid_major theme_nogrid_major tern_nogrid_major
 #' @export
 theme_nogrid_major <- function(){
   theme(panel.grid.tern.major=element_blank(),

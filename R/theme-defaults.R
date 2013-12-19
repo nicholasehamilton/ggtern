@@ -110,6 +110,7 @@ theme_grey <- theme_gray
 #' 
 #' \code{theme_rgbg} is a theme with grey background, red, green and blue axes and white gridlines
 #' @aliases theme_tern_rgbg theme_rgb
+#' @inheritParams theme_gray
 #' @rdname theme_rgbg
 #' @seealso \code{\link{theme_rgbw}}
 #' @export
@@ -127,6 +128,7 @@ theme_rgb <- theme_rgbg
 #' 
 #' \code{theme_rgbw} is a theme with white background, red, green and blue axes and gidlines
 #' @rdname theme_rgbw
+#' @inheritParams theme_gray
 #' @aliases theme_tern_rgbw
 #' @seealso \code{\link{theme_rgbg}}
 #' @export
@@ -145,6 +147,7 @@ theme_tern_rgbw <- function(base_size = 12, base_family = ""){
 #' 
 #' \code{theme_bw} is a theme with white background and black gridlines
 #' @rdname theme_bw
+#' @inheritParams theme_gray
 #' @aliases theme_tern_bw
 #' @export
 theme_bw    <- function(base_size = 12, base_family = ""){
