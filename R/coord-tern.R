@@ -14,7 +14,7 @@
 #' @param clockwise logical (default \code{FALSE}) indicating whether the precession of axes is clockwise (\code{TRUE}) or counter-clockwise (\code{FALSE}).
 #' @return ternary coordinate system object.
 #' @export
-coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Llim=NULL,Rlim=NULL,clockwise=FALSE) {
+coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Llim=NULL,Rlim=NULL,clockwise=getOption("tern.clockwise")) {
   
   ##Validate x and y lims...
   xlim <- ifthenelse(!is.numeric(xlim) & is.numeric(ylim),ylim,xlim)
