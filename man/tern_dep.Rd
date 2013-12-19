@@ -1,6 +1,6 @@
 \name{tern_dep}
 \alias{tern_dep}
-\title{Give a deprecation error, warning, or messsage, depending on version number.}
+\title{Give a deprecation error, warning, or messsage, depending on version number (ggtern version)}
 \usage{
   tern_dep(version, msg)
 }
@@ -12,14 +12,16 @@
   \item{msg}{The message to print.}
 }
 \description{
+  Based on the exported function from ggplot2.
+}
+\details{
   Version numbers have the format
   <major>.<minor>.<subminor>, like 0.9.2. This function
   compares the current version number of ggplot2 against
   the specified \code{version}, which is the most recent
   version before the function (or other object) was
   deprecated.
-}
-\details{
+
   \code{tern_dep} will give an error, warning, or message,
   depending on the difference between the current ggtern
   version and the specified \code{version}.
