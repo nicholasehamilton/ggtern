@@ -7,11 +7,20 @@ ggtern 1.0.2.0
 * Changed default procession from anticlockwise to clockwise
 
 * Theme nomleclature has been made more like the ggplot2 nomleclature, in the sense that
-  ORIGINAL             SUPERCEDED BY    ALIASES
-  theme_tern_bw()   -> theme_bw()
-  theme_tern_gray() -> theme_gray()     theme_grey()
-  theme_tern_rgbg() -> theme_rgbg()     theme_rgb()
-  theme_tern_rgbw() -> theme_rgbw()
+  ORIGINAL                SUPERCEDED BY             ALIASES
+  theme_tern_bw()         -> theme_bw()
+  theme_tern_gray()       -> theme_gray()           theme_grey()
+  theme_tern_rgbg()       -> theme_rgbg()           theme_rgb()
+  theme_tern_rgbw()       -> theme_rgbw()
+
+* Theme nomleclature improved for some unique ternary functions.
+  ORIGINAL                SUPERCEDED BY             ALIASES
+  theme_tern_nogrid_major -> theme_nogrid_major()   tern_nogrid_major()
+  theme_tern_nogrid_minor -> theme_nogrid_minor()   tern_nogrid_minor()
+  theme_tern_nogrid       -> theme_nogrid()         tern_nogrid()
+
+* Better Documentation for Theme Convenience Functions
+  
 
 * In the above themes, they have furthermore been slightly changed to be more consistent
   with that of ggplot2, in terms of the minor and major colors for the default theme_gray.

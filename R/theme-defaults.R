@@ -88,11 +88,13 @@
     )
 }
 
-#' \code{theme_gray} ternary theme, gray theme
+#' A theme with grey background and white gridlines (ggtern version)
+#' 
+#' \code{theme_gray} is a theme with grey background and white gridlines.
 #' @aliases theme_tern_gray theme_grey
 #' @param base_size base font size
 #' @param base_family base font family
-#' @rdname modifyterntheme
+#' @rdname theme_gray
 #' @export
 theme_gray  <- function(base_size = 12, base_family = ""){
   if(!inherits(get_last_coord(),"ternary")){return(ggplot2::theme_gray(base_size=base_size,base_family=base_family))}
@@ -104,9 +106,12 @@ theme_tern_gray <- function(base_size = 12, base_family = ""){
 }
 theme_grey <- theme_gray
 
-#' \code{theme_tern_rgbg} ternary theme, red green blue with gray background
+#' A theme with grey background, red, green and blue axes and white gridlines
+#' 
+#' \code{theme_rgbg} is a theme with grey background, red, green and blue axes and white gridlines
 #' @aliases theme_tern_rgbg theme_rgb
-#' @rdname modifyterntheme
+#' @rdname theme_rgbg
+#' @seealso \code{\link{theme_rgbw}}
 #' @export
 theme_rgbg  <- function(base_size = 12, base_family = ""){
   .theme_tern(base_size=base_size, base_family=base_family, col.BG="gray90",
@@ -118,9 +123,12 @@ theme_tern_rgbg <- function(base_size = 12, base_family = ""){
 }
 theme_rgb <- theme_rgbg
 
-#' \code{theme_tern_rgbw} ternary theme, red green blue with white background
-#' @rdname modifyterntheme
+#' #' A theme with white background, red, green and blue axes and gidlines
+#' 
+#' \code{theme_rgbw} is a theme with white background, red, green and blue axes and gidlines
+#' @rdname theme_rgbw
 #' @aliases theme_tern_rgbw
+#' @seealso \code{\link{theme_rgbg}}
 #' @export
 theme_rgbw  <- function(base_size = 12, base_family = ""){
   .theme_tern(base_size=base_size, base_family=base_family, col.BG="white",
@@ -133,21 +141,26 @@ theme_tern_rgbw <- function(base_size = 12, base_family = ""){
   theme_rgbw(base_size,base_family)
 }
 
-#' \code{theme_tern_bw} ternary theme black and white
-#' @rdname modifyterntheme
+#' A theme with white background and black gridlines (ggtern version)
+#' 
+#' \code{theme_bw} is a theme with white background and black gridlines
+#' @rdname theme_bw
 #' @aliases theme_tern_bw
 #' @export
 theme_bw    <- function(base_size = 12, base_family = ""){
   if(!inherits(get_last_coord(),"ternary")){return(ggplot2::theme_bw(base_size=base_size,base_family=base_family))}
   .theme_tern(base_size=base_size, base_family=base_family,base_ggplot2_theme="theme_bw",
               col.BG=NA,
-              col.T="black",
-              col.L="black",
-              col.R="black",
-              grid.T=NA,
-              grid.L=NA,
-              grid.R=NA,
-              grid.minor=NA)
+              col.T ="black",
+              col.L ="black",
+              col.R ="black",
+              grid.T="black",
+              grid.L="black",
+              grid.R="black",
+              grid.minor="gray90",
+              grid.linetype.minor=1,
+              grid.linetype=6,
+              grid.major.size=0.25)
 }
 theme_tern_bw <- function(base_size = 12, base_family = ""){
   tern_dep("1.0.1.3","theme_tern_bw has been superceded by the ggplot2 standard theme_bw")

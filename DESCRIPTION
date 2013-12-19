@@ -36,6 +36,8 @@ Collate:
   'theme-defaults.R'
   'theme-elements.R'
   'theme.R'
+  'theme-noarrows.R'
+  'theme-nogrid.R'
   'theme-convenience.R'
   'labs-pcnt.R'
   'labs-new.R'

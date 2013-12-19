@@ -37,3 +37,24 @@ tern_anticlockwise    <- function(){.tern_clockwise(FALSE)}
 #'                   tern_counterclockwise()
 #' @export
 tern_counterclockwise <- function(){.tern_clockwise(FALSE)}
+
+#' Direction of Ternary Rotation
+#' 
+#' \code{theme_clockwise} is an alias for \code{tern_clockwise}
+#' @rdname ternary_clockwise
+#' @export
+theme_clockwise <- function(){tern_clockwise()}
+
+#' Direction of Ternary Rotation
+#' 
+#' \code{theme_anticlockwise} is an alias for \code{tern_anticlockwise}
+#' @rdname ternary_clockwise
+#' @export
+theme_anticlockwise <- function(){tern_anticlockwise()}
+
+#' Direction of Ternary Rotation
+#' 
+#' \code{theme_counterclockwise} is an alias for \code{tern_counterclockwise}
+#' @rdname ternary_clockwise
+#' @export
+theme_counterclockwise <- function(){tern_counterclockwise()}

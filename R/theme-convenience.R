@@ -1,8 +1,13 @@
-#' Modify Ternary Theme Elements
+#' Theme Convenience Functions
 #' 
 #' Convenience functions to assist in the rapid modification of key theme elements.
 #' @aliases modifynewthemes modifyterntheme convenience
 #' @name modifyterntheme
+#' @seealso \code{\link[=theme_noarrows]{Show/Hide Arrows}}, \code{\link[=theme_nogrid]{Show/Hide Grids}},  
+#' \code{\link[=theme_clockwise]{Clockwise/Anticlockwise}},  
+#' \code{\link[=themeelements]{Ternary Theme Elements}}, \code{\link[=theme_tern_bw]{Black and White Theme}},
+#' \code{\link[=theme_tern_gray]{Gray and White Theme}}, \code{\link[=theme_tern_rgbw]{RGB and White Theme}},
+#' \code{\link[=theme_tern_rgbg]{RGB and Gray Theme}}
 #' @rdname modifyterntheme
 #' @examples 
 #' data(Feldspar)
@@ -11,83 +16,18 @@
 #' plot + theme_showarrows()
 #' plot + theme_noarrows()
 #' plot + theme_showarrows()
-#' plot + theme_tern_rgbg()
-#' plot + theme_tern_rgbw()
-#' plot + theme_tern_bw()
-#' plot + theme_tern_gray()
-#' plot + theme_tern_nogrid_minor()
-#' plot + theme_tern_nogrid_major()
-#' plot + theme_tern_nogrid()
+#' plot + theme_rgbg()
+#' plot + theme_rgbw()
+#' plot + theme_bw()
+#' plot + theme_gray()
+#' plot + theme_nogrid_minor()
+#' plot + theme_nogrid_major()
+#' plot + theme_nogrid()
+#' plot + theme_clockwise()
+#' plot + theme_anticlockwise()
 #' }
 #' @export
 NULL
 
-.theme_arrows <- function(show){
-  if(!is.logical(show)){show=TRUE}
-  show=show[1]
-  current <- theme_update()
-  e <- current$ternary.options
-  if(inherits(e,"element_ternary")){
-    e$showarrows <- show
-  }else{
-    e <- element_ternary(showarrows=show)
-  }
-  #current %+replace% 
-  theme(ternary.options=e)
-}
 
-#' \code{theme_noarrows} is a function that apepnds to the current theme a flag to switch OFF the ternary arrows
-#' @rdname modifyterntheme
-#' @export
-theme_noarrows   <- function(){.theme_arrows(FALSE)}
-
-#' \code{theme_showarrows} is a function that apepnds to the current theme a flag to switch ON the ternary arrows
-#' @rdname modifyterntheme
-#' @export
-theme_showarrows <- function(){.theme_arrows(TRUE)}
-
-#' \code{theme_tern_nogrid} ternary theme, no minor grids.
-#' @rdname modifyterntheme
-#' @export
-theme_tern_nogrid_minor <- function(){
-  #theme_update() %+replace%
-  theme(panel.grid.tern.minor=element_blank(),
-        panel.grid.tern.minor.T=element_blank(),
-        panel.grid.tern.minor.L=element_blank(),
-        panel.grid.tern.minor.R=element_blank()
-  ) 
-}
-
-#' \code{theme_tern_nogrid} ternary theme, no major grids.
-#' @rdname modifyterntheme
-#' @export
-theme_tern_nogrid_major <- function(){
-  #theme_update() %+replace%
-  theme(panel.grid.tern.major=element_blank(),
-        panel.grid.tern.major.T=element_blank(),
-        panel.grid.tern.major.L=element_blank(),
-        panel.grid.tern.major.R=element_blank()
-  ) 
-}
-
-#' \code{theme_tern_nogrid} ternary theme, no major or minor grids.
-#' @rdname modifyterntheme
-#' @export
-theme_tern_nogrid <- function(){
-  list(theme_tern_nogrid_minor(),
-       theme_tern_nogrid_major())
-}
-
-#' \code{theme_clockwise} is an alias for \code{\link{tern_clockwise}}
-#' @rdname modifyterntheme
-#' @export
-theme_clockwise <- function(){tern_clockwise()}
-#' \code{theme_anticlockwise} is an alias for \code{\link{tern_anticlockwise}}
-#' @rdname modifyterntheme
-#' @export
-theme_anticlockwise <- function(){tern_anticlockwise()}
-#' \code{theme_counterclockwise} is an alias for \code{\link{tern_counterclockwise}}
-#' @rdname modifyterntheme
-#' @export
-theme_counterclockwise <- function(){tern_counterclockwise()}
 
