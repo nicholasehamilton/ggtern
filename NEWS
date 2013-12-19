@@ -1,0 +1,32 @@
+ggtern 1.0.2.0
+----------------------------------------------------------------
+* Ordering of grid rendering was changed relative to the remaining background items
+
+* Global tern.clockwise option was created
+
+* Changed default procession from anticlockwise to clockwise
+
+* Theme nomleclature has been made more like the ggplot2 nomleclature, in the sense that
+  ORIGINAL             SUPERCEDED BY    ALIASES
+  theme_tern_bw()   -> theme_bw()
+  theme_tern_gray() -> theme_gray()     theme_grey()
+  theme_tern_rgbg() -> theme_rgbg()     theme_rgb()
+  theme_tern_rgbw() -> theme_rgbw()
+
+* In the above themes, they have furthermore been slightly changed to be more consistent
+  with that of ggplot2, in terms of the minor and major colors for the default theme_gray.
+
+* Error protocols for version control implemented, same as ggplot2, however, for ggtern.
+
+
+
+
+
+ggtern 1.0.1.3
+----------------------------------------------------------------
+* Package accepted for CRAN
+
+BUG FIXES
+
+* Coordinate system was not working as expected when theme_clockwise()
+  was used.
