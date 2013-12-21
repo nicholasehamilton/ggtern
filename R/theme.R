@@ -123,8 +123,13 @@ plot_theme <- function(x) {defaults(x$theme, ggtern::theme_get())}
       if (length(missing) > 0) {
         warning("New theme missing the following elements: ",paste(missing, collapse = ", "), call. = FALSE)
       }
-      old <- theme.tern
-      theme.tern <<- new
+      if(inherits(get_last_coord(),"ternary")){
+        old         <- theme.tern
+        theme.tern <<- new
+      }else{
+        old    <- theme
+        theme <<- new
+      }
       invisible(old)
     }
   )

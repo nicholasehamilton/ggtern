@@ -34,7 +34,8 @@
 \alias{undocumented}
 \title{Internal Function}
 \format{proto object 
- $ draw        :function (., data, scales, coordinates, limitarea = F, ...)   
+ $ draw        :function (., data, scales, coordinates, limitarea = F,  
+    ...)   
  $ default_stat:function (.)   
  $ objname     : chr "smoothtern" 
  $ default_aes :function (.)   
