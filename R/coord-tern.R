@@ -11,10 +11,13 @@
 #' @param Tlim the range of T in the ternary space
 #' @param Llim the range of L in the ternary space
 #' @param Rlim the range of R in the ternary space
-#' @param clockwise logical (default \code{FALSE}) indicating whether the precession of axes is clockwise (\code{TRUE}) or counter-clockwise (\code{FALSE}).
+#' @param clockwise (No longer valid) logical (default \code{FALSE}) indicating whether the precession of axes is clockwise (\code{TRUE}) or counter-clockwise (\code{FALSE}).
 #' @return ternary coordinate system object.
 #' @export
-coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Llim=NULL,Rlim=NULL,clockwise=getOption("tern.clockwise")) {
+coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Llim=NULL,Rlim=NULL,clockwise) {
+  if(!missing(clockwise)){
+    tern_dep("1.0.2.0","clockwise is now controlled by the theme element 'axis.tern.clockwise'")
+  }
   
   ##Validate x and y lims...
   xlim <- ifthenelse(!is.numeric(xlim) & is.numeric(ylim),ylim,xlim)
@@ -41,7 +44,6 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Lli
     T = T, 
     L = L,
     R = R,
-    clockwise = ifthenelse(!is.logical(clockwise),FALSE,clockwise[1]),
     limits = list(x = xlim, 
                   y = ylim,
                   T = Tlim,
@@ -106,11 +108,10 @@ coord_transform.ternary <- function(coord, data, details, verbose=FALSE,revertTo
     ix.L <- "L"
     ix.R <- "R"
     
-    clockwise = coord$clockwise;
     lim <- list(Tlim=coord$limits[[ix.T]],Llim=coord$limits[[ix.L]],Rlim=coord$limits[[ix.R]])
     
     ##Execute the transformation to cartesian
-    data[,c("x","y")] <- transform_tern_to_cart(data = data[,ix.tern],Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim,cw = clockwise)[,c("x","y")]
+    data[,c("x","y")] <- transform_tern_to_cart(data = data[,ix.tern],Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,c("x","y")]
     #only keep records in poly
     if(discard){
       #EXPAND THE MAX LIMITS
@@ -120,7 +121,7 @@ coord_transform.ternary <- function(coord, data, details, verbose=FALSE,revertTo
       xtrm <- get_tern_extremes(coord,expand=TOLLERANCE)[,ix.tern]
       
       #Transform extremes to cartesian space
-      data.extremes <-transform_tern_to_cart(data = xtrm,Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim,cw   = clockwise)[,c("x","y")]
+      data.extremes <-transform_tern_to_cart(data = xtrm,Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,c("x","y")]
       
       #In polygon or not.
       in.poly <- point.in.polygon(data$x,data$y,as.numeric(data.extremes$x),as.numeric(data.extremes$y))
@@ -241,8 +242,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   Rlim <- coord$limits$R
   
   #CLOCKWISE ROTATION OR NOT
-  clockwise <- coord$clockwise
-  if(!is.logical(clockwise)){clockwise=F}else{clockwise=clockwise[1]}
+  clockwise <- as.logical(calc_element_plot("axis.tern.clockwise",theme=theme))
   
   #constant
   .pt = find_global(".pt")
@@ -254,7 +254,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   
   #The limits.
   data.extreme <- get_tern_extremes(coordinates=coord)
-  data.extreme <- transform_tern_to_cart(data=data.extreme,Tlim=Tlim,Llim=Llim,Rlim=Rlim,cw=clockwise)
+  data.extreme <- transform_tern_to_cart(data=data.extreme,Tlim=Tlim,Llim=Llim,Rlim=Rlim)
   data.extreme <- ggint$coord_transform.cartesian(coord,data.extreme,details)
   rownames(data.extreme) <- c("AT.T","AT.L","AT.R")
   
@@ -645,7 +645,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
         lineheight<- e$lineheight
         family    <- ifthenelse(is.character(e$family),e$family,"sans")
         face      <- e$face
-        hjust     <- e$hjust #.hjust.flip(e$hjust,clockwise=clockwise)
+        hjust     <- e$hjust
         vjust     <- e$vjust
         angle     <- e$angle
         grob      <- textGrob( label = d$L[ix], 

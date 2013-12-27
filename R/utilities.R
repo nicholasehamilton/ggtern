@@ -108,7 +108,6 @@ get_tern_extremes <- function(coordinates,verbose=F,expand=0){
 #' @param Tlim the limits of the top axis
 #' @param Llim the limits of the left axis
 #' @param Rlim the limits of the right axis
-#' @param cw based on clockwise (TRUE) or anti-clockwise(FALSE) axis precession.
 #' @return \code{data.frame} object with columns \code{x} and \code{y} representing the transformed coordinates, and, number of rows
 #' equal to that of the \code{data} argument. In other words, a '1 to 1' transformation from the ternary to the cartesian space. 
 #' @examples
@@ -119,7 +118,7 @@ get_tern_extremes <- function(coordinates,verbose=F,expand=0){
 #' #Transform
 #' transform_tern_to_cart(T,L,R)
 #' @export
-transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),...,Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1),cw=TRUE,scale=TRUE){
+transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),...,Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1),scale=TRUE){
   if(class(data) != "data.frame")stop("data must be of type 'data.frame'")
   if(length(which(c("T","L","R") %in% colnames(data))) < 3) stop("data must contain columns T, L and R")
   
@@ -238,7 +237,7 @@ trytransform <- function(data,coord){
   Tlim <- coord$limits$T; Llim <- coord$limits$L; Rlim <- coord$limits$R
   tryCatch({
     if(inherits(coord,"ternary")){  
-      res <- transform_tern_to_cart(T=data[,coord$T],L=data[,coord$L],R=data[,coord$R],Tlim=Tlim,Llim=Llim,Rlim=Rlim, cw=coord$clockwise)[,c("x","y")]
+      res <- transform_tern_to_cart(T=data[,coord$T],L=data[,coord$L],R=data[,coord$R],Tlim=Tlim,Llim=Llim,Rlim=Rlim)[,c("x","y")]
       data <- cbind(res,data[,which(!colnames(data) %in% c(coord$T,coord$L,coord$R))])
     }
   },error=function(e){

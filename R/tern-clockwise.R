@@ -1,12 +1,4 @@
-.tern_clockwise <- function(x){
-  if(!is.logical(x)){x=FALSE}
-  coord <- get_last_coord()
-  if(!inherits(coord,"ternary")){
-    coord <- coord_tern()
-  }
-  coord$clockwise=x
-  coord
-}
+.tern_clockwise <- function(x){theme(axis.tern.clockwise=element_logical(x))}
 
 #' Direction of Ternary Rotation
 #' 

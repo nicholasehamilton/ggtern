@@ -4,7 +4,7 @@
 \usage{
   coord_tern(T = "x", L = "y", R = "z", xlim = c(0, 1),
     ylim = c(0, 1), Tlim = NULL, Llim = NULL, Rlim = NULL,
-    clockwise = getOption("tern.clockwise"))
+    clockwise)
 }
 \arguments{
   \item{T}{the Top Mapping (default x)}
@@ -23,9 +23,10 @@
 
   \item{Rlim}{the range of R in the ternary space}
 
-  \item{clockwise}{logical (default \code{FALSE})
-  indicating whether the precession of axes is clockwise
-  (\code{TRUE}) or counter-clockwise (\code{FALSE}).}
+  \item{clockwise}{(No longer valid) logical (default
+  \code{FALSE}) indicating whether the precession of axes
+  is clockwise (\code{TRUE}) or counter-clockwise
+  (\code{FALSE}).}
 }
 \value{
   ternary coordinate system object.

@@ -30,6 +30,8 @@ ggtern 1.0.2.0
 * New theme elements option for putting ticks INSIDE or OUTSIDE of the axis, OUTSIDE is default. 
   Convenience functions also created theme_ticksoutside() and theme_ticksinside()
 
+* Clockwise/Anticlockwise axis precession is now controlled by the theme element 'axis.tern.clockwise', inheriting from 'element_logical'.
+
 BUG FIXES
 
 * Correction to logic in .theme_new internal function

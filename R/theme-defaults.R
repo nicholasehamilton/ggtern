@@ -43,6 +43,9 @@
       ternary.options         = element_ternary(),
       
       panel.background.tern   = element_rect(fill=col.BG,color=NA),
+      
+      axis.tern.clockwise     = element_logical(getOption("tern.clockwise")),
+      
       axis.tern               = element_line(size=0.5,linetype="solid"),
       axis.tern.line          = element_line(),
       axis.tern.line.T        = element_line(colour=col.T),
