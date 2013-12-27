@@ -40,8 +40,7 @@ tern_nogrid_major <- theme_nogrid_major
 #' @rdname showhidegrid
 #' @export
 theme_nogrid <- function(){
-  list(theme_nogrid_minor(),
-       theme_nogrid_major())
+  theme_nogrid_minor() + theme_nogrid_major()
 }
 theme_tern_nogrid <- function(){
   tern_dep("1.0.1.3","theme_tern_nogrid has been superceded by theme_nogrid")
