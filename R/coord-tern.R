@@ -372,17 +372,22 @@ coord_render_bg.ternary <- function(coord,details,theme){
       rbind(existing,new)
     }
     
+    
+    #Ticks are inside or outside
+    outside <- as.logical(calc_element_plot("axis.tern.ticks.outside",theme=theme))
+    shift   <- ifthenelse(!outside,180,0)
+    
     ##get the base data.
     d <- NULL
     #Major TLR
-    d <- .getData("T",d,T,angle=  angles[1],angles.text[1]);
-    d <- .getData("L",d,T,angle=  angles[2],angles.text[2]); 
-    d <- .getData("R",d,T,angle=  angles[3],angles.text[3]); 
+    d <- .getData("T",d,T,angle=  angles[1]+shift,angles.text[1]);
+    d <- .getData("L",d,T,angle=  angles[2]+shift,angles.text[2]); 
+    d <- .getData("R",d,T,angle=  angles[3]+shift,angles.text[3]); 
     
     #Minor TLR
-    d <- .getData("T",d,F,angle=  angles[1],angles.text[1]); 
-    d <- .getData("L",d,F,angle=  angles[2],angles.text[2]); 
-    d <- .getData("R",d,F,angle=  angles[3],angles.text[3]);
+    d <- .getData("T",d,F,angle=  angles[1]+shift,angles.text[1]); 
+    d <- .getData("L",d,F,angle=  angles[2]+shift,angles.text[2]); 
+    d <- .getData("R",d,F,angle=  angles[3]+shift,angles.text[3]);
     
     #REVERSE (minor under major)
     if(nrow(d) > 1){d <- d[nrow(d):1,]}
@@ -428,8 +433,8 @@ coord_render_bg.ternary <- function(coord,details,theme){
         vjust     <- ifthenelse(is.numeric(e$vjust),e$vjust,0)
         angle     <- ifthenelse(is.numeric(e$angle),e$angle,0) + unique(d$Angle.Text)[1]
         grob      <- textGrob( label = as.character(d$Labels), 
-                               x = d$xend, 
-                               y = d$yend, 
+                               x = ifthenelse(outside,d$xend,d$x), 
+                               y = ifthenelse(outside,d$yend,d$y), 
                                default.units="native", 
                                hjust=hjust, 
                                vjust=vjust, 

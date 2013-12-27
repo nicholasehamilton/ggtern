@@ -25,6 +25,7 @@
 \alias{axis.tern.ticks.minor.L}
 \alias{axis.tern.ticks.minor.R}
 \alias{axis.tern.ticks.minor.T}
+\alias{axis.tern.ticks.outside}
 \alias{axis.tern.title}
 \alias{axis.tern.title.L}
 \alias{axis.tern.title.R}
@@ -145,6 +146,9 @@
   Apex Label \tab \code{\link{element_text}} \tab
   \code{axis.tern.title} \cr
 
+  \code{axis.tern.ticks.outside} \tab Base ticks for ggtern
+  object on outside or not \tab
+  \code{\link{element_logical}} \tab \code{logical} \cr
   \code{axis.tern.ticks} \tab Base ticks for ggtern object
   \tab \code{\link{element_line}} \tab \code{axis.tern} \cr
   \code{axis.tern.ticks.major} \tab Base Major ticks for

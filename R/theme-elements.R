@@ -1,6 +1,6 @@
 #SEARCH FOR THE ORIGINAL FUNCTIONS
 ggint$.element_tree <- find_global(".element_tree")
-.el_def       <- ggint$el_def
+.el_def             <- ggint$el_def
 
 #TERNARY OPTIONS.
 ggint$.element_tree$ternary.options          = .el_def("element_ternary","element_ternary") #
@@ -31,6 +31,7 @@ ggint$.element_tree$axis.tern.title.T        = .el_def("element_text", "axis.ter
 ggint$.element_tree$axis.tern.title.L        = .el_def("element_text", "axis.tern.title")#
 ggint$.element_tree$axis.tern.title.R        = .el_def("element_text", "axis.tern.title")#
 
+ggint$.element_tree$axis.tern.ticks.outside  = .el_def("element_logical","logical")
 ggint$.element_tree$axis.tern.ticks          = .el_def("element_line", "axis.tern")#
 ggint$.element_tree$axis.tern.ticks.major    = .el_def("element_line", "axis.tern.ticks")#
 ggint$.element_tree$axis.tern.ticks.major.T  = .el_def("element_line", "axis.tern.ticks.major")#

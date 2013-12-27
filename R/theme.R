@@ -30,7 +30,8 @@ theme_update <- function(...) {
 #' axis.tern.line.L axis.tern.line.R axis.tern.text axis.tern.text.T axis.tern.text.L axis.tern.text.R axis.tern.arrow.text axis.tern.arrow.text.T axis.tern.arrow.text.L
 #' axis.tern.arrow.text.R axis.tern.title axis.tern.title.T axis.tern.title.L axis.tern.title.R axis.tern.ticks axis.tern.ticks.major axis.tern.ticks.major.T axis.tern.ticks.major.L
 #' axis.tern.ticks.major.R axis.tern.ticks.minor axis.tern.ticks.minor.T axis.tern.ticks.minor.L axis.tern.ticks.minor.R panel.grid.tern panel.grid.tern.major
-#' panel.grid.tern.major.T panel.grid.tern.major.L panel.grid.tern.major.R panel.grid.tern.minor panel.grid.tern.minor.T panel.grid.tern.minor.L panel.grid.tern.minor.R
+#' panel.grid.tern.major.T panel.grid.tern.major.L panel.grid.tern.major.R panel.grid.tern.minor panel.grid.tern.minor.T panel.grid.tern.minor.L panel.grid.tern.minor.R 
+#' axis.tern.ticks.outside
 #' @name themeelements
 #' @name theme
 #' @section New/Additional Inheritance Structures:
@@ -62,6 +63,7 @@ theme_update <- function(...) {
 #'   \code{axis.tern.title.L}  \tab Specific text for LHS Apex Label             \tab \code{\link{element_text}}    \tab \code{axis.tern.title}  \cr
 #'   \code{axis.tern.title.R}  \tab Specific text for RHS Apex Label             \tab \code{\link{element_text}}    \tab \code{axis.tern.title}  \cr
 #'   
+#'   \code{axis.tern.ticks.outside}  \tab Base ticks for ggtern object on outside or not \tab \code{\link{element_logical}} \tab \code{logical} \cr
 #'   \code{axis.tern.ticks}          \tab Base ticks for ggtern object           \tab \code{\link{element_line}}    \tab \code{axis.tern}   \cr
 #'   \code{axis.tern.ticks.major}    \tab Base Major ticks for ggtern object     \tab \code{\link{element_line}}    \tab \code{axis.tern.ticks}   \cr
 #'   \code{axis.tern.ticks.major.T}  \tab Major ticks for TOP Axis               \tab \code{\link{element_line}}    \tab \code{axis.tern.ticks.major}  \cr

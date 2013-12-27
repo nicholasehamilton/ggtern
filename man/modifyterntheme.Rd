@@ -23,6 +23,8 @@ plot + theme_nogrid_major()
 plot + theme_nogrid()
 plot + theme_clockwise()
 plot + theme_anticlockwise()
+plot + theme_ticksoutside()
+plot + theme_ticksinside()
 }
 }
 \seealso{
@@ -33,6 +35,8 @@ plot + theme_anticlockwise()
   \code{\link[=theme_tern_bw]{Black and White Theme}},
   \code{\link[=theme_tern_gray]{Gray and White Theme}},
   \code{\link[=theme_tern_rgbw]{RGB and White Theme}},
-  \code{\link[=theme_tern_rgbg]{RGB and Gray Theme}}
+  \code{\link[=theme_tern_rgbg]{RGB and Gray
+  Theme}},\code{\link[=theme_ticksoutside]{Ticks Inside or
+  Outside}}
 }
 

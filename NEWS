@@ -27,6 +27,9 @@ ggtern 1.0.2.0
 
 * Error protocols for version control implemented, same as ggplot2, however, for ggtern.
 
+* New theme elements option for putting ticks INSIDE or OUTSIDE of the axis, OUTSIDE is default. 
+  Convenience functions also created theme_ticksoutside() and theme_ticksinside()
+
 BUG FIXES
 
 * Correction to logic in .theme_new internal function
