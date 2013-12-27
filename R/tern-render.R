@@ -32,6 +32,7 @@ print.ggplot <- function(x, newpage = is.null(vp), vp = NULL, ...) {
     grid.draw(gtable) 
     upViewport()
   }
+  set_last_coord(NULL)
   invisible(data)
 }
 

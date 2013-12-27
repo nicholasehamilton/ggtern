@@ -34,7 +34,6 @@
   size.text      <- max(base_size-2,4)
   size.title     <- max(base_size-0,6)
   
-  #ggplot2::theme_gray(base_size=base_size,base_family=base_family)  %+replace%
   get(base_ggplot2_theme,asNamespace("ggplot2"))(
     base_size=base_size,base_family=base_family)            %+replace%
     .theme_nocart()                                         %+replace%
@@ -44,7 +43,7 @@
       
       panel.background.tern   = element_rect(fill=col.BG,color=NA),
       
-      axis.tern.clockwise     = element_logical(getOption("tern.clockwise")),
+      axis.tern.clockwise     = element_logical(TRUE),
       
       axis.tern               = element_line(size=0.5,linetype="solid"),
       axis.tern.line          = element_line(),
@@ -156,7 +155,9 @@ theme_tern_rgbw <- function(base_size = 12, base_family = ""){
 #' @aliases theme_tern_bw
 #' @export
 theme_bw    <- function(base_size = 12, base_family = ""){
-  if(!inherits(get_last_coord(),"ternary")){return(ggplot2::theme_bw(base_size=base_size,base_family=base_family))}
+  if(!inherits(get_last_coord(),"ternary")){
+    return(ggplot2::theme_bw(base_size=base_size,base_family=base_family))
+  }
   .theme_tern(base_size=base_size, base_family=base_family,base_ggplot2_theme="theme_bw",
               col.BG=NA,
               col.T ="black",

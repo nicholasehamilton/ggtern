@@ -38,6 +38,8 @@ BUG FIXES
 
 * Correction to theme_nogrid(), so that it could be 'added' to other themes.
 
+* Correction to theme element logic when switching between printing of ggplot2 and ggtern objects.
+
 ggtern 1.0.1.3
 ----------------------------------------------------------------
 * Package accepted for CRAN

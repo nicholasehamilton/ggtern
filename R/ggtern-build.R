@@ -12,7 +12,6 @@
 #' @keywords internal
 #' @export
 ggplot_build <- function(plot) {
-  
   if (length(plot$layers) == 0) stop("No layers in plot", call.=FALSE)
   plot <- ggint$plot_clone(plot)
   
@@ -28,7 +27,6 @@ ggplot_build <- function(plot) {
   # variables, and add on a PANEL variable to data
   panel <- ggint$new_panel()
   #... CONTINUED BELOW...
-  
   
   ##-------------------------------------------------------------------------------
   #IF WE HAVE TERNARY OPTIONS SOMEWHERE...  
