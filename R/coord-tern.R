@@ -16,7 +16,7 @@
 #' @export
 coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Llim=NULL,Rlim=NULL,clockwise) {
   if(!missing(clockwise)){
-    tern_dep("1.0.2.0","clockwise is now controlled by the theme element 'axis.tern.clockwise'")
+    tern_dep("1.0.1.3","clockwise is now controlled by the theme element 'axis.tern.clockwise'")
   }
   
   ##Validate x and y lims...

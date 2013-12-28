@@ -33,9 +33,9 @@ element_ternary <- function(showarrows       =TRUE,
                             ticklength.major,
                             ticklength.minor){
   if(!missing(ticklength.major))
-    tern_dep("1.0.2.0","ticklength.major is replaced by element 'axis.tern.ticklength.major'")
+    tern_dep("1.0.1.3","ticklength.major is replaced by element 'axis.tern.ticklength.major'")
   if(!missing(ticklength.minor))
-    tern_dep("1.0.2.0","ticklength.minor is replaced by element 'axis.tern.ticklength.minor'")
+    tern_dep("1.0.1.3","ticklength.minor is replaced by element 'axis.tern.ticklength.minor'")
   
   structure(
     list(padding         = padding,
