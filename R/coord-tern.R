@@ -169,7 +169,7 @@ coord_train.ternary <- function(coord, scales){
   
   #trimmed down cartesian coords
   ret <- c(ggint$train_cartesian(scales$x, coord$limits$x + c(-p,p) - h, "x"),
-           ggint$train_cartesian(scales$y, coord$limits$y + c(-p,p) - v, "y"))[c("x.range","y.range")]
+           ggint$train_cartesian(scales$y, coord$limits$y + c(-p,p)*coord_aspect.ternary() - v, "y"))[c("x.range","y.range")]
   #detailed ternary coords
   IX <- c("T","L","R")
   for(ix in IX) #breaks, ticks etc...
