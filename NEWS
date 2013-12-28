@@ -40,6 +40,9 @@ BUG FIXES
 
 * Correction to theme element logic when switching between printing of ggplot2 and ggtern objects.
 
+* Ticks rendered after grid, previously it was the other way around, 
+  obvious since inside ticks have been introduced.
+
 ggtern 1.0.1.3
 ----------------------------------------------------------------
 * Package accepted for CRAN
