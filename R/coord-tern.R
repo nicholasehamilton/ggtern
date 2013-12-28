@@ -11,7 +11,7 @@
 #' @param Tlim the range of T in the ternary space
 #' @param Llim the range of L in the ternary space
 #' @param Rlim the range of R in the ternary space
-#' @param clockwise (No longer valid) logical (default \code{FALSE}) indicating whether the precession of axes is clockwise (\code{TRUE}) or counter-clockwise (\code{FALSE}).
+#' @param clockwise (Depreciated) logical (default \code{FALSE}) indicating whether the precession of axes is clockwise (\code{TRUE}) or counter-clockwise (\code{FALSE}).
 #' @return ternary coordinate system object.
 #' @export
 coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Llim=NULL,Rlim=NULL,clockwise) {
@@ -44,30 +44,10 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Lli
     T = T, 
     L = L,
     R = R,
-    limits = list(x = xlim, 
-                  y = ylim,
-                  T = Tlim,
-                  L = Llim,
-                  R = Rlim),
+    limits = list(x = xlim, y = ylim,T = Tlim,L = Llim,R = Rlim),
     required_aes=c("x","y","z"),
     subclass = c("ternary","fixed")
   )
-}
-
-#helper function
-.rename_data_ternary <- function(coord,data){
-  bup <- data
-  tryCatch({
-    to   <- c("T","L","R"); 
-    frm  <- c(coord$T,coord$L,coord$R)
-    if(length(which(!frm %in% names(data))) == 0){
-      names(to) <- frm
-      data <- rename(data,to)#,warn_missing=FALSE)
-    }
-  },error=function(e){
-    return(bup)
-  })
-  data
 }
 
 #' S3 Method Is Linear
@@ -224,8 +204,19 @@ coord_render_axis_h.ternary <- function(coord, details, theme) {
 #' @method coord_render_fg ternary
 #' @S3method coord_render_fg ternary
 coord_render_fg.ternary <- function(coord,details,theme){
-  ##NOT USED. RENDERED IN ggtern.build.R
-  .zeroGrob
+  #List to hold the grobs.
+  items <- list()
+  
+  #The limits.
+  data.extreme <- .get.data.extreme(coord,details)
+  
+  
+  items <- .render.border(data.extreme,items,theme)         #BORDER
+  items <- .render.arrows(data.extreme,items,theme,details) #ARROWS
+  items <- .render.titles(data.extreme,items,theme,details) #MAIN TITLES
+  
+  #render.
+  ggint$ggname("background",gTree(children = do.call("gList", items)))
 }
 
 #' S3 Method Render Background
@@ -243,12 +234,27 @@ coord_render_bg.ternary <- function(coord,details,theme){
   #Build the plot region.
   items <- .render.background(data.extreme,items,theme)     #BACKGROUND...
   items <- .render.grids(data.extreme,items,theme,details)  #GRIDS
-  items <- .render.border(data.extreme,items,theme)         #BORDER
-  items <- .render.arrows(data.extreme,items,theme,details) #ARROWS
-  items <- .render.titles(data.extreme,items,theme,details) #MAIN TITLES
   
   #render.
   ggint$ggname("background",gTree(children = do.call("gList", items)))
+}
+
+#----------------------------------------------------------------------------------
+#Internals >>>> Rename ternary data.
+#----------------------------------------------------------------------------------
+.rename_data_ternary <- function(coord,data){
+  bup <- data
+  tryCatch({
+    to   <- c("T","L","R"); 
+    frm  <- c(coord$T,coord$L,coord$R)
+    if(length(which(!frm %in% names(data))) == 0){
+      names(to) <- frm
+      data <- rename(data,to)#,warn_missing=FALSE)
+    }
+  },error=function(e){
+    return(bup)
+  })
+  data
 }
 
 #----------------------------------------------------------------------------------
