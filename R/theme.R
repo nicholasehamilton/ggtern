@@ -121,7 +121,9 @@ plot_theme <- function(x) {defaults(x$theme, ggtern::theme_get())}
       ifthenelse(inherits(get_last_coord(),"ternary"),theme.tern,theme)
     },
     set = function(new) {
-      if(inherits(get_last_coord(),"ternary"))
+      lc <- get_last_coord()
+      
+      if(inherits(lc,"ternary"))
         missing <- setdiff(names(theme_gray()), names(new))
       else
         missing <- setdiff(names(ggplot2::theme_gray()), names(new))
@@ -129,7 +131,8 @@ plot_theme <- function(x) {defaults(x$theme, ggtern::theme_get())}
       if (length(missing) > 0)
         warning("New theme missing the following elements: ",paste(missing, collapse = ", "), call. = FALSE)
       
-      if(inherits(get_last_coord(),"ternary"))
+      
+      if(inherits(lc,"ternary"))
         theme.tern <<- new
       else
         theme      <<- new

@@ -10,9 +10,9 @@ StatLline <- proto(ggint$Stat, {
   calculate <- function(., data, scales, Lintercept = NULL, ...) {
     data <- ggint$compute_intercept(data, Lintercept, "L") 
     
-    lc <- get_last_coord()
-    if(!inherits(lc,"ternary")){stop("Lline only relevant for ternary coordinates")}
+    tern_stop(.$objname)
     
+    lc <- get_last_coord()
     Tlim <- lc$limits$T; Tlim <- ifthenelse(!is.numeric(Tlim),c(1,0),Tlim)
     Llim <- lc$limits$L; Llim <- ifthenelse(!is.numeric(Llim),c(1,0),Llim)
     Rlim <- lc$limits$R; Rlim <- ifthenelse(!is.numeric(Rlim),c(1,0),Rlim)

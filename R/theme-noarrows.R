@@ -1,4 +1,7 @@
 .theme_arrows <- function(show){
+  
+  tern_stop("Show/Hide Arrows")
+  
   if(!is.logical(show)){show=TRUE}
   show=show[1]
   current <- theme_update()
@@ -8,7 +11,9 @@
   }else{
     e <- element_ternary(showarrows=show)
   }
-  #current %+replace% 
+  
+  
+  
   theme(ternary.options=e)
 }
 

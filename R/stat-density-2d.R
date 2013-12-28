@@ -24,6 +24,7 @@ StatDensity2dtern <- proto(Statnew, {
     if(inherits(last_coord,"ternary"))
       data <- trytransform(data,last_coord)
     
+    
     df <- data.frame(data[, which(colnames(data) %in% c("x", "y","weight"))])
     df <- remove_missing(df, na.rm, name = "stat_density2d", finite = TRUE)
     
