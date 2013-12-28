@@ -43,6 +43,9 @@ BUG FIXES
 * Ticks rendered after grid, previously it was the other way around, 
   obvious since inside ticks have been introduced.
 
+* last_coord set to NULL during onLoad, originally it was set to coord_tern(), which was necessary for the default theme elements, however, 
+  is presumptuous in terms of what te user will actually plot.
+
 ggtern 1.0.1.3
 ----------------------------------------------------------------
 * Package accepted for CRAN
