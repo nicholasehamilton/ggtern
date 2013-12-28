@@ -4,8 +4,8 @@
 \usage{
   element_ternary(showarrows = TRUE, padding = 0.1,
     arrowsep = 0.075, arrowstart = 0.3, arrowfinish = 0.7,
-    vshift = 0.25 * padding, hshift = 0,
-    ticklength.major = 0.02, ticklength.minor = 0.01)
+    vshift = 0.25 * padding, hshift = 0, ticklength.major,
+    ticklength.minor)
 }
 \arguments{
   \item{showarrows}{logical whether to show the axis
@@ -30,11 +30,11 @@
 
   \item{ticklength.major}{the length of the major ternary
   ticks as an euclidean distance relative to the x and y
-  limits of the cartesian plot area.}
+  limits of the cartesian plot area. SUPERCEDED}
 
   \item{ticklength.minor}{the length of the minor ternary
   ticks as an euclidean distance relative to the x and y
-  limits of the cartesian plot area.}
+  limits of the cartesian plot area. SUPERCEDED}
 }
 \description{
   Used to define the layout of some of the ggtern plot

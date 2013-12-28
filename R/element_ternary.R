@@ -19,9 +19,9 @@
 #' @param vshift shift the plot area vertically
 #' @param hshift shift the plot area horizontally
 #' @param ticklength.major the length of the major ternary ticks as an euclidean distance 
-#' relative to the x and y limits of the cartesian plot area. 
+#' relative to the x and y limits of the cartesian plot area. SUPERCEDED
 #' @param ticklength.minor the length of the minor ternary ticks as an euclidean distance 
-#' relative to the x and y limits of the cartesian plot area.
+#' relative to the x and y limits of the cartesian plot area. SUPERCEDED
 #' @export
 element_ternary <- function(showarrows       =TRUE,
                             padding          =0.10,
@@ -30,8 +30,13 @@ element_ternary <- function(showarrows       =TRUE,
                             arrowfinish      =0.7,
                             vshift           =0.25*padding,
                             hshift           =0,
-                            ticklength.major =0.020,
-                            ticklength.minor =0.010){
+                            ticklength.major,
+                            ticklength.minor){
+  if(!missing(ticklength.major))
+    tern_dep("1.0.2.0","ticklength.major is replaced by element 'axis.tern.ticklength.major'")
+  if(!missing(ticklength.minor))
+    tern_dep("1.0.2.0","ticklength.minor is replaced by element 'axis.tern.ticklength.minor'")
+  
   structure(
     list(padding         = padding,
          arrowsep        = arrowsep,
@@ -39,9 +44,7 @@ element_ternary <- function(showarrows       =TRUE,
          arrowstart      = min(arrowstart,arrowfinish),
          arrowfinish     = max(arrowstart,arrowfinish),
          vshift          = vshift,
-         hshift          = hshift,
-         ticklength.major= ticklength.major,
-         ticklength.minor= ticklength.minor),
+         hshift          = hshift),
     class = c("element_ternary")
   )
 }

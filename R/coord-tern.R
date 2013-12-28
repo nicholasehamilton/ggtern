@@ -161,7 +161,7 @@ coord_expand_defaults.ternary <- function(coord, scale, aesthetic){
 #' @method coord_train ternary
 #' @S3method coord_train ternary
 coord_train.ternary <- function(coord, scales){
-  
+
   el <- calc_element_plot("ternary.options",theme=theme_update(),verbose=F,plot=last_plot())
   p <- max(el$padding,0)  #PADDING
   h <- max(el$hshift, 0)  #hshift
@@ -185,7 +185,7 @@ coord_train.ternary <- function(coord, scales){
 #' @rdname coord
 #' @method coord_aspect ternary
 ##' @S3method coord_aspect ternary
-coord_aspect.ternary <- function(coord, details){sin(60*pi/180)}
+coord_aspect.ternary <- function(coord, details){0.5*tan(60*pi/180)}
 
 #' S3 Method Coordinate Distance
 #'
@@ -296,31 +296,35 @@ coord_render_bg.ternary <- function(coord,details,theme){
   #--------------------------------------------------
   #GRIDS
   if(TRUE){
-    .vett.tl     <- function(x){if(!is.numeric(x)){x <- 0 } else{x <- max(x[1],0)}}
-    .vett.labels <- function(labels,breaks){ifthenelse(identical(labels,waiver()),100*breaks,labels)}
+    #Ticks are inside or outside
+    outside <- as.logical(calc_element_plot("axis.tern.ticks.outside",theme=theme))
+    shift   <- ifthenelse(!outside,180,0)
     
-    tl.major <- .vett.tl(calc_element_plot("ternary.options",theme=theme)$ticklength.major)
-    tl.minor <- .vett.tl(calc_element_plot("ternary.options",theme=theme)$ticklength.minor)
+    #major ticklength
+    tl.major <- theme$axis.tern.ticklength.major
+    tl.major <- ifthenelse(!inherits(tl.major,"unit"),unit(0.02,"npc"),tl.major)
+    tl.major <- convertX(tl.major,"npc",valueOnly=T)
     
-    #THE TIPS OF THE TERNARY PLOT AREA
-    #d.extremes <- get_tern_extremes(coord)
-    d.extremes <- data.extreme; 
+    #minor ticklength
+    tl.minor <- theme$axis.tern.ticklength.minor
+    tl.minor <- ifthenelse(!inherits(tl.minor,"unit"),unit(0.01,"npc"),tl.minor)
+    tl.minor <- convertX(tl.minor,"npc",valueOnly=T)
     
     #ASSEMBLE THE GRID DATA.
+    .vett.labels <- function(labels,breaks){ifthenelse(identical(labels,waiver()),100*breaks,labels)}
     .getData <- function(X,existing=NULL,major=TRUE,angle=0,angle.text=0){
       breaks.major <- details[[paste0(X,".major_source")]]
       breaks.minor <- details[[paste0(X,".minor_source")]]
       breaks <- if(major){breaks.major}else{breaks.minor[which(!breaks.minor %in% breaks.major)]}
-      if(length(breaks) == 0)return(existing) #BYPASS
+      
+      #BYPASS IF NECESSARY
+      if(length(breaks) == 0)return(existing)
       
       labels <- if(major){details[[paste0(X,".labels")]]}else{""}
-      
-      
+      labels <- .vett.labels(labels=labels,breaks=breaks)
       
       #Assign new id.
-      id <- max(existing$ID,0) + 1
-      
-      labels <- .vett.labels(labels=labels,breaks=breaks)
+      id <- (max(existing$ID,0) + 1)
       tryCatch({
         limits <- as.numeric(details[[paste0(X,".range")]]);
       },error=function(e){
@@ -353,29 +357,28 @@ coord_render_bg.ternary <- function(coord,details,theme){
       #FOR TICKS
       ix.s <- which(ix.order == X); 
       ix.f <- ifthenelse(clockwise,if(ix.s == 3){1}else{ix.s+1},if(ix.s == 1){3}else{ix.s-1})
-      finish <- as.numeric(d.extremes[ix.at[ix.s],])
-      start  <- as.numeric(d.extremes[ix.at[ix.f],])
+      finish <- as.numeric(data.extreme[ix.at[ix.s],])
+      start  <- as.numeric(data.extreme[ix.at[ix.f],])
       for(i in 1:length(out)){new[,out[i]] <- new$Prop*(finish[i]-start[i]) + start[i]}
       
       #FOR GRID
       ix.s <- which(ix.order == X); 
       ix.f <- ifthenelse(clockwise,if(ix.s == 1){3}else{ix.s-1},if(ix.s == 3){1}else{ix.s+1})
-      finish <- as.numeric(d.extremes[ix.at[ix.s],])
-      start  <- as.numeric(d.extremes[ix.at[ix.f],])
+      finish <- as.numeric(data.extreme[ix.at[ix.s],])
+      start  <- as.numeric(data.extreme[ix.at[ix.f],])
       for(i in 1:length(out)){new[,paste0(out[i],"end.grid")] <- new$Prop*(finish[i]-start[i]) + start[i]}
       
       #The tick angles.
       new$Angle <- angle
       new$Angle.Text <- angle.text
       
+      ##Determine the tick finish positions for segments.
+      new$xend <- cos(new$Angle*pi/180)*new$TickLength                        + new$x
+      new$yend <- sin(new$Angle*pi/180)*new$TickLength/coord_aspect.ternary() + new$y
+      
       ##ADD TO EXISTING
       rbind(existing,new)
     }
-    
-    
-    #Ticks are inside or outside
-    outside <- as.logical(calc_element_plot("axis.tern.ticks.outside",theme=theme))
-    shift   <- ifthenelse(!outside,180,0)
     
     ##get the base data.
     d <- NULL
@@ -391,10 +394,6 @@ coord_render_bg.ternary <- function(coord,details,theme){
     
     #REVERSE (minor under major)
     if(nrow(d) > 1){d <- d[nrow(d):1,]}
-    
-    ##Determine the tick finish positions for segments.
-    d$xend <- cos(d$Angle*pi/180)*d$TickLength + d$x
-    d$yend <- sin(d$Angle*pi/180)*d$TickLength + d$y
     
     #FUNCTION TO RENDER TICKS AND LABELS
     .render.ticks <- function(name,items,d){

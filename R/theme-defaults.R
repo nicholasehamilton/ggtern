@@ -44,6 +44,8 @@
       panel.background.tern   = element_rect(fill=col.BG,color=NA),
       
       axis.tern.clockwise     = element_logical(TRUE),
+      axis.tern.ticklength.major = unit(0.02,"npc"),
+      axis.tern.ticklength.minor = unit(0.01,"npc"),
       
       axis.tern               = element_line(size=0.5,linetype="solid"),
       axis.tern.line          = element_line(),

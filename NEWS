@@ -32,6 +32,8 @@ ggtern 1.0.2.0
 
 * Clockwise/Anticlockwise axis precession is now controlled by the theme element 'axis.tern.clockwise', inheriting from 'element_logical'.
 
+* Length of theme elements in 'units', such as major and minor ticks.
+
 BUG FIXES
 
 * Correction to logic in .theme_new internal function

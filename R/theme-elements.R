@@ -11,6 +11,9 @@ ggint$.element_tree$panel.background.tern    = .el_def("element_rect", "rect")
 ##Clockwise Precession.
 ggint$.element_tree$axis.tern.clockwise      = .el_def("element_logical","logical")
 
+ggint$.element_tree$axis.tern.ticklength.major    = .el_def("unit")
+ggint$.element_tree$axis.tern.ticklength.minor    = .el_def("unit")
+
 ##AXIS ARROWS
 ggint$.element_tree$axis.tern                = .el_def("element_line", "line") #
 ggint$.element_tree$axis.tern.arrow          = .el_def("element_line", "axis.tern") #
