@@ -31,6 +31,7 @@ Collate:
   'element_ternary.R'
   'element_logical.R'
   'utilities.R'
+  'tern-stop.R'
   'strip-unapproved.R'
   'coord-tern.R'
   'global.R'
