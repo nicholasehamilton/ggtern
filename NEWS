@@ -50,6 +50,8 @@ BUG FIXES
 
 * Correction of padding by aspect ratio, which was introducing small errrors in ticks, noticiable for long tick sizes.
 
+* Restructured cood_tern() and how it renderd the ternary elements, distinct functions were broken off from the main render_bg routine.
+
 ggtern 1.0.1.3
 ----------------------------------------------------------------
 * Package accepted for CRAN
