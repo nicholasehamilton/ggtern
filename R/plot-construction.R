@@ -35,6 +35,7 @@ add_ggplot <- function(p, object, objectname) {
     names(labels) <- names(object)
     p <- update_labels(p, labels)
   } else if (is.coord(object)) {
+    set_last_coord(object)
     p$coordinates <- object
     p
   } else if (is.facet(object)) {
