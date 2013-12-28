@@ -29,7 +29,7 @@ Collate:
   'geom.R'
   'data.R'
   'element_ternary.R'
-  'element_logical.R'
+  'element-logical.R'
   'utilities.R'
   'tern-stop.R'
   'strip-unapproved.R'

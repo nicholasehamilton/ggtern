@@ -23,7 +23,7 @@
 
   \item{Rlim}{the range of R in the ternary space}
 
-  \item{clockwise}{(No longer valid) logical (default
+  \item{clockwise}{(Depreciated) logical (default
   \code{FALSE}) indicating whether the precession of axes
   is clockwise (\code{TRUE}) or counter-clockwise
   (\code{FALSE}).}
