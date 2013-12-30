@@ -2,10 +2,9 @@
 \alias{element_ternary}
 \title{Theme element: ternary structure}
 \usage{
-  element_ternary(showarrows, padding = 0.1,
-    arrowsep = 0.075, arrowstart = 0.3, arrowfinish = 0.7,
-    vshift = 0.25 * padding, hshift = 0, ticklength.major,
-    ticklength.minor)
+  element_ternary(showarrows, padding, arrowsep,
+    arrowstart, arrowfinish, vshift, hshift,
+    ticklength.major, ticklength.minor)
 }
 \arguments{
   \item{showarrows}{logical whether to show the axis
@@ -13,20 +12,21 @@
 
   \item{padding}{the padding around the plot area to make
   provision for axis labels, ticks and arrows, relative to
-  the cartesian plane.}
+  the cartesian plane. DEPRECIATED}
 
   \item{arrowsep}{the distance between ternary axis and
-  ternary arrows}
+  ternary arrows DEPRECIATED}
 
   \item{arrowstart}{the proportion along the ternary axis
-  to start the directional arrow}
+  to start the directional arrow DEPRECIATED}
 
   \item{arrowfinish}{the proportion along the ternary axis
-  to stop the directional arrow}
+  to stop the directional arrow DEPRECIATED}
 
-  \item{vshift}{shift the plot area vertically}
+  \item{vshift}{shift the plot area vertically DEPRECIATED}
 
-  \item{hshift}{shift the plot area horizontally}
+  \item{hshift}{shift the plot area horizontally
+  DEPRECIATED}
 
   \item{ticklength.major}{the length of the major ternary
   ticks as an euclidean distance relative to the x and y
@@ -37,11 +37,23 @@
   limits of the cartesian plot area. DEPRECIATED}
 }
 \description{
+  NOTE: This function has been entirely depreciated, and,
+  has been replaced by individual theme elements:
+  \code{\link{axis.tern.showarrows}}
+  \code{\link{axis.tern.padding}}
+  \code{\link{axis.tern.arrowsep}}
+  \code{\link{axis.tern.arrowstart}}
+  \code{\link{axis.tern.arrowfinish}}
+  \code{\link{axis.tern.vshift}}
+  \code{\link{axis.tern.hshift}}
+  \code{\link{axis.tern.ticklength.major}}
+  \code{\link{axis.tern.ticklength.minor}}
+}
+\details{
   Used to define the layout of some of the ggtern plot
   features which are unique to the ternary diagrams , and
   hence, this package.
-}
-\details{
+
   Note that some of these items, unlike
   \code{\link{ggplot2}} which permits absolute distances
   (ie say unit(1,"cm")) via the \code{\link{grid}} package,

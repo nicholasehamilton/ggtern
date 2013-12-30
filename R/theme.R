@@ -31,7 +31,8 @@ theme_update <- function(...) {
 #' axis.tern.arrow.text.R axis.tern.title axis.tern.title.T axis.tern.title.L axis.tern.title.R axis.tern.ticks axis.tern.ticks.major axis.tern.ticks.major.T axis.tern.ticks.major.L
 #' axis.tern.ticks.major.R axis.tern.ticks.minor axis.tern.ticks.minor.T axis.tern.ticks.minor.L axis.tern.ticks.minor.R panel.grid.tern panel.grid.tern.major
 #' panel.grid.tern.major.T panel.grid.tern.major.L panel.grid.tern.major.R panel.grid.tern.minor panel.grid.tern.minor.T panel.grid.tern.minor.L panel.grid.tern.minor.R 
-#' axis.tern.ticks.outside
+#' axis.tern.ticks.outside axis.tern.ticklength.major axis.tern.ticklength.minor axis.tern.arrowsep axis.tern.hshift axis.tern.vshift axis.tern.clockwise axis.tern.showarrows
+#' axis.tern.arrowstart axis.tern.arrowfinish axis.tern.padding 
 #' @name themeelements
 #' @name theme
 #' @section New/Additional Inheritance Structures:
@@ -39,10 +40,16 @@ theme_update <- function(...) {
 #' 
 #' \tabular{llll}{
 #'   \strong{NAME}            \tab \strong{DESCRIPTION}                          \tab \strong{OBJECT}               \tab \strong{INHERITS}      \cr
-#'   \code{ternary.options}   \tab Ternary specific options                      \tab \code{\link{element_ternary}} \tab                        \cr
-#'   \code{panel.background.tern**}    \tab Background of Ternary Plot Area      \tab \code{\link{element_rect}}    \tab \code{rect}  \cr
+#'   \code{panel.background.tern**}    \tab Background of Ternary Plot Area      \tab \code{\link{element_rect}}    \tab \code{rect}            \cr
 #'   \code{axis.tern}         \tab Base line for ggtern object                   \tab \code{\link{element_line}}    \tab \code{line}            \cr
-#'   \code{axis.tern.clockwise} \tab Clockwise Axis Precession                   \tab \code{\link{logical}}    \tab \code{logical}            \cr
+#'   \code{axis.tern.vshift} \tab Amount to nudge the plot vertically            \tab \code{\link{unit}}            \tab                        \cr
+#'   \code{axis.tern.hshift} \tab Amount to nudge the plot horizontally          \tab \code{\link{unit}}            \tab                        \cr
+#'   \code{axis.tern.clockwise} \tab Clockwise Axis Precession                   \tab \code{\link{logical}}         \tab                        \cr
+#'   \code{axis.tern.showarrows} \tab Show axis arrows or not                   \tab \code{\link{logical}}          \tab                        \cr
+#'   \code{axis.tern.padding} \tab Padding between axes and panel edges          \tab \code{\link{unit}}            \tab                        \cr
+#'   \code{axis.tern.arrowsep}\tab Distance between axes and the ternary arrows  \tab \code{\link{unit}}            \tab                        \cr
+#'   \code{axis.tern.arrowstart} \tab Proportion along ternary axis when arrow starts  \tab \code{\link{numeric}}   \tab                        \cr
+#'   \code{axis.tern.arrowfinish} \tab Proportion along ternary axis when arrow starts  \tab \code{\link{numeric}}   \tab                        \cr
 #'   \code{axis.tern.arrow}   \tab Base line for ternary arrows                  \tab \code{\link{element_line}}    \tab \code{axis.tern}       \cr
 #'   \code{axis.tern.arrow.T} \tab Specific line for TOP ternary arrow           \tab \code{\link{element_line}}    \tab \code{axis.tern.arrow} \cr
 #'   \code{axis.tern.arrow.L} \tab Specific line for LHS ternary arrow           \tab \code{\link{element_line}}    \tab \code{axis.tern.arrow} \cr
@@ -63,8 +70,9 @@ theme_update <- function(...) {
 #'   \code{axis.tern.title.T}  \tab Specific text for TOP Apex Label             \tab \code{\link{element_text}}    \tab \code{axis.tern.title}  \cr
 #'   \code{axis.tern.title.L}  \tab Specific text for LHS Apex Label             \tab \code{\link{element_text}}    \tab \code{axis.tern.title}  \cr
 #'   \code{axis.tern.title.R}  \tab Specific text for RHS Apex Label             \tab \code{\link{element_text}}    \tab \code{axis.tern.title}  \cr
-#'   
-#'   \code{axis.tern.ticks.outside}  \tab Base ticks for ggtern object on outside or not \tab \code{\link{logical}} \tab \code{logical} \cr
+#'   \code{axis.tern.ticklength.major}\tab Major ticklength                      \tab \code{\link{unit}}            \tab                        \cr
+#'   \code{axis.tern.ticklength.minor}\tab Minor ticklength                      \tab \code{\link{unit}}            \tab                        \cr
+#'   \code{axis.tern.ticks.outside}  \tab Base ticks for ggtern object on outside or not \tab \code{\link{logical}} \tab                        \cr
 #'   \code{axis.tern.ticks}          \tab Base ticks for ggtern object           \tab \code{\link{element_line}}    \tab \code{axis.tern}   \cr
 #'   \code{axis.tern.ticks.major}    \tab Base Major ticks for ggtern object     \tab \code{\link{element_line}}    \tab \code{axis.tern.ticks}   \cr
 #'   \code{axis.tern.ticks.major.T}  \tab Major ticks for TOP Axis               \tab \code{\link{element_line}}    \tab \code{axis.tern.ticks.major}  \cr
@@ -84,10 +92,13 @@ theme_update <- function(...) {
 #'   \code{panel.grid.tern.minor.T}  \tab Minor gridline for TOP Axis            \tab \code{\link{element_line}}    \tab \code{panel.grid.tern.minor}  \cr
 #'   \code{panel.grid.tern.minor.L}  \tab Minor gridline for LHS Axis            \tab \code{\link{element_line}}    \tab \code{panel.grid.tern.minor}  \cr
 #'   \code{panel.grid.tern.minor.R}  \tab Minor gridline for RHS Axis            \tab \code{\link{element_line}}    \tab \code{panel.grid.tern.minor}  \cr
+#'   \code{ternary.options} (DEP***)  \tab Ternary specific options                      \tab \code{\link{element_ternary}} \tab                        \cr
 #' }
 #' ** \strong{NB:} For \code{panel.background.tern}, whilst the ternary area is 'triangular' per-se, \code{\link{element_rect}} has been used, 
 #' as it actually holds NO information regarding the geometry (width, height), only fill, color, 
 #' size and linetype border (ie the style of how it will be rendered).
+#' 
+#' *** \strong{NB:} Fully Depreciated since \code{ggtern} version 1.0.1.3
 #' @rdname terntheme
 NULL
 

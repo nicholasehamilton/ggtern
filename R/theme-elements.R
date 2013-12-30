@@ -10,15 +10,21 @@ ggint$.element_tree$panel.background.tern    = .el_def("element_rect", "rect")
 
 ##Show the arrows
 ggint$.element_tree$axis.tern.showarrows     = .el_def("logical")
+ggint$.element_tree$axis.tern.arrowsep       = .el_def("unit")
 
 ##Clockwise Precession.
 ggint$.element_tree$axis.tern.clockwise      = .el_def("logical")
+ggint$.element_tree$axis.tern.padding        = .el_def("unit")
 
 ggint$.element_tree$axis.tern.ticklength.major    = .el_def("unit")
 ggint$.element_tree$axis.tern.ticklength.minor    = .el_def("unit")
+ggint$.element_tree$axis.tern.arrowstart    = .el_def("numeric")
+ggint$.element_tree$axis.tern.arrowfinish   = .el_def("numeric")
 
 ##AXIS ARROWS
 ggint$.element_tree$axis.tern                = .el_def("element_line", "line") #
+ggint$.element_tree$axis.tern.hshift         = .el_def("unit") #
+ggint$.element_tree$axis.tern.vshift         = .el_def("unit") #
 ggint$.element_tree$axis.tern.arrow          = .el_def("element_line", "axis.tern") #
 ggint$.element_tree$axis.tern.arrow.T        = .el_def("element_line", "axis.tern.arrow") #
 ggint$.element_tree$axis.tern.arrow.L        = .el_def("element_line", "axis.tern.arrow") #

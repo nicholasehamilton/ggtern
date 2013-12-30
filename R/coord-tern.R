@@ -143,9 +143,9 @@ coord_expand_defaults.ternary <- function(coord, scale, aesthetic){
 coord_train.ternary <- function(coord, scales){
 
   el <- calc_element_plot("ternary.options",theme=theme_update(),verbose=F,plot=last_plot())
-  p <- max(el$padding,0)  #PADDING
-  h <- max(el$hshift, 0)  #hshift
-  v <- max(el$vshift, 0)  #vshift
+  p  <- convertUnit(calc_element_plot("axis.tern.padding",theme=theme_update(),verbose=F,plot=last_plot()),"npc",valueOnly=TRUE)
+  h  <- convertUnit(calc_element_plot("axis.tern.hshift", theme=theme_update(),verbose=F,plot=last_plot()),"npc",valueOnly=TRUE)
+  v  <- convertUnit(calc_element_plot("axis.tern.vshift", theme=theme_update(),verbose=F,plot=last_plot()),"npc",valueOnly=TRUE)
   
   #trimmed down cartesian coords
   ret <- c(ggint$train_cartesian(scales$x, coord$limits$x + c(-p,p) - h, "x"),
@@ -322,12 +322,12 @@ coord_render_bg.ternary <- function(coord,details,theme){
   #major ticklength
   tl.major <- theme$axis.tern.ticklength.major
   tl.major <- ifthenelse(!inherits(tl.major,"unit"),unit(0.02,"npc"),tl.major)
-  tl.major <- convertX(tl.major,"npc",valueOnly=T)
+  tl.major <- convertUnit(tl.major,"npc",valueOnly=T)
   
   #minor ticklength
   tl.minor <- theme$axis.tern.ticklength.minor
   tl.minor <- ifthenelse(!inherits(tl.minor,"unit"),unit(0.01,"npc"),tl.minor)
-  tl.minor <- convertX(tl.minor,"npc",valueOnly=T)
+  tl.minor <- convertUnit(tl.minor,"npc",valueOnly=T)
   
   #ASSEMBLE THE GRID DATA.
   .getData <- function(X,existing=NULL,major=TRUE,angle=0,angle.text=0){
@@ -551,27 +551,37 @@ coord_render_bg.ternary <- function(coord,details,theme){
     rownames(d.s) <- rownames(d.f) #Correct rownames
     d.diff        <- d.f - d.s
     
+    #arrow start and finish proportions
+    arrowstart = theme$axis.tern.arrowstart[1]
+    arrowfinish= theme$axis.tern.arrowfinish[1]
+    
     #Cut down to relative proportion.
-    e <- calc_element_plot("ternary.options",theme=theme,verbose=F,plot=NULL)
-    d.f <- d.f -   (1-max(min(e$arrowfinish,1.0),0.0))*d.diff
-    d.s <- d.s +   (min(max(e$arrowstart, 0.0),1.0))*d.diff
+    #e <- calc_element_plot("ternary.options",theme=theme,verbose=F,plot=NULL)
+    d.f <- d.f -   (1-max(min(arrowfinish,1.0),0.0))*d.diff
+    d.s <- d.s +   (min(max(arrowstart, 0.0),1.0))*d.diff
     d <- rbind(d.s,d.f)
     
     ix <- which(colnames(d) %in% c("x","y"))
     d <- cbind(d[1:3,ix],
                d[4:6,ix]);
-    colnames(d) <- c("x","y","xend","yend")
-    rownames(d) <- c("AT.T","AT.L","AT.R")
+    ix <- c("AT.T","AT.L","AT.R")
+    rownames(d) <- ix
+    ixcol <- c("x","y","xend","yend")
+    colnames(d) <- ixcol
+    
+    #the arrow seperation from axes.
+    arrowsep <- calc_element_plot("axis.tern.arrowsep",theme=theme,verbose=F,plot=NULL)
+    arrowsep <- convertUnit(arrowsep,"npc",valueOnly=TRUE)
     
     #MOVE the Arrows Off the Axes.
-    d[c("AT.T","AT.L","AT.R"),"angle"]    <- .get.angles(clockwise)
-    d[c("AT.T","AT.L","AT.R"),"arrowsep"] <- ifthenelse(is.numeric(e$arrowsep),e$arrowsep[1],0)
-    d[,c("x","xend")] <- d[,c("x","xend")] + cos(pi*d$angle/180)*d$arrowsep
-    d[,c("y","yend")] <- d[,c("y","yend")] + sin(pi*d$angle/180)*d$arrowsep
+    d[ix,"angle"]    <- .get.angles(clockwise)
+    d[ix,"arrowsep"] <- arrowsep
+    d[,ixcol[c(1,3)]] <- d[,ixcol[c(1,3)]] + cos(pi*d$angle/180)*arrowsep
+    d[,ixcol[c(2,4)]] <- d[,ixcol[c(2,4)]] + sin(pi*d$angle/180)*arrowsep
     
     #Centerpoints, labels, arrowsuffix
-    d$xmn   <- rowMeans(d[,c("x","xend")])
-    d$ymn   <- rowMeans(d[,c("y","yend")])
+    d$xmn   <- rowMeans(d[,ixcol[c(1,3)]])
+    d$ymn   <- rowMeans(d[,ixcol[c(2,4)]])
     d$L     <- as.character(c(details$Tlabel,details$Llabel,details$Rlabel))
     d$W     <- as.character(c(details$Wlabel))
     d$A     <- .get.angles.arrowmarker(clockwise)
