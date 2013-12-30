@@ -319,18 +319,17 @@ coord_render_bg.ternary <- function(coord,details,theme){
   outside <- as.logical(calc_element_plot("axis.tern.ticks.outside",theme=theme))
   shift   <- ifthenelse(!outside,180,0)
   
-  #major ticklength
-  tl.major <- theme$axis.tern.ticklength.major
-  tl.major <- ifthenelse(!inherits(tl.major,"unit"),unit(0.02,"npc"),tl.major)
-  tl.major <- convertUnit(tl.major,"npc",valueOnly=T)
-  
-  #minor ticklength
-  tl.minor <- theme$axis.tern.ticklength.minor
-  tl.minor <- ifthenelse(!inherits(tl.minor,"unit"),unit(0.01,"npc"),tl.minor)
-  tl.minor <- convertUnit(tl.minor,"npc",valueOnly=T)
+  #major & minor ticklength
+  tl.major <- tl.minor <- 0
+  tryCatch({
+    tl.major <- convertUnit(theme$axis.tern.ticklength.major,"npc",valueOnly=T)
+    tl.minor <- convertUnit(theme$axis.tern.ticklength.minor,"npc",valueOnly=T)
+  },error=function(x){
+    #handle qietly
+  })
   
   #ASSEMBLE THE GRID DATA.
-  .getData <- function(X,existing=NULL,major=TRUE,angle=0,angle.text=0){
+  .getData <- function(X,ix,existing=NULL,major=TRUE,angle=0,angle.text=0){
     breaks.major <- details[[paste0(X,".major_source")]]
     breaks.minor <- details[[paste0(X,".minor_source")]]
     breaks <- if(major){breaks.major}else{breaks.minor[which(!breaks.minor %in% breaks.major)]}
@@ -360,7 +359,9 @@ coord_render_bg.ternary <- function(coord,details,theme){
     new$Lower=a
     new$Upper=b
     new$Prop = (new$Breaks - new$Lower) / (new$Upper - new$Lower) #The relative position
-    new$TickLength = abs(diff(limits))*if(major){tl.major}else{tl.minor}
+    
+    ix <- min(ix,ifthenelse(major,length(tl.major),length(tl.minor)))
+    new$TickLength = abs(diff(limits))*if(major){tl.major[ix]}else{tl.minor[ix]}
     
     #The theme items to call later.
     new$NameText  <- paste0("axis.tern.text.",X)
@@ -406,7 +407,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   seq.tlr <- c("T","L","R")
   for(j in 1:2)
     for(i in 1:length(seq.tlr))
-      d <- .getData(X=seq.tlr[i],existing=d,major = (j==1),angle = angles[i],angle.text = angles.text[i]);
+      d <- .getData(X=seq.tlr[i],ix=i,existing=d,major = (j==1),angle = angles[i],angle.text = angles.text[i]);
   if(nrow(d) > 1){d <- d[nrow(d):1,]}  #REVERSE (minor under major)
   
   #FUNCTION TO RENDER TICKS AND LABELS
@@ -570,7 +571,10 @@ coord_render_bg.ternary <- function(coord,details,theme){
       colnames(d) <- ixcol
       
       #The arrow seperation in npc units.
-      arrowsep <- convertUnit(calc_element_plot("axis.tern.arrowsep",theme=theme,verbose=F,plot=NULL),"npc",valueOnly=TRUE)
+      arrowsep <- calc_element_plot("axis.tern.arrowsep",theme=theme,verbose=F,plot=NULL)
+      if(length(arrowsep) != 3 && length(arrowsep) > 1)
+        arrowsep <- arrowsep[1]
+      arrowsep <- convertUnit(arrowsep,"npc",valueOnly=TRUE)
       
       #MOVE the Arrows Off the Axes.
       d[ixrow,"angle"]    <- .get.angles(clockwise)
