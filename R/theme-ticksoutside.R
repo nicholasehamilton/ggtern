@@ -1,5 +1,4 @@
 .theme_ticksoutside <- function(x){
-  tern_stop("Ticks Inside/Outside")
   theme(axis.tern.ticks.outside=element_logical(x))
 }
 

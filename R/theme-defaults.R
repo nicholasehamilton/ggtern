@@ -36,7 +36,7 @@
   
   get(base_ggplot2_theme,asNamespace("ggplot2"))(
     base_size=base_size,base_family=base_family)            %+replace%
-    .theme_nocart()                                         %+replace%
+    #.theme_nocart()                                         %+replace%
     theme(      
       legend.background       = element_blank(),
       ternary.options         = element_ternary(),
@@ -103,7 +103,7 @@
 #' @rdname theme_gray
 #' @export
 theme_gray  <- function(base_size = 12, base_family = ""){
-  if(!inherits(get_last_coord(),"ternary")){return(ggplot2::theme_gray(base_size=base_size,base_family=base_family))}
+  #if(!inherits(get_last_coord(),"ternary")){return(ggplot2::theme_gray(base_size=base_size,base_family=base_family))}
   .theme_tern(base_size=base_size, base_family=base_family, col.BG="grey90",col.T="black",col.L="black",col.R="black")
 }
 theme_tern_gray <- function(base_size = 12, base_family = ""){
@@ -157,9 +157,9 @@ theme_tern_rgbw <- function(base_size = 12, base_family = ""){
 #' @aliases theme_tern_bw
 #' @export
 theme_bw    <- function(base_size = 12, base_family = ""){
-  if(!inherits(get_last_coord(),"ternary")){
-    return(ggplot2::theme_bw(base_size=base_size,base_family=base_family))
-  }
+  #if(!inherits(get_last_coord(),"ternary")){
+  #  return(ggplot2::theme_bw(base_size=base_size,base_family=base_family))
+  #}
   .theme_tern(base_size=base_size, base_family=base_family,base_ggplot2_theme="theme_bw",
               col.BG=NA,
               col.T ="black",
