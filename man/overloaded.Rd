@@ -2,6 +2,7 @@
 \alias{\%+\%}
 \alias{\%+replace\%}
 \alias{add_ggplot}
+\alias{add_theme}
 \alias{calc_element}
 \alias{combine_elements}
 \alias{opts}
@@ -26,6 +27,8 @@
 
   theme_set(new)
 
+  add_theme(t1, t2, t2name)
+
   %+replace%(e1, e2)
 
   update_theme(oldtheme, newtheme)
@@ -43,6 +46,9 @@
 
   \item{elname}{the element name}
 
+  \item{...}{Arguments to be passed on to the \code{theme}
+  function.}
+
   \item{x}{gg object}
 
   \item{oldtheme}{previous theme object}
@@ -59,9 +65,15 @@
 
   \item{objectname}{name of obeject}
 
-  \item{...}{named list of theme settings}
-
   \item{new}{new theme (a list of theme elements)}
+
+  \item{t1}{A theme object}
+
+  \item{t2}{A theme object that is to be added to
+  \code{t1}}
+
+  \item{t2name}{A name of the t2 object. This is used for
+  printing informative error messages.}
 
   \item{element}{The name of the theme element to
   calculate}
@@ -77,6 +89,12 @@
   for them to function under the ggplot2 framework. Patches
   were mainly to do with handling the new theme elements
   and heirarchies.
+
+  \code{opts} is deprecated. See the \code{\link{theme}}
+  function.
+
+  Slightly modified to handle 'logical' values the same way
+  it handles character or numeric values.
 }
 \details{
   \code{validate_element} is a function which checks the
@@ -106,6 +124,8 @@
   elements to a gg object.
 }
 \seealso{
+  \code{\link{+.gg}} \code{\link[ggplot2]{add_theme}}
+
   \code{\link[ggplot2]{calc_element}}
 }
 

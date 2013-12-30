@@ -158,6 +158,53 @@ theme_get <- .theme_new$get
 #' @export
 theme_set <- .theme_new$set
 
+
+#' Modify properties of an element in a theme object (ggtern version)
+#'
+#' Slightly modified to handle 'logical' values the same way it handles character or numeric values.
+#' @inheritParams ggplot2::add_theme
+#' @rdname overloaded
+#' @seealso \code{\link{+.gg}} \code{\link[ggplot2]{add_theme}}
+add_theme <- function(t1, t2, t2name) {
+  if (!is.theme(t2)) {
+    stop("Don't know how to add ", t2name, " to a theme object",
+         call. = FALSE)
+  }
+  
+  # Iterate over the elements that are to be updated
+  for (item in names(t2)) {
+    x <- t1[[item]]
+    y <- t2[[item]]
+    
+    if (is.null(x) || inherits(x, "element_blank")) {
+      # If x is NULL or element_blank, then just assign it y
+      x <- y
+    } else if (is.null(y) || is.character(y) || is.numeric(y) || is.logical(y) ||
+                 inherits(y, "element_blank")) {
+      # If y is NULL, or a string or numeric vector, or is element_blank, just replace x
+      x <- y
+    } else {
+      # If x is not NULL, then copy over the non-NULL properties from y
+      # Get logical vector of non-NULL properties in y
+      idx <- !vapply(y, is.null, logical(1))
+      # Get the names of TRUE items
+      idx <- names(idx[idx])
+      
+      # Update non-NULL items
+      x[idx] <- y[idx]
+    }
+    
+    # Assign it back to t1
+    # This is like doing t1[[item]] <- x, except that it preserves NULLs.
+    # The other form will simply drop NULL values
+    t1[item] <- list(x)
+  }
+  
+  # If either theme is complete, then the combined theme is complete
+  attr(t1, "complete") <- attr(t1, "complete") || attr(t2, "complete")
+  t1
+}
+
 #' @details \code{"\%+replace\%"} replace operator
 #' @rdname overloaded 
 "%+replace%" <- function(e1, e2) {

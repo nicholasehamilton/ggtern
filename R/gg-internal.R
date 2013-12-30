@@ -35,7 +35,6 @@
                 "is.zero",
                 "plot_clone",
                 "set_last_plot",
-                "add_theme",
                 "make_labels",
                 "update_guides",
                 "zeroGrob",
