@@ -564,9 +564,9 @@ coord_render_bg.ternary <- function(coord,details,theme){
     ix <- which(colnames(d) %in% c("x","y"))
     d <- cbind(d[1:3,ix],
                d[4:6,ix]);
-    ix <- c("AT.T","AT.L","AT.R")
-    rownames(d) <- ix
+    ixrow <- c("AT.T","AT.L","AT.R")
     ixcol <- c("x","y","xend","yend")
+    rownames(d) <- ixrow
     colnames(d) <- ixcol
     
     #the arrow seperation from axes.
@@ -574,8 +574,8 @@ coord_render_bg.ternary <- function(coord,details,theme){
     arrowsep <- convertUnit(arrowsep,"npc",valueOnly=TRUE)
     
     #MOVE the Arrows Off the Axes.
-    d[ix,"angle"]    <- .get.angles(clockwise)
-    d[ix,"arrowsep"] <- arrowsep
+    d[ixrow,"angle"]    <- .get.angles(clockwise)
+    d[ixrow,"arrowsep"] <- arrowsep
     d[,ixcol[c(1,3)]] <- d[,ixcol[c(1,3)]] + cos(pi*d$angle/180)*arrowsep
     d[,ixcol[c(2,4)]] <- d[,ixcol[c(2,4)]] + sin(pi*d$angle/180)*arrowsep
     
