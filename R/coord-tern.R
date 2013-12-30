@@ -506,17 +506,22 @@ coord_render_bg.ternary <- function(coord,details,theme){
       size     <- e$size
       linetype <- e$linetype
       lineend  <- e$lineend
-      grob     <- segmentsGrob(
-        x0 = data.extreme$x[s], 
-        x1 = data.extreme$x[f],
-        y0 = data.extreme$y[s], 
-        y1 = data.extreme$y[f],
-        default.units="native",
-        gp = gpar(col = colour, 
-                  lty = linetype,
-                  lineend=lineend,
-                  lwd = size*find_global(".pt"))
-      )
+      grob <- .zeroGrob
+      tryCatch({
+        grob     <- segmentsGrob(
+          x0 = data.extreme$x[s], 
+          x1 = data.extreme$x[f],
+          y0 = data.extreme$y[s], 
+          y1 = data.extreme$y[f],
+          default.units="native",
+          gp = gpar(col = colour, 
+                    lty = linetype,
+                    lineend=lineend,
+                    lwd = size*find_global(".pt"))
+        )
+      },error=function(e){
+        #just handle it.
+      })
       
       ##Add to the items.
       items[[length(items) + 1]] <- grob
