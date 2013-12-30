@@ -8,6 +8,9 @@ ggint$.element_tree$ternary.options          = .el_def("element_ternary","elemen
 ##TERNARY PANEL
 ggint$.element_tree$panel.background.tern    = .el_def("element_rect", "rect")
 
+##Show the arrows
+ggint$.element_tree$axis.tern.showarrows     = .el_def("logical")
+
 ##Clockwise Precession.
 ggint$.element_tree$axis.tern.clockwise      = .el_def("logical")
 

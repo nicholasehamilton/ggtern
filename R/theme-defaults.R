@@ -42,7 +42,7 @@
       ternary.options         = element_ternary(),
       
       panel.background.tern   = element_rect(fill=col.BG,color=NA),
-      
+      axis.tern.showarrows    = TRUE,
       axis.tern.clockwise     = TRUE,
       axis.tern.ticklength.major = unit(0.02,"npc"),
       axis.tern.ticklength.minor = unit(0.01,"npc"),

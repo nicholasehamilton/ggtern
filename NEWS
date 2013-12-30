@@ -34,6 +34,8 @@ ggtern 1.0.2.0
 
 * Length of theme elements in 'units', such as major and minor ticks.
 
+* element_ternary()$showarrows superceded by theme element axis.tern.showarrows, which takes a logical value.
+
 BUG FIXES
 
 * Correction to logic in .theme_new internal function

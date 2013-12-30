@@ -537,11 +537,9 @@ coord_render_bg.ternary <- function(coord,details,theme){
   items
 }
 .render.arrows <- function(data.extreme,items,theme,details){
-  e <- theme$ternary.options$showarrows
-  if(!is.logical(e)){
-    #bypass
-  }else if(e){
-    clockwise <- theme$axis.tern.clockwise  
+  axis.tern.showarrows <- theme$axis.tern.showarrows
+  if(is.logical(axis.tern.showarrows) && (axis.tern.showarrows)){
+    clockwise <- theme$axis.tern.clockwise
     #The basic data.
     d.s <- data.extreme[ifthenelse(clockwise,c(2,3,1),c(3,1,2)),]
     d.f <- data.extreme[c(1,2,3),]

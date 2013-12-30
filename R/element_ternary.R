@@ -11,7 +11,7 @@
 #' of the plot edges from tip to tip. Elements which are subject to this include the \code{padding}, \code{arrowsep}, \code{ticklength.major} and 
 #' \code{ticklength.minor}. This is perhaps not ideal, however, seemed to be a necessary sacrifice in order to produce these plots.
 #' 
-#' @param showarrows logical whether to show the axis directional arrows
+#' @param showarrows logical whether to show the axis directional arrows DEPRECIATED
 #' @param padding the padding around the plot area to make provision for axis labels, ticks and arrows, relative to the cartesian plane.
 #' @param arrowsep the distance between ternary axis and ternary arrows
 #' @param arrowstart the proportion along the ternary axis to start the directional arrow
@@ -19,11 +19,11 @@
 #' @param vshift shift the plot area vertically
 #' @param hshift shift the plot area horizontally
 #' @param ticklength.major the length of the major ternary ticks as an euclidean distance 
-#' relative to the x and y limits of the cartesian plot area. SUPERCEDED
+#' relative to the x and y limits of the cartesian plot area. DEPRECIATED
 #' @param ticklength.minor the length of the minor ternary ticks as an euclidean distance 
-#' relative to the x and y limits of the cartesian plot area. SUPERCEDED
+#' relative to the x and y limits of the cartesian plot area. DEPRECIATED
 #' @export
-element_ternary <- function(showarrows       =TRUE,
+element_ternary <- function(showarrows,
                             padding          =0.10,
                             arrowsep         =0.075,
                             arrowstart       =0.3,
@@ -36,11 +36,12 @@ element_ternary <- function(showarrows       =TRUE,
     tern_dep("1.0.1.3","ticklength.major is replaced by element 'axis.tern.ticklength.major'")
   if(!missing(ticklength.minor))
     tern_dep("1.0.1.3","ticklength.minor is replaced by element 'axis.tern.ticklength.minor'")
+  if(!missing(showarrows))
+    tern_dep("1.0.1.3","showarrows is replaced by element 'axis.tern.showarrows'")
   
   structure(
     list(padding         = padding,
          arrowsep        = arrowsep,
-         showarrows      = showarrows,
          arrowstart      = min(arrowstart,arrowfinish),
          arrowfinish     = max(arrowstart,arrowfinish),
          vshift          = vshift,

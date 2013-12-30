@@ -2,14 +2,14 @@
 \alias{element_ternary}
 \title{Theme element: ternary structure}
 \usage{
-  element_ternary(showarrows = TRUE, padding = 0.1,
+  element_ternary(showarrows, padding = 0.1,
     arrowsep = 0.075, arrowstart = 0.3, arrowfinish = 0.7,
     vshift = 0.25 * padding, hshift = 0, ticklength.major,
     ticklength.minor)
 }
 \arguments{
   \item{showarrows}{logical whether to show the axis
-  directional arrows}
+  directional arrows DEPRECIATED}
 
   \item{padding}{the padding around the plot area to make
   provision for axis labels, ticks and arrows, relative to
@@ -30,11 +30,11 @@
 
   \item{ticklength.major}{the length of the major ternary
   ticks as an euclidean distance relative to the x and y
-  limits of the cartesian plot area. SUPERCEDED}
+  limits of the cartesian plot area. DEPRECIATED}
 
   \item{ticklength.minor}{the length of the minor ternary
   ticks as an euclidean distance relative to the x and y
-  limits of the cartesian plot area. SUPERCEDED}
+  limits of the cartesian plot area. DEPRECIATED}
 }
 \description{
   Used to define the layout of some of the ggtern plot

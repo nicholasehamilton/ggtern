@@ -1,18 +1,4 @@
-.theme_arrows <- function(show){
-  if(!is.logical(show)){show=TRUE}
-  show=show[1]
-  current <- theme_update()
-  e <- current$ternary.options
-  if(inherits(e,"element_ternary")){
-    e$showarrows <- show
-  }else{
-    e <- element_ternary(showarrows=show)
-  }
-  
-  
-  
-  theme(ternary.options=e)
-}
+.theme_arrows <- function(show){theme(axis.tern.showarrows = show)}
 
 #' Show or Hide the Ternary Arrows
 #' 
