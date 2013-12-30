@@ -313,7 +313,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   items
 }
 .render.grids <- function(data.extreme,items,theme,details){
-  clockwise <- as.logical(calc_element_plot("axis.tern.clockwise",theme=theme))  
+  clockwise <- theme$axis.tern.clockwise  
   
   #Ticks are inside or outside
   outside <- as.logical(calc_element_plot("axis.tern.ticks.outside",theme=theme))
@@ -498,7 +498,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   items
 }
 .render.border <- function(data.extreme,items,theme){
-  clockwise <- as.logical(calc_element_plot("axis.tern.clockwise",theme=theme))
+  clockwise <- theme$axis.tern.clockwise  
   .renderB <- function(name,s,f,items){
     tryCatch({
       e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
@@ -541,7 +541,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   if(!is.logical(e)){
     #bypass
   }else if(e){
-    clockwise <- as.logical(calc_element_plot("axis.tern.clockwise",theme=theme))
+    clockwise <- theme$axis.tern.clockwise  
     #The basic data.
     d.s <- data.extreme[ifthenelse(clockwise,c(2,3,1),c(3,1,2)),]
     d.f <- data.extreme[c(1,2,3),]
@@ -642,7 +642,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   items
 }
 .render.titles <- function(data.extreme,items,theme,details){
-  clockwise <- as.logical(calc_element_plot("axis.tern.clockwise",theme=theme))
+  clockwise <- theme$axis.tern.clockwise  
   
   d    <- data.extreme
   d$L  <- as.character(c(details$Tlabel,details$Llabel,details$Rlabel))

@@ -40,8 +40,9 @@ theme_update <- function(...) {
 #' \tabular{llll}{
 #'   \strong{NAME}            \tab \strong{DESCRIPTION}                          \tab \strong{OBJECT}               \tab \strong{INHERITS}      \cr
 #'   \code{ternary.options}   \tab Ternary specific options                      \tab \code{\link{element_ternary}} \tab                        \cr
-#'   \code{panel.background.tern**}    \tab Background of Ternary Plot Area        \tab \code{\link{element_rect}}    \tab \code{rect}  \cr
+#'   \code{panel.background.tern**}    \tab Background of Ternary Plot Area      \tab \code{\link{element_rect}}    \tab \code{rect}  \cr
 #'   \code{axis.tern}         \tab Base line for ggtern object                   \tab \code{\link{element_line}}    \tab \code{line}            \cr
+#'   \code{axis.tern.clockwise} \tab Clockwise Axis Precession                   \tab \code{\link{logical}}    \tab \code{logical}            \cr
 #'   \code{axis.tern.arrow}   \tab Base line for ternary arrows                  \tab \code{\link{element_line}}    \tab \code{axis.tern}       \cr
 #'   \code{axis.tern.arrow.T} \tab Specific line for TOP ternary arrow           \tab \code{\link{element_line}}    \tab \code{axis.tern.arrow} \cr
 #'   \code{axis.tern.arrow.L} \tab Specific line for LHS ternary arrow           \tab \code{\link{element_line}}    \tab \code{axis.tern.arrow} \cr
@@ -63,7 +64,7 @@ theme_update <- function(...) {
 #'   \code{axis.tern.title.L}  \tab Specific text for LHS Apex Label             \tab \code{\link{element_text}}    \tab \code{axis.tern.title}  \cr
 #'   \code{axis.tern.title.R}  \tab Specific text for RHS Apex Label             \tab \code{\link{element_text}}    \tab \code{axis.tern.title}  \cr
 #'   
-#'   \code{axis.tern.ticks.outside}  \tab Base ticks for ggtern object on outside or not \tab \code{\link{element_logical}} \tab \code{logical} \cr
+#'   \code{axis.tern.ticks.outside}  \tab Base ticks for ggtern object on outside or not \tab \code{\link{logical}} \tab \code{logical} \cr
 #'   \code{axis.tern.ticks}          \tab Base ticks for ggtern object           \tab \code{\link{element_line}}    \tab \code{axis.tern}   \cr
 #'   \code{axis.tern.ticks.major}    \tab Base Major ticks for ggtern object     \tab \code{\link{element_line}}    \tab \code{axis.tern.ticks}   \cr
 #'   \code{axis.tern.ticks.major.T}  \tab Major ticks for TOP Axis               \tab \code{\link{element_line}}    \tab \code{axis.tern.ticks.major}  \cr

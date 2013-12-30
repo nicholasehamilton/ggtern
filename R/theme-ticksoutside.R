@@ -1,5 +1,5 @@
 .theme_ticksoutside <- function(x){
-  theme(axis.tern.ticks.outside=element_logical(x))
+  theme(axis.tern.ticks.outside=x)
 }
 
 

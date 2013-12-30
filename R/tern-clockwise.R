@@ -1,4 +1,4 @@
-.tern_clockwise <- function(x){theme(axis.tern.clockwise=element_logical(x))}
+.tern_clockwise <- function(x){theme(axis.tern.clockwise=x)}
 
 #' Direction of Ternary Rotation
 #' 

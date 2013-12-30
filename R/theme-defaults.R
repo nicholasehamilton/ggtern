@@ -43,7 +43,7 @@
       
       panel.background.tern   = element_rect(fill=col.BG,color=NA),
       
-      axis.tern.clockwise     = element_logical(TRUE),
+      axis.tern.clockwise     = TRUE,
       axis.tern.ticklength.major = unit(0.02,"npc"),
       axis.tern.ticklength.minor = unit(0.01,"npc"),
       
@@ -80,7 +80,7 @@
       panel.grid.tern.major.R = element_line(colour=grid.R),
       panel.grid.tern.minor   = element_line(size=0.25,colour=grid.minor,linetype=grid.linetype.minor),
       
-      axis.tern.ticks.outside = element_logical(TRUE),
+      axis.tern.ticks.outside = TRUE,
       axis.tern.ticks         = element_line(),
       axis.tern.ticks.major   = element_line(color="black"),
       axis.tern.ticks.major.T = element_line(colour=col.T),

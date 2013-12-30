@@ -94,8 +94,10 @@
   Plot Area \tab \code{\link{element_rect}} \tab
   \code{rect} \cr \code{axis.tern} \tab Base line for
   ggtern object \tab \code{\link{element_line}} \tab
-  \code{line} \cr \code{axis.tern.arrow} \tab Base line for
-  ternary arrows \tab \code{\link{element_line}} \tab
+  \code{line} \cr \code{axis.tern.clockwise} \tab Clockwise
+  Axis Precession \tab \code{\link{logical}} \tab
+  \code{logical} \cr \code{axis.tern.arrow} \tab Base line
+  for ternary arrows \tab \code{\link{element_line}} \tab
   \code{axis.tern} \cr \code{axis.tern.arrow.T} \tab
   Specific line for TOP ternary arrow \tab
   \code{\link{element_line}} \tab \code{axis.tern.arrow}
@@ -147,15 +149,14 @@
   \code{axis.tern.title} \cr
 
   \code{axis.tern.ticks.outside} \tab Base ticks for ggtern
-  object on outside or not \tab
-  \code{\link{element_logical}} \tab \code{logical} \cr
-  \code{axis.tern.ticks} \tab Base ticks for ggtern object
-  \tab \code{\link{element_line}} \tab \code{axis.tern} \cr
-  \code{axis.tern.ticks.major} \tab Base Major ticks for
-  ggtern object \tab \code{\link{element_line}} \tab
-  \code{axis.tern.ticks} \cr \code{axis.tern.ticks.major.T}
-  \tab Major ticks for TOP Axis \tab
-  \code{\link{element_line}} \tab
+  object on outside or not \tab \code{\link{logical}} \tab
+  \code{logical} \cr \code{axis.tern.ticks} \tab Base ticks
+  for ggtern object \tab \code{\link{element_line}} \tab
+  \code{axis.tern} \cr \code{axis.tern.ticks.major} \tab
+  Base Major ticks for ggtern object \tab
+  \code{\link{element_line}} \tab \code{axis.tern.ticks}
+  \cr \code{axis.tern.ticks.major.T} \tab Major ticks for
+  TOP Axis \tab \code{\link{element_line}} \tab
   \code{axis.tern.ticks.major} \cr
   \code{axis.tern.title.major.L} \tab Major ticks for LHS
   Axis \tab \code{\link{element_line}} \tab
