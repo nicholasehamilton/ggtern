@@ -205,18 +205,13 @@ coord_render_axis_h.ternary <- function(coord, details, theme) {
 #' @S3method coord_render_fg ternary
 coord_render_fg.ternary <- function(coord,details,theme){
   #List to hold the grobs.
-  items <- list()
+  #items <- list()
   
   #The limits.
-  data.extreme <- .get.data.extreme(coord,details)
-  
-  
-  items <- .render.border(data.extreme,items,theme)         #BORDER
-  items <- .render.arrows(data.extreme,items,theme,details) #ARROWS
-  items <- .render.titles(data.extreme,items,theme,details) #MAIN TITLES
+  #data.extreme <- .get.data.extreme(coord,details)
   
   #render.
-  ggint$ggname("background",gTree(children = do.call("gList", items)))
+  #ggint$ggname("background",gTree(children = do.call("gList", items)))
 }
 
 #' S3 Method Render Background
@@ -234,6 +229,9 @@ coord_render_bg.ternary <- function(coord,details,theme){
   #Build the plot region.
   items <- .render.background(data.extreme,items,theme)     #BACKGROUND...
   items <- .render.grids(data.extreme,items,theme,details)  #GRIDS
+  items <- .render.border(data.extreme,items,theme)         #BORDER
+  items <- .render.arrows(data.extreme,items,theme,details) #ARROWS
+  items <- .render.titles(data.extreme,items,theme,details) #MAIN TITLES
   
   #render.
   ggint$ggname("background",gTree(children = do.call("gList", items)))
@@ -332,7 +330,6 @@ coord_render_bg.ternary <- function(coord,details,theme){
   tl.minor <- convertX(tl.minor,"npc",valueOnly=T)
   
   #ASSEMBLE THE GRID DATA.
-  .vett.labels <- function(labels,breaks){ifthenelse(identical(labels,waiver()),100*breaks,labels)}
   .getData <- function(X,existing=NULL,major=TRUE,angle=0,angle.text=0){
     breaks.major <- details[[paste0(X,".major_source")]]
     breaks.minor <- details[[paste0(X,".minor_source")]]
@@ -342,7 +339,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
     if(length(breaks) == 0)return(existing)
     
     labels <- if(major){details[[paste0(X,".labels")]]}else{""}
-    labels <- .vett.labels(labels=labels,breaks=breaks)
+    labels <- ifthenelse(identical(labels,waiver()),100*breaks,labels)
     
     #Assign new id.
     id <- (max(existing$ID,0) + 1)
@@ -401,23 +398,16 @@ coord_render_bg.ternary <- function(coord,details,theme){
     rbind(existing,new)
   }
   
-  angles <- .get.angles(clockwise)
+  angles      <- .get.angles(clockwise) + shift
   angles.text <- .get.angles.text(clockwise)
   
   ##get the base data.
   d <- NULL
-  #Major TLR
-  d <- .getData("T",d,T,angle=  angles[1]+shift,angles.text[1]);
-  d <- .getData("L",d,T,angle=  angles[2]+shift,angles.text[2]); 
-  d <- .getData("R",d,T,angle=  angles[3]+shift,angles.text[3]); 
-  
-  #Minor TLR
-  d <- .getData("T",d,F,angle=  angles[1]+shift,angles.text[1]); 
-  d <- .getData("L",d,F,angle=  angles[2]+shift,angles.text[2]); 
-  d <- .getData("R",d,F,angle=  angles[3]+shift,angles.text[3]);
-  
-  #REVERSE (minor under major)
-  if(nrow(d) > 1){d <- d[nrow(d):1,]}
+  seq.tlr <- c("T","L","R")
+  for(j in 1:2)
+    for(i in 1:length(seq.tlr))
+      d <- .getData(X=seq.tlr[i],existing=d,major = (j==1),angle = angles[i],angle.text = angles.text[i]);
+  if(nrow(d) > 1){d <- d[nrow(d):1,]}  #REVERSE (minor under major)
   
   #FUNCTION TO RENDER TICKS AND LABELS
   .render.ticks <- function(name,items,d){
@@ -641,13 +631,13 @@ coord_render_bg.ternary <- function(coord,details,theme){
     }
     
     #process the axes
-    items <- .render.arrow("axis.tern.arrow.T",1,items)
-    items <- .render.arrow("axis.tern.arrow.L",2,items)
-    items <- .render.arrow("axis.tern.arrow.R",3,items)
-    #MARKERS
-    items <- .render.label("axis.tern.arrow.text.T",1,items)
-    items <- .render.label("axis.tern.arrow.text.L",2,items)
-    items <- .render.label("axis.tern.arrow.text.R",3,items)
+    ix.seq <- c("T","L","R")
+    for(i in 1:length(ix.seq)){
+      #Arrows
+      items <- .render.arrow(paste0("axis.tern.arrow.",ix.seq[i]),i,items)
+      #Markers
+      items <- .render.label(paste0("axis.tern.arrow.text.",ix.seq[i]),i,items)
+    }
   }
   items
 }
