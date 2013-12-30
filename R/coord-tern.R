@@ -544,113 +544,111 @@ coord_render_bg.ternary <- function(coord,details,theme){
 .render.arrows <- function(data.extreme,items,theme,details){
   axis.tern.showarrows <- theme$axis.tern.showarrows
   if(is.logical(axis.tern.showarrows) && (axis.tern.showarrows)){
-    clockwise <- theme$axis.tern.clockwise
-    #The basic data.
-    d.s <- data.extreme[ifthenelse(clockwise,c(2,3,1),c(3,1,2)),]
-    d.f <- data.extreme[c(1,2,3),]
-    rownames(d.s) <- rownames(d.f) #Correct rownames
-    d.diff        <- d.f - d.s
-    
-    #arrow start and finish proportions
-    arrowstart = theme$axis.tern.arrowstart[1]
-    arrowfinish= theme$axis.tern.arrowfinish[1]
-    
-    #Cut down to relative proportion.
-    #e <- calc_element_plot("ternary.options",theme=theme,verbose=F,plot=NULL)
-    d.f <- d.f -   (1-max(min(arrowfinish,1.0),0.0))*d.diff
-    d.s <- d.s +   (min(max(arrowstart, 0.0),1.0))*d.diff
-    d <- rbind(d.s,d.f)
-    
-    ix <- which(colnames(d) %in% c("x","y"))
-    d <- cbind(d[1:3,ix],
-               d[4:6,ix]);
-    ixrow <- c("AT.T","AT.L","AT.R")
-    ixcol <- c("x","y","xend","yend")
-    rownames(d) <- ixrow
-    colnames(d) <- ixcol
-    
-    #the arrow seperation from axes.
-    arrowsep <- calc_element_plot("axis.tern.arrowsep",theme=theme,verbose=F,plot=NULL)
-    arrowsep <- convertUnit(arrowsep,"npc",valueOnly=TRUE)
-    
-    #MOVE the Arrows Off the Axes.
-    d[ixrow,"angle"]    <- .get.angles(clockwise)
-    d[ixrow,"arrowsep"] <- arrowsep
-    d[,ixcol[c(1,3)]] <- d[,ixcol[c(1,3)]] + cos(pi*d$angle/180)*arrowsep
-    d[,ixcol[c(2,4)]] <- d[,ixcol[c(2,4)]] + sin(pi*d$angle/180)*arrowsep
-    
-    #Centerpoints, labels, arrowsuffix
-    d$xmn   <- rowMeans(d[,ixcol[c(1,3)]])
-    d$ymn   <- rowMeans(d[,ixcol[c(2,4)]])
-    d$L     <- as.character(c(details$Tlabel,details$Llabel,details$Rlabel))
-    d$W     <- as.character(c(details$Wlabel))
-    d$A     <- .get.angles.arrowmarker(clockwise)
-    
-    ##Function to create new axis grob
-    .render.arrow <- function(name,ix,items){
-      tryCatch({  
-        e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
-        colour   <- e$colour
-        size     <- e$size
-        linetype <- e$linetype
-        lineend  <- e$lineend
-        grob     <- segmentsGrob(
-          x0 = d$x[ix], 
-          x1 = d$xend[ix],
-          y0 = d$y[ix], 
-          y1 = d$yend[ix],
-          default.units="native",
-          arrow=lineend,
-          gp = gpar(col    = colour, 
-                    lty    = linetype,
-                    lineend="butt",
-                    lwd    = size*find_global(".pt"))
-        )
-        ##Add to the items.
-        items[[length(items) + 1]] <- grob
-      },error = function(e){ warning(e)})
-      return(items)
-    }
-    
-    ##Function to create new axis grob
-    .render.label <- function(name,ix,items){
-      tryCatch({  
-        e         <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
-        colour    <- e$colour
-        size      <- e$size
-        lineheight<- e$lineheight
-        family    <- e$family
-        face      <- e$face
-        hjust     <- e$hjust
-        vjust     <- ifthenelse(identical(name,"axis.tern.arrow.text.T"),e$vjust,.hjust.flip(e$vjust,clockwise=clockwise))
-        angle     <- e$angle
-        grob      <- textGrob( label = arrow_label_formatter(d$L[ix],d$W[ix]), 
-                               x     = d$xmn[ix], 
-                               y     = d$ymn[ix], 
-                               hjust = hjust, 
-                               vjust = vjust, 
-                               rot   = angle + d$A[ix], 
-                               default.units="native", 
-                               gp   = gpar(col        = colour, 
-                                           fontsize   = size,
-                                           fontfamily = family, 
-                                           fontface   = face, 
-                                           lineheight = lineheight))
-        
-        ##Add to the items.
-        items[[length(items) + 1]] <- grob
-      },error = function(e){})
-      return(items)
-    }
-    
-    #process the axes
-    ix.seq <- c("T","L","R")
-    for(i in 1:length(ix.seq)){
-      #Arrows
-      items <- .render.arrow(paste0("axis.tern.arrow.",ix.seq[i]),i,items)
-      #Markers
-      items <- .render.label(paste0("axis.tern.arrow.text.",ix.seq[i]),i,items)
-    }
+    tryCatch({
+      clockwise <- theme$axis.tern.clockwise
+      #The basic data.
+      d.s <- data.extreme[ifthenelse(clockwise,c(2,3,1),c(3,1,2)),]
+      d.f <- data.extreme[c(1,2,3),]
+      rownames(d.s) <- rownames(d.f) #Correct rownames
+      d.diff        <- d.f - d.s
+      
+      #arrow start and finish proportions
+      arrowstart = theme$axis.tern.arrowstart[1]
+      arrowfinish= theme$axis.tern.arrowfinish[1]
+      
+      #Cut down to relative proportion.
+      d.f <- d.f -   (1-max(min(arrowfinish,1.0),0.0))*d.diff
+      d.s <- d.s +   (min(max(arrowstart, 0.0),1.0)  )*d.diff
+      d <- rbind(d.s,d.f)
+      
+      ixseq <- c("T","L","R")
+      ixrow <- paste0("AT.",ix.seq)
+      ixcol <- c("x","y","xend","yend")
+      ix    <- which(colnames(d) %in% ixcol[c(1:2)])
+      d     <- cbind(d[1:3,ix],d[4:6,ix]);
+      rownames(d) <- ixrow
+      colnames(d) <- ixcol
+      
+      #The arrow seperation in npc units.
+      arrowsep <- convertUnit(calc_element_plot("axis.tern.arrowsep",theme=theme,verbose=F,plot=NULL),"npc",valueOnly=TRUE)
+      
+      #MOVE the Arrows Off the Axes.
+      d[ixrow,"angle"]    <- .get.angles(clockwise)
+      d[ixrow,"arrowsep"] <- arrowsep
+      d[,ixcol[c(1,3)]]   <- d[,ixcol[c(1,3)]] + cos(pi*d$angle/180)*arrowsep
+      d[,ixcol[c(2,4)]]   <- d[,ixcol[c(2,4)]] + sin(pi*d$angle/180)*arrowsep
+      
+      #Centerpoints, labels, arrowsuffix
+      d$xmn   <- rowMeans(d[,ixcol[c(1,3)]])
+      d$ymn   <- rowMeans(d[,ixcol[c(2,4)]])
+      d$L     <- as.character(c(details$Tlabel,details$Llabel,details$Rlabel))
+      d$W     <- as.character(c(details$Wlabel))
+      d$A     <- .get.angles.arrowmarker(clockwise)
+      
+      ##Function to create new axis & label grob
+      .render.arrow <- function(name,ix,items){
+        tryCatch({  
+          e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
+          colour   <- e$colour
+          size     <- e$size
+          linetype <- e$linetype
+          lineend  <- e$lineend
+          grob     <- segmentsGrob(
+            x0 = d$x[ix], 
+            x1 = d$xend[ix],
+            y0 = d$y[ix], 
+            y1 = d$yend[ix],
+            default.units="native",
+            arrow=lineend,
+            gp = gpar(col    = colour, 
+                      lty    = linetype,
+                      lineend="butt",
+                      lwd    = size*find_global(".pt"))
+          )
+          ##Add to the items.
+          items[[length(items) + 1]] <- grob
+        },error = function(e){ warning(e)})
+        return(items)
+      }
+      .render.label <- function(name,ix,items){
+        tryCatch({  
+          e         <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
+          colour    <- e$colour
+          size      <- e$size
+          lineheight<- e$lineheight
+          family    <- e$family
+          face      <- e$face
+          hjust     <- e$hjust
+          vjust     <- ifthenelse(identical(name,"axis.tern.arrow.text.T"),e$vjust,.hjust.flip(e$vjust,clockwise=clockwise))
+          angle     <- e$angle
+          grob      <- textGrob( label = arrow_label_formatter(d$L[ix],d$W[ix]), 
+                                 x     = d$xmn[ix], 
+                                 y     = d$ymn[ix], 
+                                 hjust = hjust, 
+                                 vjust = vjust, 
+                                 rot   = angle + d$A[ix], 
+                                 default.units="native", 
+                                 gp   = gpar(col        = colour, 
+                                             fontsize   = size,
+                                             fontfamily = family, 
+                                             fontface   = face, 
+                                             lineheight = lineheight))
+          
+          ##Add to the items.
+          items[[length(items) + 1]] <- grob
+        },error = function(e){})
+        return(items)
+      }
+      
+      #process the axes
+      for(i in 1:length(ixseq)){
+        ix    <- ixseq[i]
+        items <- .render.arrow(paste0("axis.tern.arrow.",     ix),i,items)#Arrows
+        items <- .render.label(paste0("axis.tern.arrow.text.",ix),i,items)#Markers
+      }
+    },error=function(e){
+      #handle quietly
+    })
   }
   items
 }
