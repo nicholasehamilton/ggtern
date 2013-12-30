@@ -100,10 +100,31 @@ theme <- function(..., complete = FALSE) {
   structure(elements, class = c("theme", "gg"), complete = complete)
 }
 
+#' Build a theme (or partial theme) from theme elements
+#'
+#' \code{opts} is deprecated. See the \code{\link{theme}} function.
+#' @param ... Arguments to be passed on to the \code{theme} function.
 #' @rdname overloaded
+#' @export
 opts <- function(...) {
-  warning("opts is disabled in ggtern")
-  NULL
+  gg_dep("0.9.1", "'opts' is deprecated. Use 'theme' instead.")
+  
+  # Add check for deprecated elements
+  extra <- NULL
+  elements <- list(...)
+  if (!is.null(elements[["title"]])) {
+    # This is kind of a hack, but fortunately it will be removed in future versions
+    gg_dep("0.9.1", paste(sep = "\n",
+                          'Setting the plot title with opts(title="...") is deprecated.',
+                          ' Use labs(title="...") or ggtitle("...") instead.'))
+    
+    title <- elements$title
+    elements$title <- NULL
+    
+    return(list(ggtitle(title), do.call(theme, elements)))
+  }
+  
+  do.call(theme, elements)
 }
 
 
