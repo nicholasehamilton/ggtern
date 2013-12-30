@@ -44,12 +44,20 @@
       panel.background.tern      = element_rect(fill=col.BG,color=NA),
       axis.tern.clockwise        = TRUE,
       axis.tern.showarrows       = TRUE,
-      axis.tern.hshift           = unit(0,"npc"),
-      axis.tern.vshift           = unit(0.025,"npc"),
       axis.tern.arrowstart       = 0.3,
       axis.tern.arrowfinish      = 0.7,
+      #axis.tern.padding          = unit(0.10,"npc"),
+      #axis.tern.hshift           = unit(0,"npc"),
+      #axis.tern.vshift           = unit(0.025,"npc"),
+      #axis.tern.arrowsep         = unit(15,"mm"),
+      
+      #axis.tern.ticklength.major = unit(5,"mm"),
+      #axis.tern.ticklength.minor = unit(2.5,"mm"),
+      
+      axis.tern.padding          = unit(20,  "mm" ),
+      axis.tern.hshift           = unit(0.0, "mm" ),
+      axis.tern.vshift           = unit(20/4,"mm" ),
       axis.tern.arrowsep         = unit(0.06,"npc"),
-      axis.tern.padding          = unit(0.10,"npc"),
       axis.tern.ticklength.major = unit(0.02,"npc"),
       axis.tern.ticklength.minor = unit(0.01,"npc"),
       
