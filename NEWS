@@ -54,6 +54,8 @@ BUG FIXES
 
 * Restructured cood_tern() and how it renderd the ternary elements, distinct functions were broken off from the main render_bg routine.
 
+* Correction to throwing points in geom_smooth set, when coordinate limits != c(0,1)
+
 ggtern 1.0.1.3
 ----------------------------------------------------------------
 * Package accepted for CRAN

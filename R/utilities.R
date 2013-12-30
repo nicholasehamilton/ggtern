@@ -278,8 +278,11 @@ remove_outside <- function(data){
     if(inherits(lp,"ggtern")){ #ONLY FOR ggtern object
       if(class(data) != "data.frame"){return(data)}
       if(length(which(c("x","y") %in% names(data))) != 2){warning("x and y are required"); return(data)}
-      tri <- transform_tern_to_cart(data=get_tern_extremes(get_last_coord()))
-      ix <- point.in.polygon(data$x,data$y,tri$x,tri$y)
+      
+      coord <- get_last_coord()
+      lim <- list(Tlim=coord$limits[["T"]],Llim=coord$limits[["L"]],Rlim=coord$limits[["R"]])
+      tri <- transform_tern_to_cart(data=get_tern_extremes(coord),Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)
+      ix  <- point.in.polygon(data$x,data$y,tri$x,tri$y)
       return(data[which(ix > 0),])
     }
   },error=function(e){

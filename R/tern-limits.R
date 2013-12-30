@@ -18,7 +18,6 @@
 #' @rdname tern_limits
 #' @export
 tern_limits <- function(T=1,L=1,R=1,...,verbose=F){
-  tern_stop("Tern Limits")
   ret <- list()
   tryCatch({
     if(!is.numeric(T) | !is.numeric(L) | !is.numeric(R)){stop("T, L and R input parameters must be a numeric scalar.")}
