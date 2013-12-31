@@ -12,6 +12,10 @@ ggint$.element_tree$panel.background.tern    = .el_def("element_rect", "rect")
 ggint$.element_tree$axis.tern.showarrows     = .el_def("logical")
 ggint$.element_tree$axis.tern.arrowsep       = .el_def("unit")
 
+##Secondary ticks
+ggint$.element_tree$axis.tern.ticks.showprimary   = .el_def("logical")
+ggint$.element_tree$axis.tern.ticks.showsecondary = .el_def("logical")
+
 ##Clockwise Precession.
 ggint$.element_tree$axis.tern.clockwise      = .el_def("logical")
 ggint$.element_tree$axis.tern.padding        = .el_def("unit")

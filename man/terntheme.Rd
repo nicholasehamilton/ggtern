@@ -35,6 +35,7 @@
 \alias{axis.tern.ticks.minor.R}
 \alias{axis.tern.ticks.minor.T}
 \alias{axis.tern.ticks.outside}
+\alias{axis.tern.ticks.showsecondary}
 \alias{axis.tern.title}
 \alias{axis.tern.title.L}
 \alias{axis.tern.title.R}
@@ -175,13 +176,17 @@
   \tab \code{\link{unit}} \tab \cr
   \code{axis.tern.ticks.outside} \tab Base ticks for ggtern
   object on outside or not \tab \code{\link{logical}} \tab
-  \cr \code{axis.tern.ticks} \tab Base ticks for ggtern
-  object \tab \code{\link{element_line}} \tab
-  \code{axis.tern} \cr \code{axis.tern.ticks.major} \tab
-  Base Major ticks for ggtern object \tab
-  \code{\link{element_line}} \tab \code{axis.tern.ticks}
-  \cr \code{axis.tern.ticks.major.T} \tab Major ticks for
-  TOP Axis \tab \code{\link{element_line}} \tab
+  \cr \code{axis.tern.ticks.showprimary} \tab Show primary
+  tickset \tab \code{\link{logical}} \tab \cr
+  \code{axis.tern.ticks.showsecondary}\tab Show secondary
+  tickset \tab \code{\link{logical}} \tab \cr
+  \code{axis.tern.ticks} \tab Base ticks for ggtern object
+  \tab \code{\link{element_line}} \tab \code{axis.tern} \cr
+  \code{axis.tern.ticks.major} \tab Base Major ticks for
+  ggtern object \tab \code{\link{element_line}} \tab
+  \code{axis.tern.ticks} \cr \code{axis.tern.ticks.major.T}
+  \tab Major ticks for TOP Axis \tab
+  \code{\link{element_line}} \tab
   \code{axis.tern.ticks.major} \cr
   \code{axis.tern.title.major.L} \tab Major ticks for LHS
   Axis \tab \code{\link{element_line}} \tab

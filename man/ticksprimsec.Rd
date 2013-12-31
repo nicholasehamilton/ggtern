@@ -1,0 +1,61 @@
+\name{ticksprimsec}
+\alias{theme_hideprimary}
+\alias{theme_hidesecondary}
+\alias{theme_noprimary}
+\alias{theme_nosecondary}
+\alias{theme_showprimary}
+\alias{theme_showsecondary}
+\alias{ticksprimsec}
+\title{Show or Hide the Primary/Secondary Ticks}
+\usage{
+  theme_noprimary()
+
+  theme_hideprimary()
+
+  theme_showprimary()
+
+  theme_nosecondary()
+
+  theme_hidesecondary()
+
+  theme_showsecondary()
+}
+\description{
+  Convenience functions to enable or disable the axis
+  primary or secondary ticks.
+
+  \code{theme_noprimary} or \code{theme_hideprimary}
+  (Alias) are functions that apepnds to the current theme a
+  flag to switch OFF the primary ticks
+
+  \code{theme_showprimary} is a function that apepnds to
+  the current theme a flag to switch ON the primary ticks
+
+  \code{theme_nosecondary} or \code{theme_hidesecondary}
+  (Alias) are functions that apepnds to the current theme a
+  flag to switch OFF the secondary ticks
+
+  \code{theme_showsecondary} is a function that apepnds to
+  the current theme a flag to switch ON the secondary ticks
+}
+\details{
+  In \code{ggtern}, the primary ticks are deemed as being
+  the ticks along the binary axis increasing to the apex
+  species, primary ticks can consist of both major and
+  minor ticks (major ticks have labels, and are generally
+  longer and bolder). Therefore, there are three (3) sets
+  of major primary ticks, and, three (3) sets of minor
+  primary ticks. These convenience functions introduce the
+  concept of secondary ticks, which, are the same items
+  however on the 'opposing' binary axis. For example,
+  considering the TOP apex species, in a plot with
+  'clockwise' axis precession, the primary ticks would run
+  along the LHS, whilst, the secondary ticks, woudl run
+  along the RHS. By default, the primary ticks are switched
+  ON, whilst the secondary ticks are switched OFF and are
+  controlled by the
+  \code{\link{axis.tern.ticks.showprimary}} and
+  \code{\link{axis.tern.ticks.showsecondary}} theme
+  elements respectively.
+}
+

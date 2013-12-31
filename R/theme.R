@@ -32,7 +32,7 @@ theme_update <- function(...) {
 #' axis.tern.ticks.major.R axis.tern.ticks.minor axis.tern.ticks.minor.T axis.tern.ticks.minor.L axis.tern.ticks.minor.R panel.grid.tern panel.grid.tern.major
 #' panel.grid.tern.major.T panel.grid.tern.major.L panel.grid.tern.major.R panel.grid.tern.minor panel.grid.tern.minor.T panel.grid.tern.minor.L panel.grid.tern.minor.R 
 #' axis.tern.ticks.outside axis.tern.ticklength.major axis.tern.ticklength.minor axis.tern.arrowsep axis.tern.hshift axis.tern.vshift axis.tern.clockwise axis.tern.showarrows
-#' axis.tern.arrowstart axis.tern.arrowfinish axis.tern.padding 
+#' axis.tern.arrowstart axis.tern.arrowfinish axis.tern.padding axis.tern.ticks.showsecondary
 #' @name themeelements
 #' @name theme
 #' @section New/Additional Inheritance Structures:
@@ -73,6 +73,8 @@ theme_update <- function(...) {
 #'   \code{axis.tern.ticklength.major}\tab Major ticklength                      \tab \code{\link{unit}}            \tab                        \cr
 #'   \code{axis.tern.ticklength.minor}\tab Minor ticklength                      \tab \code{\link{unit}}            \tab                        \cr
 #'   \code{axis.tern.ticks.outside}  \tab Base ticks for ggtern object on outside or not \tab \code{\link{logical}} \tab                        \cr
+#'   \code{axis.tern.ticks.showprimary} \tab Show primary tickset                \tab \code{\link{logical}}         \tab                        \cr
+#'   \code{axis.tern.ticks.showsecondary}\tab Show secondary tickset             \tab \code{\link{logical}}         \tab                        \cr
 #'   \code{axis.tern.ticks}          \tab Base ticks for ggtern object           \tab \code{\link{element_line}}    \tab \code{axis.tern}   \cr
 #'   \code{axis.tern.ticks.major}    \tab Base Major ticks for ggtern object     \tab \code{\link{element_line}}    \tab \code{axis.tern.ticks}   \cr
 #'   \code{axis.tern.ticks.major.T}  \tab Major ticks for TOP Axis               \tab \code{\link{element_line}}    \tab \code{axis.tern.ticks.major}  \cr

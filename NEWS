@@ -36,6 +36,8 @@ ggtern 1.0.2.0
 
 * element_ternary fully depreciated in favour of individual theme elements.
 
+* Added functionality for 'secondary ticks' and convenience functions theme_showsecondary(), theme_hidesecondary(), theme_showprimary(), theme_hideprimary()
+
 BUG FIXES
 
 * Correction to logic in .theme_new internal function

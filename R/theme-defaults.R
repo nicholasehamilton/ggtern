@@ -94,7 +94,9 @@
       panel.grid.tern.major.R = element_line(colour=grid.R),
       panel.grid.tern.minor   = element_line(size=0.25,colour=grid.minor,linetype=grid.linetype.minor),
       
-      axis.tern.ticks.outside = TRUE,
+      axis.tern.ticks.outside       = TRUE,
+      axis.tern.ticks.showsecondary = FALSE,
+      axis.tern.ticks.showprimary   = TRUE,
       axis.tern.ticks         = element_line(),
       axis.tern.ticks.major   = element_line(color="black"),
       axis.tern.ticks.major.T = element_line(colour=col.T),

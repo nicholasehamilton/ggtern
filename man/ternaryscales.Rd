@@ -5,18 +5,18 @@
 \title{Ternary Continuous Scales}
 \usage{
   scale_L_continuous(name = NULL,
-    breaks = pretty(c(0, 1), n = 10),
-    minor_breaks = pretty(c(0, 1), n = 20),
+    breaks = getOption("tern.breaks.default"),
+    minor_breaks = getOption("tern.breaks.default.minor"),
     labels = 100 * breaks, limits = waiver())
 
   scale_T_continuous(name = NULL,
-    breaks = pretty(c(0, 1), n = 10),
-    minor_breaks = pretty(c(0, 1), n = 20),
+    breaks = getOption("tern.breaks.default"),
+    minor_breaks = getOption("tern.breaks.default.minor"),
     labels = 100 * breaks, limits = waiver())
 
   scale_R_continuous(name = NULL,
-    breaks = pretty(c(0, 1), n = 10),
-    minor_breaks = pretty(c(0, 1), n = 20),
+    breaks = getOption("tern.breaks.default"),
+    minor_breaks = getOption("tern.breaks.default.minor"),
     labels = 100 * breaks, limits = waiver())
 }
 \arguments{

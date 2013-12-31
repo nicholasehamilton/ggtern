@@ -316,8 +316,10 @@ coord_render_bg.ternary <- function(coord,details,theme){
   clockwise <- theme$axis.tern.clockwise  
   
   #Ticks are inside or outside
-  outside <- as.logical(calc_element_plot("axis.tern.ticks.outside",theme=theme))
-  shift   <- ifthenelse(!outside,180,0)
+  outside       <- as.logical(calc_element_plot("axis.tern.ticks.outside",theme=theme))
+  showprimary   <- as.logical(calc_element_plot("axis.tern.ticks.showprimary",theme=theme))
+  showsecondary <- as.logical(calc_element_plot("axis.tern.ticks.showsecondary",theme=theme))
+  shift         <- ifthenelse(!outside,180,0)
   
   #major & minor ticklength
   tl.major <- tl.minor <- 0
@@ -342,32 +344,25 @@ coord_render_bg.ternary <- function(coord,details,theme){
     
     #Assign new id.
     id <- (max(existing$ID,0) + 1)
+    limits <- c(0,1)
     tryCatch({
       limits <- as.numeric(details[[paste0(X,".range")]]);
     },error=function(e){
-      limits <- c(0,1)
+      #quietly
     })
-    if(!is.numeric(limits)){limits=c(0,1)}
-    new <- data.frame(ID = id,Scale=X,Breaks=breaks,Labels=labels,Major=major)
-    
-    #The max/min limits.
-    b <- limits[length(limits)]
-    a <- limits[1]
-    
-    new <- new[which(new$Breaks > 1.001*min(b,a) & new$Breaks <= max(b,a)),]
-    
-    new$Lower=a
-    new$Upper=b
-    new$Prop = (new$Breaks - new$Lower) / (new$Upper - new$Lower) #The relative position
-    
+    limits <- .is.numericor(limits,c(0,1))
+    b <- limits[length(limits)]; a <- limits[1] #The max/min limits.
     ix <- min(ix,ifthenelse(major,length(tl.major),length(tl.minor)))
-    new$TickLength = ifthenelse(major,tl.major[ix],tl.minor[ix])
-      #if(major){tl.major[ix]}else{tl.minor[ix]}
+    majmin        <- ifthenelse(major,"major","minor")  #Major or Minor Element Name part.
     
-    #The theme items to call later.
-    new$NameText  <- paste0("axis.tern.text.",X)
-    new$NameTicks <- paste0("axis.tern.ticks.",if(major){"major"}else{"minor"},".",X)
-    new$NameGrid  <- paste0("panel.grid.tern.",if(major){"major"}else{"minor"},".",X)
+    #The new dataframe
+    new            <- data.frame(ID = id,Scale=X,Breaks=breaks,Labels=labels,Major=major)
+    new            <- new[which(new$Breaks >= min(b,a) & new$Breaks <= max(b,a)),]
+    new$Prop       <- (new$Breaks - a) / (b - a) #The relative position
+    new$TickLength <- ifthenelse(major,tl.major[ix],tl.minor[ix])
+    new$NameText   <- paste0("axis.tern.text.",X)
+    new$NameTicks  <- paste0("axis.tern.ticks.",majmin,".",X)
+    new$NameGrid   <- paste0("panel.grid.tern.",majmin,".",X)
     
     ##Start and finish positions of scale.
     ix.order  <- c("T","L","R")
@@ -389,12 +384,18 @@ coord_render_bg.ternary <- function(coord,details,theme){
     for(i in 1:length(out)){new[,paste0(out[i],"end.grid")] <- new$Prop*(finish[i]-start[i]) + start[i]}
     
     #The tick angles.
-    new$Angle <- angle
+    new$Angle      <- angle
     new$Angle.Text <- angle.text
     
-    ##Determine the tick finish positions for segments.
+    #Determine the tick finish positions for segments.
     new$xend <- cos(new$Angle*pi/180)*new$TickLength                        + new$x
     new$yend <- sin(new$Angle*pi/180)*new$TickLength/coord_aspect.ternary() + new$y
+    
+    #Determine the secondary tick start and finish positions.
+    new$x.sec <- new$xend.grid
+    new$y.sec <- new$yend.grid
+    new$xend.sec <- cos((new$Angle+180)*pi/180)*new$TickLength                        + new$x.sec
+    new$yend.sec <- sin((new$Angle+180)*pi/180)*new$TickLength/coord_aspect.ternary() + new$y.sec
     
     ##ADD TO EXISTING
     rbind(existing,new)
@@ -412,7 +413,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   if(nrow(d) > 1){d <- d[nrow(d):1,]}  #REVERSE (minor under major)
   
   #FUNCTION TO RENDER TICKS AND LABELS
-  .render.ticks <- function(name,items,d){
+  .render.ticks <- function(name,items,d,secondary=FALSE){
     tryCatch({  
       e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
       colour   <- e$colour
@@ -420,10 +421,10 @@ coord_render_bg.ternary <- function(coord,details,theme){
       linetype <- e$linetype
       lineend  <- e$lineend
       grob     <- segmentsGrob(
-        x0 = d$x, 
-        x1 = d$xend,
-        y0 = d$y, 
-        y1 = d$yend,
+        x0 = ifthenelse(secondary,d$x.sec,d$x), 
+        x1 = ifthenelse(secondary,d$xend.sec,d$xend),
+        y0 = ifthenelse(secondary,d$y.sec,d$y), 
+        y1 = ifthenelse(secondary,d$yend.sec,d$yend),
         default.units="native",
         gp = gpar(col     = colour, 
                   lty     = linetype,
@@ -448,8 +449,8 @@ coord_render_bg.ternary <- function(coord,details,theme){
       vjust     <- ifthenelse(is.numeric(e$vjust),e$vjust,0)
       angle     <- ifthenelse(is.numeric(e$angle),e$angle,0) + unique(d$Angle.Text)[1]
       grob      <- textGrob( label = as.character(d$Labels), 
-                             x = ifthenelse(outside,d$xend,d$x), 
-                             y = ifthenelse(outside,d$yend,d$y), 
+                             x = ifthenelse(outside && showprimary,d$xend,d$x), 
+                             y = ifthenelse(outside && showprimary,d$yend,d$y), 
                              default.units="native", 
                              hjust=hjust, 
                              vjust=vjust, 
@@ -495,7 +496,10 @@ coord_render_bg.ternary <- function(coord,details,theme){
   
   #PROCESS TICKS AND LABELS
   for(n in unique(d$NameGrid)){ items <- .render.grid(  name=n,items=items,d=d[which(d$NameGrid  == n),])}
-  for(n in unique(d$NameTicks)){items <- .render.ticks( name=n,items=items,d=d[which(d$NameTicks == n),])}
+  if(showprimary)
+    for(n in unique(d$NameTicks)){items <- .render.ticks(name=n,items=items,d=d[which(d$NameTicks == n),],secondary=FALSE)}
+  if(showsecondary)
+    for(n in unique(d$NameTicks)){items <- .render.ticks(name=n,items=items,d=d[which(d$NameTicks == n),],secondary=TRUE)}
   for(n in unique(d$NameText)){ items <- .render.labels(name=n,items=items,d=d[which(d$NameText  == n),])}
   items
 }
