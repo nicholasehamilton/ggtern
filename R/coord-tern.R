@@ -361,7 +361,8 @@ coord_render_bg.ternary <- function(coord,details,theme){
     new$Prop = (new$Breaks - new$Lower) / (new$Upper - new$Lower) #The relative position
     
     ix <- min(ix,ifthenelse(major,length(tl.major),length(tl.minor)))
-    new$TickLength = abs(diff(limits))*if(major){tl.major[ix]}else{tl.minor[ix]}
+    new$TickLength = ifthenelse(major,tl.major[ix],tl.minor[ix])
+      #if(major){tl.major[ix]}else{tl.minor[ix]}
     
     #The theme items to call later.
     new$NameText  <- paste0("axis.tern.text.",X)
