@@ -42,8 +42,8 @@
       ternary.options         = element_ternary(),
       
       panel.background.tern      = element_rect(fill=col.BG,color=NA),
-      axis.tern.clockwise        = TRUE,
-      axis.tern.showarrows       = TRUE,
+      axis.tern.clockwise        = getOption("tern.clockwise"),
+      axis.tern.showarrows       = getOption("tern.showarrows"),
       axis.tern.arrowstart       = 0.3,
       axis.tern.arrowfinish      = 0.7,
       #axis.tern.padding          = unit(0.10,"npc"),
@@ -94,9 +94,9 @@
       panel.grid.tern.major.R = element_line(colour=grid.R),
       panel.grid.tern.minor   = element_line(size=0.25,colour=grid.minor,linetype=grid.linetype.minor),
       
-      axis.tern.ticks.outside       = TRUE,
-      axis.tern.ticks.showsecondary = FALSE,
-      axis.tern.ticks.showprimary   = TRUE,
+      axis.tern.ticks.outside       = getOption("tern.ticks.outside"),
+      axis.tern.ticks.showsecondary = getOption("tern.ticks.showsecondary"),
+      axis.tern.ticks.showprimary   = getOption("tern.ticks.showprimary"),
       axis.tern.ticks         = element_line(),
       axis.tern.ticks.major   = element_line(color="black"),
       axis.tern.ticks.major.T = element_line(colour=col.T),
