@@ -58,6 +58,8 @@ BUG FIXES
 
 * Correction to throwing points in geom_smooth set, when coordinate limits != c(0,1)
 
+* .theme_nocart(), which destroys all cartesian theme elements, is now applied EVERY TIME a ggtern object is rendered. Previously, if a new theme (say theme_bw()) is applied to an EXISTING ggtern plot (ie plot + theme_bw()), some cartesian theme elements were creeping back into the plot.
+
 ggtern 1.0.1.3
 ----------------------------------------------------------------
 * Package accepted for CRAN
