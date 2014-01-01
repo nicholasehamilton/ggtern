@@ -1,5 +1,6 @@
 \name{geom_density2d}
 \alias{Density2dTern}
+\alias{GeomDensity2dtern}
 \alias{geom_density2d}
 \title{Contours from a 2d density estimate - (ggtern version)}
 \usage{

@@ -1,10 +1,13 @@
 \name{ticksprimsec}
 \alias{theme_hideprimary}
 \alias{theme_hidesecondary}
+\alias{theme_hideticks}
 \alias{theme_noprimary}
 \alias{theme_nosecondary}
+\alias{theme_noticks}
 \alias{theme_showprimary}
 \alias{theme_showsecondary}
+\alias{theme_showticks}
 \alias{ticksprimsec}
 \title{Show or Hide the Primary/Secondary Ticks}
 \usage{
@@ -19,6 +22,12 @@
   theme_hidesecondary()
 
   theme_showsecondary()
+
+  theme_showticks()
+
+  theme_hideticks()
+
+  theme_noticks()
 }
 \description{
   Convenience functions to enable or disable the axis
@@ -37,6 +46,10 @@
 
   \code{theme_showsecondary} is a function that apepnds to
   the current theme a flag to switch ON the secondary ticks
+
+  \code{theme_showticks(), themehideticks(),
+  theme_noticks()} are functions that switch ON or OFF BOTH
+  the primary or secondary ticks.
 }
 \details{
   In \code{ggtern}, the primary ticks are deemed as being
@@ -45,17 +58,29 @@
   minor ticks (major ticks have labels, and are generally
   longer and bolder). Therefore, there are three (3) sets
   of major primary ticks, and, three (3) sets of minor
-  primary ticks. These convenience functions introduce the
-  concept of secondary ticks, which, are the same items
-  however on the 'opposing' binary axis. For example,
-  considering the TOP apex species, in a plot with
-  'clockwise' axis precession, the primary ticks would run
-  along the LHS, whilst, the secondary ticks, woudl run
+  primary ticks.
+
+  These convenience functions introduce the concept of
+  secondary ticks, which, are the same items however on the
+  'opposing' binary axis.
+
+  For example, considering the TOP apex species, in a plot
+  with 'clockwise' axis precession, the primary ticks would
+  run along the LHS, whilst, the secondary ticks, woudl run
   along the RHS. By default, the primary ticks are switched
   ON, whilst the secondary ticks are switched OFF and are
   controlled by the
   \code{\link{axis.tern.ticks.showprimary}} and
   \code{\link{axis.tern.ticks.showsecondary}} theme
   elements respectively.
+}
+\examples{
+data(Feldspar)
+plot <- ggtern(data=Feldspar,aes(Ab,An,Or)) + geom_point()
+plot
+plot + theme_showsecondary()
+plot + theme_noprimary() + theme_nosecondary()
+plot + theme_showticks()
+plot + theme_hideticks()
 }
 

@@ -11,7 +11,10 @@
   panel
 }
 
-#' @rdname undocumented
+#' \code{panel_scales} is a local copy of the ggplot2 function that calculates the scales for each panel, patched for the ternary system.
+#' @param panel the particular panel
+#' @param i index number
+#' @rdname overloaded
 panel_scales <- function(panel, i) {
   this_panel <- panel$layout[panel$layout$PANEL == i, ]
   scales <- list(
@@ -26,11 +29,10 @@ panel_scales <- function(panel, i) {
   scales
 }
 
-# Calculate statistics
-# 
-# @param layers list of layers
-# @param data a list of data frames (one for each layer)  
-#'@rdname undocumented
+#' \code{calculate_stats} is a local copy of the ggplot2 function that calculates various stats for each layer.
+#' @param layers list of layers
+#' @param data a list of data frames (one for each layer)  
+#' @rdname overloaded
 calculate_stats <- function(panel, data, layers) {
   lapply(seq_along(data), function(i) {
     d <- data[[i]]
@@ -42,8 +44,9 @@ calculate_stats <- function(panel, data, layers) {
   }) 
 }
 
-#' Compute ranges and dimensions of each panel, using the coord.
-#' @rdname undocumented
+#' \code{train_ranges} is a local copy of the ggplot2 function that computes ranges and dimensions of each panel, using the coord, 
+#' and patched for the ternary system.
+#' @rdname overloaded
 train_ranges <- function(panel, coord) {
   compute_range <- function(ix, iy) {
     scales <- list(x = panel$x_scales[[ix]], 
@@ -66,20 +69,10 @@ train_ranges <- function(panel, coord) {
   panel$T_scales$name  %||% labels[["T"]] %||% labels$x %||% "T"
 }
 .Llabel <- function(panel, labels,force=F) {  
-  #if(get_last_coord()$clockwise & !force){
-  #  writeLines("Llabel -> Rlabel")
-  #  .Rlabel(panel,labels,force=T)
-  #}else{
-    panel$L_scales$name  %||% labels[["L"]] %||% labels$y  %||% "L"
-  #}
+  panel$L_scales$name  %||% labels[["L"]] %||% labels$y  %||% "L"
 }
 .Rlabel <- function(panel, labels,force=F) {
-  #if(get_last_coord()$clockwise & !force){
-  #  writeLines("Rlabel -> Llabel")
-  #  .Llabel(panel,labels,force=T)
-  #}else{
-    panel$R_scales$name  %||% labels[["R"]] %||% labels$z  %||% "R"
-  #}
+  panel$R_scales$name  %||% labels[["R"]] %||% labels$z  %||% "R"
 } 
 .Wlabel <- function(panel, labels) {
   (panel$W %||% labels$W) %||% ""

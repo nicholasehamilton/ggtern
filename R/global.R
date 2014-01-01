@@ -15,17 +15,11 @@
   )
 })()
 
-#' Last Coordinates
-#' 
-#' Internal functions to get and set the last coordinate system. An internal command for ggtern.
-#' 
 #' \code{get_last_coord} is a function that returns the last coordinate system used.
 #' @rdname undocumented
-#' @return coordinate system
+#' @return \code{get_last_coord} returns the current coordinate system
 get_last_coord <- .coordinates$get
 
-#' Last Coordinates
-#' 
 #' \code{set_last_coord} set the last coordinate system.
 #' @param new the coordinate system to set
 #' @rdname undocumented

@@ -14,6 +14,7 @@
 #' }
 #' @inheritParams ggplot2::geom_point
 #' @inheritParams ggplot2::geom_path
+#' @aliases GeomDensity2dtern
 #' @export
 geom_density2d <- function (mapping = NULL, data = NULL, stat = "density2dtern", position = "identity", 
                             lineend = "butt", linejoin = "round", linemitre = 1, na.rm = FALSE, ...) { 
@@ -21,7 +22,6 @@ geom_density2d <- function (mapping = NULL, data = NULL, stat = "density2dtern",
                     lineend = lineend, linejoin = linejoin, linemitre = linemitre, na.rm = na.rm, ...)
 }
 
-#' @rdname undocumented
 GeomDensity2dtern <- proto(ggint$GeomPath,{
   objname <- "density2dtern"
   default_stat <- function(.) StatDensity2dNew

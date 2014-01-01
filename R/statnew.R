@@ -1,3 +1,6 @@
+
+#' \code{Statnew} is a local copy of the ggplot2 Stat top-level proto
+#' @rdname undocumented
 Statnew <- proto(ggint$TopLevel, expr={
   objname <- "" 
   desc <- ""

@@ -1,10 +1,10 @@
 #' @rdname statTLRline
+#' @aliases StatTline
 #' @export
 stat_Tline <- function (mapping = NULL, data = NULL, geom = "Tline", position = "identity", Tintercept, ...) {
   StatTline$new(mapping = mapping, data = data, geom = geom, position = position, Tintercept = Tintercept, ...)
 }
 
-#' @rdname undocumented
 StatTline <- proto(ggint$Stat, {
   objname <- "Tline"
   calculate <- function(., data, scales, Tintercept = NULL, ...) {

@@ -6,11 +6,11 @@
   else if (is.ggplot(e1)) add_ggplot(e1, e2, e2name)
 }
 
-#' @details \code{"\%+\%"} add operator no change other than exporting from this namespace
+#' \code{"\%+\%"} is a local copy of the ggplot2 add operator, no change other than exporting from the ggtern namespace
 #' @rdname overloaded 
 "%+%" <- `+.gg`
 
-#' @details \code{add_ggplot} is a local copy of method that adds elements to a gg object.
+#' \code{add_ggplot} is a local copy of the ggplot2 method that adds elements to an existing gg object.
 #' @param p plot
 #' @param object to add
 #' @param objectname name of obeject

@@ -23,6 +23,7 @@ Imports:
 License: GPL-2
 URL: http://www.ggtern.com
 Collate:
+  'aaa.R'
   'gg-internal.R'
   'overloaded.R'
   'statnew.R'
@@ -70,5 +71,5 @@ Collate:
   'stat-Rline.R'
   'TRL-line.R'
   'modified-original.R'
-  'undocumented.R'
+  'arrow.R'
   'onLoad.R'

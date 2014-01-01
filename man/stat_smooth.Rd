@@ -1,4 +1,5 @@
 \name{stat_smooth}
+\alias{StatSmoothtern}
 \alias{stat_smooth}
 \title{Add a smoother. (Ternary Version)}
 \usage{

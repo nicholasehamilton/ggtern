@@ -17,6 +17,25 @@
   which is an implementation of Wilkinsons "The Grammar of
   Graphics".
 }
+\details{
+  Plots in \code{ggtern} are instigated via the default
+  constructor: \code{ggtern(...)}, which is essentially a
+  convenience wrapper for the following: \code{ggplot{...}
+  + coord_tern()}, indeed, if one wishes to use
+  \code{ggplot{...} + coord_tern()} then this is quite
+  satisfactory, however, it is important to note that once
+  the \code{coord_tern()} coordinate system has been
+  applied, the object is no longer strictly a ggplot
+  object, rather, a ggtern object and several patches have
+  been applied to facilitate correct plotting, including
+  some limitations on the types of geometries which can be
+  used. One such essential patch is, for approved
+  geometries previously requiring \code{x} and \code{y}
+  coordinates, now require an additional \code{z}
+  coordinate. \code{\link[ggtern]{geom_segment}} goes one
+  step further in that it requires both an additional
+  \code{z} and \code{zend} coordinate mappings.
+}
 \section{Valid Geometries for ggtern}{
   ggplot2, using the \code{\link{grid}} and
   \code{\link{proto}} architectures, makes provision for a
@@ -27,9 +46,17 @@
   \strong{not relevant} (or wont function) with ternary
   plots. As such, a limited number of 'approved' geometries
   can be used, includes the following in the first
-  instance: \enumerate{ \item point \item path \item
-  segment \item polygon \item smooth \item text \item
-  density2d \item rug }
+  instance: \enumerate{ \item
+  \code{\link[=geom_point]{Point}} \item
+  \code{\link[=geom_path]{Path}} \item
+  \code{\link[=geom_segment]{Segment}} \item
+  \code{\link[=geom_polygon]{Polygon}} \item
+  \code{\link[=geom_smooth]{Smooth}} \item
+  \code{\link[=geom_text]{Text}} \item
+  \code{\link[=geom_density2d]{Density2d}} \item
+  \code{\link[=geom_rug]{Rug}} } Additionally, ggterin
+  incldues novel geometries, including: \enumerate{ \item
+  \code{\link[=geom_confidence]{Confidence}} }
 }
 
 \section{Handling Non-Approved Geometries}{
@@ -48,6 +75,12 @@
   heirarchies which can be tailored on a case-by-case
   basis. The full list of new elements can is provided
   \link[=newelements]{HERE}.
+}
+
+\section{Theme Element Convenience Functions}{
+  \code{ggtern} has made available a number of convenience
+  functions, for rapid tweaking of common theme elements,
+  for a comprehensive list, see \link[=convenience]{HERE}.
 }
 
 \section{Modification to Required Aesthetics}{

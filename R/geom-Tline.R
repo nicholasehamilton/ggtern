@@ -31,12 +31,12 @@
 NULL
 
 #' @rdname statTLRline
+#' @aliases GeomTline
 #' @export
 geom_Tline <- function (mapping = NULL, data = NULL, stat = "Tline", position = "identity", show_guide = FALSE, ...) { 
   GeomTline$new(mapping = mapping, data = data, stat = stat, position = position, show_guide = show_guide, ...)
 }
 
-#' @rdname undocumented
 GeomTline <- proto(Geom, {
   objname <- "Tline"
   new <- function(., data = NULL, mapping = NULL, Tintercept = NULL, ...) {

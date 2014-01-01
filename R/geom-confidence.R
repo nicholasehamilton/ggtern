@@ -6,6 +6,7 @@
 #' @param breaks the confidence intervals, default to 50, 90 and 95 percent.
 #' @param n the numer of points in the approximation for each confidence interval.
 #' @rdname geomconfidence
+#' @aliases GeomConfidence StatConfidence
 #' @examples
 #' \donttest{
 #'   data(Feldspar)
@@ -16,7 +17,6 @@ geom_confidence <- function (mapping = NULL, data = NULL,breaks=c(0.50,0.90,0.95
   GeomConfidence$new(mapping = mapping, data = data, breaks=breaks,stat = stat, n=n,position = position, na.rm = na.rm, ...)
 }
 
-#' @rdname undocumented
 GeomConfidence <- proto(Geom, {
   objname <- "confidence"
   draw <- function(.,data,scales,coordinates,arrow = NULL,lineend = "butt",na.rm = FALSE,...){    
@@ -56,7 +56,6 @@ GeomConfidence <- proto(Geom, {
   guide_geom <- function(.) "path"
 })
 
-#' @rdname undocumented
 StatConfidence <- proto(ggint$Stat, {
   objname <- "confidence"
   calculate_groups <- function(., data, scales, na.rm = FALSE,breaks=c(0.50,0.90,0.95),n=500) {
@@ -117,7 +116,7 @@ StatConfidence <- proto(ggint$Stat, {
   required_aes <- c("x", "y")
 })
 
-#internal function
+#' \code{cullAndConstrain} is a function that is not implemented at this point in time, ignore it.
 #' @rdname undocumented
 cullAndConstrain <- function(data){
   lc <- get_last_coord()

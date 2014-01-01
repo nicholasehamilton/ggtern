@@ -35,6 +35,7 @@
 \alias{axis.tern.ticks.minor.R}
 \alias{axis.tern.ticks.minor.T}
 \alias{axis.tern.ticks.outside}
+\alias{axis.tern.ticks.showprimary}
 \alias{axis.tern.ticks.showsecondary}
 \alias{axis.tern.title}
 \alias{axis.tern.title.L}

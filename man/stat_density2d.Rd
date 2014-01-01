@@ -1,4 +1,5 @@
 \name{stat_density2d}
+\alias{StatDensity2dtern}
 \alias{stat_density2d}
 \title{2d density estimation - (ggtern version)}
 \usage{

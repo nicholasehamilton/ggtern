@@ -3,6 +3,7 @@
 #' Aids the eye in seeing patterns in the presence of overplotting
 #' @seealso \code{\link[ggplot2]{stat_smooth}}
 #' @inheritParams ggplot2::stat_smooth
+#' @aliases StatSmoothtern
 #' @export
 stat_smooth <- function (mapping = NULL, data = NULL, geom = "smoothtern", position = "identity", 
                          method = "auto", formula = y ~ x, se = TRUE, n = 80, fullrange = FALSE, 
@@ -12,8 +13,6 @@ stat_smooth <- function (mapping = NULL, data = NULL, geom = "smoothtern", posit
                  level = level, na.rm = na.rm, ...)
 }
 
-#' Modified Stat Smooth Proto
-#' @rdname undocumented
 StatSmoothtern <- proto(Statnew, {
   objname <- "smoothtern"
   calculate_groups <- function(., data, scales, method=ifthenelse(inherits(last_plot(),"ggtern"),"lm","auto"), formula=y~x, ...){

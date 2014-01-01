@@ -7,6 +7,7 @@
 #' the value of \code{fullrange} has no meaning, since the full-range becomes essentially becomes limited by the ternary plot area. 
 #' When set to \code{FALSE}, \code{fullarea} behaves as per normal.
 #' @param fullrange extend the range to the edge of the plotting panel.
+#' @aliases GeomSmoothtern
 #' @inheritParams ggplot2::geom_smooth
 #' @export
 geom_smooth <- function (mapping = NULL, data = NULL, stat = "smoothtern", position = "identity",limitarea=TRUE,fullrange=FALSE,...) { 
@@ -15,8 +16,6 @@ geom_smooth <- function (mapping = NULL, data = NULL, stat = "smoothtern", posit
   GeomSmoothtern$new(mapping = mapping, data = data, stat = stat, position = position,limitarea=limitarea,fullrange=fullrange,...)
 }
 
-#' Modified Geom Smooth Proto
-#' @rdname undocumented
 GeomSmoothtern <- proto(Geom, {
   objname <- "smoothtern"
   draw <- function(., data, scales, coordinates,limitarea=F,...) { 

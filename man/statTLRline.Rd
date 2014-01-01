@@ -1,6 +1,12 @@
 \name{statTLRline}
+\alias{GeomLline}
+\alias{GeomRline}
+\alias{GeomTline}
 \alias{Lline}
 \alias{Rline}
+\alias{StatLline}
+\alias{StatRline}
+\alias{StatTline}
 \alias{Tline}
 \alias{geom_Lline}
 \alias{geom_Rline}

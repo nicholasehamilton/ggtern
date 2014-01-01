@@ -1,4 +1,6 @@
 \name{geom_confidence}
+\alias{GeomConfidence}
+\alias{StatConfidence}
 \alias{geom_confidence}
 \title{Confidence Interval}
 \usage{

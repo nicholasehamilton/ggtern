@@ -263,6 +263,30 @@ coord_render_bg.ternary <- function(coord,details,theme){
 .get.angles.text <- function(clockwise){ifthenelse(clockwise,c(0,-60,60),c(0,-60,60))}
 
 #----------------------------------------------------------------------------------
+#Internals >>>> Theme flags.
+#----------------------------------------------------------------------------------
+.theme.get.clockwise <- function(theme){
+  clockwise     <- theme$axis.tern.clockwise  
+  clockwise     <- ifthenelse(is.logical(clockwise),clockwise[1],getOption("tern.clockwise"))
+  clockwise
+}
+.theme.get.outside    <- function(theme){
+  outside       <- calc_element_plot("axis.tern.ticks.outside",theme=theme)
+  outside       <- ifthenelse(is.logical(outside),outside[1],getOption("tern.ticks.outside"))
+  outside
+}
+.theme.get.showprimary <- function(theme){
+  showprimary   <- calc_element_plot("axis.tern.ticks.showprimary",theme=theme)
+  showprimary   <- ifthenelse(is.logical(showprimary), showprimary[1],getOption("tern.ticks.showprimary"))
+  showprimary
+}
+.theme.get.showsecondary <- function(theme){
+  showsecondary <- calc_element_plot("axis.tern.ticks.showsecondary",theme=theme)
+  showsecondary <- ifthenelse(is.logical(showsecondary),showsecondary[1],getOption("tern.ticks.showsecondary"))
+  showsecondary
+}
+
+#----------------------------------------------------------------------------------
 #Internals >>>> Data Extremes.
 #----------------------------------------------------------------------------------
 .get.data.extreme <- function(coord,details){
@@ -313,12 +337,11 @@ coord_render_bg.ternary <- function(coord,details,theme){
   items
 }
 .render.grids <- function(data.extreme,items,theme,details){
-  clockwise <- theme$axis.tern.clockwise  
-  
-  #Ticks are inside or outside
-  outside       <- as.logical(calc_element_plot("axis.tern.ticks.outside",theme=theme))
-  showprimary   <- as.logical(calc_element_plot("axis.tern.ticks.showprimary",theme=theme))
-  showsecondary <- as.logical(calc_element_plot("axis.tern.ticks.showsecondary",theme=theme))
+  #Process the flags.
+  clockwise     <- .theme.get.clockwise(theme)
+  outside       <- .theme.get.outside(theme)
+  showprimary   <- .theme.get.showprimary(theme)
+  showsecondary <- .theme.get.showsecondary(theme)
   shift         <- ifthenelse(!outside,180,0)
   
   #major & minor ticklength
@@ -329,6 +352,9 @@ coord_render_bg.ternary <- function(coord,details,theme){
   },error=function(x){
     #handle qietly
   })
+  
+  #Top, Left Right sequence.
+  seq.tlr <- c("T","L","R")
   
   #ASSEMBLE THE GRID DATA.
   .getData <- function(X,ix,existing=NULL,major=TRUE,angle=0,angle.text=0){
@@ -365,23 +391,25 @@ coord_render_bg.ternary <- function(coord,details,theme){
     new$NameGrid   <- paste0("panel.grid.tern.",majmin,".",X)
     
     ##Start and finish positions of scale.
-    ix.order  <- c("T","L","R")
-    ix.at     <- c("AT.T","AT.L","AT.R")
+    ix.at     <- paste0("AT.",seq.tlr)
     out       <- c("x","y")
     
+    #Start indexes.
+    ix.s <- which(seq.tlr == X); 
+    
     #FOR TICKS
-    ix.s <- which(ix.order == X); 
     ix.f <- ifthenelse(clockwise,if(ix.s == 3){1}else{ix.s+1},if(ix.s == 1){3}else{ix.s-1})
     finish <- as.numeric(data.extreme[ix.at[ix.s],])
     start  <- as.numeric(data.extreme[ix.at[ix.f],])
-    for(i in 1:length(out)){new[,out[i]] <- new$Prop*(finish[i]-start[i]) + start[i]}
+    for(i in 1:length(out))
+      new[,out[i]] <- new$Prop*(finish[i]-start[i]) + start[i]
     
     #FOR GRID
-    ix.s <- which(ix.order == X); 
     ix.f <- ifthenelse(clockwise,if(ix.s == 1){3}else{ix.s-1},if(ix.s == 3){1}else{ix.s+1})
     finish <- as.numeric(data.extreme[ix.at[ix.s],])
     start  <- as.numeric(data.extreme[ix.at[ix.f],])
-    for(i in 1:length(out)){new[,paste0(out[i],"end.grid")] <- new$Prop*(finish[i]-start[i]) + start[i]}
+    for(i in 1:length(out))
+      new[,paste0(out[i],"end.grid")] <- new$Prop*(finish[i]-start[i]) + start[i]
     
     #The tick angles.
     new$Angle      <- angle
@@ -392,8 +420,8 @@ coord_render_bg.ternary <- function(coord,details,theme){
     new$yend <- sin(new$Angle*pi/180)*new$TickLength/coord_aspect.ternary() + new$y
     
     #Determine the secondary tick start and finish positions.
-    new$x.sec <- new$xend.grid
-    new$y.sec <- new$yend.grid
+    new$x.sec    <- new$xend.grid
+    new$y.sec    <- new$yend.grid
     new$xend.sec <- cos((new$Angle+180)*pi/180)*new$TickLength                        + new$x.sec
     new$yend.sec <- sin((new$Angle+180)*pi/180)*new$TickLength/coord_aspect.ternary() + new$y.sec
     
@@ -406,14 +434,13 @@ coord_render_bg.ternary <- function(coord,details,theme){
   
   ##get the base data.
   d <- NULL
-  seq.tlr <- c("T","L","R")
   for(j in 1:2)
     for(i in 1:length(seq.tlr))
       d <- .getData(X=seq.tlr[i],ix=i,existing=d,major = (j==1),angle = angles[i],angle.text = angles.text[i]);
   if(nrow(d) > 1){d <- d[nrow(d):1,]}  #REVERSE (minor under major)
   
   #FUNCTION TO RENDER TICKS AND LABELS
-  .render.ticks <- function(name,items,d,secondary=FALSE){
+  .render.ticks <- function(name,items,d,primary=TRUE){
     tryCatch({  
       e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
       colour   <- e$colour
@@ -421,10 +448,10 @@ coord_render_bg.ternary <- function(coord,details,theme){
       linetype <- e$linetype
       lineend  <- e$lineend
       grob     <- segmentsGrob(
-        x0 = ifthenelse(secondary,d$x.sec,d$x), 
-        x1 = ifthenelse(secondary,d$xend.sec,d$xend),
-        y0 = ifthenelse(secondary,d$y.sec,d$y), 
-        y1 = ifthenelse(secondary,d$yend.sec,d$yend),
+        x0 = ifthenelse(!primary,d$x.sec,d$x), 
+        x1 = ifthenelse(!primary,d$xend.sec,d$xend),
+        y0 = ifthenelse(!primary,d$y.sec,d$y), 
+        y1 = ifthenelse(!primary,d$yend.sec,d$yend),
         default.units="native",
         gp = gpar(col     = colour, 
                   lty     = linetype,
@@ -497,15 +524,15 @@ coord_render_bg.ternary <- function(coord,details,theme){
   #PROCESS TICKS AND LABELS
   for(n in unique(d$NameGrid)){ items <- .render.grid(  name=n,items=items,d=d[which(d$NameGrid  == n),])}
   if(showprimary)
-    for(n in unique(d$NameTicks)){items <- .render.ticks(name=n,items=items,d=d[which(d$NameTicks == n),],secondary=FALSE)}
+    for(n in unique(d$NameTicks)){items <- .render.ticks(name=n,items=items,d=d[which(d$NameTicks == n),],primary=TRUE)}
   if(showsecondary)
-    for(n in unique(d$NameTicks)){items <- .render.ticks(name=n,items=items,d=d[which(d$NameTicks == n),],secondary=TRUE)}
+    for(n in unique(d$NameTicks)){items <- .render.ticks(name=n,items=items,d=d[which(d$NameTicks == n),],primary=FALSE)}
   for(n in unique(d$NameText)){ items <- .render.labels(name=n,items=items,d=d[which(d$NameText  == n),])}
   items
 }
 .render.border <- function(data.extreme,items,theme){
-  clockwise <- theme$axis.tern.clockwise  
-  .renderB <- function(name,s,f,items){
+  clockwise <- .theme.get.clockwise(theme) 
+  .renderB  <- function(name,s,f,items){
     tryCatch({
       e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
       colour   <- e$colour
@@ -551,7 +578,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   axis.tern.showarrows <- theme$axis.tern.showarrows
   if(is.logical(axis.tern.showarrows) && (axis.tern.showarrows)){
     tryCatch({
-      clockwise <- theme$axis.tern.clockwise
+      clockwise <- .theme.get.clockwise(theme)
       #The basic data.
       d.s <- data.extreme[ifthenelse(clockwise,c(2,3,1),c(3,1,2)),]
       d.f <- data.extreme[c(1,2,3),]
@@ -568,7 +595,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
       d <- rbind(d.s,d.f)
       
       ixseq <- c("T","L","R")
-      ixrow <- paste0("AT.",ix.seq)
+      ixrow <- paste0("AT.",ixseq)
       ixcol <- c("x","y","xend","yend")
       ix    <- which(colnames(d) %in% ixcol[c(1:2)])
       d     <- cbind(d[1:3,ix],d[4:6,ix]);
@@ -662,7 +689,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   items
 }
 .render.titles <- function(data.extreme,items,theme,details){
-  clockwise <- theme$axis.tern.clockwise  
+  clockwise <- .theme.get.clockwise(theme) 
   
   d    <- data.extreme
   d$L  <- as.character(c(details$Tlabel,details$Llabel,details$Rlabel))

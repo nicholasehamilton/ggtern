@@ -1,49 +1,33 @@
 \docType{data}
-\name{ifthenelse}
+\name{internal}
+\alias{.all_aesthetics}
+\alias{.internals}
 \alias{Geom}
-\alias{GeomConfidence}
-\alias{GeomDensity2dtern}
-\alias{GeomLline}
-\alias{GeomRline}
-\alias{GeomSmoothtern}
-\alias{GeomTline}
-\alias{StatConfidence}
-\alias{StatDensity2dtern}
-\alias{StatLline}
-\alias{StatRline}
-\alias{StatSmoothtern}
-\alias{StatTline}
 \alias{Statnew}
 \alias{arrow}
 \alias{arrow_label_formatter}
 \alias{calc_element_plot}
-\alias{calculate_stats}
-\alias{check_required_aesthetics}
 \alias{cullAndConstrain}
 \alias{find_global}
 \alias{get_last_coord}
 \alias{get_tern_extremes}
 \alias{ggint}
 \alias{ifthenelse}
-\alias{panel_scales}
+\alias{internal}
 \alias{remove_outside}
 \alias{set_last_coord}
 \alias{sink_density}
-\alias{train_ranges}
 \alias{trytransform}
 \alias{undocumented}
-\title{Internal Function}
-\format{proto object 
- $ draw        :function (., data, scales, coordinates, limitarea = F, ...)   
- $ default_stat:function (.)   
- $ objname     : chr "smoothtern" 
- $ default_aes :function (.)   
- $ guide_geom  :function (.)   
- $ required_aes: chr [1:2] "x" "y" 
- $ draw_legend :function (., data, params, ...)   
- parent: proto object 
- .. parent: proto object}
+\title{Internal Functions}
+\format{functions and objects}
 \usage{
+  ggint
+
+  Statnew
+
+  Geom
+
   ifthenelse(x, a, b)
 
   get_tern_extremes(coordinates, verbose = F, expand = 0)
@@ -62,43 +46,11 @@
   sink_density(df, remove = TRUE,
     coord = stop("coord is required"))
 
-  check_required_aesthetics(required, present, name)
-
   get_last_coord()
 
   set_last_coord(new)
 
-  panel_scales(panel, i)
-
-  calculate_stats(panel, data, layers)
-
-  train_ranges(panel, coord)
-
-  GeomSmoothtern
-
-  GeomTline
-
-  GeomLline
-
-  GeomRline
-
-  GeomConfidence
-
-  StatConfidence
-
   cullAndConstrain(data)
-
-  GeomDensity2dtern
-
-  StatSmoothtern
-
-  StatDensity2dtern
-
-  StatTline
-
-  StatLline
-
-  StatRline
 }
 \arguments{
   \item{coordinates}{ggtern coordinate system, inheriting
@@ -139,50 +91,53 @@
 
   \item{remove}{boolean remove or make zero}
 
-  \item{coord}{coordinates}
-
-  \item{character}{vector of required aesthetics}
-
-  \item{character}{vector of present aesthetics}
-
-  \item{name}{of object for error message}
+  \item{coord}{coordinates of the type 'ternar', ie
+  coord_tern()}
 
   \item{new}{the coordinate system to set}
-
-  \item{a}{argument a}
-
-  \item{b}{argument b}
-
-  \item{x}{argument x}
 }
 \value{
-  data.frame representing the T, L and R amounts (Columns)
-  at each of the tips (extremes) of the ternary plot area
-  (Rows)
+  \code{get_tern_extremes} returns data.frame representing
+  the T, L and R amounts (Columns) at each of the tips
+  (extremes) of the ternary plot area (Rows)
 
-  Instance of the named object (if it exists), or
-  \code{NULL} (if it does not).
+  \code{find_global} returns an instance of the named
+  object (if it exists), or \code{NULL} (if it does not).
 
-  transformed data
-
-  data.frame
-
-  data.frame
-
-  coordinate system
+  \code{get_last_coord} returns the current coordinate
+  system
 }
 \description{
+  INTERNAL FUNCTIONS (native to \code{ggtern}):
+  \code{ggtern} makes use of several non-exported internal
+  functions, a list of the internal functions is as
+  follows:
+
+  \code{ggint} is a structure which holds all the internal
+  functions from the ggplot2 namespace, which can be used
+  conveniently via \code{ggint$ABC}.
+
+  \code{Statnew} is a local copy of the ggplot2 Stat
+  top-level proto
+
+  \code{Geom} is a local copy of the ggplot2 Gom top-level
+  proto
+
+  \code{ggtern} makes use of several non-exported internal
+  functions, a list of the internal functions is as
+  follows:
+
   \code{ifthenelse} function takes input arguments
-  \code{x}, \code{a} and \code{b} and returns \code{a}
+  \code{x}, \code{a} and \code{b} and returns \code{a} if
+  \code{x} is \code{TRUE}, else, returns \code{b}
 
   \code{get_tern_extremes} determines the limiting ternary
   coordinates given input coordinates.
 
   \code{arrow_label_formatter} is a function that formats
-  the labels directly adjacent to the axes on a ternary
-  plot.
+  the labels directly adjacent to the ternary arrows.
 
-  \code{calc_element_plot} Calculate the element
+  \code{calc_element_plot} Calculates the element
   properties, by inheriting properties from its parents,
   and compares to whether the local plot overrides this
   value. Based largely off the
@@ -194,46 +149,35 @@
   \code{env} environment. If an instance doesn't exist
   within the \code{env} environment, a search is then
   conducted within the \code{ggtern} and \code{ggplot2}
-  namespaces \emph{(in that order)}.
+  namespaces \emph{(in that order)}. This is a modified
+  version of the original source as provided in
+  \code{ggplot2}, which has the same functionality,
+  however, the modification is such that the function now
+  additionally searches within the \code{ggtern} namespace
+  prior to the \code{ggplot2} namespace.
 
   \code{trytransform} is an internal function which
   attempts to make ternary transformation. If fails, the
-  original data is returned
+  original data is returned.
 
-  Internal Function
+  \code{remove_outside} is a function that removes, from an
+  input datases, all the rows wich are outside the ternary
+  plot area
 
-  Internal Function
-
-  Check required aesthetics are present This is used by
-  geoms and stats to give a more helpful error message when
-  required aesthetics are missing.
-
-  Internal functions to get and set the last coordinate
-  system. An internal command for ggtern.
-
-  \code{set_last_coord} set the last coordinate system.
-
-  Compute ranges and dimensions of each panel, using the
-  coord.
-
-  Modified Geom Smooth Proto
-
-  Modified Stat Smooth Proto
-
-  Internal Function
-
-  Exported instance of the imported grid arrow function
-}
-\details{
-  This is a modified version of the original source as
-  provided in \code{ggplot2}, which has the same
-  functionality, however, the modification is such that the
-  function now additionally searches within the
-  \code{ggtern} namespace prior to the \code{ggplot2}
-  namespace.
+  \code{sink_density} is a function which permits contours
+  on the ternary surface, without running over the ternary
+  borders.
 
   \code{get_last_coord} is a function that returns the last
   coordinate system used.
+
+  \code{set_last_coord} set the last coordinate system.
+
+  \code{cullAndConstrain} is a function that is not
+  implemented at this point in time, ignore it.
+
+  \code{arrow} is an exported instance of the imported grid
+  arrow function
 }
 \examples{
 get_tern_extremes(coordinates = coord_tern())

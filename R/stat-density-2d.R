@@ -4,13 +4,13 @@
 #' @inheritParams ggtern::stat_density2d
 #' @importFrom MASS kde2d
 #' @name stat_density2d
+#' @aliases StatDensity2dtern
 #' @export
 #' @seealso \code{\link[ggtern]{geom_density2d}}
 stat_density2d <- function (mapping = NULL, data = NULL, geom = "density2dtern", position = "identity", na.rm = FALSE, contour = TRUE, n = 100, ...) {
   StatDensity2dtern$new(mapping = mapping, data = data,geom=geom,geometry=geom,position = position, na.rm = na.rm, contour = contour, n = n,...)
 }
 
-#' @rdname undocumented
 StatDensity2dtern <- proto(Statnew, {
   objname <- "density2dtern"
   default_geom <- function(.) GeomDensity2dTern

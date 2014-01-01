@@ -1,11 +1,17 @@
 #' Log-ratio Transformations
 #' 
-#' Log-ratio transformation, algorithm based on that provided in \code{\link[robCompositions]{isomLR}}
-#' @param  x 2D object to transform 
-#' @aliases log-ratio logratio
+#' Log-ratio and Inverse Log-ratio transformations, for use as part of the \code{\link{geom_confidence}} geometry.
 #' @rdname logratio
-#' @return transformed data
-#' @references provided in \code{\link[robCompositions]{isomLR}}
+#' @name logratio
+NULL
+
+#' @details \code{isomLR} is a function which executes the Log-ratio transformation as per the algorithm based 
+#' on that provided in \code{\link[robCompositions]{isomLR}}.
+#' @param  x 2D object to transform 
+#' @aliases log-ratio
+#' @rdname logratio
+#' @return \code{isomLRinv} returns the transformed data
+#' @references References are provided in the original \code{\link[robCompositions]{isomLR}} documentation.
 isomLR <- function(x){
   geometricMean <- function(x){
     if(!is.numeric(x)) stop("x has to be a vector of class numeric")
@@ -18,12 +24,13 @@ isomLR <- function(x){
   return(x.ilr)
 }
 
-#' Log-ratio Transformations
+#' @details \code{isomLRinv} is a function which executes the Inverse isometric log-ratio transformation 
+#' as per the algorithm based on that provided in \code{\link[robCompositions]{isomLRinv}}.
 #' 
-#' Inverse isometric log-ratio transformation, algorithm based on that provided in \code{\link[robCompositions]{isomLRinv}}
+#' The above functions are based on those provided as part of the robCompositions package.
 #' @param x.ilr 2D object to transform
 #' @rdname logratio
-#' @return transformed data
+#' @return \code{isomLRinv} returns the inverse-transformed data
 isomLRinv <- function(x.ilr){
   y=matrix(0,nrow=nrow(x.ilr),ncol=ncol(x.ilr)+1)
   D=ncol(x.ilr)+1

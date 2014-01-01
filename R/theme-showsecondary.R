@@ -7,10 +7,22 @@
 #' 
 #' In \code{ggtern}, the primary ticks are deemed as being the ticks along the binary axis increasing to the apex species, primary ticks can consist of 
 #' both major and minor ticks (major ticks have labels, and are generally longer and bolder). Therefore, there are three (3) sets of major primary ticks, and,
-#' three (3) sets of minor primary ticks. These convenience functions introduce the concept of secondary ticks, which, are the same items however on the 
-#' 'opposing' binary axis. For example, considering the TOP apex species, in a plot with 'clockwise' axis precession, the primary ticks would run along the 
+#' three (3) sets of minor primary ticks. 
+#' 
+#' These convenience functions introduce the concept of secondary ticks, which, are the same items however on the 
+#' 'opposing' binary axis. 
+#' 
+#' For example, considering the TOP apex species, in a plot with 'clockwise' axis precession, the primary ticks would run along the 
 #' LHS, whilst, the secondary ticks, woudl run along the RHS. By default, the primary ticks are switched ON, whilst the secondary ticks are switched OFF and are
 #' controlled by the \code{\link{axis.tern.ticks.showprimary}} and \code{\link{axis.tern.ticks.showsecondary}} theme elements respectively.
+#' @examples
+#' data(Feldspar)
+#' plot <- ggtern(data=Feldspar,aes(Ab,An,Or)) + geom_point()
+#' plot
+#' plot + theme_showsecondary()
+#' plot + theme_noprimary() + theme_nosecondary()
+#' plot + theme_showticks()
+#' plot + theme_hideticks()
 #' @rdname ticksprimsec
 #' @name ticksprimsec
 NULL
@@ -35,7 +47,6 @@ theme_showprimary <- function(){.theme_showprimary(TRUE)}
 #' @export
 theme_nosecondary   <- function(){.theme_showsecondary(FALSE)}
 
-#'
 #' @rdname ticksprimsec
 #' @export
 theme_hidesecondary <- theme_nosecondary
@@ -44,3 +55,18 @@ theme_hidesecondary <- theme_nosecondary
 #' @rdname ticksprimsec
 #' @export
 theme_showsecondary <- function(){.theme_showsecondary(TRUE)}
+
+#' \code{theme_showticks(), themehideticks(), theme_noticks()} are functions that switch ON or OFF BOTH the primary or secondary ticks.
+#' @rdname ticksprimsec
+#' @export
+theme_showticks <- function(){theme_showprimary() + theme_showsecondary()}
+
+#' @rdname ticksprimsec
+#' @export
+theme_hideticks <- function(){theme_hideprimary() + theme_hidesecondary()}
+
+#' @rdname ticksprimsec
+#' @export
+theme_noticks   <- theme_hideticks
+
+

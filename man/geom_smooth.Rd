@@ -1,4 +1,5 @@
 \name{geom_smooth}
+\alias{GeomSmoothtern}
 \alias{geom_smooth}
 \title{Add a smoothed conditional mean (MODIFIED)}
 \usage{

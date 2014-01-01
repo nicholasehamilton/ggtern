@@ -74,33 +74,3 @@ ggint$.element_tree$panel.grid.tern.minor.L  = .el_def("element_line", "panel.gr
 ggint$.element_tree$panel.grid.tern.minor.R  = .el_def("element_line", "panel.grid.tern.minor") #
 
 
-#' @details \code{validate_element} is a function which checks the validity of a given theme element, against the elements table.
-#' Since the \code{.elements_tree} is an internal function, which is not exported, and modifications could not be made, 
-#' a new (and equivalent) \code{.element_tree} is created within ggtern.
-#' @param el the element
-#' @param elname the element name
-#' @rdname overloaded
-validate_element <- function(el, elname) {
-  eldef <- ggint$.element_tree[[elname]]
-  
-  if (is.null(eldef)) {
-    writeLines("testing")
-    stop('"', elname, '" is not a valid theme element name...')
-  }
-  
-  # NULL values for elements are OK
-  if (is.null(el)) return()
-  
-  if (eldef$class == "character") {
-    # Need to be a bit looser here since sometimes it's a string like "top"
-    # but sometimes its a vector like c(0,0)
-    if (!is.character(el) && !is.numeric(el))
-      stop("Element ", elname, " must be a string or numeric vector.")
-    
-  } else if (!inherits(el, eldef$class) && !inherits(el, "element_blank")) {
-    stop("Element ", elname, " must be a ", eldef$class, " object.")
-  }
-  invisible()
-}
-
-

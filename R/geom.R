@@ -1,3 +1,5 @@
+#' \code{Geom} is a local copy of the ggplot2 Gom top-level proto
+#' @rdname undocumented
 Geom <- proto(ggint$TopLevel, expr={
   class <- function(.) "geom"
   parameters <- function(.) {
