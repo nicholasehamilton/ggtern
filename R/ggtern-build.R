@@ -45,10 +45,8 @@ ggplot_build <- function(plot) {
     
     ##Add the missing scales
     ggint$scales_add_missing(plot,scales.tern,environment())
-    scales <- plot$scales
-    scale_T <- function() scales$get_scales("T")
-    scale_L <- function() scales$get_scales("L")
-    scale_R <- function() scales$get_scales("R")
+    for(i in 1:3)
+      assign(paste0("scale_",scales.tern[i]),plot$scales$get_scales(scales.tern[i]))
     
     ##Add the ternary fixed coordinates if it doesn't exist
     if(!inherits(plot$coordinates,"ternary")){plot <- plot + coord_tern()}
@@ -65,14 +63,13 @@ ggplot_build <- function(plot) {
     
     #THESE ARE A BIT OF A HACK. NORMALLY THIS INFO IS HANDLED IN THE GRID ARCHITECTURE.
     #BUT THIS IS ONE WAY OF PASSING IT THROUGH...
-    panel <- .train_position_ternary(panel,scale_T(),scale_L(),scale_R())
-    panel$T_scales$name = .Tlabel(panel,plot$labels)
-    panel$L_scales$name = .Llabel(panel,plot$labels)
-    panel$R_scales$name = .Rlabel(panel,plot$labels)
-    panel$Wlabel        = .Wlabel(panel,plot$labels)
-  }else{
-    set_last_coord(NULL)
-  }
+    panel <- .train_position_ternary(panel,scale_T,scale_L,scale_R)
+    panel$Wlabel = .Wlabel(panel,plot$labels)
+    for(i in 1:3){
+      x = scales.tern[i]
+      panel[[paste0(x,"_scales")]]$name <- do.call(paste0(".",x,"label"),list(panel  = panel,labels = plot$labels))
+    } 
+  }else set_last_coord(NULL)
   
   layers <- plot$layers
   layer_data <- lapply(layers, function(y) y$data)
