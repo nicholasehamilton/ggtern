@@ -52,11 +52,9 @@ ggplot_build <- function(plot) {
     if(!inherits(plot$coordinates,"ternary")){plot <- plot + coord_tern()}
     
     ##Update the scales limits from the coordinate
-    for(X in scales.tern){
-      a <- plot$scales$get_scales(X)$limits 
-      b <- plot$coordinates$limits[[X]]
-      plot$coordinates$limits[[X]] <- .is.numericor(.select.lim(a,b),c(0,1))
-    }
+    for(X in scales.tern)
+      plot$coordinates$limits[[X]] <- .is.numericor(.select.lim(plot$scales$get_scales(X)$limits,
+                                                                plot$coordinates$limits[[X]]),c(0,1))
     
     #STORE COORDINATES FOR USE BY OTHER METHODS.
     set_last_coord(plot$coordinates)
