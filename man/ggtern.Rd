@@ -1,6 +1,16 @@
 \name{ggtern}
+\alias{aaa}
+\alias{constructor}
 \alias{ggtern}
 \title{Ternary Diagrams in R}
+\usage{
+  ggtern(data = NULL, ...)
+}
+\arguments{
+  \item{data}{default data set}
+
+  \item{...}{other arguments passed to specific methods}
+}
 \description{
   Ternary diagrams are used frequently in materials science
   to graph compositional features for mixtures of three
@@ -12,8 +22,19 @@
 \details{
   Plots in \code{ggtern} are instigated via the default
   constructor: \code{ggtern(...)}, for additional
-  information, click \link[=constructor]{HERE}.
+  information, see below:
 }
+\section{ggtern Constructor}{
+  Plots in \code{ggtern} are instigated via the default
+  constructor: \code{ggtern(...)}, which is essentially a
+  convenience wrapper for the following: \code{ggplot{...}
+  + coord_tern()}, indeed, if one wishes to use
+  \code{ggplot{...} + coord_tern()} then this is quite
+  satisfactory. For further information on the
+  \code{coord_tern(...)} coordinate system, click
+  \link[=coord_tern]{HERE}.
+}
+
 \section{Valid Geometries for ggtern}{
   ggplot2, using the \code{\link{grid}} and
   \code{\link{proto}} architectures, makes provision for a

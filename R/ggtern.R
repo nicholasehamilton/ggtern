@@ -4,7 +4,12 @@
 #'Ternary diagrams are used frequently in materials science to graph compositional features for mixtures of three different elements or compounds.
 #'This package is based (extends) the very popular \code{\link{ggplot}} package, which is an implementation of Wilkinsons "The Grammar of Graphics".
 #'
-#'Plots in \code{ggtern} are instigated via the default constructor: \code{ggtern(...)}, for additional information, click \link[=constructor]{HERE}.
+#'Plots in \code{ggtern} are instigated via the default constructor: \code{ggtern(...)}, for additional information, see below:
+#'
+#' @section ggtern Constructor:
+#' Plots in \code{ggtern} are instigated via the default constructor: \code{ggtern(...)}, which is essentially a convenience wrapper for the following: 
+#' \code{ggplot{...} + coord_tern()}, indeed, if one wishes to use \code{ggplot{...} + coord_tern()} then this is quite satisfactory. For further information
+#' on the \code{coord_tern(...)} coordinate system, click \link[=coord_tern]{HERE}.
 #'
 #' @section Valid Geometries for ggtern:
 #'ggplot2, using the \code{\link{grid}} and \code{\link{proto}} architectures, makes provision for a many number of geometries to be added 
@@ -283,17 +288,9 @@
 #' }
 #' @name ggtern
 #' @rdname ggtern
-NULL
-
-#' ggtern Constructor 
-#' 
-#' Plots in \code{ggtern} are instigated via the default constructor: \code{ggtern(...)}, which is essentially a convenience wrapper for the following: 
-#' \code{ggplot{...} + coord_tern()}, indeed, if one wishes to use \code{ggplot{...} + coord_tern()} then this is quite satisfactory. For further information
-#' on the \code{coord_tern(...)} coordinate system, click \link[=coord_tern]{HERE}.
-#'@inheritParams ggplot2::ggplot
-#'@rdname constructor
-#'@name constructor
-#'@export
+#' @inheritParams ggplot2::ggplot
+#' @aliases constructor aaa
+#' @export
 ggtern <- function(data=NULL,...){ggplot(data=data,...) + coord_tern()}
 
 
