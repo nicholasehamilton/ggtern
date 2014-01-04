@@ -3,6 +3,11 @@
 #' 
 #' \code{coord_tern} is a function which creates a transformation mechanism between the ternary system, and, the cartesian system.
 #' It inherits from the fixed coordinate system, employing fixed ratio between x and y axes once transformed.
+#' 
+#' It is important to note that once the \code{coord_tern()} coordinate system has been applied, the base plot object is no longer strictly a ggplot object, 
+#' rather, a ggtern object where several patches have been applied to facilitate correct plotting, including, some limitations on the types of geometries 
+#' which can be used. One such essential patch is, for approved geometries previously requiring \code{x} and \code{y} coordinates, now require an additional \code{z} coordinate. 
+#' \code{\link[ggtern]{geom_segment}} goes one step further in that it requires both an additional \code{z} and \code{zend} coordinate mappings.
 #' @param T the Top Mapping (default x)
 #' @param L the Left Mapping (default y)
 #' @param R the Right Mapping (default z)

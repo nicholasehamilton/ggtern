@@ -1,14 +1,6 @@
 \name{ggtern}
 \alias{ggtern}
 \title{Ternary Diagrams in R}
-\usage{
-  ggtern(data = NULL, ...)
-}
-\arguments{
-  \item{data}{default data set}
-
-  \item{...}{other arguments passed to specific methods}
-}
 \description{
   Ternary diagrams are used frequently in materials science
   to graph compositional features for mixtures of three
@@ -19,22 +11,8 @@
 }
 \details{
   Plots in \code{ggtern} are instigated via the default
-  constructor: \code{ggtern(...)}, which is essentially a
-  convenience wrapper for the following: \code{ggplot{...}
-  + coord_tern()}, indeed, if one wishes to use
-  \code{ggplot{...} + coord_tern()} then this is quite
-  satisfactory, however, it is important to note that once
-  the \code{coord_tern()} coordinate system has been
-  applied, the object is no longer strictly a ggplot
-  object, rather, a ggtern object and several patches have
-  been applied to facilitate correct plotting, including
-  some limitations on the types of geometries which can be
-  used. One such essential patch is, for approved
-  geometries previously requiring \code{x} and \code{y}
-  coordinates, now require an additional \code{z}
-  coordinate. \code{\link[ggtern]{geom_segment}} goes one
-  step further in that it requires both an additional
-  \code{z} and \code{zend} coordinate mappings.
+  constructor: \code{ggtern(...)}, for additional
+  information, click \link[=constructor]{HERE}.
 }
 \section{Valid Geometries for ggtern}{
   ggplot2, using the \code{\link{grid}} and
@@ -202,9 +180,9 @@ last_plot() + coord_tern(Tlim=c(.3,.8),Llim=c(.1,0.6),Rlim=c(.1,0.6)) +
 plot + theme_tern_rgbw()
 
 #Additional themes (uncomment to execute)
-#plot + theme_tern_bw()
-#plot + theme_tern_gray()
-#plot + theme_tern_rgbg()
+#plot + theme_bw()
+#plot + theme_gray()
+#plot + theme_rgbg()
 
 
 ##-----------------------------------------------
@@ -277,7 +255,7 @@ ggtern(data=data.frame(A=0.6,B=0.2,C=0.2,
 ggtern(data=DATA.RANDOM,aes(x,y,z,color=Group)) +
  geom_point() +
  geom_smooth(aes(Group=Group),size=2,n=25) +
- theme_tern_bw()
+ theme_bw()
 
 
 ##-----------------------------------------------
@@ -316,13 +294,19 @@ plot + labs(title="Example of Region Focus") +
 ##-----------------------------------------------
 plot + theme_noarrows() + labs(title="Example of No Arrows")
 
+##-----------------------------------------------
+## Control of Ticks
+##-----------------------------------------------
+plot <- plot + theme_bw()
+plot + theme_ticksinside()  #Ticks Inside
+plot + theme_showsecondary()#Secondary ticks
 
 ##-----------------------------------------------
 ## Example RECESSED Arrows
 ##-----------------------------------------------
 ggtern(data=DATA.RANDOM,mapping=aes(x,y,z)) +
  geom_point() +
- theme_tern_rgbw() +
+ theme_rgbw() +
  tern_limits(labels=c(0,10,20,"","","","","",80,90,100)) + #AFFECT ALL SCALES
  theme(ternary.options=element_ternary(arrowsep=0.03,arrowstart=0.25,arrowfinish=0.75))
 }
