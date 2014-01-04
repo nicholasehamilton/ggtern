@@ -130,8 +130,9 @@
 theme_gray  <- function(base_size = 12, base_family = ""){
   #if(!inherits(get_last_coord(),"ternary")){return(ggplot2::theme_gray(base_size=base_size,base_family=base_family))}
   .theme_tern(base_size=base_size, base_family=base_family, 
-              col.BG="grey90",col.T="gray50",col.L="gray50",col.R="gray50",
-              axis.T="transparent",axis.L="transparent",axis.R="transparent",
+              col.BG="grey90",
+              col.T ="gray50",col.L="gray50",col.R="gray50",
+              axis.T="grey90",axis.L="grey90",axis.R="grey90",
               title.T="black",title.L="black",title.R="black",
               arrow.text.T="black",arrow.text.L="black",arrow.text.R="black")
 }
