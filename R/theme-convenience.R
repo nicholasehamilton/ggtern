@@ -30,9 +30,9 @@
 #'   \item \code{\link[=themeelements]{Ternary Theme Elements}} 
 #' }
 #' 
-#' @aliases modifynewthemes modifyterntheme convenience
-#' @name modifyterntheme
-#' @rdname modifyterntheme
+#' @aliases modifynewthemes modifyterntheme convenience-functions
+#' @name convenience
+#' @rdname convenience
 #' @examples
 #' \donttest{
 #' #Load data and create the base plot.

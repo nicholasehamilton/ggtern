@@ -1,9 +1,9 @@
-\name{labsnew}
+\name{labels}
 \alias{Llab}
 \alias{Rlab}
 \alias{Tlab}
 \alias{Wlab}
-\alias{labsnew}
+\alias{labels}
 \alias{zlab}
 \title{Change Axis labels and legend titles}
 \usage{

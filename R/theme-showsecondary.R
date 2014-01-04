@@ -23,49 +23,49 @@
 #' plot + theme_noprimary() + theme_nosecondary()
 #' plot + theme_showticks()
 #' plot + theme_hideticks()
-#' @rdname ticksprimsec
-#' @name ticksprimsec
+#' @rdname convenience-ticks
+#' @name convenience-ticks
 NULL
 
 #' \code{theme_noprimary} or \code{theme_hideprimary} (Alias) are functions that apepnds to the current theme a flag to switch OFF the primary ticks
-#' @rdname ticksprimsec
+#' @rdname convenience-ticks
 #' @export
 theme_noprimary   <- function(){.theme_showprimary(FALSE)}
 
 #'
-#' @rdname ticksprimsec
+#' @rdname convenience-ticks
 #' @export
 theme_hideprimary <- theme_noprimary
 
 #' \code{theme_showprimary} is a function that apepnds to the current theme a flag to switch ON the primary ticks
-#' @rdname ticksprimsec
+#' @rdname convenience-ticks
 #' @export
 theme_showprimary <- function(){.theme_showprimary(TRUE)}
 
 #' \code{theme_nosecondary} or \code{theme_hidesecondary} (Alias) are functions that apepnds to the current theme a flag to switch OFF the secondary ticks
-#' @rdname ticksprimsec
+#' @rdname convenience-ticks
 #' @export
 theme_nosecondary   <- function(){.theme_showsecondary(FALSE)}
 
-#' @rdname ticksprimsec
+#' @rdname convenience-ticks
 #' @export
 theme_hidesecondary <- theme_nosecondary
 
 #' \code{theme_showsecondary} is a function that apepnds to the current theme a flag to switch ON the secondary ticks
-#' @rdname ticksprimsec
+#' @rdname convenience-ticks
 #' @export
 theme_showsecondary <- function(){.theme_showsecondary(TRUE)}
 
 #' \code{theme_showticks(), themehideticks(), theme_noticks()} are functions that switch ON or OFF BOTH the primary or secondary ticks.
-#' @rdname ticksprimsec
+#' @rdname convenience-ticks
 #' @export
 theme_showticks <- function(){theme_showprimary() + theme_showsecondary()}
 
-#' @rdname ticksprimsec
+#' @rdname convenience-ticks
 #' @export
 theme_hideticks <- function(){theme_hideprimary() + theme_hidesecondary()}
 
-#' @rdname ticksprimsec
+#' @rdname convenience-ticks
 #' @export
 theme_noticks   <- theme_hideticks
 

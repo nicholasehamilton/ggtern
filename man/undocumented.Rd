@@ -17,7 +17,6 @@
 \alias{remove_outside}
 \alias{set_last_coord}
 \alias{sink_density}
-\alias{trytransform}
 \alias{undocumented}
 \title{Internal Functions}
 \format{functions and objects}
@@ -39,8 +38,6 @@
 
   find_global(name, env = environment())
 
-  trytransform(data, coord)
-
   remove_outside(data)
 
   sink_density(df, remove = TRUE,
@@ -53,6 +50,12 @@
   cullAndConstrain(data)
 }
 \arguments{
+  \item{x}{logical input to check}
+
+  \item{a}{value to return if \code{x} is TRUE}
+
+  \item{b}{value to return if \code{x} is FALSE}
+
   \item{coordinates}{ggtern coordinate system, inheriting
   "ternary" and "coord" classes.}
 
@@ -80,10 +83,6 @@
 
   \item{env}{environment to search within as first
   priority}
-
-  \item{data}{the dataset}
-
-  \item{coord}{the coordinates}
 
   \item{data}{data.frame}
 
@@ -123,10 +122,6 @@
   \code{Geom} is a local copy of the ggplot2 Gom top-level
   proto
 
-  \code{ggtern} makes use of several non-exported internal
-  functions, a list of the internal functions is as
-  follows:
-
   \code{ifthenelse} function takes input arguments
   \code{x}, \code{a} and \code{b} and returns \code{a} if
   \code{x} is \code{TRUE}, else, returns \code{b}
@@ -155,10 +150,6 @@
   however, the modification is such that the function now
   additionally searches within the \code{ggtern} namespace
   prior to the \code{ggplot2} namespace.
-
-  \code{trytransform} is an internal function which
-  attempts to make ternary transformation. If fails, the
-  original data is returned.
 
   \code{remove_outside} is a function that removes, from an
   input datases, all the rows wich are outside the ternary
@@ -190,5 +181,4 @@ find_global('scale_x_continuous')
   \code{\link[grid]{arrow}}
 }
 \keyword{datasets}
-\keyword{internal}
 

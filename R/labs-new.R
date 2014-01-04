@@ -6,8 +6,8 @@
 #' as is \code{Llab} and \code{\link{ylab}}, and \code{Rlab} and \code{zlab}.
 #' \code{Wlab} changes the ternary arrow suffix. (ie atomic percent, weight percent etc.)
 #' @param label the label value to change
-#' @rdname labsnew
-#' @name labsnew
+#' @rdname ggtern-labels
+#' @name labels
 #' @seealso \code{\link[ggplot2]{labs}}
 #' @examples
 #' data(Feldspar)
@@ -20,22 +20,22 @@
 #' @export
 NULL
 
-#' @rdname labsnew
+#' @rdname ggtern-labels
 #' @export
 zlab <- function(label){labs(z=label)}
 
-#' @rdname labsnew
+#' @rdname ggtern-labels
 #' @export
 Tlab <- function(label){labs(T=label)}
 
-#' @rdname labsnew
+#' @rdname ggtern-labels
 #' @export
 Llab <- function(label){labs(L=label)}
 
-#' @rdname labsnew
+#' @rdname ggtern-labels
 #' @export
 Rlab <- function(label){labs(R=label)}
 
-#' @rdname labsnew
+#' @rdname ggtern-labels
 #' @export
 Wlab <- function(label){labs(W=label)}

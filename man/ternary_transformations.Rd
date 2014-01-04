@@ -1,11 +1,15 @@
-\name{transform_tern_to_cart}
+\name{ternary_transformations}
+\alias{ternary_transformations}
 \alias{transform_tern_to_cart}
-\title{Transform Ternary Coordinates to Cartesian Coordinates}
+\alias{trytransform}
+\title{Ternary Transformations}
 \usage{
   transform_tern_to_cart(T, L, R,
     data = data.frame(T = T, L = L, R = R), ...,
     Tlim = c(0, 1), Llim = c(0, 1), Rlim = c(0, 1),
     scale = TRUE)
+
+  trytransform(data, coord)
 }
 \arguments{
   \item{T}{the concentrations of the \strong{Top} species
@@ -33,15 +37,27 @@
   \item{Llim}{the limits of the left axis}
 
   \item{Rlim}{the limits of the right axis}
+
+  \item{data}{the dataset}
+
+  \item{coord}{the coordinates}
 }
 \value{
-  \code{data.frame} object with columns \code{x} and
-  \code{y} representing the transformed coordinates, and,
-  number of rows equal to that of the \code{data} argument.
-  In other words, a '1 to 1' transformation from the
-  ternary to the cartesian space.
+  \code{transform_tern_to_cart} returns a \code{data.frame}
+  object with columns \code{x} and \code{y} representing
+  the transformed coordinates, and, number of rows equal to
+  that of the \code{data} argument. In other words, a '1 to
+  1' transformation from the ternary to the cartesian
+  space.
+
+  \code{trytransform} returns a \code{data.frame} object
+  regardless of the success of the function operation.
 }
 \description{
+  Functions relating to the transformation from the ternary
+  coordinate systems, to the cartesian coordinate system.
+}
+\section{Transform Ternary Coordinates to Cartesian Coordinates}{
   \code{transform_tern_to_cart(...)} is a function that
   takes input numeric vectors for the \code{T}, \code{L}
   and \code{R} species, or, alternatively, a data.frame
@@ -52,8 +68,7 @@
   respectively. The limits for \code{T}, \code{L} and
   \code{R} \strong{MAY NOT NECESSARILY} be in the range
   \code{[0,1]}, however, this is the default range.
-}
-\details{
+
   Since the constituents of each ternary points must sum to
   \code{1.0}, the user has the option to scale the data so
   that this is satisfied. Negative values \emph{may} be of
@@ -77,6 +92,12 @@
   \code{min(Rlim) = 1} AND} \item{\code{min(Tlim) +
   min(Llim)} + \strong{max(Rlim)} = 1} }
 }
+
+\section{Attempt Transformation from Ternary to Cartesian Coordinates}{
+  \code{trytransform} is an internal function which
+  attempts to make ternary transformation. If fails, the
+  original data is returned.
+}
 \examples{
 #Species Concentrations
 T=c(1,0,0) #TOP
@@ -85,4 +106,5 @@ R=c(0,0,1) #RIGHT
 #Transform
 transform_tern_to_cart(T,L,R)
 }
+\keyword{internal}
 

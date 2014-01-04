@@ -1,4 +1,4 @@
-\name{statTLRline}
+\name{constant-line}
 \alias{GeomLline}
 \alias{GeomRline}
 \alias{GeomTline}
@@ -8,10 +8,10 @@
 \alias{StatRline}
 \alias{StatTline}
 \alias{Tline}
+\alias{constant-line}
 \alias{geom_Lline}
 \alias{geom_Rline}
 \alias{geom_Tline}
-\alias{statTLRline}
 \alias{stat_Lline}
 \alias{stat_Rline}
 \alias{stat_Tline}

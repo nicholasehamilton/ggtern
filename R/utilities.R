@@ -1,12 +1,7 @@
-#' Internal Function
-#' 
-#' @description \code{ggtern} makes use of several non-exported internal functions, a list of the internal functions is as follows:
-#' @name undocumented
-#' @rdname undocumented
-#' @aliases internal
-NULL
-
 #' \code{ifthenelse} function takes input arguments \code{x}, \code{a} and \code{b} and returns \code{a} if \code{x} is \code{TRUE}, else, returns \code{b}
+#' @param x logical input to check
+#' @param a value to return if \code{x} is TRUE
+#' @param b value to return if \code{x} is FALSE
 #' @rdname undocumented
 ifthenelse <- function(x,a,b){
   if(!is.logical(x))stop("x argument must be logical")
@@ -70,8 +65,11 @@ get_tern_extremes <- function(coordinates,verbose=F,expand=0){
   invisible(ret)
 }
 
-#' Transform Ternary Coordinates to Cartesian Coordinates
+#' Ternary Transformations
 #' 
+#' Functions relating to the transformation from the ternary coordinate systems, to the cartesian coordinate system.
+#' 
+#' @section Transform Ternary Coordinates to Cartesian Coordinates:
 #' \code{transform_tern_to_cart(...)} is a function that takes input numeric vectors for the \code{T}, \code{L} and \code{R} species, 
 #' or, alternatively, a data.frame with columns \code{T}, \code{L} and \code{R} (Mandatory Column Names), and, transforms the data from the ternary space, 
 #' to the cartesian space where \code{x} and \code{y} are in the range \code{[0,1]} and [0,\eqn{sin(\pi/3)}] respectively.
@@ -103,8 +101,11 @@ get_tern_extremes <- function(coordinates,verbose=F,expand=0){
 #' @param Tlim the limits of the top axis
 #' @param Llim the limits of the left axis
 #' @param Rlim the limits of the right axis
-#' @return \code{data.frame} object with columns \code{x} and \code{y} representing the transformed coordinates, and, number of rows
+#' @return \code{transform_tern_to_cart} returns a \code{data.frame} object with columns \code{x} and \code{y} representing the transformed coordinates, and, number of rows
 #' equal to that of the \code{data} argument. In other words, a '1 to 1' transformation from the ternary to the cartesian space. 
+#' @rdname ternary_transformations
+#' @name   ternary_transformations
+#' @aliases transform_tern_to_cart
 #' @examples
 #' #Species Concentrations
 #' T=c(1,0,0) #TOP 
@@ -207,12 +208,16 @@ find_global <- function (name, env=environment()){
 }
 
 
+#' @section Attempt Transformation from Ternary to Cartesian Coordinates:
 #' \code{trytransform} is an internal function which attempts to make ternary transformation. 
 #' If fails, the original data is returned.
 #' @param data the dataset
 #' @param coord the coordinates
 #' @keywords internal
-#' @rdname undocumented
+#' @aliases trytransform
+#' @return \code{trytransform} returns a \code{data.frame} object regardless of the success of the function operation.
+#' @name   ternary_transformations
+#' @rdname ternary_transformations
 trytransform <- function(data,coord){
   if(missing(coord)){stop("coord are required")}
   bup <- data

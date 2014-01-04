@@ -8,8 +8,8 @@
 #' @aliases geom_Tline geom_Lline geom_Rline stat_Tline stat_Rline stat_Lline
 #' @inheritParams ggplot2::geom_hline
 #' @inheritParams ggplot2::stat_hline
-#' @rdname statTLRline
-#' @name   statTLRline
+#' @rdname constant-line
+#' @name   constant-line
 #' @param Tintercept for geom_Tline and stat_Tline, the constant value of the THS apex constituent.
 #' @param Lintercept for geom_Lline and stat_Lline, the constant value of the LHS apex constituent.
 #' @param Rintercept for geom_Rline and stat_Rline, the constant value of the RHS apex constituent.
@@ -30,7 +30,7 @@
 #' @export
 NULL
 
-#' @rdname statTLRline
+#' @rdname constant-line
 #' @aliases GeomTline
 #' @export
 geom_Tline <- function (mapping = NULL, data = NULL, stat = "Tline", position = "identity", show_guide = FALSE, ...) { 

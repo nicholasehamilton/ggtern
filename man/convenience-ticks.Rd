@@ -1,4 +1,5 @@
-\name{ticksprimsec}
+\name{convenience-ticks}
+\alias{convenience-ticks}
 \alias{theme_hideprimary}
 \alias{theme_hidesecondary}
 \alias{theme_hideticks}
@@ -8,7 +9,6 @@
 \alias{theme_showprimary}
 \alias{theme_showsecondary}
 \alias{theme_showticks}
-\alias{ticksprimsec}
 \title{Show or Hide the Primary/Secondary Ticks}
 \usage{
   theme_noprimary()

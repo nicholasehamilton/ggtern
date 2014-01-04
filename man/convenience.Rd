@@ -1,5 +1,6 @@
-\name{modifyterntheme}
+\name{convenience}
 \alias{convenience}
+\alias{convenience-functions}
 \alias{modifynewthemes}
 \alias{modifyterntheme}
 \title{Theme Convenience Functions}
