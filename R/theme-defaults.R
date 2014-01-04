@@ -26,6 +26,15 @@
                              grid.L        ="white",
                              grid.R        ="white",
                              grid.minor    ="grey95",
+                             axis.T        = col.T,
+                             axis.L        = col.L,
+                             axis.R        = col.R,
+                             title.T       = col.T,
+                             title.L       = col.L,
+                             title.R       = col.R,
+                             arrow.text.T  = col.T,
+                             arrow.text.L  = col.L,
+                             arrow.text.R  = col.R,
                              grid.linetype =1,
                              grid.linetype.minor = grid.linetype,
                              grid.major.size=NULL){  
@@ -63,9 +72,9 @@
       
       axis.tern               = element_line(size=0.5,linetype="solid"),
       axis.tern.line          = element_line(),
-      axis.tern.line.T        = element_line(colour=col.T),
-      axis.tern.line.L        = element_line(colour=col.L),
-      axis.tern.line.R        = element_line(colour=col.R),
+      axis.tern.line.T        = element_line(colour=axis.T),
+      axis.tern.line.L        = element_line(colour=axis.L),
+      axis.tern.line.R        = element_line(colour=axis.R),
       
       axis.tern.arrow         = element_line(lineend=arrow(length=unit(2.5,"mm"))),
       axis.tern.arrow.T       = element_line(colour=col.T),
@@ -78,14 +87,14 @@
       axis.tern.text.R        = element_text(colour=col.R,vjust=0.5,hjust= 1.2,angle =0),
       
       axis.tern.arrow.text    = element_text(size=size.text,hjust=0.5),
-      axis.tern.arrow.text.T  = element_text(colour=col.T, vjust=-0.2, angle =0),
-      axis.tern.arrow.text.L  = element_text(colour=col.L, vjust=-0.2, angle =0),
-      axis.tern.arrow.text.R  = element_text(colour=col.R, vjust= 1.2, angle =0),
+      axis.tern.arrow.text.T  = element_text(colour=arrow.text.T, vjust=-0.2, angle =0),
+      axis.tern.arrow.text.L  = element_text(colour=arrow.text.L, vjust=-0.2, angle =0),
+      axis.tern.arrow.text.R  = element_text(colour=arrow.text.R, vjust= 1.2, angle =0),
       
       axis.tern.title         = element_text(size  =size.title, angle=0,face="bold",hjust=0.5 ,vjust=0.5),
-      axis.tern.title.T       = element_text(colour=col.T,vjust= 0.0),
-      axis.tern.title.L       = element_text(colour=col.L,hjust= 1.0),
-      axis.tern.title.R       = element_text(colour=col.R,hjust= 0.0),
+      axis.tern.title.T       = element_text(colour=title.T,vjust= 0.0),
+      axis.tern.title.L       = element_text(colour=title.L,hjust= 1.0),
+      axis.tern.title.R       = element_text(colour=title.R,hjust= 0.0),
       
       panel.grid.tern         = element_line(linetype=grid.linetype),
       panel.grid.tern.major   = element_line(color="black",size=grid.major.size),
@@ -120,7 +129,11 @@
 #' @export
 theme_gray  <- function(base_size = 12, base_family = ""){
   #if(!inherits(get_last_coord(),"ternary")){return(ggplot2::theme_gray(base_size=base_size,base_family=base_family))}
-  .theme_tern(base_size=base_size, base_family=base_family, col.BG="grey90",col.T="black",col.L="black",col.R="black")
+  .theme_tern(base_size=base_size, base_family=base_family, 
+              col.BG="grey90",col.T="gray50",col.L="gray50",col.R="gray50",
+              axis.T="transparent",axis.L="transparent",axis.R="transparent",
+              title.T="black",title.L="black",title.R="black",
+              arrow.text.T="black",arrow.text.L="black",arrow.text.R="black")
 }
 theme_tern_gray <- function(base_size = 12, base_family = ""){
   tern_dep("1.0.1.3","theme_tern_gray has been superceded by the ggplot2 standard theme_gray")
