@@ -2,32 +2,33 @@
 
 #' Draw plot on current graphics device.
 #'
+#' \code{print.ggtern} is the default print function for \code{\link{ggtern}} objects.
 #' @inheritParams print.ggplot
-#' @export
+#' @rdname print
 #' @method print ggtern
-print.ggtern <- function(x, newpage = is.null(vp), vp = NULL, ...) {  
-  print.ggplot(x=x,newpage=newpage,vp=NULL,...)
-}
+#' @export
+print.ggtern <- function(x, newpage = is.null(vp), vp = NULL, ...){print.ggplot(x=x,newpage=newpage,vp=NULL,...)}
 
 #' Draw plot on current graphics device.
 #'
+#' \code{print.ggplot} is the default print function for \code{ggplot} objects.
 #' @param x plot to display
 #' @param newpage draw new (empty) page first?
 #' @param vp viewport to draw plot in
 #' @param ... other arguments not used by this method
 #' @keywords hplot
+#' @rdname print
 #' @export
 #' @method print ggplot
 print.ggplot <- function(x, newpage = is.null(vp), vp = NULL, ...) {
   ggint$set_last_plot(x)
-  if (newpage) grid.newpage()
-  
+  if(newpage) 
+    grid.newpage()
   data <- ggplot_build(x)
-  
   gtable <- ggplot_gtable(data)
-  if (is.null(vp)) {
+  if (is.null(vp)){
     grid.draw(gtable) 
-  } else {
+  }else{
     if (is.character(vp)) seekViewport(vp) else pushViewport(vp)
     grid.draw(gtable) 
     upViewport()

@@ -18,6 +18,7 @@
 \alias{set_last_coord}
 \alias{sink_density}
 \alias{undocumented}
+\alias{unit}
 \title{Internal Functions}
 \format{functions and objects}
 \usage{
@@ -168,7 +169,12 @@
   implemented at this point in time, ignore it.
 
   \code{arrow} is an exported instance of the imported grid
-  arrow function
+  arrow function. For further information, refer to:
+  \link[grid]{arrow}.
+
+  \code{unit} is an exported instance of the imported grid
+  unit function. For further information, refer to:
+  \link[grid]{unit}.
 }
 \examples{
 get_tern_extremes(coordinates = coord_tern())
@@ -177,8 +183,6 @@ find_global('scale_x_continuous')
 }
 \seealso{
   \code{\link[ggplot2]{calc_element}}
-
-  \code{\link[grid]{arrow}}
 }
 \keyword{datasets}
 

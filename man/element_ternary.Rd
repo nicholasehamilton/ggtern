@@ -37,39 +37,22 @@
   limits of the cartesian plot area. DEPRECIATED}
 }
 \description{
-  NOTE: This function has been entirely depreciated, and,
-  has been replaced by individual theme elements:
-  \code{\link{axis.tern.showarrows}}
-  \code{\link{axis.tern.padding}}
-  \code{\link{axis.tern.arrowsep}}
-  \code{\link{axis.tern.arrowstart}}
-  \code{\link{axis.tern.arrowfinish}}
-  \code{\link{axis.tern.vshift}}
-  \code{\link{axis.tern.hshift}}
-  \code{\link{axis.tern.ticklength.major}}
-  \code{\link{axis.tern.ticklength.minor}}
+  \strong{NB:} This function has been entirely
+  \strong{DEPRECIATED} as of version 1.0.1.3 and, has been
+  replaced by individual theme elements: \enumerate{ \item
+  \code{\link{axis.tern.showarrows}} \item
+  \code{\link{axis.tern.padding}} \item
+  \code{\link{axis.tern.arrowsep}} \item
+  \code{\link{axis.tern.arrowstart}} \item
+  \code{\link{axis.tern.arrowfinish}} \item
+  \code{\link{axis.tern.vshift}} \item
+  \code{\link{axis.tern.hshift}} \item
+  \code{\link{axis.tern.ticklength.major}} \item
+  \code{\link{axis.tern.ticklength.minor}} }
 }
 \details{
   Used to define the layout of some of the ggtern plot
   features which are unique to the ternary diagrams , and
   hence, this package.
-
-  Note that some of these items, unlike
-  \code{\link{ggplot2}} which permits absolute distances
-  (ie say unit(1,"cm")) via the \code{\link{grid}} package,
-  are instead defined as a relative length to the limits
-  imposed by the underlying \code{x} and \code{y} axes.
-
-  For example, the ternary axes are rendered directly onto
-  the plot area, (rather than using an exclusive grid
-  component) and since the \code{x} limits (unless changed)
-  are between \code{[0,1]}, then a relative length of
-  \code{0.02} represents a length that is approximately
-  \code{2\%} of the plot edges from tip to tip. Elements
-  which are subject to this include the \code{padding},
-  \code{arrowsep}, \code{ticklength.major} and
-  \code{ticklength.minor}. This is perhaps not ideal,
-  however, seemed to be a necessary sacrifice in order to
-  produce these plots.
 }
 

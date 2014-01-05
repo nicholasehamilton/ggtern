@@ -6,7 +6,7 @@
 #' @rdname showhidegrid
 #' @export
 theme_nogrid_minor <- function(){
-  theme(panel.grid.tern.minor=element_blank(),
+  theme(panel.grid.tern.minor  =element_blank(),
         panel.grid.tern.minor.T=element_blank(),
         panel.grid.tern.minor.L=element_blank(),
         panel.grid.tern.minor.R=element_blank()
@@ -23,7 +23,7 @@ tern_nogrid_minor <- theme_nogrid_minor
 #' @aliases theme_tern_nogrid_major theme_nogrid_major tern_nogrid_major
 #' @export
 theme_nogrid_major <- function(){
-  theme(panel.grid.tern.major=element_blank(),
+  theme(panel.grid.tern.major  =element_blank(),
         panel.grid.tern.major.T=element_blank(),
         panel.grid.tern.major.L=element_blank(),
         panel.grid.tern.major.R=element_blank()
