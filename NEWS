@@ -1,3 +1,7 @@
+ggtern 1.0.3.0
+----------------------------------------------------------------
+* Grid rendered AFTER border
+
 ggtern 1.0.2.0
 ----------------------------------------------------------------
 * Ordering of grid rendering was changed relative to the remaining background items

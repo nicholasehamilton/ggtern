@@ -25,10 +25,8 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Lli
   }
   
   ##Validate x and y lims...
-  xlim <- ifthenelse(!is.numeric(xlim) & is.numeric(ylim),ylim,xlim)
-  ylim <- ifthenelse(!is.numeric(ylim) & is.numeric(xlim),xlim,ylim)
-  xlim <- .is.numericor(xlim,c(0,1)); xlim <- sort(xlim); 
-  ylim <- .is.numericor(ylim,c(0,1)); ylim <- sort(ylim);
+  xlim <- sort(.is.numericor(ifthenelse(!is.numeric(xlim) & is.numeric(ylim),ylim,xlim),c(0,1)))
+  ylim <- sort(.is.numericor(ifthenelse(!is.numeric(ylim) & is.numeric(xlim),xlim,ylim),c(0,1)))
   
   ##Put into correct aspect.
   if(diff(xlim) != diff(ylim)){
@@ -233,8 +231,8 @@ coord_render_bg.ternary <- function(coord,details,theme){
   
   #Build the plot region.
   items <- .render.background(data.extreme,items,theme)     #BACKGROUND...
-  items <- .render.grids(data.extreme,items,theme,details)  #GRIDS
   items <- .render.border(data.extreme,items,theme)         #BORDER
+  items <- .render.grids(data.extreme,items,theme,details)  #GRIDS
   items <- .render.arrows(data.extreme,items,theme,details) #ARROWS
   items <- .render.titles(data.extreme,items,theme,details) #MAIN TITLES
   
