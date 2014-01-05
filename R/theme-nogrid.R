@@ -13,7 +13,7 @@ theme_nogrid_minor <- function(){
   ) 
 }
 theme_tern_nogrid_minor <- function(){
-  tern_dep("1.0.1.3","theme_tern_nogrid_minor has been superceded by theme_nogrid_minor")
+  tern_dep("1.0.1.3","theme_tern_nogrid_minor() has been superceded by theme_nogrid_minor()")
   theme_nogrid_minor()
 }
 tern_nogrid_minor <- theme_nogrid_minor
@@ -30,7 +30,7 @@ theme_nogrid_major <- function(){
   ) 
 }
 theme_tern_nogrid_major <- function(){
-  tern_dep("1.0.1.3","theme_tern_nogrid_major has been superceded by theme_nogrid_major")
+  tern_dep("1.0.1.3","theme_tern_nogrid_major() has been superceded by theme_nogrid_major()")
   theme_nogrid_major()
 }
 tern_nogrid_major <- theme_nogrid_major
@@ -43,7 +43,7 @@ theme_nogrid <- function(){
   theme_nogrid_minor() + theme_nogrid_major()
 }
 theme_tern_nogrid <- function(){
-  tern_dep("1.0.1.3","theme_tern_nogrid has been superceded by theme_nogrid")
+  tern_dep("1.0.1.3","theme_tern_nogrid() has been superceded by theme_nogrid()")
   theme_nogrid()
 }
-tern_nogrid    <- tern_hidegrid <- theme_hidegrid <- theme_nogrid
+tern_nogrid    <- tern_hidegrid <- theme_hidegrid <- theme_nogrid #aliasses.
