@@ -40,15 +40,16 @@ geom_Tline <- function (mapping = NULL, data = NULL, stat = "Tline", position = 
 GeomTline <- proto(Geom, {
   objname <- "Tline"
   new <- function(., data = NULL, mapping = NULL, Tintercept = NULL, ...) {
-    if (is.numeric(Tintercept)) {
+    if(is.numeric(Tintercept)){
       data <- data.frame(Tintercept = Tintercept)
       Tintercept <- NULL
       mapping <- aes_all(names(data))
     }
     .super$new(., data = data, mapping = mapping, inherit.aes = FALSE, Tintercept = Tintercept, ...)
   }
-  draw <- function(., data, scales, coordinates, ...) {
-    ggint$GeomSegment$draw(unique(data[,which(!colnames(data) %in% "Tintercept")]),scales,coordinates)
+  draw <- function(., data, scales, coordinates, ...){
+    data <- unique(data[,which(!colnames(data) %in% "TinterceptXXX")])
+    ggint$GeomSegment$draw(data,scales,coordinates,...)
   }
   default_stat <- function(.) StatTline
   default_aes <- function(.) aes(colour="black", size=0.5, linetype=1, alpha = NA)

@@ -25,8 +25,8 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Lli
   }
   
   ##Validate x and y lims...
-  xlim <- sort(.is.numericor(ifthenelse(!is.numeric(xlim) & is.numeric(ylim),ylim,xlim),c(0,1)))
-  ylim <- sort(.is.numericor(ifthenelse(!is.numeric(ylim) & is.numeric(xlim),xlim,ylim),c(0,1)))
+  xlim <- sort(is.numericor(ifthenelse(!is.numeric(xlim) & is.numeric(ylim),ylim,xlim),c(0,1)))
+  ylim <- sort(is.numericor(ifthenelse(!is.numeric(ylim) & is.numeric(xlim),xlim,ylim),c(0,1)))
   
   ##Put into correct aspect.
   if(diff(xlim) != diff(ylim)){
@@ -98,7 +98,7 @@ coord_transform.ternary <- function(coord, data, details, verbose=FALSE,revertTo
     #only keep records in poly
     if(discard){
       #EXPAND THE MAX LIMITS
-      TOLLERANCE <- max(.is.numericor(getOption("tern.pip.tollerance"),0.01))*max(as.numeric(sapply(lim,function(x)diff(x))))
+      TOLLERANCE <- max(is.numericor(getOption("tern.pip.tollerance"),0.01))*max(as.numeric(sapply(lim,function(x)diff(x))))
       
       #Get the extremes (PLUS TOLLERANCE) to determine if points are outside the plot area.
       xtrm <- get_tern_extremes(coord,expand=TOLLERANCE)[,ix.tern]
@@ -379,7 +379,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
     },error=function(e){
       #quietly
     })
-    limits <- .is.numericor(limits,c(0,1))
+    limits <- is.numericor(limits,c(0,1))
     b <- limits[length(limits)]; a <- limits[1] #The max/min limits.
     ix <- min(ix,ifthenelse(major,length(tl.major),length(tl.minor)))
     majmin        <- ifthenelse(major,"major","minor")  #Major or Minor Element Name part.

@@ -53,7 +53,7 @@ ggplot_build <- function(plot) {
     
     ##Update the scales limits from the coordinate
     for(X in scales.tern)
-      plot$coordinates$limits[[X]] <- .is.numericor(.select.lim(plot$scales$get_scales(X)$limits,
+      plot$coordinates$limits[[X]] <- is.numericor(.select.lim(plot$scales$get_scales(X)$limits,
                                                                 plot$coordinates$limits[[X]]),c(0,1))
     
     #STORE COORDINATES FOR USE BY OTHER METHODS.

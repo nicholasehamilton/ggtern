@@ -8,7 +8,11 @@ ifthenelse <- function(x,a,b){
   if(x){a}else{b}
 }
 
-.is.numericor <- function(a,b){
+#' \code{is.numericor} function takes input arguments \code{a} and \code{b} and returns \code{a} if \code{a} is numeric, else, returns \code{b}
+#' @param a value to return if \code{a} is numeric
+#' @param b value to return if \code{a} is not numeric
+#' @rdname undocumented
+is.numericor <- function(a,b){
   if(missing(b)){stop("b must be provided")}
   if(!is.numeric(b)){stop("b must be numeric")}
   ifthenelse(is.numeric(a),a,b)
@@ -23,7 +27,7 @@ ifthenelse <- function(x,a,b){
 #' @return \code{get_tern_extremes} returns data.frame representing the T, L and R amounts (Columns) at each of the tips (extremes) of the ternary plot area (Rows)
 #' @rdname undocumented
 get_tern_extremes <- function(coordinates,verbose=F,expand=0){
-  expand = max(0,.is.numericor(expand[1],0)); 
+  expand = max(0,is.numericor(expand[1],0)); 
   expand <- c(-expand/2,expand)
   
   if(!inherits(coordinates,"ternary") & !inherits(coordinates,"coord"))stop("coordinates must be ternary coordinates")
@@ -241,7 +245,7 @@ trytransform <- function(data,coord){
   if(identical(a,default))a=waiver()
   if(identical(b,default))b=waiver()
   if(identical(a,b)){
-    .is.numericor(a,default)
+    is.numericor(a,default)
   }else if(!is.numeric(a) & is.numeric(b)){
     b
   }else if(is.numeric(a) & !is.numeric(b)){

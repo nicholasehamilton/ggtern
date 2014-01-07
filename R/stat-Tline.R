@@ -12,11 +12,10 @@ StatTline <- proto(ggint$Stat, {
     
     tern_stop(.$objname)
     
-    lc <- get_last_coord()
-    
-    Tlim <- lc$limits$T; Tlim <- ifthenelse(!is.numeric(Tlim),c(1,0),Tlim)
-    Llim <- lc$limits$L; Llim <- ifthenelse(!is.numeric(Llim),c(1,0),Llim)
-    Rlim <- lc$limits$R; Rlim <- ifthenelse(!is.numeric(Rlim),c(1,0),Rlim)
+    lc <- get_last_coord()    
+    Tlim <- is.numericor(lc$limits$T,c(1,0))
+    Llim <- is.numericor(lc$limits$L,c(1,0))
+    Rlim <- is.numericor(lc$limits$R,c(1,0))
     
     unique(within(data, {
       x    <- Tintercept
