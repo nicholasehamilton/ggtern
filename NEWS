@@ -2,6 +2,7 @@ ggtern 1.0.3.0
 ----------------------------------------------------------------
 * Grid rendered AFTER border
 * Documentation Improvements
+* Inclusion of USDA Soil Classification Data, accessed by: data(USDA)
 
 ggtern 1.0.2.0
 ----------------------------------------------------------------
