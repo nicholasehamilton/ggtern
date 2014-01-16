@@ -14,6 +14,7 @@
 \alias{ggint}
 \alias{ifthenelse}
 \alias{internal}
+\alias{is.numericor}
 \alias{remove_outside}
 \alias{set_last_coord}
 \alias{sink_density}
@@ -29,6 +30,8 @@
   Geom
 
   ifthenelse(x, a, b)
+
+  is.numericor(a, b)
 
   get_tern_extremes(coordinates, verbose = F, expand = 0)
 
@@ -56,6 +59,10 @@
   \item{a}{value to return if \code{x} is TRUE}
 
   \item{b}{value to return if \code{x} is FALSE}
+
+  \item{a}{value to return if \code{a} is numeric}
+
+  \item{b}{value to return if \code{a} is not numeric}
 
   \item{coordinates}{ggtern coordinate system, inheriting
   "ternary" and "coord" classes.}
@@ -126,6 +133,10 @@
   \code{ifthenelse} function takes input arguments
   \code{x}, \code{a} and \code{b} and returns \code{a} if
   \code{x} is \code{TRUE}, else, returns \code{b}
+
+  \code{is.numericor} function takes input arguments
+  \code{a} and \code{b} and returns \code{a} if \code{a} is
+  numeric, else, returns \code{b}
 
   \code{get_tern_extremes} determines the limiting ternary
   coordinates given input coordinates.

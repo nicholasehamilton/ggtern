@@ -16,9 +16,10 @@
 NULL
 
 #' @name USDA
-#' @title USDA Textural Classification
+#' @title USDA Textural Classification Data
 #' @description This dataset was issued by the United States Department of Agriculture (USDA) 
-#' in the form of a ternary diagram, this original ternary diagram has been converted and included here.
+#' in the form of a ternary diagram, this original ternary diagram has been converted to numerical data 
+#' and included here.
 #' @docType data
 #' @usage data(USDA)
 #' @format 1row per point, many points per classification representing the extremes of the area.
