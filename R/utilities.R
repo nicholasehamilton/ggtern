@@ -8,14 +8,14 @@ ifthenelse <- function(x,a,b){
   if(x){a}else{b}
 }
 
-#' \code{is.numericor} function takes input arguments \code{a} and \code{b} and returns \code{a} if \code{a} is numeric, else, returns \code{b}
-#' @param a value to return if \code{a} is numeric
-#' @param b value to return if \code{a} is not numeric
+#' \code{is.numericor} function takes input arguments \code{A} and \code{B} and returns \code{A} if \code{A} is numeric, else, returns \code{B}
+#' @param A value to return if \code{A} is numeric
+#' @param B value to return if \code{A} is NOT numeric
 #' @rdname undocumented
-is.numericor <- function(a,b){
-  if(missing(b)){stop("b must be provided")}
-  if(!is.numeric(b)){stop("b must be numeric")}
-  ifthenelse(is.numeric(a),a,b)
+is.numericor <- function(A,B){
+  if(missing(B)){stop("b must be provided")}
+  if(!is.numeric(B)){stop("b must be numeric")}
+  ifthenelse(is.numeric(A),A,B)
 }
 "%||%" <- function(a, b) {if (!is.null(a)) a else b}
 

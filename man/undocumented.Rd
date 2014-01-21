@@ -31,7 +31,7 @@
 
   ifthenelse(x, a, b)
 
-  is.numericor(a, b)
+  is.numericor(A, B)
 
   get_tern_extremes(coordinates, verbose = F, expand = 0)
 
@@ -60,9 +60,9 @@
 
   \item{b}{value to return if \code{x} is FALSE}
 
-  \item{a}{value to return if \code{a} is numeric}
+  \item{A}{value to return if \code{A} is numeric}
 
-  \item{b}{value to return if \code{a} is not numeric}
+  \item{B}{value to return if \code{A} is NOT numeric}
 
   \item{coordinates}{ggtern coordinate system, inheriting
   "ternary" and "coord" classes.}
@@ -135,8 +135,8 @@
   \code{x} is \code{TRUE}, else, returns \code{b}
 
   \code{is.numericor} function takes input arguments
-  \code{a} and \code{b} and returns \code{a} if \code{a} is
-  numeric, else, returns \code{b}
+  \code{A} and \code{B} and returns \code{A} if \code{A} is
+  numeric, else, returns \code{B}
 
   \code{get_tern_extremes} determines the limiting ternary
   coordinates given input coordinates.
