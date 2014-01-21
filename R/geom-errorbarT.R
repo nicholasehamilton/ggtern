@@ -5,6 +5,7 @@
 #' \code{\link[ggplot2]{geom_errorbarh}} as provided in the base ggplot2 package.
 #' 
 #' @inheritParams ggplot2::geom_point
+#' @param allow.outside logical value indicating whether the error bars can overflow the plot area, if FALSE, bars outiside will be stripped.
 #' @section Aesthetics: 
 #' Additional required aethetics are, for each respectively:
 #' 
@@ -27,6 +28,7 @@
 #' @rdname ternaryerrorbars
 #' @examples
 #' \donttest{
+#' #Example with Dummy Data.
 #' tmp <- data.frame(x=1/3,
 #' y=1/3,
 #' z=1/3,
@@ -37,16 +39,24 @@
 #'   geom_errorbarT(aes(Tmin=Min,Tmax=Max))+
 #'   geom_errorbarL(aes(Lmin=Min,Lmax=Max))+
 #'   geom_errorbarR(aes(Rmin=Min,Rmax=Max)) 
+#'   
+#' #Example with Feldspar Data
+#' data(Feldspar)
+#' Feldspar$Min <- (Feldspar$An - 5)
+#' Feldspar$Max <- (Feldspar$An + 5)
+#' ggtern(data=Feldspar,aes(x=An,y=Ab,z=Or)) + 
+#'   geom_errorbarT(aes(Tmin=Min,Tmax=Max,width=0.01),size=0.2,allow.outside=T) +
+#'   geom_point(fill="white",shape=21)
 #' }
 #' @export
-geom_errorbarT <- function (mapping = NULL, data = NULL, stat = "identity", position = "identity", ...) { 
-  ggint$GeomErrorbarT$new(mapping = mapping, data = data, stat = stat, position = position, ...)
+geom_errorbarT <- function (mapping = NULL, data = NULL, stat = "identity", position = "identity", allow.outside=TRUE,...) { 
+  ggint$GeomErrorbarT$new(mapping = mapping, data = data, stat = stat, position = position, allow.outside=allow.outside,...)
 }
 
 ggint$GeomErrorbarT <- proto(Geom,{
   objname <- "errorbarT"
   default_stat <- function(.) StatIdentity
-  default_aes <- function(.) aes(colour = "black", size=0.5, linetype=1, height=0.5, alpha = NA,width=.01)
+  default_aes <- function(.) aes(colour = "black", size=0.5, linetype=1, height=0.5, alpha = NA)
   guide_geom <- function(.) "path"
   required_aes <- c("x","y","z","Tmax","Tmin")
   reparameterise <- function(., df, params){
@@ -70,7 +80,7 @@ ggint$GeomErrorbarT <- proto(Geom,{
     df
   }
   
-  draw <- function(., data, scales, coordinates, height = NULL, ...) {
+  draw <- function(., data, scales, coordinates, height = NULL,allow.outside,...) {
     required_aes <- sort(unique(c(.$required_aes,coordinates$required_aes)))
     check_required_aesthetics(required_aes, names(data),"geom_errorbarR")
     if(!inherits(coordinates,"ternary"))
@@ -79,41 +89,45 @@ ggint$GeomErrorbarT <- proto(Geom,{
     IX <- coordinates$T  
     df <- with(data, data.frame( 
       x        = ifthenelse(IX == "x",
-                            as.vector(rbind(Tmax,Tmax,NA,Tmax,x,Tmin,NA,Tmin,Tmin)),
+                            as.vector(rbind(Tmax,Tmax,Tmax,x,Tmin,Tmin,Tmin)),
                             as.vector(rbind(ifthenelse(IX=="y",x+LMAX+width,x+LMAX-width),
                                             ifthenelse(IX=="y",x+LMAX-width,x+LMAX+width),
-                                            NA,x+LMAX,x,x+LMIN,NA,
+                                            x+LMAX,x,x+LMIN,
                                             ifthenelse(IX=="y",x+LMIN+width,x+LMIN-width),
                                             ifthenelse(IX=="y",x+LMIN-width,x+LMIN+width))
                             )
       ),
       y        = ifthenelse(IX=="y",
-                            as.vector(rbind(Tmax,Tmax,NA,Tmax,y,Tmin,NA,Tmin,Tmin)),
+                            as.vector(rbind(Tmax,Tmax,Tmax,y,Tmin,Tmin,Tmin)),
                             as.vector(rbind(ifthenelse(IX=="z",y+LMAX+width,y+LMAX-width),
                                             ifthenelse(IX=="z",y+LMAX-width,y+LMAX+width),
-                                            NA,y+LMAX,y,y+LMIN,NA,
+                                            y+LMAX,y,y+LMIN,
                                             ifthenelse(IX=="z",y+LMIN+width,y+LMIN-width),
                                             ifthenelse(IX=="z",y+LMIN-width,y+LMIN+width))
                             )
       ),
       z        = ifthenelse(IX=="z",
-                            as.vector(rbind(Tmax,Tmax,NA,Tmax,z,Tmin,NA,Tmin,Tmin)),
+                            as.vector(rbind(Tmax,Tmax,Tmax,z,Tmin,Tmin,Tmin)),
                             as.vector(rbind(ifthenelse(IX=="x",z+LMAX+width,z+LMAX-width),
                                             ifthenelse(IX=="x",z+LMAX-width,z+LMAX+width),
-                                            NA,z+LMAX,z,z+LMIN,NA,
+                                            z+LMAX,z,z+LMIN,
                                             ifthenelse(IX=="x",z+LMIN+width,z+LMIN-width),
                                             ifthenelse(IX=="x",z+LMIN-width,z+LMIN+width))
                             )
       ),
-      colour   = rep(colour,         each = 9),
-      alpha    = rep(alpha,          each = 9),
-      size     = rep(size,           each = 9),
-      linetype = rep(linetype,       each = 9),
-      group    = apply(expand.grid(rep(1:3,each=3),1:nrow(data))[,2:1],1,function(x)paste(x[1],x[2],sep="-")),
+      colour   = rep(colour,         each = 7),
+      alpha    = rep(alpha,          each = 7),
+      size     = rep(size,           each = 7),
+      linetype = rep(linetype,       each = 7),
+      group    = apply(expand.grid(c(1,1,2,2,2,3,3),1:nrow(data))[,2:1],1,function(x)paste(x[1],x[2],sep="-")),
       #group    = rep(1:(nrow(data)), each = 9),
       stringsAsFactors = FALSE, 
-      row.names = 1:(nrow(data)*9)
+      row.names = 1:(nrow(data)*7)
     ))
-    GeomPath$draw(df,scales,coordinates,...)
+    discard <- getOption("tern.discard.external")
+    options("tern.discard.external" = !allow.outside)
+    ret <- GeomPath$draw(df,scales,coordinates,...)
+    options("tern.discard.external" = discard)
+    ret
   }
 })
