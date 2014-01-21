@@ -10,7 +10,10 @@
                  "Tline",
                  "Lline",
                  "Rline",
-                 "confidence")
+                 "confidence",
+                 "errorbarT",
+                 "errorbarL",
+                 "errorbarR")
 
 .dissaproved <- c("tile",
                   "violin")
@@ -26,6 +29,8 @@
 #'  \item{smooth and density2d-ggtern}
 #'  \item{text}
 #'  \item{rug}
+#'  \item{confidence}
+#'  \item{errorbarT, errorbarL and errorbarR}
 #' }
 #' The balance of the available geometries to ggplot2 are either dissaproved, or, work in progress with regards to this package.
 #' @param layers list of the layers to strip unnaproved layers from.

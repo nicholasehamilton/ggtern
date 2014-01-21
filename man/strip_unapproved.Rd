@@ -19,7 +19,8 @@
   list of approved layers are as follows: \itemize{
   \item{point, path, segment and polygon} \item{Tline,
   Lline and Rline} \item{smooth and density2d-ggtern}
-  \item{text} \item{rug} } The balance of the available
+  \item{text} \item{rug} \item{confidence} \item{errorbarT,
+  errorbarL and errorbarR} } The balance of the available
   geometries to ggplot2 are either dissaproved, or, work in
   progress with regards to this package.
 }

@@ -3,6 +3,7 @@ ggtern 1.0.3.0
 * Grid rendered AFTER border
 * Documentation Improvements
 * Inclusion of USDA Soil Classification Data, accessed by: data(USDA)
+* Creation of New geometries for ternary errorbars, ie, geom_errorbarT, geom_errorbarL and geom_errorbarR
 
 ggtern 1.0.2.0
 ----------------------------------------------------------------
