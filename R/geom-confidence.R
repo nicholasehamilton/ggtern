@@ -6,6 +6,8 @@
 #' @param breaks the confidence intervals, default to 50, 90 and 95 percent.
 #' @param n the numer of points in the approximation for each confidence interval.
 #' @rdname geomconfidence
+#' @section Aesthetics:
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "confidence")}
 #' @aliases GeomConfidence StatConfidence
 #' @examples
 #' \donttest{

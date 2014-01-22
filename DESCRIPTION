@@ -25,6 +25,7 @@ URL: http://www.ggtern.com
 Collate:
   'ggtern-package.R'
   'aaa.R'
+  'utilities-help.R'
   'gg-internal.R'
   'overloaded.R'
   'statnew.R'

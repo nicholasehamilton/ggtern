@@ -4,10 +4,21 @@
 #' \code{coord_tern} is a function which creates a transformation mechanism between the ternary system, and, the cartesian system.
 #' It inherits from the fixed coordinate system, employing fixed ratio between x and y axes once transformed.
 #' 
+#' @section Aesthetics (Required in Each Layer):
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("coord", "tern")}
+#' 
+#' @section Additional Points to Note:
 #' It is important to note that once the \code{coord_tern()} coordinate system has been applied, the base plot object is no longer strictly a ggplot object, 
-#' rather, a ggtern object where several patches have been applied to facilitate correct plotting, including, some limitations on the types of geometries 
-#' which can be used. One such essential patch is, for approved geometries previously requiring \code{x} and \code{y} coordinates, now require an additional \code{z} coordinate. 
-#' \code{\link[ggtern]{geom_segment}} goes one step further in that it requires both an additional \code{z} and \code{zend} coordinate mappings.
+#' rather, a ggtern object where several patches have been applied to facilitate correct plotting.
+#' 
+#' Abovementioned limitations include the types of geometries which can be used (ie approved geometries), 
+#' or modifications to required aesthetic mappings. One such essential patch is, for approved geometries previously 
+#' requiring \code{x} and \code{y} coordinates, now require an additional \code{z} coordinate, and, 
+#' \code{\link[ggtern]{geom_segment}} goes one step further in that it requires both an additional 
+#' \code{z} and \code{zend} coordinate mappings. 
+#' 
+#' In essence, the required aesthetics are the product between what
+#' is required of the 'layer' and what is required of the 'coordinate system'.
 #' @param T the Top Mapping (default x)
 #' @param L the Left Mapping (default y)
 #' @param R the Right Mapping (default z)
@@ -16,13 +27,12 @@
 #' @param Tlim the range of T in the ternary space
 #' @param Llim the range of L in the ternary space
 #' @param Rlim the range of R in the ternary space
-#' @param clockwise (Depreciated) logical (default \code{FALSE}) indicating whether the precession of axes is clockwise (\code{TRUE}) or counter-clockwise (\code{FALSE}).
-#' @return ternary coordinate system object.
+#' @param clockwise (Depreciated, see \code{\link{axis.tern.clockwise}}) logical (default \code{FALSE}) indicating whether the precession of axes is clockwise (\code{TRUE}) or counter-clockwise (\code{FALSE}).
+#' @return \code{coord_tern} returns a ternary coordinate system object.
 #' @export
 coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Llim=NULL,Rlim=NULL,clockwise) {
-  if(!missing(clockwise)){
+  if(!missing(clockwise))
     tern_dep("1.0.1.3","clockwise is now controlled by the theme element 'axis.tern.clockwise'")
-  }
   
   ##Validate x and y lims...
   xlim <- sort(is.numericor(ifthenelse(!is.numeric(xlim) & is.numeric(ylim),ylim,xlim),c(0,1)))
@@ -43,12 +53,11 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Lli
   L <- match.arg(L, all.coords[which(!all.coords %in% c(T  ))]) #T is picked
   R <- match.arg(R, all.coords[which(!all.coords %in% c(T,L))]) #T & L are picked
   
+  #return coord object.
   coord(
-    T = T, 
-    L = L,
-    R = R,
+    T = T, L = L, R = R,
     limits = list(x = xlim, y = ylim,T = Tlim,L = Llim,R = Rlim),
-    required_aes=c("x","y","z"),
+    required_aes=all.coords,
     subclass = c("ternary","fixed")
   )
 }

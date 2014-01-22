@@ -6,25 +6,14 @@
 #' 
 #' @inheritParams ggplot2::geom_point
 #' @param allow.outside logical value indicating whether the error bars can overflow the plot area, if FALSE, bars outiside will be stripped.
-#' @section Aesthetics: 
-#' Additional required aethetics are, for each respectively:
+#' @section Aesthetics (geom_errorbarT): 
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "errorbarT")}
 #' 
-#' \code{geom_errorbarT:}
-#' \itemize{
-#'  \item \code{Tmax}
-#'  \item \code{Tmin}
-#' }
-#' \code{geom_errorbarL:}
-#' \itemize{
-#'  \item \code{Lmax}
-#'  \item \code{Lmin}
-#' }
-#' \code{geom_errorbarR:}
-#' \itemize{
-#'  \item \code{Rmax}
-#'  \item \code{Rmin}
-#' }
+#' @section Aesthetics (geom_errorbarL):
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "errorbarL")}
 #' 
+#' @section Aesthetics (geom_errorbarR):
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "errorbarR")}
 #' @rdname ternaryerrorbars
 #' @examples
 #' \donttest{
@@ -48,13 +37,14 @@
 #'   geom_errorbarT(aes(Tmin=Min,Tmax=Max,width=0.01),size=0.2,allow.outside=T) +
 #'   geom_point(fill="white",shape=21)
 #' }
+#' @aliases GeomErrorbart
 #' @export
 geom_errorbarT <- function (mapping = NULL, data = NULL, stat = "identity", position = "identity", allow.outside=TRUE,...) { 
-  ggint$GeomErrorbarT$new(mapping = mapping, data = data, stat = stat, position = position, allow.outside=allow.outside,...)
+  GeomErrorbart$new(mapping = mapping, data = data, stat = stat, position = position, allow.outside=allow.outside,...)
 }
 
-ggint$GeomErrorbarT <- proto(Geom,{
-  objname <- "errorbarT"
+GeomErrorbart <- proto(Geom,{
+  objname <- "errorbart"
   default_stat <- function(.) StatIdentity
   default_aes <- function(.) aes(colour = "black", size=0.5, linetype=1, height=0.5, alpha = NA)
   guide_geom <- function(.) "path"

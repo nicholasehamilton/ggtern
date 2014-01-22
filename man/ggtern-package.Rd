@@ -1,5 +1,8 @@
 \name{ggtern-package}
 \alias{ggtern-package}
+\alias{intro}
+\alias{introduction}
+\alias{overview}
 \title{Ternary Diagrams in R}
 \description{
   Ternary diagrams are used frequently in a number of
@@ -7,25 +10,26 @@
   of three different elements or compounds. It is possible
   to represent a coordinate system having three (3) degrees
   of freedom, in 2D space, since the third dimention is
-  linear and depends only on the other two. The
-  \code{ggtern} package is based on (extends) the very
+  linear and depends only on the other two.
+
+  The \code{ggtern} package is based on (extends) the very
   popular \code{\link{ggplot}} package, which is an
   implementation of Wilkinsons "The Grammar of Graphics",
-  making provision for a highly methodical construction
-  process for developing meaningful (graphical) data
-  representations. Of course, the above book by Wilkinson
-  outlines the theory, whilst Hadley Wickhams
-  \code{\link{ggplot2}} implementation is where much of the
-  magic happens, and, an ideal base-platform for this
-  package.
+  and, makes provision for a highly methodical construction
+  process for the development of meaningful (graphical)
+  data representations.  Of course, the above book by
+  Wilkinson outlines the \emph{theory}, whilst Hadley
+  Wickhams \code{\link{ggplot2}} implementation is where
+  much of the magic happens, and, an ideal base-platform
+  for the \code{ggtern} package.
 }
-\section{ggtern Constructor}{
+\section{\code{ggtern} Constructor}{
   Plots in \code{ggtern} are instigated via the default
   constructor: \code{ggtern(...)}, for additional
   information, click \link[=ggtern]{HERE}:
 }
 
-\section{ggtern Ternary Coordinate System}{
+\section{\code{ggtern} Ternary Coordinate System}{
   The foundation of this package, is the ternary coordinate
   system, which can be produced with the
   \code{coord_tern(...)} command and added to an existing
@@ -35,27 +39,24 @@
   coordinate system, click \link[=coord_tern]{HERE}.
 }
 
-\section{Valid Geometries for ggtern}{
+\section{Valid Geometries for \code{ggtern}}{
   ggplot2, using the \code{\link{grid}} and
   \code{\link{proto}} architectures, makes provision for a
   many number of geometries to be added progressively in
-  \emph{'layers'} to a given base plot. In this version 1.0
-  (the first release of this package), some of the
-  geometries which are available in ggplot2, are
-  \strong{not relevant} (or wont function) with ternary
-  plots. As such, a limited number of 'approved' geometries
-  can be used, includes the following in the first
-  instance: \enumerate{ \item
-  \code{\link[=geom_point]{Point}} \item
-  \code{\link[=geom_path]{Path}} \item
-  \code{\link[=geom_segment]{Segment}} \item
-  \code{\link[=geom_polygon]{Polygon}} \item
-  \code{\link[=geom_smooth]{Smooth}} \item
-  \code{\link[=geom_text]{Text}} \item
-  \code{\link[=geom_density2d]{Density2d}} \item
-  \code{\link[=geom_rug]{Rug}} } Additionally, ggterin
-  incldues novel geometries, including: \enumerate{ \item
-  \code{\link[=geom_confidence]{Confidence}} }
+  \emph{'layers'} to a given base plot. Due to the nature
+  of the ternary coordinate system, some of the geometries
+  which are available in ggplot2, are \strong{not relevant}
+  (or won't function) with ternary plots and as such, a
+  limited number of 'approved' geometries can be used.
+  Click \link[=approved_geometries]{HERE} for the full list
+  of approved geometries.
+
+  Notably, \code{ggtern} includes novel geometries not
+  available to \code{ggplot2} which include: \enumerate{
+  \item \code{\link[=geom_confidence]{Confidence Intervals
+  via the Mahalnobis Distance}} \item
+  \code{\link[=geom_errorbarT]{Ternary Errorbars}} \item
+  \code{\link[=geom_Tline]{Ternary Constant-Lines}} }
 }
 
 \section{Handling Non-Approved Geometries}{
@@ -93,6 +94,13 @@
   distinuishes between \code{ggplot} and \code{ggtern}
   objects, distinguished by the presence of the
   \code{coord_tern(...)} coordinate system.
+}
+
+\section{Provided Datasets}{
+  \code{ggtern} ships with a number of datasets, including:
+  \enumerate{ \item \code{\link[=Feldspar]{Elkin and Groves
+  Feldspar Data}} \item \code{\link[=USDA]{USDA Textural
+  Classification Data}} }
 }
 \examples{
 \donttest{

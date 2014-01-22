@@ -9,12 +9,14 @@
 \alias{calc_element_plot}
 \alias{cullAndConstrain}
 \alias{find_global}
+\alias{firstUpper}
 \alias{get_last_coord}
 \alias{get_tern_extremes}
 \alias{ggint}
 \alias{ifthenelse}
 \alias{internal}
 \alias{is.numericor}
+\alias{rd_aesthetics}
 \alias{remove_outside}
 \alias{set_last_coord}
 \alias{sink_density}
@@ -23,6 +25,10 @@
 \title{Internal Functions}
 \format{functions and objects}
 \usage{
+  firstUpper(s)
+
+  rd_aesthetics(type, name)
+
   ggint
 
   Statnew
@@ -54,6 +60,10 @@
   cullAndConstrain(data)
 }
 \arguments{
+  \item{s}{character string to convert}
+
+  \item{type}{geom, stat or coord}
+
   \item{x}{logical input to check}
 
   \item{a}{value to return if \code{x} is TRUE}
@@ -119,6 +129,12 @@
   \code{ggtern} makes use of several non-exported internal
   functions, a list of the internal functions is as
   follows:
+
+  \code{firstUpper} converts a string to the same string
+  however, having first letter in uppercase.
+
+  \code{rd_aesthetics} is a helper function for documenting
+  aesthetics in R help files.
 
   \code{ggint} is a structure which holds all the internal
   functions from the ggplot2 namespace, which can be used

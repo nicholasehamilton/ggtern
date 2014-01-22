@@ -9,19 +9,18 @@
   layers from.}
 }
 \value{
-  list of approved layers (may be empty if none are
-  approved)
+  \code{strip_unapproved} returns a list of approved layers
+  (may be empty if none are approved).
 }
 \description{
-  \code{strip_unapproved} is a function which essentially
-  'deletes' layers from the current ternary plot, if such
-  layers are not one of the approved layers. The current
-  list of approved layers are as follows: \itemize{
-  \item{point, path, segment and polygon} \item{Tline,
-  Lline and Rline} \item{smooth and density2d-ggtern}
-  \item{text} \item{rug} \item{confidence} \item{errorbarT,
-  errorbarL and errorbarR} } The balance of the available
-  geometries to ggplot2 are either dissaproved, or, work in
-  progress with regards to this package.
+  \code{strip_unapproved} is an internal function which
+  essentially 'deletes' layers from the current ternary
+  plot in the event that such layers are not one of the
+  approved layers. Refer to \link{approved_geometries} for
+  the current list of approved geometries.
 }
+\seealso{
+  \code{\link{approved_geometries}}
+}
+\keyword{internal}
 

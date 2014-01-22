@@ -44,6 +44,10 @@
   Distance and use of the \code{\link[=logratio]{Log-Ratio
   Transformation}}.
 }
+\section{Aesthetics}{
+  \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom",
+  "confidence")}
+}
 \examples{
 \donttest{
   data(Feldspar)

@@ -1,11 +1,12 @@
 #' @rdname ternaryerrorbars
+#' @aliases GeomErrorbarl
 #' @export
 geom_errorbarL <- function (mapping = NULL, data = NULL, stat = "identity", position = "identity",allow.outside=TRUE,...) { 
-  ggint$GeomErrorbarL$new(mapping = mapping, data = data, stat = stat, position = position, allow.outside=allow.outside,...)
+  GeomErrorbarl$new(mapping = mapping, data = data, stat = stat, position = position, allow.outside=allow.outside,...)
 }
 
-ggint$GeomErrorbarL <- proto(Geom,{
-  objname <- "errorbarL"
+GeomErrorbarl <- proto(Geom,{
+  objname <- "errorbarl"
   default_stat <- function(.) StatIdentity
   default_aes <- function(.) aes(colour = "black", size=0.5, linetype=1, height=0.5, alpha = NA)
   guide_geom <- function(.) "path"

@@ -1,4 +1,7 @@
 \name{geom_errorbarT}
+\alias{GeomErrorbarl}
+\alias{GeomErrorbarr}
+\alias{GeomErrorbart}
 \alias{geom_errorbarL}
 \alias{geom_errorbarR}
 \alias{geom_errorbarT}
@@ -48,13 +51,19 @@
   \code{\link[ggplot2]{geom_errorbarh}} as provided in the
   base ggplot2 package.
 }
-\section{Aesthetics}{
-  Additional required aethetics are, for each respectively:
+\section{Aesthetics (geom_errorbarT)}{
+  \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom",
+  "errorbarT")}
+}
 
-  \code{geom_errorbarT:} \itemize{ \item \code{Tmax} \item
-  \code{Tmin} } \code{geom_errorbarL:} \itemize{ \item
-  \code{Lmax} \item \code{Lmin} } \code{geom_errorbarR:}
-  \itemize{ \item \code{Rmax} \item \code{Rmin} }
+\section{Aesthetics (geom_errorbarL)}{
+  \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom",
+  "errorbarL")}
+}
+
+\section{Aesthetics (geom_errorbarR)}{
+  \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom",
+  "errorbarR")}
 }
 \examples{
 \donttest{
