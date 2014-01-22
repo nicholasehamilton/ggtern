@@ -14,7 +14,12 @@
 #' @param Lintercept for geom_Lline and stat_Lline, the constant value of the LHS apex constituent.
 #' @param Rintercept for geom_Rline and stat_Rline, the constant value of the RHS apex constituent.
 #' @section Tline, Lline and Rline:
-#' Convenience functions, \code{Tline(...), Lline(...)} and \code{Rline(...)} have been created so that constant lines can be quickly created:
+#' Convenience functions, \code{Tline(...), Lline(...)} and \code{Rline(...)} 
+#' have been created so that constant lines can be quickly created:
+#' @section Aesthetics:
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "Tline")}
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "Lline")}
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "Rline")}
 #' @examples
 #' #Base usage
 #' ggtern()  + 
@@ -52,6 +57,7 @@ GeomTline <- proto(Geom, {
     ggint$GeomSegment$draw(data,scales,coordinates,...)
   }
   default_stat <- function(.) StatTline
+  required_aes <- c("Tintercept")
   default_aes <- function(.) aes(colour="black", size=0.5, linetype=1, alpha = NA)
   guide_geom <- function(.) "path"
 })

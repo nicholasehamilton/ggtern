@@ -88,6 +88,15 @@
   \code{Rline(...)} have been created so that constant
   lines can be quickly created:
 }
+
+\section{Aesthetics}{
+  \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom",
+  "Tline")}
+  \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom",
+  "Lline")}
+  \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom",
+  "Rline")}
+}
 \examples{
 #Base usage
 ggtern()  +
