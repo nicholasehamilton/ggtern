@@ -10,9 +10,9 @@
                  Lline     = "Lline",
                  Rline     = "Rline",
                  confidence= "confidence",
-                 errorbarT = "errorbarT",
-                 errorbarL = "errorbarL",
-                 errorbarR = "errorbarR")
+                 errorbarT = "errorbart",
+                 errorbarL = "errorbarl",
+                 errorbarR = "errorbarr")
 .dissaproved <- c(tile     = "tile",
                   violin   = "violin")
 .rd_approved <- function(approved=TRUE){
