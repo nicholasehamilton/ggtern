@@ -7,6 +7,9 @@ ggtern 1.0.3.0
 * Creation of convenience functions (theme_showtitles and theme_hidetitles) for hiding or showing the apex titles
 * Better handline of convenience functions for hiding (and showing which is new) major or minor gridlines
 
+BUG FIXES
+* Labels not assigning correctly when coord_tern() not using default x,y,z mapping.
+
 ggtern 1.0.2.0
 ----------------------------------------------------------------
 * Ordering of grid rendering was changed relative to the remaining background items
