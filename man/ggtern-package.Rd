@@ -17,11 +17,15 @@
   implementation of Wilkinsons "The Grammar of Graphics",
   and, makes provision for a highly methodical construction
   process for the development of meaningful (graphical)
-  data representations.  Of course, the above book by
+  data representations. Of course, the above book by
   Wilkinson outlines the \emph{theory}, whilst Hadley
   Wickhams \code{\link{ggplot2}} implementation is where
   much of the magic happens, and, an ideal base-platform
   for the \code{ggtern} package.
+
+  In this document, some of the main features are
+  highlighted, however, current examples (and corresponding
+  outputs) can be viewed at \link{www.ggtern.com}.
 }
 \section{\code{ggtern} Constructor}{
   Plots in \code{ggtern} are instigated via the default
