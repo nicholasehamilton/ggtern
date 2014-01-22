@@ -26,7 +26,7 @@
   \itemize{ \item \code{\link[=theme_showtitles]{Show/Hide
   Axis Titles}} \item
   \code{\link[=theme_showarrows]{Show/Hide Arrows}} \item
-  \code{\link[=theme_showgrid]{Show/Hide Grids}} \item
+  \code{\link[=theme_nogrid]{Show/Hide Grids}} \item
   \code{\link[=theme_clockwise]{Clockwise/Anticlockwise
   Axis Precession}} \item
   \code{\link[=theme_ticksoutside]{Ticks Inside or Outside
