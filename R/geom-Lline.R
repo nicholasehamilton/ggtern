@@ -20,7 +20,6 @@ GeomLline <- proto(Geom, {
     ggint$GeomSegment$draw(data,scales,coordinates,...)
   }
   default_stat <- function(.) StatLline
-  required_aes <- c("Lintercept")
   default_aes <- function(.) aes(colour="black", size=0.5, linetype=1, alpha = NA)
   guide_geom <- function(.) "path"
 })

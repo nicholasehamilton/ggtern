@@ -96,6 +96,16 @@
   "Lline")}
   \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom",
   "Rline")}
+
+  The statistical transformations hold the following
+  aesthetic requirements:
+
+  \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("stat",
+  "Tline")}
+  \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("stat",
+  "Lline")}
+  \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("stat",
+  "Rline")}
 }
 \examples{
 #Base usage

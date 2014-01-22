@@ -20,7 +20,6 @@ GeomRline <- proto(Geom, {
     ggint$GeomSegment$draw(data,scales,coordinates,...)
   }
   default_stat <- function(.) StatRline
-  required_aes <- c("Rintercept")
   default_aes <- function(.) aes(colour="black", size=0.5, linetype=1, alpha = NA)
   guide_geom <- function(.) "path"
 })

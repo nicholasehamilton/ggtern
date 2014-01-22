@@ -25,7 +25,7 @@
 
   In this document, some of the main features are
   highlighted, however, current examples (and corresponding
-  outputs) can be viewed at \link{www.ggtern.com}.
+  outputs) can be viewed at http://ggtern.com
 }
 \section{\code{ggtern} Constructor}{
   Plots in \code{ggtern} are instigated via the default

@@ -20,6 +20,12 @@
 #' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "Tline")}
 #' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "Lline")}
 #' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "Rline")}
+#' 
+#' The statistical transformations hold the following aesthetic requirements:
+#' 
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("stat", "Tline")}
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("stat", "Lline")}
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("stat", "Rline")}
 #' @examples
 #' #Base usage
 #' ggtern()  + 
@@ -57,7 +63,6 @@ GeomTline <- proto(Geom, {
     ggint$GeomSegment$draw(data,scales,coordinates,...)
   }
   default_stat <- function(.) StatTline
-  required_aes <- c("Tintercept")
   default_aes <- function(.) aes(colour="black", size=0.5, linetype=1, alpha = NA)
   guide_geom <- function(.) "path"
 })
