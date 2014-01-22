@@ -5,6 +5,7 @@ ggtern 1.0.3.0
 * Inclusion of USDA Soil Classification Data, accessed by: data(USDA)
 * Creation of New geometries for ternary errorbars, ie, geom_errorbarT, geom_errorbarL and geom_errorbarR
 * Creation of convenience functions (theme_showtitles and theme_hidetitles) for hiding or showing the apex titles
+* Better handline of convenience functions for hiding (and showing which is new) major or minor gridlines
 
 ggtern 1.0.2.0
 ----------------------------------------------------------------

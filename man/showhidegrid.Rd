@@ -1,29 +1,92 @@
-\name{theme_nogrid_minor}
-\alias{tern_hidegrid}
-\alias{tern_nogrid}
-\alias{tern_nogrid_major}
-\alias{tern_nogrid_minor}
+\name{theme_showgrid}
 \alias{theme_hidegrid}
+\alias{theme_hidegrid_major}
+\alias{theme_hidegrid_minor}
 \alias{theme_nogrid}
 \alias{theme_nogrid_major}
 \alias{theme_nogrid_minor}
+\alias{theme_showgrid}
+\alias{theme_showgrid_major}
+\alias{theme_showgrid_minor}
 \alias{theme_tern_nogrid}
 \alias{theme_tern_nogrid_major}
 \alias{theme_tern_nogrid_minor}
 \title{Show or Hide Grid}
 \usage{
-  theme_nogrid_minor()
+  theme_showgrid()
 
-  theme_nogrid_major()
+  theme_hidegrid()
 
-  theme_nogrid()
+  theme_showgrid_major()
+
+  theme_hidegrid_major()
+
+  theme_showgrid_minor()
+
+  theme_hidegrid_minor()
 }
 \description{
-  \code{theme_nogrid_minor} ternary theme, no minor grids.
+  A set of convenience functions to enable or disable the
+  use of major or minor (or both) gridlines.
 
-  \code{theme_nogrid_major} ternary theme, no major grids.
+  \code{theme_showgrid} is a function which
+  \strong{enables} both MAJOR and MINOR gridlines.
 
-  \code{theme_nogrid} ternary theme, no major AND no minor
-  grids.
+  \code{theme_hidegrid} or \code{theme_nogrid} (alias) is a
+  function which \strong{disables} both MAJOR and MINOR
+  gridlines.
+
+  \code{theme_showgrid_major} is a function which
+  \strong{enables} MAJOR gridlines.
+
+  \code{theme_hidegrid_major} or \code{theme_nogrid_major}
+  (alias) is a function which \strong{disables} MAJOR
+  gridlines.
+
+  \code{theme_showgrid_major} is a function which
+  \strong{enables} MINOR gridlines.
+
+  \code{theme_hidegrid_minor} or \code{theme_nogrid_minor}
+  (alias) is a function which \strong{disables} MINOR
+  gridlines.
+}
+\details{
+  These flags operate at the 'rendering' level, and,
+  supercede the presence of theme elements, therefore,
+  \code{theme_hidegrid(...)} or its aliases will PREVENT
+  rendering of grid elements, irrespective of whether those
+  grid elements are valid (renderable). From the counter
+  perspective, \code{theme_showgrid(...)} or its aliases
+  will ALLOW rendering of grid elements, subject to those
+  grid elements being valid (renderable, ie say
+  \code{\link{element_line}} as opposed to
+  \code{\link{element_blank}}).
+}
+\examples{
+\donttest{
+  #Load data
+  data(Feldspar)
+
+  #Create plot, Switch OFF gridlines
+  plot <- ggtern(data=Feldspar,aes(Ab,An,Or)) +
+          geom_point()   + #Layer
+          theme_bw()     + #For clarity
+          theme_hidegrid() #Turn off both major and minor
+  plot
+
+  #Demonstrate switching on major, minor and both gridlines
+  plot + theme_showgrid_minor() #show minor only
+  plot + theme_showgrid_major() #show major only
+  plot + theme_showgrid()       #show both major and minor
+
+  #Switch ON gridlines
+  plot <- plot + theme_showgrid() #as before
+  plot
+
+  #Demonstrate switching OFF major, minor and both gridlines
+  plot + theme_hidegrid_minor() #show major only (hide minor)
+  plot + theme_hidegrid_major() #show minor only (hide major)
+  plot + theme_hidegrid()       #show none (hide both major and minor)
+}
 }
 

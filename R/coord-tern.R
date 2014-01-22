@@ -287,6 +287,17 @@ coord_render_bg.ternary <- function(coord,details,theme){
   showtitles    <- ifthenelse(is.logical(showtitles),showtitles[1],getOption("tern.showtitles"))
   showtitles
 }
+.theme.get.showgrid.major <- function(theme){
+  showgrid <- calc_element_plot("axis.tern.showgrid.major",theme=theme)
+  showgrid <- ifthenelse(is.logical(showgrid),showgrid[1],getOption("tern.showgrid.major"))
+  showgrid
+}
+.theme.get.showgrid.minor <- function(theme){
+  showgrid <- calc_element_plot("axis.tern.showgrid.minor",theme=theme)
+  showgrid <- ifthenelse(is.logical(showgrid),showgrid[1],getOption("tern.showgrid.minor"))
+  showgrid
+}
+
 .theme.get.outside    <- function(theme){
   outside       <- calc_element_plot("axis.tern.ticks.outside",theme=theme)
   outside       <- ifthenelse(is.logical(outside),outside[1],getOption("tern.ticks.outside"))
@@ -359,6 +370,8 @@ coord_render_bg.ternary <- function(coord,details,theme){
   outside       <- .theme.get.outside(theme)
   showprimary   <- .theme.get.showprimary(theme)
   showsecondary <- .theme.get.showsecondary(theme)
+  showgrid.major<- .theme.get.showgrid.major(theme)
+  showgrid.minor<- .theme.get.showgrid.minor(theme)
   shift         <- ifthenelse(!outside,180,0)
   
   #major & minor ticklength
@@ -377,7 +390,11 @@ coord_render_bg.ternary <- function(coord,details,theme){
   .getData <- function(X,ix,existing=NULL,major=TRUE,angle=0,angle.text=0){
     breaks.major <- details[[paste0(X,".major_source")]]
     breaks.minor <- details[[paste0(X,".minor_source")]]
-    breaks <- if(major){breaks.major}else{breaks.minor[which(!breaks.minor %in% breaks.major)]}
+    breaks <- if(major){
+      breaks.major
+    }else{
+      breaks.minor[which(!breaks.minor %in% breaks.major | !showgrid.major)]
+    }
     
     #BYPASS IF NECESSARY
     if(length(breaks) == 0)return(existing)
@@ -406,6 +423,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
     new$NameText   <- paste0("axis.tern.text.",X)
     new$NameTicks  <- paste0("axis.tern.ticks.",majmin,".",X)
     new$NameGrid   <- paste0("panel.grid.tern.",majmin,".",X)
+    new$Major      <- major
     
     ##Start and finish positions of scale.
     ix.at     <- paste0("AT.",seq.tlr)
@@ -510,36 +528,40 @@ coord_render_bg.ternary <- function(coord,details,theme){
     },error = function(e){ warning(e)})
     return(items)
   }
-  .render.grid <- function(name,items,d){
-    tryCatch({  
-      e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
-      if(!identical(e,element_blank())){
-        colour   <- e$colour
-        size     <- max(e$size,0)
-        if(size > 0){
-          linetype <- e$linetype
-          lineend  <- e$lineend
-          grob     <- segmentsGrob(
-            x0 = d$x, 
-            x1 = d$xend.grid,
-            y0 = d$y, 
-            y1 = d$yend.grid,
-            default.units="native",
-            gp = gpar(col     = colour, 
-                      lty     = linetype,
-                      lineend = lineend,
-                      lwd     = size*find_global(".pt"))
-          )
-          ##Add to the items.
-          items[[length(items) + 1]] <- grob
+  .render.grid <- function(name,items,d,showgrid.major=TRUE,showgrid.minor=TRUE){
+    if((unique(d$Major) & showgrid.major) | (!unique(d$Major) & showgrid.minor)){
+      tryCatch({  
+        e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
+        if(!identical(e,element_blank())){
+          colour   <- e$colour
+          size     <- max(e$size,0)
+          if(size > 0){
+            linetype <- e$linetype
+            lineend  <- e$lineend
+            grob     <- segmentsGrob(
+              x0 = d$x, 
+              x1 = d$xend.grid,
+              y0 = d$y, 
+              y1 = d$yend.grid,
+              default.units="native",
+              gp = gpar(col     = colour, 
+                        lty     = linetype,
+                        lineend = lineend,
+                        lwd     = size*find_global(".pt"))
+            )
+            ##Add to the items.
+            items[[length(items) + 1]] <- grob
+          }
         }
-      }
-    },error = function(e){ warning(e)})
+      },error = function(e){ warning(e)})
+    }
     return(items)
   }
   
   #PROCESS TICKS AND LABELS
-  for(n in unique(d$NameGrid)){ items <- .render.grid(  name=n,items=items,d=d[which(d$NameGrid  == n),])}
+  if(showgrid.major | showgrid.minor)
+    for(n in unique(d$NameGrid)){ items <- .render.grid(  name=n,items=items,d=d[which(d$NameGrid  == n),],
+                                                          showgrid.major=showgrid.major,showgrid.minor=showgrid.minor)}  
   if(showprimary)
     for(n in unique(d$NameTicks)){items <- .render.ticks(name=n,items=items,d=d[which(d$NameTicks == n),],primary=TRUE)}
   if(showsecondary)

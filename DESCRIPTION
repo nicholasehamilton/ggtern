@@ -43,7 +43,7 @@ Collate:
   'theme-noarrows.R'
   'theme-showsecondary.R'
   'theme-showtitles.R'
-  'theme-nogrid.R'
+  'theme-showgrid.R'
   'theme-convenience.R'
   'theme-ticksoutside.R'
   'labs-pcnt.R'

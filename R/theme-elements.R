@@ -9,9 +9,15 @@ ggint$.element_tree$ternary.options          = .el_def("element_ternary","elemen
 ggint$.element_tree$panel.background.tern    = .el_def("element_rect", "rect")
 
 ##Show the arrows
-ggint$.element_tree$axis.tern.showtitles     = .el_def("logical")
 ggint$.element_tree$axis.tern.showarrows     = .el_def("logical")
 ggint$.element_tree$axis.tern.arrowsep       = .el_def("unit")
+
+#Show the titles
+ggint$.element_tree$axis.tern.showtitles     = .el_def("logical")
+
+#Show the grids
+ggint$.element_tree$axis.tern.showgrid.major = .el_def("logical")
+ggint$.element_tree$axis.tern.showgrid.minor = .el_def("logical")
 
 ##Secondary ticks
 ggint$.element_tree$axis.tern.ticks.showprimary   = .el_def("logical")
