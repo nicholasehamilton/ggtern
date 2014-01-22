@@ -57,7 +57,7 @@ theme_update <- function(...) {
 #' axis.tern.ticks.major.R axis.tern.ticks.minor axis.tern.ticks.minor.T axis.tern.ticks.minor.L axis.tern.ticks.minor.R panel.grid.tern panel.grid.tern.major
 #' panel.grid.tern.major.T panel.grid.tern.major.L panel.grid.tern.major.R panel.grid.tern.minor panel.grid.tern.minor.T panel.grid.tern.minor.L panel.grid.tern.minor.R 
 #' axis.tern.ticks.outside axis.tern.ticklength.major axis.tern.ticklength.minor axis.tern.arrowsep axis.tern.hshift axis.tern.vshift axis.tern.clockwise axis.tern.showarrows
-#' axis.tern.arrowstart axis.tern.arrowfinish axis.tern.padding axis.tern.ticks.showsecondary axis.tern.ticks.showprimary
+#' axis.tern.arrowstart axis.tern.arrowfinish axis.tern.padding axis.tern.ticks.showsecondary axis.tern.ticks.showprimary axis.tern.showtitles
 #' @name themeelements
 #' @name theme
 #' @section New/Additional Inheritance Structures:
@@ -70,11 +70,12 @@ theme_update <- function(...) {
 #'   \code{axis.tern.vshift} \tab Amount to nudge the plot vertically            \tab \code{\link{unit}}            \tab                        \cr
 #'   \code{axis.tern.hshift} \tab Amount to nudge the plot horizontally          \tab \code{\link{unit}}            \tab                        \cr
 #'   \code{axis.tern.clockwise} \tab Clockwise Axis Precession                   \tab \code{\link{logical}}         \tab                        \cr
-#'   \code{axis.tern.showarrows} \tab Show axis arrows or not                   \tab \code{\link{logical}}          \tab                        \cr
+#'   \code{axis.tern.showarrows} \tab Show axis arrows or not                    \tab \code{\link{logical}}         \tab                        \cr
+#'   \code{axis.tern.showtitles} \tab Show axis (apex) titles or not             \tab \code{\link{logical}}         \tab                        \cr
 #'   \code{axis.tern.padding} \tab Padding between axes and panel edges          \tab \code{\link{unit}}            \tab                        \cr
 #'   \code{axis.tern.arrowsep}\tab Distance between axes and the ternary arrows  \tab \code{\link{unit}}            \tab                        \cr
 #'   \code{axis.tern.arrowstart} \tab Proportion along ternary axis when arrow starts  \tab \code{\link{numeric}}   \tab                        \cr
-#'   \code{axis.tern.arrowfinish} \tab Proportion along ternary axis when arrow starts  \tab \code{\link{numeric}}   \tab                        \cr
+#'   \code{axis.tern.arrowfinish} \tab Proportion along ternary axis when arrow starts  \tab \code{\link{numeric}}  \tab                        \cr
 #'   \code{axis.tern.arrow}   \tab Base line for ternary arrows                  \tab \code{\link{element_line}}    \tab \code{axis.tern}       \cr
 #'   \code{axis.tern.arrow.T} \tab Specific line for TOP ternary arrow           \tab \code{\link{element_line}}    \tab \code{axis.tern.arrow} \cr
 #'   \code{axis.tern.arrow.L} \tab Specific line for LHS ternary arrow           \tab \code{\link{element_line}}    \tab \code{axis.tern.arrow} \cr

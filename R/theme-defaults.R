@@ -53,6 +53,7 @@
       panel.background.tern      = element_rect(fill=col.BG,color=NA),
       axis.tern.clockwise        = getOption("tern.clockwise"),
       axis.tern.showarrows       = getOption("tern.showarrows"),
+      axis.tern.showtitles       = getOption("tern.showtitles"),
       axis.tern.arrowstart       = 0.3,
       axis.tern.arrowfinish      = 0.7,
       #axis.tern.padding          = unit(0.10,"npc"),

@@ -282,6 +282,11 @@ coord_render_bg.ternary <- function(coord,details,theme){
   clockwise     <- ifthenelse(is.logical(clockwise),clockwise[1],getOption("tern.clockwise"))
   clockwise
 }
+.theme.get.showtitles <- function(theme){
+  showtitles    <- calc_element_plot("axis.tern.showtitles",theme=theme)
+  showtitles    <- ifthenelse(is.logical(showtitles),showtitles[1],getOption("tern.showtitles"))
+  showtitles
+}
 .theme.get.outside    <- function(theme){
   outside       <- calc_element_plot("axis.tern.ticks.outside",theme=theme)
   outside       <- ifthenelse(is.logical(outside),outside[1],getOption("tern.ticks.outside"))
@@ -701,6 +706,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   items
 }
 .render.titles <- function(data.extreme,items,theme,details){
+  showtitles <- .theme.get.showtitles(theme)
   clockwise <- .theme.get.clockwise(theme) 
   
   d    <- data.extreme
@@ -709,6 +715,8 @@ coord_render_bg.ternary <- function(coord,details,theme){
   ##Function to create new axis grob
   .render <- function(name,ix,items,hshift=0,vshift=0){
     tryCatch({  
+      if(!showtitles) return(items)
+      
       e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
       colour    <- e$colour
       size      <- e$size;
@@ -718,20 +726,21 @@ coord_render_bg.ternary <- function(coord,details,theme){
       hjust     <- e$hjust
       vjust     <- e$vjust
       angle     <- e$angle
-      grob      <- textGrob( label = d$L[ix], 
-                             x = unit(d$x[ix] + hshift,"npc"), 
-                             y = unit(d$y[ix] + vshift,"npc"),
-                             hjust=hjust, 
-                             vjust=vjust, 
-                             rot  =angle,
-                             gp   = gpar(col        = colour, 
-                                         fontsize   = size,
-                                         fontfamily = family, 
-                                         fontface   = face, 
-                                         lineheight = lineheight))
-      #print(convertWidth(widthDetails(grob), 'npc', TRUE))
-      ##Add to the items.
-      items[[length(items) + 1]] <- grob
+      
+      if(!identical(e,element_blank())){
+        grob      <- textGrob( label = d$L[ix], 
+                               x = unit(d$x[ix] + hshift,"npc"), 
+                               y = unit(d$y[ix] + vshift,"npc"),
+                               hjust=hjust, 
+                               vjust=vjust, 
+                               rot  =angle,
+                               gp   = gpar(col        = colour, 
+                                           fontsize   = size,
+                                           fontfamily = family, 
+                                           fontface   = face, 
+                                           lineheight = lineheight))
+        items[[length(items) + 1]] <- grob
+      }
     },error = function(e){ warning(e)})
     return(items)
   }

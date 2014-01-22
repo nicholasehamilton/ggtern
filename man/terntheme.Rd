@@ -19,6 +19,7 @@
 \alias{axis.tern.line.T}
 \alias{axis.tern.padding}
 \alias{axis.tern.showarrows}
+\alias{axis.tern.showtitles}
 \alias{axis.tern.text}
 \alias{axis.tern.text.L}
 \alias{axis.tern.text.R}
@@ -112,6 +113,8 @@
   \tab \code{\link{logical}} \tab \cr
   \code{axis.tern.showarrows} \tab Show axis arrows or not
   \tab \code{\link{logical}} \tab \cr
+  \code{axis.tern.showtitles} \tab Show axis (apex) titles
+  or not \tab \code{\link{logical}} \tab \cr
   \code{axis.tern.padding} \tab Padding between axes and
   panel edges \tab \code{\link{unit}} \tab \cr
   \code{axis.tern.arrowsep}\tab Distance between axes and

@@ -3,6 +3,7 @@
   options("tern.discard.external"      = TRUE)
   options("tern.clockwise"             = TRUE)
   options("tern.showarrows"            = TRUE)
+  options("tern.showtitles"            = TRUE)
   options("tern.ticks.outside"         = TRUE)
   options("tern.ticks.showprimary"     = TRUE)
   options("tern.ticks.showsecondary"   = FALSE)
