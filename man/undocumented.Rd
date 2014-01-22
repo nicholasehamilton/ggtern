@@ -65,8 +65,6 @@
 
   \item{type}{geom, stat or coord}
 
-  \item{table}{show table or aliases}
-
   \item{x}{logical input to check}
 
   \item{a}{value to return if \code{x} is TRUE}

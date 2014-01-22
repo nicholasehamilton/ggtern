@@ -64,17 +64,23 @@ rd_aesthetics <- function(type, name) {
 
 #' \code{rd_theme} is a helper function for documenting theme_elements in R help files.
 #' @rdname undocumented
-#' @param table show table or aliases
 rd_theme <- function(){
   dic <- ggint$.element_tree[which(!ggint$.element_tree %in% ggint$.element_tree.orig)]
   nam <- names(dic)
+  nolink <- c()
   paste(
     "\nBased on the \\code{ggplot2} existing structure (\\link[ggplot2]{theme}), the \\strong{NEW} individual theme elements for the ternary plot are as follows:",
-    "\\tabular{llll}{",
-    "\\strong{NAME} \\tab \\strong{OBJECT} \\tab \\strong{INHERITS} \\tab \\strong{DESCRIPTION} \\cr",
+    "\\tabular{lll}{",
+    "\\strong{NAME} \\tab \\strong{OBJECT}/(INHERITS) \\tab \\strong{DESCRIPTION} \\cr",
     paste(sapply(nam,function(x){
       obj  = dic[[x]]
-      paste("\\code{",x,"} \\tab \\code{\\link{",obj$class,"}} \\tab \\code{",obj$inherit,"} \\tab ",obj$description,sep=" ")
+      paste("\\code{",x,"} \\tab \\code{",
+            ifthenelse(obj$class %in% nolink,obj$class,paste0("\\link{",obj$class,"}")) ,
+            "}",
+            ifthenelse(!is.null(obj$inherit),"/(",""),"",
+            obj$inherit,
+            ifthenelse(!is.null(obj$inherit),")",""),
+            " \\tab ",obj$description,sep="")
     }),collapse="\\cr "),
     "\n}\n"
   )

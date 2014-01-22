@@ -35,7 +35,7 @@ theme_update <- function(...) {
   theme_set(theme_get() %+replace% do.call(theme, list(...)))
 }
 
-#' @rdname terntheme
+#' @rdname theme_elements
 #' @inheritParams ggplot2::theme
 #' @export
 theme <- function(..., complete = FALSE) {

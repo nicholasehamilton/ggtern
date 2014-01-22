@@ -32,9 +32,8 @@
 #' panel.grid.tern panel.grid.tern.major panel.grid.tern.major.T panel.grid.tern.major.L panel.grid.tern.major.R 
 #' axis.tern.showgrid.minor panel.grid.tern.minor 
 #' panel.grid.tern.minor.T panel.grid.tern.minor.L panel.grid.tern.minor.R ternary.options
-#' @name themeelements
-#' @name theme
-#' @rdname terntheme
+#' @name theme_elements
+#' @rdname theme_elements
 NULL
 
 

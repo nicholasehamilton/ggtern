@@ -1,4 +1,4 @@
-\name{themeelements}
+\name{theme_elements}
 \alias{axis.tern}
 \alias{axis.tern.arrow}
 \alias{axis.tern.arrow.L}
@@ -62,6 +62,7 @@
 \alias{ternary.options}
 \alias{theme}
 \alias{theme-tern}
+\alias{theme_elements}
 \alias{themeelements}
 \title{New Theme Elements}
 \usage{
