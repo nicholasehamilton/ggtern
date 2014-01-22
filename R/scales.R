@@ -1,4 +1,3 @@
-
 #' Ternary Continuous Scales
 #' 
 #' Create continuous scales for the top (T), left (L) and right(R) species in the ternary diagram, and, control the appearance of the labels, the limits, major and

@@ -1,7 +1,5 @@
 \docType{data}
-\name{internal}
-\alias{.all_aesthetics}
-\alias{.internals}
+\name{zzz-internal}
 \alias{Geom}
 \alias{Statnew}
 \alias{arrow}
@@ -14,7 +12,6 @@
 \alias{get_tern_extremes}
 \alias{ggint}
 \alias{ifthenelse}
-\alias{internal}
 \alias{is.numericor}
 \alias{rd_aesthetics}
 \alias{remove_outside}
@@ -22,6 +19,7 @@
 \alias{sink_density}
 \alias{undocumented}
 \alias{unit}
+\alias{zzz-internal}
 \title{Internal Functions}
 \format{functions and objects}
 \usage{

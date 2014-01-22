@@ -1,10 +1,9 @@
 #'Internal Functions
 #'
 #'INTERNAL FUNCTIONS (native to \code{ggtern}): \code{ggtern} makes use of several non-exported internal functions, a list of the internal functions is as follows:
-#'@aliases .internals .all_aesthetics
-#'@rdname undocumented
 #'@format functions and objects
-#'@name internal
+#'@rdname undocumented
+#'@name zzz-internal
 NULL
 
 #' Overloaded ggplot2 functions
@@ -13,5 +12,5 @@ NULL
 #' under the ggtern framework. Patches were mainly to do with handling the new theme elements and heirarchies. 
 #' @format functions and objects
 #' @rdname overloaded
-#' @name overloaded
+#' @name zzz-overloaded
 NULL

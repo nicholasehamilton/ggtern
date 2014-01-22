@@ -1,4 +1,4 @@
-\name{overloaded}
+\name{zzz-overloaded}
 \alias{\%+\%}
 \alias{\%+replace\%}
 \alias{add_ggplot}
@@ -8,7 +8,6 @@
 \alias{check_required_aesthetics}
 \alias{combine_elements}
 \alias{opts}
-\alias{overloaded}
 \alias{panel_scales}
 \alias{plot_theme}
 \alias{theme_get}
@@ -17,6 +16,7 @@
 \alias{train_ranges}
 \alias{update_theme}
 \alias{validate_element}
+\alias{zzz-overloaded}
 \title{Overloaded ggplot2 functions}
 \format{functions and objects}
 \usage{

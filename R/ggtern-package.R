@@ -38,7 +38,7 @@
 #' }
 #' 
 #' @section Handling Non-Approved Geometries:
-#' If a geometric layer is added that is \strong{NOT} contained in the above list, \strong{IT WILL BE STRIPPED / IGNORED} from the ternary diagram 
+#' If a geometric layer is added that is \strong{NOT} contained in the approved \link[=approved_geometries]{list}, \strong{IT WILL BE STRIPPED / IGNORED} from the ternary diagram 
 #' when rendering takes place (notifying the user to such effect). The reason for this is that subtle 'patches' have been applied, which are mainly to do with 
 #' the transformation procedures when incorporating a 'third' dimention. \strong{NB:} In the future, others may be made available once patched.
 #'
