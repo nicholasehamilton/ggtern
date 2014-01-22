@@ -25,49 +25,49 @@
 #' plot + theme_showticks()
 #' plot + theme_hideticks()
 #' }
-#' @rdname convenience-ticks
-#' @name convenience-ticks
+#' @rdname theme_showprimary
+#' @name theme_showprimary
 NULL
 
 #' \code{theme_noprimary} or \code{theme_hideprimary} (Alias) are functions that apends to the current theme a flag to switch OFF the primary ticks
-#' @rdname convenience-ticks
+#' @rdname theme_showprimary
 #' @export
 theme_noprimary   <- function(){.theme_showprimary(FALSE)}
 
 #'
-#' @rdname convenience-ticks
+#' @rdname theme_showprimary
 #' @export
 theme_hideprimary <- theme_noprimary
 
 #' \code{theme_showprimary} is a function that apends to the current theme a flag to switch ON the primary ticks
-#' @rdname convenience-ticks
+#' @rdname theme_showprimary
 #' @export
 theme_showprimary <- function(){.theme_showprimary(TRUE)}
 
 #' \code{theme_nosecondary} or \code{theme_hidesecondary} (Alias) are functions that apends to the current theme a flag to switch OFF the secondary ticks
-#' @rdname convenience-ticks
+#' @rdname theme_showprimary
 #' @export
 theme_nosecondary   <- function(){.theme_showsecondary(FALSE)}
 
-#' @rdname convenience-ticks
+#' @rdname theme_showprimary
 #' @export
 theme_hidesecondary <- theme_nosecondary
 
 #' \code{theme_showsecondary} is a function that apends to the current theme a flag to switch ON the secondary ticks
-#' @rdname convenience-ticks
+#' @rdname theme_showprimary
 #' @export
 theme_showsecondary <- function(){.theme_showsecondary(TRUE)}
 
 #' \code{theme_showticks(), themehideticks(), theme_noticks()} are functions that switch ON or OFF BOTH the primary or secondary ticks.
-#' @rdname convenience-ticks
+#' @rdname theme_showprimary
 #' @export
 theme_showticks <- function(){theme_showprimary() + theme_showsecondary()}
 
-#' @rdname convenience-ticks
+#' @rdname theme_showprimary
 #' @export
 theme_hideticks <- function(){theme_hideprimary() + theme_hidesecondary()}
 
-#' @rdname convenience-ticks
+#' @rdname theme_showprimary
 #' @export
 theme_noticks   <- theme_hideticks
 

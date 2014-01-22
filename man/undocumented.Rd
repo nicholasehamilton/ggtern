@@ -14,6 +14,7 @@
 \alias{ifthenelse}
 \alias{is.numericor}
 \alias{rd_aesthetics}
+\alias{rd_theme}
 \alias{remove_outside}
 \alias{set_last_coord}
 \alias{sink_density}
@@ -26,6 +27,8 @@
   firstUpper(s)
 
   rd_aesthetics(type, name)
+
+  rd_theme()
 
   ggint
 
@@ -61,6 +64,8 @@
   \item{s}{character string to convert}
 
   \item{type}{geom, stat or coord}
+
+  \item{table}{show table or aliases}
 
   \item{x}{logical input to check}
 
@@ -133,6 +138,9 @@
 
   \code{rd_aesthetics} is a helper function for documenting
   aesthetics in R help files.
+
+  \code{rd_theme} is a helper function for documenting
+  theme_elements in R help files.
 
   \code{ggint} is a structure which holds all the internal
   functions from the ggplot2 namespace, which can be used

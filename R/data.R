@@ -1,21 +1,36 @@
-#' @name Feldspar
+#' Data Sets
+#' 
+#' \code{ggtern} ships with a number of datasets, including:
+#' \enumerate{
+#'   \item \code{\link[=data_Feldspar]{Elkin and Groves Feldspar Data}}
+#'   \item \code{\link[=data_USDA]{USDA Textural Classification Data}}
+#' }
+#' @aliases ggtern-data
+#' @name data
+#' @rdname data
+NULL
+
+#' @name data_Feldspar
+#' @aliases Feldspar
 #' @title Elkin and Groves Feldspar Data
 #' @description This dataset is some data on Feldspar and its phases, as a function of temperature and pressure.
 #' @docType data
 #' @usage data(Feldspar)
-#' @format 1 row per Feldspar composition
-#' @source Elkin and Groves, 1990
-#' @author Nick Hamilton
+#' @format One (1) row per Feldspar composition
+#' @source American Mineralogist, June 1990, v. 75, p. 544-559
+#' @author Linda T. Elkins and Timothy L. Grove
 #' @examples
 #' \donttest{
 #'  data(Feldspar)
 #'  summary(Feldspar)
 #'  ggtern(data=Feldspar,aes(x=An,y=Ab,z=Or)) + geom_point()
 #' }
+#' @seealso \link[=data]{ggtern datasets}
 #' @export
 NULL
 
-#' @name USDA
+#' @name data_USDA
+#' @aliases USDA
 #' @title USDA Textural Classification Data
 #' @description This dataset was issued by the United States Department of Agriculture (USDA) 
 #' in the form of a ternary diagram, this original ternary diagram has been converted to numerical data 
@@ -25,6 +40,7 @@ NULL
 #' @format 1row per point, many points per classification representing the extremes of the area.
 #' @source Soil Mechanics Level 1, Module 3, USDA Textural Classification Study Guide
 #' @author United States Department of Agriculture (USDA)
+#' @seealso \link[=data]{ggtern datasets}
 #' @examples
 #' \donttest{
 #' #Load the Libraries

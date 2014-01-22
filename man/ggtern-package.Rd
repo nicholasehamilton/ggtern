@@ -104,9 +104,9 @@
 
 \section{Provided Datasets}{
   \code{ggtern} ships with a number of datasets, including:
-  \enumerate{ \item \code{\link[=Feldspar]{Elkin and Groves
-  Feldspar Data}} \item \code{\link[=USDA]{USDA Textural
-  Classification Data}} }
+  \enumerate{ \item \code{\link[=data_Feldspar]{Elkin and
+  Groves Feldspar Data}} \item \code{\link[=data_USDA]{USDA
+  Textural Classification Data}} }
 }
 \examples{
 \donttest{

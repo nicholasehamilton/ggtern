@@ -1,4 +1,4 @@
-#' @rdname constant-line
+#' @rdname geom_TRLline
 #' @aliases GeomLline
 #' @export
 geom_Lline <- function (mapping = NULL, data = NULL, stat = "Lline", position = "identity", show_guide = FALSE, ...) { 

@@ -1,10 +1,11 @@
 \docType{data}
-\name{Feldspar}
+\name{data_Feldspar}
 \alias{Feldspar}
+\alias{data_Feldspar}
 \title{Elkin and Groves Feldspar Data}
-\format{1 row per Feldspar composition}
+\format{One (1) row per Feldspar composition}
 \source{
-  Elkin and Groves, 1990
+  American Mineralogist, June 1990, v. 75, p. 544-559
 }
 \description{
   This dataset is some data on Feldspar and its phases, as
@@ -18,7 +19,10 @@
 }
 }
 \author{
-  Nick Hamilton
+  Linda T. Elkins and Timothy L. Grove
+}
+\seealso{
+  \link[=data]{ggtern datasets}
 }
 \keyword{datasets}
 

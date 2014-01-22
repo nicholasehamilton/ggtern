@@ -1,5 +1,4 @@
-\name{convenience-ticks}
-\alias{convenience-ticks}
+\name{theme_showprimary}
 \alias{theme_hideprimary}
 \alias{theme_hidesecondary}
 \alias{theme_hideticks}

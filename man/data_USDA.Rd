@@ -1,6 +1,7 @@
 \docType{data}
-\name{USDA}
+\name{data_USDA}
 \alias{USDA}
+\alias{data_USDA}
 \title{USDA Textural Classification Data}
 \format{1row per point, many points per classification representing the extremes of the area.}
 \source{
@@ -43,6 +44,9 @@ ggtern(data=USDA,aes(Clay,Sand,Silt,color=Label,fill=Label)) +
 }
 \author{
   United States Department of Agriculture (USDA)
+}
+\seealso{
+  \link[=data]{ggtern datasets}
 }
 \keyword{datasets}
 

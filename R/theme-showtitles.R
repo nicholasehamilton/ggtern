@@ -4,8 +4,8 @@
 #' 
 #' Convenience functions to SHOW or HIDE the apex labels.
 #' 
-#' @rdname convenience-showtitles
-#' @name convenience-showtitles
+#' @rdname theme_showtitles
+#' @name theme_showtitles
 #' @examples
 #' \donttest{
 #'  #Load data
@@ -22,16 +22,16 @@ NULL
 
 
 #' \code{theme_showtitles} is a function that apends to the current theme a flag to switch ON the apex titles.
-#' @rdname convenience-showtitles
+#' @rdname theme_showtitles
 #' @export
 theme_showtitles <- function(){.theme_showtitles(TRUE)}
 
 #' \code{theme_hidetitles} or \code{theme_notitles} (alias) is a function that apends to the current 
 #' theme a flag to switch OFF the apex titles.
-#' @rdname convenience-showtitles
+#' @rdname theme_showtitles
 #' @export
 theme_hidetitles <- function(){.theme_showtitles(FALSE)}
 
-#' @rdname convenience-showtitles
+#' @rdname theme_showtitles
 #' @export
 theme_notitles <- theme_hidetitles

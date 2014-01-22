@@ -1,5 +1,4 @@
-\name{convenience-showtitles}
-\alias{convenience-showtitles}
+\name{theme_showtitles}
 \alias{theme_hidetitles}
 \alias{theme_notitles}
 \alias{theme_showtitles}
