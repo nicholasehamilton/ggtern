@@ -78,7 +78,8 @@ StatConfidence <- proto(ggint$Stat, {
     
     RESULT <- data.frame()
     ret  <- within(data,by(data,data[,c("PANEL","group")],function(df){
-      z  <- ifthenelse(is.tern,isomLR(df[,ifthenelse(lc$clockwise,c(lc$R,lc$L,lc$T),c(lc$L,lc$R,lc$T))]),df[,.$required_aes])
+      #z  <- ifthenelse(is.tern,isomLR(df[,ifthenelse(lc$clockwise,c(lc$R,lc$L,lc$T),c(lc$L,lc$R,lc$T))]),df[,.$required_aes])
+      z  <- ifthenelse(is.tern,isomLR(df[,c(lc$L,lc$R,lc$T)]),df[,.$required_aes])
       mu <- colMeans(z)
       cm <- cov(z)
       dat<- mahalanobisDistance(z, mu, cm, whichlines=breaks,m=n)
@@ -107,9 +108,9 @@ StatConfidence <- proto(ggint$Stat, {
       RHS <- input$x - input$y*tan(pi*30/180)
       LHS <- 1 - THS - RHS      
       
-      RESULT$x = THS
-      RESULT$y = ifthenelse(lc$clockwise,RHS,LHS)
-      RESULT$z = ifthenelse(lc$clockwise,LHS,RHS)
+      RESULT[,lc$T] = THS
+      RESULT[,lc$L] = LHS#ifthenelse(lc$clockwise,RHS,LHS)
+      RESULT[,lc$R] = RHS#ifthenelse(lc$clockwise,LHS,RHS)
     }
     RESULT
   }

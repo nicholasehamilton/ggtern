@@ -9,6 +9,7 @@ ggtern 1.0.3.0
 
 BUG FIXES
 * Labels not assigning correctly when coord_tern() not using default x,y,z mapping.
+* Error in geom_confidence wrt clockwise (existing dependency on ternary.options)
 
 ggtern 1.0.2.0
 ----------------------------------------------------------------
