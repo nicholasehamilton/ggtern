@@ -214,10 +214,11 @@ arrow_label_formatter <- function(label,suffix="",...,sep="/"){
   }
   return(ret) #result
 }
-
-data(Feldspar)
-ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point() + Tlab(expression(x^2)) + custom_percent("'/''%'")
-
+#testing
+#if(0){
+#  data(Feldspar)
+#  ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point() + Tlab(expression(x^2)) #+ weight_percent()
+#}
 
 #' \code{calc_element_plot} Calculates the element properties, by inheriting properties from its parents, 
 #' and compares to whether the local plot overrides this value. Based largely off the \code{\link[ggplot2]{calc_element}} 

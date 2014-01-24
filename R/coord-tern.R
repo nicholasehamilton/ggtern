@@ -310,7 +310,6 @@ coord_render_bg.ternary <- function(coord,details,theme){
   showgrid <- ifthenelse(is.logical(showgrid),showgrid[1],getOption("tern.showgrid.minor"))
   showgrid
 }
-
 .theme.get.outside    <- function(theme){
   outside       <- calc_element_plot("axis.tern.ticks.outside",theme=theme)
   outside       <- ifthenelse(is.logical(outside),outside[1],getOption("tern.ticks.outside"))
@@ -679,11 +678,25 @@ coord_render_bg.ternary <- function(coord,details,theme){
       
       #The arrow seperation in npc units.
       arrowsep <- calc_element_plot("axis.tern.arrowsep",theme=theme,verbose=F,plot=NULL)
+      arrowbaseline <- calc_element_plot("axis.tern.arrowbaseline",theme=theme)
+      ticksoutside <- .theme.get.outside(theme)
       ticklength <- max(calc_element_plot("axis.tern.ticklength.major",theme=theme,verbose=F,plot=NULL),
                         calc_element_plot("axis.tern.ticklength.minor",theme=theme,verbose=F,plot=NULL))
-      if(length(arrowsep) != 3 && length(arrowsep) > 1)
-        arrowsep <- arrowsep[1]
-      arrowsep <- convertUnit(arrowsep + ticklength + .arrow.pos$get(),"npc",valueOnly=TRUE)
+      
+      #Ensure there are EXACTLY 3 values for each metric
+      if(length(arrowsep) != 3 && length(arrowsep) >= 1)
+        arrowsep <- rep(arrowsep[1],3)
+      if(length(arrowbaseline) != 3 && length(arrowbaseline) >= 1)
+        arrowbaseline <- rep(arrowbaseline[1],3)
+      ticklength = rep(ticklength,3)
+      
+      #get set of 3 arrowsep positions
+      arrowsep <- sapply(c(1:3),function(x){
+        convertUnit(  arrowsep[x] + 
+                      ifthenelse(arrowbaseline[x] >= 1 & ticksoutside,ticklength[x], unit(0,"npc")) + 
+                      ifthenelse(arrowbaseline[x] >= 2,.arrow.pos$get(),unit(0,"npc")),
+                    "npc",valueOnly=TRUE)
+      })
       
       #MOVE the Arrows Off the Axes.
       d[ixrow,"angle"]    <- .get.angles(clockwise)
