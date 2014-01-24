@@ -23,10 +23,8 @@
   satisfactory.
 }
 \examples{
-\donttest{
- data(Feldspar)
- ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point()
-}
+data(Feldspar)
+ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point()
 }
 \seealso{
   For an introduction to the \code{ggtern} package,
