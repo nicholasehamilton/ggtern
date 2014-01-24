@@ -121,9 +121,7 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),...,Tlim=c
   if(class(data) != "data.frame")stop("data must be of type 'data.frame'")
   if(length(which(c("T","L","R") %in% colnames(data))) < 3) stop("data must contain columns T, L and R")
   
-  Tlim <- sort(Tlim)
-  Rlim <- sort(Rlim)
-  Llim <- sort(Llim)
+  Tlim <- sort(Tlim); Rlim <- sort(Rlim); Llim <- sort(Llim)
   
   d <- data; 
   s <- rowSums(d);
@@ -140,7 +138,7 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),...,Tlim=c
   }
   
   #Adjust for the Limits.
-  .adj <- function(input,lim){(input-lim[1])/(lim[length(lim)] - lim[1])}
+  .adj <- function(input,lim){(input-min(lim))/(abs(diff(lim)))}
   d$T <- .adj(d$T,Tlim)
   d$L <- .adj(d$L,Llim)
   d$R <- .adj(d$R,Rlim)
@@ -151,6 +149,34 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),...,Tlim=c
   
   return(data.frame(x=out.X,y=out.Y))
 }
+transform_cart_to_tern <- function(x,y,data=data.frame(x=x,y=y),...,Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1)){
+  tryCatch({
+    if(length(which(c("x","y") %in% colnames(data))) < 2) stop("data must contain columns x and y")
+    out.R = data$x - data$y*tan(pi/6)
+    out.T = data$y/(tan(pi/3)*0.5)
+    out.L = 1 - out.R - out.T
+    
+    #Undo Scale
+    .adj.rev <- function(input,lim){
+      input*(abs(diff(lim))) + min(lim)
+    }
+    out.T = .adj.rev(out.T,Tlim)
+    out.L = .adj.rev(out.L,Llim)
+    out.R = .adj.rev(out.R,Rlim)
+    
+    data.frame(T=out.T,L=out.L,R=out.R)
+    },error=function(e){
+      return(data)
+  })
+}
+
+
+
+
+
+
+
+
 
 #' \code{arrow_label_formatter} is a function that formats the labels directly adjacent to the ternary arrows.
 #' @param label character label
@@ -160,14 +186,17 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),...,Tlim=c
 #' @examples arrow_label_formatter("TOP","Wt.%",sep="/")
 arrow_label_formatter <- function(label,suffix="",...,sep="/"){
   if(missing(label))stop("label cannot be missing")
-  if(!is.character(label) | !is.character(suffix) | !is.character(sep))stop("label, sep and suffix must be characters")
+  label = label[[1]]
   if(missing(suffix)){
-    label
+    ret <- parse(text=gsub(x=label,pattern=" ",replacement="~"))
   }else if(identical(suffix,NULL) | identical(suffix,"") | missing(suffix)){
-    label
+    ret <- parse(text=gsub(x=label,pattern=" ",replacement="~"))
   }else{
-    paste(label,sep,suffix)
+    if(class(label) == "call")
+      label = as.expression(label)
+    ret <- parse(text=paste(label,sep,gsub(x=suffix,pattern=" ",replacement="~")))
   }
+  ret
 }
 
 #' \code{calc_element_plot} Calculates the element properties, by inheriting properties from its parents, 
@@ -225,7 +254,6 @@ find_global <- function (name, env=environment()){
 trytransform <- function(data,coord){
   if(missing(coord)){stop("coord are required")}
   bup <- data
-  
   Tlim <- coord$limits$T; Llim <- coord$limits$L; Rlim <- coord$limits$R
   tryCatch({
     if(inherits(coord,"ternary")){  
@@ -233,11 +261,22 @@ trytransform <- function(data,coord){
       data <- cbind(res,data[,which(!colnames(data) %in% c(coord$T,coord$L,coord$R))])
     }
   },error=function(e){
-    warning(e)
-    message(e)
+    #warning(e)
+    #message(e)
     data <- bup
   })
   data
+}
+
+#' \code{notransform} is an internal function that permits the input argument (evaluate) to be executed with temporary disabling of
+#' ternary transformations, existing state is restored
+#' @param evaluate code to execute in a protected block from transformation
+notransform <- function(evaluate){
+ existing <- getOption("tern.dont_transform")    
+ options("tern.dont_transform" = TRUE)
+ res <- evaluate
+ options("tern.dont_transform" = existing)
+ invisible(res)
 }
 
 #select appropriate limits. internal

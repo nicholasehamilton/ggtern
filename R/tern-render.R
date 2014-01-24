@@ -61,8 +61,10 @@ ggplot_gtable <- function(data) {
   theme <- ggtern::plot_theme(plot)
   
   build_grob <- function(layer, layer_data) {
-    if (nrow(layer_data) == 0) return()
-    
+    if(is.null(layer_data))
+      return()
+    if (nrow(layer_data) == 0) 
+      return()
     dlply(layer_data, "PANEL", function(df) {
       panel_i <- match(df$PANEL[1], panel$layout$PANEL)
       layer$make_grob(df, scales = panel$ranges[[panel_i]], cs = plot$coord)

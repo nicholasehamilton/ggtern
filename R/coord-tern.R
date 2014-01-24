@@ -69,6 +69,7 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Lli
 #' @param details scales details
 #' @param verbose verbose reporting
 #' @param revertToCart fall back to cartesian data if error
+#' @param dont_transform override the ternary transformation
 #' @param adjustCart adjust for the cartesian scale or not
 #' @param discard throw away data outside the plotting perimeter
 #' @param scales plot scales 
@@ -88,51 +89,61 @@ is.linear.ternary <- function(coord) TRUE
 #' @rdname coord
 #' @method coord_transform ternary
 #' @S3method coord_transform ternary
-coord_transform.ternary <- function(coord, data, details, verbose=FALSE,revertToCart=TRUE,adjustCart=TRUE,discard=getOption("tern.discard.external")){
-  bup    <- data #Original Data Backup.
-  tryCatch({
-    check_required_aesthetics(coord$required_aes, names(data),"coord_tern")
-    data   <- .rename_data_ternary(coord, data)
-    ix.tern <- c("T","L","R"); 
-    ix.cart <- c("x","y")
+coord_transform.ternary <- function(coord, data, details, 
+                                    verbose        = FALSE,
+                                    revertToCart   = FALSE,
+                                    adjustCart     = TRUE,
+                                    discard        = getOption("tern.discard.external"),
+                                    dont_transform = getOption("tern.dont_transform")){
+  #If transformation is enabled
+  if(!dont_transform){
     
-    ix.T <- "T"
-    ix.L <- "L"
-    ix.R <- "R"
+    #Original Data Backup.
+    bup    <- data 
     
-    lim <- list(Tlim=coord$limits[[ix.T]],Llim=coord$limits[[ix.L]],Rlim=coord$limits[[ix.R]])
-    
-    ##Execute the transformation to cartesian
-    data[,c("x","y")] <- transform_tern_to_cart(data = data[,ix.tern],Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,c("x","y")]
-    #only keep records in poly
-    if(discard){
-      #EXPAND THE MAX LIMITS
-      TOLLERANCE <- max(is.numericor(getOption("tern.pip.tollerance"),0.01))*max(as.numeric(sapply(lim,function(x)diff(x))))
+    tryCatch({
+      check_required_aesthetics(coord$required_aes, names(data),"coord_tern")
+      data   <- .rename_data_ternary(coord, data)
+      ix.tern <- c("T","L","R"); 
+      ix.cart <- c("x","y")
+      lim <- list(Tlim=coord$limits[["T"]],Llim=coord$limits[["L"]],Rlim=coord$limits[["R"]])
       
-      #Get the extremes (PLUS TOLLERANCE) to determine if points are outside the plot area.
-      xtrm <- get_tern_extremes(coord,expand=TOLLERANCE)[,ix.tern]
+      ##Execute the transformation to cartesian
+      data[,ix.cart] <- transform_tern_to_cart(data = data[,ix.tern],Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,ix.cart]
       
-      #Transform extremes to cartesian space
-      data.extremes <-transform_tern_to_cart(data = xtrm,Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,c("x","y")]
+      #Discard records outside the polygon region that defines the plot area.
+      if(discard){
+        #EXPAND THE MAX LIMITS
+        TOLLERANCE <- max(is.numericor(getOption("tern.pip.tollerance"),0.01))*max(as.numeric(sapply(lim,function(x)diff(x))))
+        
+        #Get the extremes (PLUS TOLLERANCE) to determine if points are outside the plot area.
+        xtrm <- get_tern_extremes(coord,expand=TOLLERANCE)[,ix.tern]
+        
+        #Transform extremes to cartesian space
+        data.extremes <-transform_tern_to_cart(data = xtrm,Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,c("x","y")]
+        
+        #In polygon or not.
+        in.poly <- point.in.polygon(data$x,data$y,as.numeric(data.extremes$x),as.numeric(data.extremes$y))
+        data <- data[which(in.poly > 0),]
+      }
       
-      #In polygon or not.
-      in.poly <- point.in.polygon(data$x,data$y,as.numeric(data.extremes$x),as.numeric(data.extremes$y))
-      data <- data[which(in.poly > 0),]
-    }
-  },error=function(e){
-    if(!revertToCart){
-      stop(as.character(e))
-    }
-    if(verbose){
-      writeLines(as.character(e))
-    }
-    data <- bup
-  })
+    #Error Handling - Terminate or Revert to 'cartesian'
+    },error=function(e){
+      msg <- as.character(e)
+      if(!revertToCart)
+        stop(gsub("Error: ","",msg),call.=FALSE) #Terminate
+      if(verbose)
+        message(msg) #Report Error if verbose
+      data <- bup    #Revert
+    })
+  }
   
   ##Default is to execute the cartesian transformation (DEFAULT)
   if(adjustCart & !missing(details)){
     ggint$coord_transform.cartesian(coord,data,details)
-  }else{ ##however sometimes (say in an intermediate step), we may wish to suppress.
+    
+  ##however sometimes (say in an intermediate step), we may wish to suppress.
+  }else{ 
     data
   }
 }
@@ -143,8 +154,7 @@ coord_transform.ternary <- function(coord, data, details, verbose=FALSE,revertTo
 #' @method coord_expand_defaults ternary
 #' @S3method coord_expand_defaults ternary
 coord_expand_defaults.ternary <- function(coord, scale, aesthetic){
-  ret <- ggint$expand_default(scale)
-  ret
+  ggint$expand_default(scale)
 }
 
 #' S3 Method Coordinate Train
@@ -566,13 +576,13 @@ coord_render_bg.ternary <- function(coord,details,theme){
   
   #PROCESS TICKS AND LABELS
   if(showgrid.major | showgrid.minor)
-    for(n in unique(d$NameGrid)){ items <- .render.grid(  name=n,items=items,d=d[which(d$NameGrid  == n),],
-                                                          showgrid.major=showgrid.major,showgrid.minor=showgrid.minor)}  
+    for(n in unique(d$NameGrid)){ items <- .render.grid(  name=n,items=items,d=d[which(d$NameGrid  == n),], showgrid.major=showgrid.major,showgrid.minor=showgrid.minor)}  
   if(showprimary)
     for(n in unique(d$NameTicks)){items <- .render.ticks(name=n,items=items,d=d[which(d$NameTicks == n),],primary=TRUE)}
   if(showsecondary)
     for(n in unique(d$NameTicks)){items <- .render.ticks(name=n,items=items,d=d[which(d$NameTicks == n),],primary=FALSE)}
-  for(n in unique(d$NameText)){ items <- .render.labels(name=n,items=items,d=d[which(d$NameText  == n),])}
+  if(showlabels)
+    for(n in unique(d$NameText)){ items <- .render.labels(name=n,items=items,d=d[which(d$NameText  == n),])}
   items
 }
 .render.border <- function(data.extreme,items,theme){
@@ -649,9 +659,12 @@ coord_render_bg.ternary <- function(coord,details,theme){
       
       #The arrow seperation in npc units.
       arrowsep <- calc_element_plot("axis.tern.arrowsep",theme=theme,verbose=F,plot=NULL)
+      ticklength <- max(calc_element_plot("axis.tern.ticklength.major",theme=theme,verbose=F,plot=NULL),
+                        calc_element_plot("axis.tern.ticklength.minor",theme=theme,verbose=F,plot=NULL))
       if(length(arrowsep) != 3 && length(arrowsep) > 1)
         arrowsep <- arrowsep[1]
-      arrowsep <- convertUnit(arrowsep,"npc",valueOnly=TRUE)
+      #buffer   <- convertUnit(unit(1,"strwidth","100"),"npc")
+      arrowsep <- convertUnit(arrowsep + ticklength,"npc",valueOnly=TRUE)
       
       #MOVE the Arrows Off the Axes.
       d[ixrow,"angle"]    <- .get.angles(clockwise)
@@ -662,8 +675,9 @@ coord_render_bg.ternary <- function(coord,details,theme){
       #Centerpoints, labels, arrowsuffix
       d$xmn   <- rowMeans(d[,ixcol[c(1,3)]])
       d$ymn   <- rowMeans(d[,ixcol[c(2,4)]])
-      d$L     <- as.character(c(details$Tlabel,details$Llabel,details$Rlabel))
-      d$W     <- as.character(c(details$Wlabel))
+      
+      d$L     <- c(details$Tlabel,details$Llabel,details$Rlabel)
+      d$W     <- c(details$Wlabel)
       d$A     <- .get.angles.arrowmarker(clockwise)
       
       ##Function to create new axis & label grob
@@ -738,12 +752,13 @@ coord_render_bg.ternary <- function(coord,details,theme){
   clockwise <- .theme.get.clockwise(theme) 
   
   d    <- data.extreme
-  d$L  <- as.character(c(details$Tlabel,details$Llabel,details$Rlabel))
+  d$L  <- as.expression(c(details$Tlabel,details$Llabel,details$Rlabel))
   
   ##Function to create new axis grob
   .render <- function(name,ix,items,hshift=0,vshift=0){
     tryCatch({  
-      if(!showtitles) return(items)
+      if(!showtitles)
+        return(items)
       
       e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
       colour    <- e$colour

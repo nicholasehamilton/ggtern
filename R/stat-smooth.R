@@ -57,6 +57,7 @@ StatSmoothtern <- proto(Statnew, {
     #HACK 4 ggtern
     lc <- get_last_coord()
     if(inherits(lc,"ternary")){
+      check_required_aesthetics(lc$required_aes, names(data),"coord_tern")
       data <- trytransform(data,lc)
       if(identical(method,lm)){method="lm"}
       if(is.null(xseq)){

@@ -14,7 +14,6 @@ stat_density2d <- function (mapping = NULL, data = NULL, geom = "density2dtern",
 StatDensity2dtern <- proto(Statnew, {
   objname <- "density2dtern"
   default_geom <- function(.) GeomDensity2dTern
-  #default_aes <- function(.) aes(colour = "#3366FF")
   required_aes <- c("x", "y")
   calculate <- function(., data, scales, na.rm = FALSE, contour = TRUE, n = 100, geometry="Density2dTern",...) {
     if(empty(data)){return(data.frame())}
@@ -48,12 +47,21 @@ StatDensity2dtern <- proto(Statnew, {
     df$group <- data$group[1]
     
     if (contour) {
-      StatContour$calculate(df, scales,...)     
+      ret <- StatContour$calculate(df, scales,...)     
     } else {
       names(df) <- c("x", "y", "density", "group")
       df$level <- 1
       df$piece <- 1
-      df
+      ret <- df
     }
+    
+    if(inherits(last_coord,"ternary")){
+      Tlim = last_coord$limits$T
+      Rlim = last_coord$limits$R
+      Llim = last_coord$limits$L
+      ret[,c(last_coord$T,last_coord$L,last_coord$R)] <- transform_cart_to_tern(data=ret,Tlim=Tlim,Llim=Llim,Rlim=Rlim)
+    }
+    
+    return(ret)
   }  
 })

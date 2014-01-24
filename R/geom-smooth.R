@@ -19,7 +19,6 @@ geom_smooth <- function (mapping = NULL, data = NULL, stat = "smoothtern", posit
 GeomSmoothtern <- proto(Geom, {
   objname <- "smoothtern"
   draw <- function(., data, scales, coordinates,limitarea=F,...) { 
-    
     #HACK 4 GGTERN
     if(limitarea & inherits(get_last_coord(),"ternary")){data <- remove_outside(data)}
     
@@ -27,10 +26,13 @@ GeomSmoothtern <- proto(Geom, {
     path   <- transform(data, alpha  = NA)
     
     has_ribbon <- function(x) !is.null(data$ymax) && !is.null(data$ymin)
-    gList(
-      if (has_ribbon(data)) GeomRibbon$draw(ribbon, scales, coordinates),
-      GeomLine$draw(path, scales, coordinates)
-    )
+    
+    notransform({ #ggtern hack
+      ret = gList(
+        if (has_ribbon(data)) GeomRibbon$draw(ribbon, scales, coordinates),
+        GeomLine$draw(path, scales, coordinates))
+    })
+    ret
   }
   guide_geom <- function(.) "smooth"
   default_stat <- function(.) StatSmoothtern

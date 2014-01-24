@@ -20,6 +20,6 @@ geom_density2d <- function (mapping = NULL, data = NULL, stat = "density2dtern",
 
 GeomDensity2dtern <- proto(ggint$GeomPath,{
   objname <- "density2dtern"
-  default_stat <- function(.) StatDensity2dNew
+  default_stat <- function(.) StatDensity2dtern
   default_aes <- function(.) aes(colour="#3366FF", size = 0.5, linetype = 1, alpha = NA,weight=NULL)
 })

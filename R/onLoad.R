@@ -13,6 +13,7 @@
   options("tern.pip.tollerance"        = 0.01)
   options("tern.breaks.default"        = seq(0.1, 1.0,by=0.1))
   options("tern.breaks.default.minor"  = seq(0.05,1.0,by=0.05))
+  options("tern.dont_transform"        = FALSE)
   
   #Set the theme and the last coordinates.
   theme_set(theme_gray())
