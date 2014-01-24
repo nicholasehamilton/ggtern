@@ -1,5 +1,5 @@
 #' Single line segments (Ternary Version).
-#'
+#' 
 #' Modified geom_segment geometry
 #' @section Aesthetics: 
 #' \Sexpr[results=rd,stage=build]{ggplot2:::rd_aesthetics("geom", "segment")}

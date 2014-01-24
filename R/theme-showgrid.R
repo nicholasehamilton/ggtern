@@ -59,13 +59,13 @@ theme_tern_nogrid <- function(){
 #' \code{theme_showgrid_major} is a function which \strong{enables} MAJOR gridlines.
 #' @rdname showhidegrid
 #' @export
-theme_showgrid_major <- function().theme.showgrid.major(TRUE)
+theme_showgrid_major <- function(){.theme.showgrid.major(TRUE)}
 
 #' \code{theme_hidegrid_major} or \code{theme_nogrid_major} (alias) is a function which \strong{disables} MAJOR gridlines.
 #' @aliases theme_nogrid_major theme_tern_nogrid_major
 #' @rdname showhidegrid
 #' @export
-theme_hidegrid_major <- function().theme.showgrid.major(FALSE)
+theme_hidegrid_major <- function(){.theme.showgrid.major(FALSE)}
 theme_nogrid_major <- theme_hidegrid_major
 theme_tern_nogrid_major <- function(){
   tern_dep("1.0.1.3","theme_tern_nogrid_major() has been superceded by theme_nogrid_major()")
@@ -81,7 +81,7 @@ theme_showgrid_minor <- function().theme.showgrid.minor(TRUE)
 #' @aliases theme_nogrid_minor theme_tern_nogrid_minor
 #' @rdname showhidegrid
 #' @export
-theme_hidegrid_minor <- function().theme.showgrid.minor(FALSE)
+theme_hidegrid_minor <- function(){.theme.showgrid.minor(FALSE)}
 theme_nogrid_minor <- theme_hidegrid_minor
 theme_tern_nogrid_minor <- function(){
   tern_dep("1.0.1.3","theme_tern_nogrid_minor() has been superceded by theme_nogrid_minor()")

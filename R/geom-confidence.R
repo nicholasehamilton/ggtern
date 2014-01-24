@@ -109,8 +109,8 @@ StatConfidence <- proto(ggint$Stat, {
       LHS <- 1 - THS - RHS      
       
       RESULT[,lc$T] = THS
-      RESULT[,lc$L] = LHS#ifthenelse(lc$clockwise,RHS,LHS)
-      RESULT[,lc$R] = RHS#ifthenelse(lc$clockwise,LHS,RHS)
+      RESULT[,lc$L] = LHS
+      RESULT[,lc$R] = RHS
     }
     RESULT
   }

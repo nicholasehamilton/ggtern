@@ -19,3 +19,4 @@
   theme_set(theme_gray())
   set_last_coord(NULL)
 }
+
