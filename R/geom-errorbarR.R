@@ -8,7 +8,7 @@ geom_errorbarR <- function (mapping = NULL, data = NULL, stat = "identity", posi
 GeomErrorbarr <- proto(Geom,{
   objname <- "errorbarr"
   default_stat <- function(.) StatIdentity
-  default_aes <- function(.) aes(colour = "black", size=0.5, linetype=1, height=0.5, alpha = NA)
+  default_aes <- function(.) aes(colour = "black", size=0.5, linetype=1, height=0.5, alpha = NA,width=NA)
   guide_geom <- function(.) "path"
   required_aes <- c("x","y","z","Rmax","Rmin")
   
@@ -16,6 +16,11 @@ GeomErrorbarr <- proto(Geom,{
     coordinates <- get_last_coord()
     if(!inherits(coordinates,"ternary"))
       stop("Coordinates Must be Ternary.")
+    
+    #Check
+    required_aes <- sort(unique(c(.$required_aes,coordinates$required_aes)))
+    check_required_aesthetics(required_aes, names(df),"geom_errorbarR")
+    
     IX <- coordinates$R
     df$width <- df$width %||% params$width %||% 0
     
@@ -34,8 +39,6 @@ GeomErrorbarr <- proto(Geom,{
   }
   
   draw <- function(., data, scales, coordinates, height = NULL,allow.outside,...) {
-    required_aes <- sort(unique(c(.$required_aes,coordinates$required_aes)))
-    check_required_aesthetics(required_aes, names(data),"geom_errorbarR")
     if(!inherits(coordinates,"ternary"))
       stop("Coordinates Must be Ternary.")
     
