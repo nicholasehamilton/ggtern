@@ -46,6 +46,7 @@ Collate:
   'theme-showgrid.R'
   'theme-convenience.R'
   'theme-ticksoutside.R'
+  'theme-arrowbaseline.R'
   'labs-pcnt.R'
   'labs-new.R'
   'log-ratio-trans.R'

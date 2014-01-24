@@ -66,6 +66,7 @@ ggint$.element_tree$axis.tern.text.L         = .el_def("element_text", "axis.ter
 ggint$.element_tree$axis.tern.text.R         = .el_def("element_text", "axis.tern.text",       description="Text for RHS Axis") #
 
 ggint$.element_tree$axis.tern.showarrows     = .el_def("logical",                              description="Arrows Show or Hide")
+ggint$.element_tree$axis.tern.arrowbaseline  = .el_def("numeric",                              description="Arrow Origin 0=Axis,1=Ticks,2=Labels")
 ggint$.element_tree$axis.tern.arrowsep       = .el_def("unit",                                 description="Arrows Seperation from Axis")
 ggint$.element_tree$axis.tern.arrowstart    = .el_def("numeric",                               description="Proportion of Axis when Arrow Starts")
 ggint$.element_tree$axis.tern.arrowfinish   = .el_def("numeric",                               description="Proportion of Axis when Arrow Finishes")

@@ -57,6 +57,7 @@
       axis.tern.showlabels       = getOption("tern.showlabels"),
       axis.tern.arrowstart       = 0.3,
       axis.tern.arrowfinish      = 0.7,
+      axis.tern.arrowbaseline    = 2,
       #axis.tern.padding          = unit(0.10,"npc"),
       #axis.tern.hshift           = unit(0,"npc"),
       #axis.tern.vshift           = unit(0.025,"npc"),
