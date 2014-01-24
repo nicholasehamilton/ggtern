@@ -327,6 +327,19 @@ coord_render_bg.ternary <- function(coord,details,theme){
   showsecondary
 }
 
+#for relative arrow positioning
+.arrow.pos <- (function() {
+  width <- unit(0,"npc")
+  list(
+    get   = function(){width},
+    set   = function(new){width <<- new},
+    reset = function(){   width <<- unit(0,"npc")}
+  )
+})()
+
+
+
+
 #----------------------------------------------------------------------------------
 #Internals >>>> Data Extremes.
 #----------------------------------------------------------------------------------
@@ -539,6 +552,9 @@ coord_render_bg.ternary <- function(coord,details,theme){
                                          fontface   = face, 
                                          lineheight = lineheight))
       
+      #Update the maximum grob width allocated to labels.
+      .arrow.pos$set(convertUnit(max(grobWidth(grob),grobHeight(grob),.arrow.pos$get()),"npc"))
+      
       ##Add to the items.
       items[[length(items) + 1]] <- grob
     },error = function(e){ warning(e)})
@@ -583,6 +599,8 @@ coord_render_bg.ternary <- function(coord,details,theme){
     for(n in unique(d$NameTicks)){items <- .render.ticks(name=n,items=items,d=d[which(d$NameTicks == n),],primary=FALSE)}
   if(showlabels)
     for(n in unique(d$NameText)){ items <- .render.labels(name=n,items=items,d=d[which(d$NameText  == n),])}
+  else
+    .arrow.pos$reset()
   items
 }
 .render.border <- function(data.extreme,items,theme){
@@ -629,11 +647,13 @@ coord_render_bg.ternary <- function(coord,details,theme){
   }
   items
 }
-.render.arrows <- function(data.extreme,items,theme,details){
+.render.arrows <- function(data.extreme,items,theme,details,maxgrob){
   axis.tern.showarrows <- theme$axis.tern.showarrows
   if(is.logical(axis.tern.showarrows) && (axis.tern.showarrows)){
     tryCatch({
+      #clockwise or anticlockwise precession
       clockwise <- .theme.get.clockwise(theme)
+      
       #The basic data.
       d.s <- data.extreme[ifthenelse(clockwise,c(2,3,1),c(3,1,2)),]
       d.f <- data.extreme[c(1,2,3),]
@@ -663,14 +683,15 @@ coord_render_bg.ternary <- function(coord,details,theme){
                         calc_element_plot("axis.tern.ticklength.minor",theme=theme,verbose=F,plot=NULL))
       if(length(arrowsep) != 3 && length(arrowsep) > 1)
         arrowsep <- arrowsep[1]
-      #buffer   <- convertUnit(unit(1,"strwidth","100"),"npc")
-      arrowsep <- convertUnit(arrowsep + ticklength,"npc",valueOnly=TRUE)
+      arrowsep <- convertUnit(arrowsep + ticklength + .arrow.pos$get(),"npc",valueOnly=TRUE)
       
       #MOVE the Arrows Off the Axes.
       d[ixrow,"angle"]    <- .get.angles(clockwise)
       d[ixrow,"arrowsep"] <- arrowsep
+      #xcoordinates
       d[,ixcol[c(1,3)]]   <- d[,ixcol[c(1,3)]] + cos(pi*d$angle/180)*arrowsep
-      d[,ixcol[c(2,4)]]   <- d[,ixcol[c(2,4)]] + sin(pi*d$angle/180)*arrowsep
+      #ycoorinates
+      d[,ixcol[c(2,4)]]   <- d[,ixcol[c(2,4)]] + sin(pi*d$angle/180)*arrowsep/coord_aspect.ternary()
       
       #Centerpoints, labels, arrowsuffix
       d$xmn   <- rowMeans(d[,ixcol[c(1,3)]])
