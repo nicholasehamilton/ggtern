@@ -65,6 +65,7 @@ ggplot_build <- function(plot) {
     panel$Wlabel = .Wlabel(panel,plot$labels)
     for(i in 1:3){
       x = scales.tern[i]
+      #.Tlabel, .Llabel, .Rlabel
       panel[[paste0(x,"_scales")]]$name <- do.call(paste0(".",x,"label"),list(panel  = panel,labels = plot$labels))
     } 
   }else set_last_coord(NULL)

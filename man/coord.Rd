@@ -14,9 +14,10 @@
   \method{is.linear}{ternary} (coord)
 
   \method{coord_transform}{ternary} (coord, data, details,
-    verbose = FALSE, revertToCart = TRUE,
+    verbose = FALSE, revertToCart = FALSE,
     adjustCart = TRUE,
-    discard = getOption("tern.discard.external"))
+    discard = getOption("tern.discard.external"),
+    dont_transform = getOption("tern.dont_transform"))
 
   \method{coord_expand_defaults}{ternary} (coord, scale,
     aesthetic)
@@ -47,6 +48,9 @@
   \item{verbose}{verbose reporting}
 
   \item{revertToCart}{fall back to cartesian data if error}
+
+  \item{dont_transform}{override the ternary
+  transformation}
 
   \item{adjustCart}{adjust for the cartesian scale or not}
 
