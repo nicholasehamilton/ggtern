@@ -175,6 +175,17 @@ transform_cart_to_tern <- function(x,y,data=data.frame(x=x,y=y),...,Tlim=c(0,1),
   })
 }
 
+.makevalid <- function(x){
+  x = x[[1]]
+  if(class(x) == 'character'){
+    x = gsub("%","'%'",x)
+    #x = gsub("/","'/'",x)
+    x = gsub('([[:punct:]])\\1+', '\\1', x)
+    x = gsub(" ","~",x)
+  }
+  x
+}
+
 #' \code{arrow_label_formatter} is a function that formats the labels directly adjacent to the ternary arrows.
 #' @param label character label
 #' @param suffix chacater suffix behind each label
@@ -186,21 +197,27 @@ transform_cart_to_tern <- function(x,y,data=data.frame(x=x,y=y),...,Tlim=c(0,1),
 #' }
 arrow_label_formatter <- function(label,suffix="",...,sep="/"){
   if(missing(label))stop("label cannot be missing")
-  label = label[[1]]
-  if(missing(suffix)){
-    ret <- parse(text=gsub(x=label,pattern=" ",replacement="~"))
-  }else if(identical(suffix,NULL) | identical(suffix,"") | missing(suffix)){
-    ret <- parse(text=gsub(x=label,pattern=" ",replacement="~"))
+  label = .makevalid(label)
+  suffix= .makevalid(suffix)
+  sep   = .makevalid(sep)
+  sep   = ifthenelse(identical(suffix,""),"",sep)
+  ret   = label #default
+  if(identical(suffix,NULL) | missing(suffix)){
+    ret = arrow_label_formatter(label=label,sep=sep,suffix="") #recursive
   }else{
     tryCatch({
-      label = as.expression(label)
-      ret <- paste(label,sep,gsub("'%'",'%',suffix))
-      ret <- parse(text=paste(label,sep,gsub(x=suffix,pattern=" ",replacement="~")))
+      ret   = ifthenelse(class(label) == 'call',as.expression(ret),ret)
+      ret   = parse(text=paste(ret,sep,gsub(x=suffix,pattern=" ",replacement="~")))
     },error=function(e){
+      message(e) #to console
     })
   }
-  ret
+  return(ret) #result
 }
+
+data(Feldspar)
+ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point() + Tlab(expression(x^2)) + custom_percent("'/''%'")
+
 
 #' \code{calc_element_plot} Calculates the element properties, by inheriting properties from its parents, 
 #' and compares to whether the local plot overrides this value. Based largely off the \code{\link[ggplot2]{calc_element}} 
