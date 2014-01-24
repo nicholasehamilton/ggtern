@@ -1,8 +1,8 @@
 #' Theme Convenience Functions
 #' 
 #' @description
-#' \code{ggtern} has made available a number of convenience functions for rapid tweaking of the various theme elements, for a full list of the available 
-#' theme elements which can be manually modified, see \link[=themeelements]{HERE}.
+#' \code{ggtern} has made available a number of convenience functions for rapid tweaking of the various theme elements, 
+#' for a full list of the available theme elements which can be manually modified, see \link[=themeelements]{HERE}.
 #' 
 #' @section Default Themes:
 #' Default themes which ship with \code{ggtern}:
@@ -18,10 +18,11 @@
 #' \itemize{
 #'   \item \code{\link[=theme_showtitles]{Show/Hide Axis Titles}}
 #'   \item \code{\link[=theme_showarrows]{Show/Hide Arrows}} 
-#'   \item \code{\link[=theme_nogrid]{Show/Hide Grids}}
+#'   \item \code{\link[=theme_showgrid]{Show/Hide Grids}}
+#'   \item \code{\link[=theme_showprimary]{Show/Hide Primary/Secondary Ticks}}
+#'   \item \code{\link[=theme_showlabels]{Show/Hide Axis Ticklabels}}
 #'   \item \code{\link[=theme_clockwise]{Clockwise/Anticlockwise Axis Precession}}  
 #'   \item \code{\link[=theme_ticksoutside]{Ticks Inside or Outside of the Main Plot Area}}
-#'   \item \code{\link[=theme_noticks]{Show or Hide Primary or Secondary Ticks.}}
 #'   \item \code{\link[=atomic_percent]{Atomic or Weight Percent Arrow Label Suffix.}}
 #' }
 #' 

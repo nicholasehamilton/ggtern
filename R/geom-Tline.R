@@ -37,7 +37,7 @@
 #'  Tline(0.5,color="red") + 
 #'  Lline(0.5,color="green") + 
 #'  Rline(0.5,color="blue")
-#'  }
+#' }
 #' @export
 NULL
 

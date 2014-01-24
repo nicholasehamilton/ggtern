@@ -11,7 +11,6 @@
 #' Modifying the newly created items requires the same procedures as introduced in the ggplot2 \code{\link[ggplot2]{theme}} documentation.
 #' Some convenience functions have been also newly created, proceed to \code{\link{convenience}} for additional information.
 #' 
-
 #' @section New/Additional Inheritance Structures:
 #' \Sexpr[results=rd,stage=build]{ggtern:::rd_theme()}
 #' **  \strong{NB:} \code{panel.background.tern}, whilst the ternary area is 'triangular' per-se, \code{\link{element_rect}} has been used, 

@@ -7,6 +7,8 @@
   theme_showlabels()
 
   theme_hidelabels()
+
+  theme_nolabels()
 }
 \description{
   Convenience functions to enable or disable the axis

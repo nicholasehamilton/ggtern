@@ -1,7 +1,4 @@
-.theme_ticksoutside <- function(x){
-  theme(axis.tern.ticks.outside=x)
-}
-
+.theme_ticksoutside <- function(x){theme(axis.tern.ticks.outside=x)}
 
 #' Place Ticks Inside or Outside
 #' 

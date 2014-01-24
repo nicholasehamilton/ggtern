@@ -26,13 +26,15 @@
   \itemize{ \item \code{\link[=theme_showtitles]{Show/Hide
   Axis Titles}} \item
   \code{\link[=theme_showarrows]{Show/Hide Arrows}} \item
-  \code{\link[=theme_nogrid]{Show/Hide Grids}} \item
+  \code{\link[=theme_showgrid]{Show/Hide Grids}} \item
+  \code{\link[=theme_showprimary]{Show/Hide
+  Primary/Secondary Ticks}} \item
+  \code{\link[=theme_showlabels]{Show/Hide Axis
+  Ticklabels}} \item
   \code{\link[=theme_clockwise]{Clockwise/Anticlockwise
   Axis Precession}} \item
   \code{\link[=theme_ticksoutside]{Ticks Inside or Outside
   of the Main Plot Area}} \item
-  \code{\link[=theme_noticks]{Show or Hide Primary or
-  Secondary Ticks.}} \item
   \code{\link[=atomic_percent]{Atomic or Weight Percent
   Arrow Label Suffix.}} }
 }

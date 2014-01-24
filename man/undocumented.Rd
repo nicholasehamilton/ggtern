@@ -2,7 +2,6 @@
 \name{zzz-internal}
 \alias{Geom}
 \alias{Statnew}
-\alias{arrow}
 \alias{arrow_label_formatter}
 \alias{calc_element_plot}
 \alias{cullAndConstrain}
@@ -18,8 +17,6 @@
 \alias{remove_outside}
 \alias{set_last_coord}
 \alias{sink_density}
-\alias{undocumented}
-\alias{unit}
 \alias{zzz-internal}
 \title{Internal Functions}
 \format{functions and objects}
@@ -198,14 +195,6 @@
 
   \code{cullAndConstrain} is a function that is not
   implemented at this point in time, ignore it.
-
-  \code{arrow} is an exported instance of the imported grid
-  arrow function. For further information, refer to:
-  \link[grid]{arrow}.
-
-  \code{unit} is an exported instance of the imported grid
-  unit function. For further information, refer to:
-  \link[grid]{unit}.
 }
 \examples{
 \donttest{

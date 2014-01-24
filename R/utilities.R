@@ -175,14 +175,6 @@ transform_cart_to_tern <- function(x,y,data=data.frame(x=x,y=y),...,Tlim=c(0,1),
   })
 }
 
-
-
-
-
-
-
-
-
 #' \code{arrow_label_formatter} is a function that formats the labels directly adjacent to the ternary arrows.
 #' @param label character label
 #' @param suffix chacater suffix behind each label

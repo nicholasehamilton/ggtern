@@ -18,7 +18,6 @@ aes <- function(x,y,z,...) {
   # Convert prefixes to full names
   full <- match(names(x), .all_aesthetics)
   names(x)[!is.na(full)] <- .all_aesthetics[full[!is.na(full)]]
-  
   rename(x, find_global(".base_to_ggplot"), warn_missing = FALSE)
 }
 .all_aesthetics <- c(ggint$.all_aesthetics,"T","L","R","zend")

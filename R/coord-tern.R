@@ -141,9 +141,7 @@ coord_transform.ternary <- function(coord, data, details,
   ##Default is to execute the cartesian transformation (DEFAULT)
   if(adjustCart & !missing(details)){
     ggint$coord_transform.cartesian(coord,data,details)
-    
-  ##however sometimes (say in an intermediate step), we may wish to suppress.
-  }else{ 
+  }else{ ##however sometimes (say in an intermediate step), we may wish to suppress.
     data
   }
 }
