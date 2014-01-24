@@ -4,6 +4,7 @@
   options("tern.clockwise"             = TRUE)
   options("tern.showarrows"            = TRUE)
   options("tern.showtitles"            = TRUE)
+  options("tern.showlabels"            = TRUE)
   options("tern.showgrid.major"        = TRUE)
   options("tern.showgrid.minor"        = TRUE)
   options("tern.ticks.outside"         = TRUE)

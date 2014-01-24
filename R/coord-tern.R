@@ -287,6 +287,11 @@ coord_render_bg.ternary <- function(coord,details,theme){
   showtitles    <- ifthenelse(is.logical(showtitles),showtitles[1],getOption("tern.showtitles"))
   showtitles
 }
+.theme.get.showlabels <- function(theme){
+  showlabels    <- calc_element_plot("axis.tern.showlabels",theme=theme)
+  showlabels    <- ifthenelse(is.logical(showlabels),showlabels[1],getOption("tern.showlabels"))
+  showlabels
+}
 .theme.get.showgrid.major <- function(theme){
   showgrid <- calc_element_plot("axis.tern.showgrid.major",theme=theme)
   showgrid <- ifthenelse(is.logical(showgrid),showgrid[1],getOption("tern.showgrid.major"))
@@ -372,6 +377,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   showsecondary <- .theme.get.showsecondary(theme)
   showgrid.major<- .theme.get.showgrid.major(theme)
   showgrid.minor<- .theme.get.showgrid.minor(theme)
+  showlabels    <- .theme.get.showlabels(theme)
   shift         <- ifthenelse(!outside,180,0)
   
   #major & minor ticklength

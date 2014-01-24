@@ -21,6 +21,7 @@
 \alias{axis.tern.showarrows}
 \alias{axis.tern.showgrid.major}
 \alias{axis.tern.showgrid.minor}
+\alias{axis.tern.showlabels}
 \alias{axis.tern.showtitles}
 \alias{axis.tern.text}
 \alias{axis.tern.text.L}

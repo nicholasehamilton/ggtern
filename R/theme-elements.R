@@ -32,6 +32,7 @@
 #' panel.grid.tern panel.grid.tern.major panel.grid.tern.major.T panel.grid.tern.major.L panel.grid.tern.major.R 
 #' axis.tern.showgrid.minor panel.grid.tern.minor 
 #' panel.grid.tern.minor.T panel.grid.tern.minor.L panel.grid.tern.minor.R ternary.options
+#' axis.tern.showlabels
 #' @name theme_elements
 #' @rdname theme_elements
 NULL
@@ -59,6 +60,7 @@ ggint$.element_tree$axis.tern.line.T         = .el_def("element_line", "axis.ter
 ggint$.element_tree$axis.tern.line.L         = .el_def("element_line", "axis.tern.line",       description="Line for LHS Axis") #
 ggint$.element_tree$axis.tern.line.R         = .el_def("element_line", "axis.tern.line",       description="LIne for RHS Axis") #
 
+ggint$.element_tree$axis.tern.showlabels     = .el_def("logical",                              description="Axis Labels Show or Hide")
 ggint$.element_tree$axis.tern.text           = .el_def("element_text", "text",                 description="Base Text") #
 ggint$.element_tree$axis.tern.text.T         = .el_def("element_text", "axis.tern.text",       description="Text for TOP Axis") #
 ggint$.element_tree$axis.tern.text.L         = .el_def("element_text", "axis.tern.text",       description="Text for LHS Axis") #
