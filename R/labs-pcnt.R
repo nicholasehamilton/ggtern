@@ -9,10 +9,12 @@
 #' 
 #' @description \code{percent_weight} adds 'Wt. \%' to the arrow marker label as a suffix
 #' @examples
+#' \donttest{
 #' plot <- ggtern(data=data.frame(THS=1,LHS=0,RHS=0),aes(x=THS,y=LHS,z=RHS)) + geom_point()
 #' plot + percent_weight()
 #' plot + percent_atomic()
 #' plot + percent_custom("Percentage")
+#' }
 #' @rdname labs_pcnt
 #' @export
 percent_weight <- function(){labs(W="Wt. '%'")}

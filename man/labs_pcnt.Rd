@@ -51,9 +51,11 @@
   Atomic, Weight or Custom Percentage Suffix
 }
 \examples{
+\donttest{
 plot <- ggtern(data=data.frame(THS=1,LHS=0,RHS=0),aes(x=THS,y=LHS,z=RHS)) + geom_point()
 plot + percent_weight()
 plot + percent_atomic()
 plot + percent_custom("Percentage")
+}
 }
 

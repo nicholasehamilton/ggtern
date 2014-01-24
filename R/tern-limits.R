@@ -9,12 +9,14 @@
 #' @param verbose report the solved values
 #' @seealso \code{\link{scale_T_continuous}}, \code{\link{scale_L_continuous}} and \code{\link{scale_R_continuous}}
 #' @examples 
+#' \donttest{
 #' plot <- ggtern(data=data.frame(x=runif(100),
 #'                                y=runif(100),
 #'                                z=runif(100)), aes(x,y,z)) + 
 #'         geom_point() + 
 #'         tern_limits(0.7,0.3,0.4)
 #' plot
+#' }
 #' @rdname tern_limits
 #' @export
 tern_limits <- function(T=1,L=1,R=1,...,verbose=F){

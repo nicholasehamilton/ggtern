@@ -31,6 +31,7 @@
   suffix. (ie atomic percent, weight percent etc.)
 }
 \examples{
+\donttest{
 data(Feldspar)
 plot <- ggtern(data=Feldspar,aes(Ab,An,Or)) +
         geom_point() +
@@ -38,6 +39,7 @@ plot <- ggtern(data=Feldspar,aes(Ab,An,Or)) +
         ylab("DEF")  +
         zlab("GHI")
 plot
+}
 }
 \seealso{
   \code{\link[ggplot2]{labs}}

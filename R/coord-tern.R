@@ -371,7 +371,9 @@ coord_render_bg.ternary <- function(coord,details,theme){
       
       ##Add to the items.
       items[[length(items) + 1]] <- grob
-    },error = function(e){print(e)})
+    },error = function(e){
+      
+    })
     return(items)
   }
   

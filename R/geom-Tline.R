@@ -25,6 +25,7 @@
 #' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("stat", "Lline")}
 #' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("stat", "Rline")}
 #' @examples
+#' \donttest{
 #' #Base usage
 #' ggtern()  + 
 #'  geom_Lline(Lintercept=0.5,color="red") + 
@@ -36,6 +37,7 @@
 #'  Tline(0.5,color="red") + 
 #'  Lline(0.5,color="green") + 
 #'  Rline(0.5,color="blue")
+#'  }
 #' @export
 NULL
 

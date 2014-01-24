@@ -208,9 +208,15 @@
   \link[grid]{unit}.
 }
 \examples{
-get_tern_extremes(coordinates = coord_tern())
-arrow_label_formatter("TOP","Wt.\%",sep="/")
+\donttest{
+ get_tern_extremes(coordinates = coord_tern())
+}
+\donttest{
+arrow_label_formatter("TOP","Wt. \%",sep="/")
+}
+\donttest{
 find_global('scale_x_continuous')
+}
 }
 \seealso{
   \code{\link[ggplot2]{calc_element}}

@@ -108,6 +108,7 @@
   "Rline")}
 }
 \examples{
+\donttest{
 #Base usage
 ggtern()  +
  geom_Lline(Lintercept=0.5,color="red") +
@@ -119,5 +120,6 @@ ggtern() +
  Tline(0.5,color="red") +
  Lline(0.5,color="green") +
  Rline(0.5,color="blue")
+ }
 }
 

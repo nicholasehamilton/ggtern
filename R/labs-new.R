@@ -10,6 +10,7 @@
 #' @name labels
 #' @seealso \code{\link[ggplot2]{labs}}
 #' @examples
+#' \donttest{
 #' data(Feldspar)
 #' plot <- ggtern(data=Feldspar,aes(Ab,An,Or)) + 
 #'         geom_point() + 
@@ -17,6 +18,7 @@
 #'         ylab("DEF")  + 
 #'         zlab("GHI")
 #' plot
+#' }
 #' @export
 NULL
 

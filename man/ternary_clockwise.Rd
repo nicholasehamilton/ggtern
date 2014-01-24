@@ -39,14 +39,23 @@
   \code{tern_counterclockwise}
 }
 \examples{
+\donttest{
 plot <- ggtern(data=data.frame(x=1,y=1,z=1),aes(x,y,z)) +
                   geom_point() +
                   tern_clockwise()
+plot
+}
+\donttest{
 plot <- ggtern(data=data.frame(x=1,y=1,z=1),aes(x,y,z)) +
                   geom_point() +
                   tern_anticlockwise()
+plot
+}
+\donttest{
 plot <- ggtern(data=data.frame(x=1,y=1,z=1),aes(x,y,z)) +
                   geom_point() +
                   tern_counterclockwise()
+plot
+}
 }
 

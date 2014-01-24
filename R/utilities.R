@@ -23,7 +23,10 @@ is.numericor <- function(A,B){
 #' @param coordinates ggtern coordinate system, inheriting "ternary" and "coord" classes.
 #' @param verbose logical indicating verbose reporting to console
 #' @param expand numeric value to 
-#' @examples get_tern_extremes(coordinates = coord_tern())
+#' @examples 
+#' \donttest{
+#'  get_tern_extremes(coordinates = coord_tern())
+#' }
 #' @return \code{get_tern_extremes} returns data.frame representing the T, L and R amounts (Columns) at each of the tips (extremes) of the ternary plot area (Rows)
 #' @rdname undocumented
 get_tern_extremes <- function(coordinates,verbose=F,expand=0){
@@ -109,14 +112,16 @@ get_tern_extremes <- function(coordinates,verbose=F,expand=0){
 #' equal to that of the \code{data} argument. In other words, a '1 to 1' transformation from the ternary to the cartesian space. 
 #' @rdname ternary_transformations
 #' @name   ternary_transformations
-#' @aliases transform_tern_to_cart
+#' @aliases transform_tern_to_cart transform_cart_to_tern
 #' @examples
+#' \donttest{
 #' #Species Concentrations
 #' T=c(1,0,0) #TOP 
 #' L=c(0,1,0) #LEFT
 #' R=c(0,0,1) #RIGHT
 #' #Transform
 #' transform_tern_to_cart(T,L,R)
+#' }
 transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),...,Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1),scale=TRUE){
   if(class(data) != "data.frame")stop("data must be of type 'data.frame'")
   if(length(which(c("T","L","R") %in% colnames(data))) < 3) stop("data must contain columns T, L and R")
@@ -183,7 +188,10 @@ transform_cart_to_tern <- function(x,y,data=data.frame(x=x,y=y),...,Tlim=c(0,1),
 #' @param suffix chacater suffix behind each label
 #' @param sep the seperator between label and suffix 
 #' @rdname undocumented
-#' @examples arrow_label_formatter("TOP","Wt.%",sep="/")
+#' @examples 
+#' \donttest{
+#' arrow_label_formatter("TOP","Wt. %",sep="/")
+#' }
 arrow_label_formatter <- function(label,suffix="",...,sep="/"){
   if(missing(label))stop("label cannot be missing")
   label = label[[1]]
@@ -192,9 +200,12 @@ arrow_label_formatter <- function(label,suffix="",...,sep="/"){
   }else if(identical(suffix,NULL) | identical(suffix,"") | missing(suffix)){
     ret <- parse(text=gsub(x=label,pattern=" ",replacement="~"))
   }else{
-    if(class(label) == "call")
+    tryCatch({
       label = as.expression(label)
-    ret <- parse(text=paste(label,sep,gsub(x=suffix,pattern=" ",replacement="~")))
+      ret <- paste(label,sep,gsub("'%'",'%',suffix))
+      ret <- parse(text=paste(label,sep,gsub(x=suffix,pattern=" ",replacement="~")))
+    },error=function(e){
+    })
   }
   ret
 }
@@ -226,7 +237,10 @@ calc_element_plot <- function(element,theme=theme_update(),...,plot=NULL,verbose
 #' now additionally searches within the \code{ggtern} namespace prior to the \code{ggplot2} namespace.
 #' @param name character name of object to search for
 #' @param env environment to search within as first priority
-#' @examples find_global('scale_x_continuous')
+#' @examples 
+#' \donttest{
+#' find_global('scale_x_continuous')
+#' }
 #' @rdname undocumented
 #' @return \code{find_global} returns an instance of the named object (if it exists), or \code{NULL} (if it does not).
 find_global <- function (name, env=environment()){  

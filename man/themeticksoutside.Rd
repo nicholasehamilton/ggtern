@@ -15,11 +15,13 @@
   \code{theme_ticksoutside})
 }
 \examples{
+\donttest{
 data(Feldspar)
 ggtern(data=Feldspar,aes(Ab,An,Or)) +
   geom_point() +
   theme_bw() +
   theme_nogrid() +
   theme_ticksinside()
+}
 }
 
