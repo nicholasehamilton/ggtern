@@ -248,10 +248,10 @@ coord_render_bg.ternary <- function(coord,details,theme){
   
   #Build the plot region.
   items <- .render.background(data.extreme,items,theme)     #BACKGROUND...
-  items <- .render.border(data.extreme,items,theme)         #BORDER
   items <- .render.grids(data.extreme,items,theme,details)  #GRIDS
   items <- .render.arrows(data.extreme,items,theme,details) #ARROWS
   items <- .render.titles(data.extreme,items,theme,details) #MAIN TITLES
+  items <- .render.border(data.extreme,items,theme)         #BORDER
   
   #render.
   ggint$ggname("background",gTree(children = do.call("gList", items)))
@@ -506,6 +506,8 @@ coord_render_bg.ternary <- function(coord,details,theme){
   .render.ticks <- function(name,items,d,primary=TRUE){
     tryCatch({  
       e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
+      if(identical(e,element_blank()))
+        return(items)
       colour   <- e$colour
       size     <- e$size
       linetype <- e$linetype
@@ -529,6 +531,8 @@ coord_render_bg.ternary <- function(coord,details,theme){
   .render.labels <- function(name,items,d){    
     tryCatch({  
       e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
+      if(identical(e,element_blank()))
+        return(items)
       colour    <- e$colour
       fill      <- e$fill
       size      <- e$size
@@ -563,26 +567,26 @@ coord_render_bg.ternary <- function(coord,details,theme){
     if((unique(d$Major) & showgrid.major) | (!unique(d$Major) & showgrid.minor)){
       tryCatch({  
         e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
-        if(!identical(e,element_blank())){
-          colour   <- e$colour
-          size     <- max(e$size,0)
-          if(size > 0){
-            linetype <- e$linetype
-            lineend  <- e$lineend
-            grob     <- segmentsGrob(
-              x0 = d$x, 
-              x1 = d$xend.grid,
-              y0 = d$y, 
-              y1 = d$yend.grid,
-              default.units="native",
-              gp = gpar(col     = colour, 
-                        lty     = linetype,
-                        lineend = lineend,
-                        lwd     = size*find_global(".pt"))
-            )
-            ##Add to the items.
-            items[[length(items) + 1]] <- grob
-          }
+        if(identical(e,element_blank()))
+          return(items)
+        colour   <- e$colour
+        size     <- max(e$size,0)
+        if(size > 0){
+          linetype <- e$linetype
+          lineend  <- e$lineend
+          grob     <- segmentsGrob(
+            x0 = d$x, 
+            x1 = d$xend.grid,
+            y0 = d$y, 
+            y1 = d$yend.grid,
+            default.units="native",
+            gp = gpar(col     = colour, 
+                      lty     = linetype,
+                      lineend = lineend,
+                      lwd     = size*find_global(".pt"))
+          )
+          ##Add to the items.
+          items[[length(items) + 1]] <- grob
         }
       },error = function(e){ warning(e)})
     }
