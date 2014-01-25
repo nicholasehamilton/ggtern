@@ -175,8 +175,6 @@ coord_train.ternary <- function(coord, scales){
   #trimmed down cartesian coords
   ret <- c(ggint$train_cartesian(scales$x, coord$limits$x + c(-p,p) - h, "x"),
            ggint$train_cartesian(scales$y, coord$limits$y + c(-p,p)*coord_aspect.ternary() - v, "y"))[c("x.range","y.range")]
-
-  print(scales)
   
   #detailed ternary coords
   IX <- c("T","L","R")
@@ -291,6 +289,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
 #Internals >>>> ANGLES
 #----------------------------------------------------------------------------------
 .get.angles <- function(clockwise){ifthenelse(clockwise,c(-180,-60,60),c(0,120,240))}
+.get.angles.arrows <- function(clockwise){ifthenelse(clockwise,c(150,-90,30),c(30,150,-90))}
 .get.angles.arrowmarker <- function(clockwise){ifthenelse(clockwise,c(60,0,-60),c(-60,60,0) )}
 .get.angles.text <- function(clockwise){ifthenelse(clockwise,c(0,-60,60),c(0,-60,60))}
 
@@ -719,7 +718,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
       })
       
       #MOVE the Arrows Off the Axes.
-      d[ixrow,"angle"]    <- .get.angles(clockwise)
+      d[ixrow,"angle"]    <- .get.angles.arrows(clockwise)
       d[ixrow,"arrowsep"] <- arrowsep
       #xcoordinates
       d[,ixcol[c(1,3)]]   <- d[,ixcol[c(1,3)]] + cos(pi*d$angle/180)*arrowsep
