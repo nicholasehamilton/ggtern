@@ -91,17 +91,21 @@ ggplot_gtable <- function(data) {
   
   panel_dim <-  .find_panel(plot_table)
   
-  xlab_height <- grobHeight(xlabel) + 
-    if (is.null(labels$x)) unit(0, "lines") else unit(0.5, "lines")
-  plot_table <- gtable_add_rows(plot_table, xlab_height)
-  plot_table <- gtable_add_grob(plot_table, xlabel, name = "xlab",
-                                l = panel_dim$l, r = panel_dim$r, t = -1, clip = "off")
   
-  ylab_width <- grobWidth(ylabel) + 
-    if (is.null(labels$y)) unit(0, "lines") else unit(0.5, "lines")
-  plot_table <- gtable_add_cols(plot_table, ylab_width, pos = 0)
-  plot_table <- gtable_add_grob(plot_table, ylabel, name = "ylab",
-                                l = 1, b = panel_dim$b, t = panel_dim$t, clip = "off")
+  #ggtern suppress existing x and y axes
+  if(!inherits(plot$coordinates,"ternary")){
+    xlab_height <- grobHeight(xlabel) + 
+      if (is.null(labels$x)) unit(0, "lines") else unit(0.5, "lines")
+    plot_table <- gtable_add_rows(plot_table, xlab_height)
+    plot_table <- gtable_add_grob(plot_table, xlabel, name = "xlab",
+                                  l = panel_dim$l, r = panel_dim$r, t = -1, clip = "off")
+    
+    ylab_width <- grobWidth(ylabel) + 
+      if (is.null(labels$y)) unit(0, "lines") else unit(0.5, "lines")
+    plot_table <- gtable_add_cols(plot_table, ylab_width, pos = 0)
+    plot_table <- gtable_add_grob(plot_table, ylabel, name = "ylab",
+                                  l = 1, b = panel_dim$b, t = panel_dim$t, clip = "off")
+  }
   
   # Legends
   position <- theme$legend.position

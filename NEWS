@@ -9,6 +9,7 @@ ggtern 1.0.3.0
 * Better handling of convenience functions for hiding (and showing which is new) major or minor gridlines
 * Improvement on arrow positioning relative to ticks and axis labels.
 * Convenience function for the setting of the ternary arrow baseline (theme_arrowbaseline(value))
+* Removal of grid elements for existing axes (ie not just using blank elements)
 
 BUG FIXES
 * Labels not assigning correctly when coord_tern() not using default x,y,z mapping.
