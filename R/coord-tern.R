@@ -106,7 +106,14 @@ coord_transform.ternary <- function(coord, data, details,
       data   <- .rename_data_ternary(coord, data)
       ix.tern <- c("T","L","R"); 
       ix.cart <- c("x","y")
-      lim <- list(Tlim=coord$limits[["T"]],Llim=coord$limits[["L"]],Rlim=coord$limits[["R"]])
+      lim <- list(Tlim=coord$limits[["T"]],
+                  Llim=coord$limits[["L"]],
+                  Rlim=coord$limits[["R"]])
+      
+      #HACK
+      for(ix in ix.tern)
+        if(is.null(coord$limits[[ix]]))
+          revertToCart = TRUE
       
       ##Execute the transformation to cartesian
       data[,ix.cart] <- transform_tern_to_cart(data = data[,ix.tern],Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,ix.cart]
@@ -131,7 +138,7 @@ coord_transform.ternary <- function(coord, data, details,
     },error=function(e){
       msg <- as.character(e)
       if(!revertToCart)
-        stop(gsub("Error: ","",msg),call.=FALSE) #Terminate
+        stop(gsub("Error: ","",msg)) #Terminate
       if(verbose)
         message(msg) #Report Error if verbose
       data <- bup    #Revert
@@ -161,8 +168,6 @@ coord_expand_defaults.ternary <- function(coord, scale, aesthetic){
 #' @method coord_train ternary
 #' @S3method coord_train ternary
 coord_train.ternary <- function(coord, scales){
-
-  el <- calc_element_plot("ternary.options",theme=theme_update(),verbose=F,plot=last_plot())
   p  <- convertUnit(calc_element_plot("axis.tern.padding",theme=theme_update(),verbose=F,plot=last_plot()),"npc",valueOnly=TRUE)
   h  <- convertUnit(calc_element_plot("axis.tern.hshift", theme=theme_update(),verbose=F,plot=last_plot()),"npc",valueOnly=TRUE)
   v  <- convertUnit(calc_element_plot("axis.tern.vshift", theme=theme_update(),verbose=F,plot=last_plot()),"npc",valueOnly=TRUE)
@@ -170,12 +175,19 @@ coord_train.ternary <- function(coord, scales){
   #trimmed down cartesian coords
   ret <- c(ggint$train_cartesian(scales$x, coord$limits$x + c(-p,p) - h, "x"),
            ggint$train_cartesian(scales$y, coord$limits$y + c(-p,p)*coord_aspect.ternary() - v, "y"))[c("x.range","y.range")]
+
+  print(scales)
+  
   #detailed ternary coords
   IX <- c("T","L","R")
-  for(ix in IX) #breaks, ticks etc...
-    ret <- c(ret,ggint$train_cartesian(scales[[ix]],coord$limits[ix],ix))
-  for(ix in IX) #labels
-    ret[paste0(ix,"label")] <- scales[[ix]]$name
+  for(ix in IX){
+    scale <- scales[[ix]]
+    if(!is.null(scale)){
+      tmp <- ggint$train_cartesian(scale,coord$limits[ix],ix)
+      ret <- c(ret,tmp) #breaks, ticks etc...
+      ret[paste0(ix,"label")] <- scale$name #labels
+    }
+  }
   ret$Wlabel = scales$W
   ret
 }
@@ -326,8 +338,10 @@ coord_render_bg.ternary <- function(coord,details,theme){
   showsecondary
 }
 
-#for relative arrow positioning
-.arrow.pos <- (function() {
+#For relative arrow positioning, this function allows global 'width' metric to be stored via getter and setter methods
+#This technique is used to store the maximum ticklabel grob width (when they are generated) so that the stored value
+#can be picked up later when trying to determine the location to place the axis arrows.
+.arrow.pos <- (function(){
   width <- unit(0,"npc")
   list(
     get   = function(){width},
@@ -335,9 +349,6 @@ coord_render_bg.ternary <- function(coord,details,theme){
     reset = function(){   width <<- unit(0,"npc")}
   )
 })()
-
-
-
 
 #----------------------------------------------------------------------------------
 #Internals >>>> Data Extremes.
@@ -495,11 +506,16 @@ coord_render_bg.ternary <- function(coord,details,theme){
   angles      <- .get.angles(clockwise) + shift
   angles.text <- .get.angles.text(clockwise)
   
+  #print(details) # for debug
+  
   ##get the base data.
   d <- NULL
   for(j in 1:2)
     for(i in 1:length(seq.tlr))
       d <- .getData(X=seq.tlr[i],ix=i,existing=d,major = (j==1),angle = angles[i],angle.text = angles.text[i]);
+  
+  if(empty(d))
+    return(items)
   if(nrow(d) > 1){d <- d[nrow(d):1,]}  #REVERSE (minor under major)
   
   #FUNCTION TO RENDER TICKS AND LABELS

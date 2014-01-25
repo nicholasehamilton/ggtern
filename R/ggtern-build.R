@@ -35,7 +35,7 @@ ggplot_build <- function(plot) {
     plot$layers <- strip_unapproved(plot$layers)
     
     ##Check that there are layers.
-    if(length(plot$layers) == 0){stop("No layers in plot",call.=F)}  
+    if(length(plot$layers) == 0){stop("No layers in ternary plot",call.=F)}  
     
     #The ternary axis names.
     scales.tern <- c("T","L","R","x","y")

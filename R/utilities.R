@@ -143,7 +143,11 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),...,Tlim=c
   }
   
   #Adjust for the Limits.
-  .adj <- function(input,lim){(input-min(lim))/(abs(diff(lim)))}
+  .adj <- function(input,lim){
+    if(is.null(lim))
+      lim=c(0,1)
+    (input-min(lim))/(abs(diff(lim)))
+  }
   d$T <- .adj(d$T,Tlim)
   d$L <- .adj(d$L,Llim)
   d$R <- .adj(d$R,Rlim)
@@ -151,7 +155,7 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),...,Tlim=c
   #Calculate
   out.Y <- d$T*tan(pi/3)*0.5
   out.X <- d$R + out.Y*tan(pi/6)
-  
+    
   return(data.frame(x=out.X,y=out.Y))
 }
 transform_cart_to_tern <- function(x,y,data=data.frame(x=x,y=y),...,Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1)){

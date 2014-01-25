@@ -33,7 +33,9 @@ NULL
 scale_T_continuous <- function(name=NULL,breaks=getOption("tern.breaks.default"),minor_breaks=getOption("tern.breaks.default.minor"),labels=100*breaks,limits=waiver()){
   if(!is.numeric(breaks)){minor_breaks=major_breaks="none"}
   if(length(labels) == 1 & length(breaks) > 1){labels = rep(labels,length(breaks))}
-  continuous_scale(c("T"),name=name,scale_name="tern_T", identity,breaks=breaks,minor_breaks=minor_breaks,labels=labels, expand = waiver(), guide = "none",limits=limits)
+  ret <- continuous_scale(c("T"),name=name,scale_name="tern_T", identity,breaks=breaks,minor_breaks=minor_breaks,labels=labels, expand = waiver(), guide = "none",limits=limits)
+  class(ret) <- c("tern_T","continuous_ternary","scale")
+  ret
 }
 
 #' @section Left Apex Species:
@@ -43,7 +45,9 @@ scale_T_continuous <- function(name=NULL,breaks=getOption("tern.breaks.default")
 scale_L_continuous <- function(name=NULL,breaks=getOption("tern.breaks.default"),minor_breaks=getOption("tern.breaks.default.minor"),labels=100*breaks,limits=waiver()){
   if(!is.numeric(breaks)){minor_breaks=major_breaks="none"}
   if(length(labels) == 1 & length(breaks) > 1){labels = rep(labels,length(breaks))}
-  continuous_scale(c("L"),name=name,scale_name="tern_L", identity,breaks=breaks,minor_breaks=minor_breaks,labels=labels, expand = waiver(), guide = "none",limits=limits)
+  ret <- continuous_scale(c("L"),name=name,scale_name="tern_L", identity,breaks=breaks,minor_breaks=minor_breaks,labels=labels, expand = waiver(), guide = "none",limits=limits)
+  class(ret) <- c("tern_L","continuous_ternary","scale")
+  ret
 }
 
 #' @section Right Apex Species:
@@ -53,7 +57,15 @@ scale_L_continuous <- function(name=NULL,breaks=getOption("tern.breaks.default")
 scale_R_continuous <- function(name=NULL,breaks=getOption("tern.breaks.default"),minor_breaks=getOption("tern.breaks.default.minor"),labels=100*breaks,limits=waiver()){
   if(!is.numeric(breaks)){minor_breaks=major_breaks="none"}
   if(length(labels) == 1 & length(breaks) > 1){labels = rep(labels,length(breaks))}
-  continuous_scale(c("R"),name=name,scale_name="tern_R", identity,breaks=breaks,minor_breaks=minor_breaks,labels=labels, expand = waiver(), guide = "none",limits=limits)
+  ret <- continuous_scale(c("R"),name=name,scale_name="tern_R", identity,breaks=breaks,minor_breaks=minor_breaks,labels=labels, expand = waiver(), guide = "none",limits=limits)
+  class(ret) <- c("tern_R","continuous_ternary","scale")
+  ret
 }
 
+scale_clone.continuous_ternary       <- find_global("scale_clone.continuous")
+scale_transform.continuous_ternary   <- find_global("scale_transform.continuous")
+scale_break_info.continuous_ternary  <- find_global("scale_break_info.continuous")
+scale_breaks.continuous_ternary      <- find_global("scale_breaks.continuous")
+scale_labels.continuous_ternary      <- find_global("scale_labels.continuous")
+scale_breaks_minor.continuous_ternary<- find_global("scale_breaks_minor.continuous")
 

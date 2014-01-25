@@ -1,0 +1,3 @@
+KNOWN BUGS
+
+* use of grid.arrange (from the gridExtra package) doesn't function as expected. From what I can tell, this is because the local copy of ggplot_build is NOT being run, rather, the original function from the ggplot2 package is being called, and, hence the patched functionality unique to ggtern is essentially being circumvented.
