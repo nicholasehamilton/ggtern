@@ -26,6 +26,7 @@
                              grid.L        ="white",
                              grid.R        ="white",
                              grid.minor    ="grey95",
+                             axis.tern.size=0.5,
                              axis.T        = col.T,
                              axis.L        = col.L,
                              axis.R        = col.R,
@@ -35,9 +36,12 @@
                              arrow.text.T  = col.T,
                              arrow.text.L  = col.L,
                              arrow.text.R  = col.R,
+                             showarrow     = getOption("tern.showarrows"),
                              grid.linetype =1,
                              grid.linetype.minor = grid.linetype,
-                             grid.major.size=NULL){  
+                             grid.major.size=NULL,
+                             ticklength.major = unit(0.010,"npc"),
+                             ticklength.minor = unit(0.005,"npc")){  
   #TEXT SIZES
   size.base      <- max(base_size-4,2)
   size.text      <- max(base_size-2,4)
@@ -52,7 +56,7 @@
       
       panel.background.tern      = element_rect(fill=col.BG,color=NA),
       axis.tern.clockwise        = getOption("tern.clockwise"),
-      axis.tern.showarrows       = getOption("tern.showarrows"),
+      axis.tern.showarrows       = showarrow,
       axis.tern.showtitles       = getOption("tern.showtitles"),
       axis.tern.showlabels       = getOption("tern.showlabels"),
       axis.tern.arrowstart       = 0.3,
@@ -69,11 +73,11 @@
       axis.tern.padding          = unit(20,  "mm"),
       axis.tern.hshift           = unit(0.0, "mm"),
       axis.tern.vshift           = unit(20/4,"mm"),
-      axis.tern.arrowsep         = unit(2.0, "mm"), #convertUnit(1.1*unit(1,"strwidth","100"),"npc"),
-      axis.tern.ticklength.major = unit(0.02,"npc"),
-      axis.tern.ticklength.minor = unit(0.01,"npc"),
+      axis.tern.arrowsep         = unit(2.0, "mm"),
+      axis.tern.ticklength.major = ticklength.major,
+      axis.tern.ticklength.minor = ticklength.minor,
       
-      axis.tern               = element_line(size=0.5,linetype="solid"),
+      axis.tern               = element_line(size=axis.tern.size,linetype="solid"),
       axis.tern.line          = element_line(),
       axis.tern.line.T        = element_line(colour=axis.T),
       axis.tern.line.L        = element_line(colour=axis.L),
@@ -137,6 +141,8 @@ theme_gray  <- function(base_size = 12, base_family = ""){
               col.T ="gray50",col.L="gray50",col.R="gray50",
               axis.T="grey90",axis.L="grey90",axis.R="grey90",
               title.T="black",title.L="black",title.R="black",
+              axis.tern.size = 0.25,ticklength.minor = unit(0,"npc"),
+              showarrow=FALSE,
               arrow.text.T="black",arrow.text.L="black",arrow.text.R="black")
 }
 theme_tern_gray <- function(base_size = 12, base_family = ""){
