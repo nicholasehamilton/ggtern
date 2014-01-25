@@ -72,8 +72,8 @@
       
       axis.tern.padding          = unit(20,  "mm"),
       axis.tern.hshift           = unit(0.0, "mm"),
-      axis.tern.vshift           = unit(20/4,"mm"),
-      axis.tern.arrowsep         = unit(2.0, "mm"),
+      axis.tern.vshift           = unit(1.0, "lines"),#unit(0*20/4,"mm"),
+      axis.tern.arrowsep         = unit(1.0, "lines"),
       axis.tern.ticklength.major = ticklength.major,
       axis.tern.ticklength.minor = ticklength.minor,
       
