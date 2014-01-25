@@ -24,6 +24,13 @@ tern_limits <- function(T=1,L=1,R=1,...,verbose=F){
   tryCatch({
     if(!is.numeric(T) | !is.numeric(L) | !is.numeric(R)){stop("T, L and R input parameters must be a numeric scalar.")}
     
+    .report <- function(x,src="")
+      if(x > 1 | x < 0)
+        message(paste0("Maximum ",src," is outside the limit [0,1] (Currently it is ",x,") and will be truncated accordingly."))
+    .report(T,"T")
+    .report(L,"L")
+    .report(R,"R")
+    
     T <- max(min(1,T),0)[1]
     L <- max(min(1,L),0)[1]
     R <- max(min(1,R),0)[1]
@@ -38,11 +45,10 @@ tern_limits <- function(T=1,L=1,R=1,...,verbose=F){
     
     #solve
     minima <- round(solve(d,v),3)
-    if(verbose){
+    if(verbose)
       print(minima)
-    }else if(min(minima) < 0 | max(minima) > 1.0){
+    if(min(minima) < 0 | max(minima) > 1.0)
       stop("Invalid Maximum T, L and R values.")
-    }
     
     #Return.
     ret <- list( scale_T_continuous(limits=c(minima[1],T),...),

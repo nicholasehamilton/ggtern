@@ -22,7 +22,7 @@ is.numericor <- function(A,B){
 #' \code{get_tern_extremes} determines the limiting ternary coordinates given input coordinates.
 #' @param coordinates ggtern coordinate system, inheriting "ternary" and "coord" classes.
 #' @param verbose logical indicating verbose reporting to console
-#' @param expand numeric value to 
+#' @param expand numeric do define the max and min acceptable limits above and below the intended range.
 #' @examples 
 #' \donttest{
 #'  get_tern_extremes(coordinates = coord_tern())
@@ -60,9 +60,9 @@ get_tern_extremes <- function(coordinates,verbose=F,expand=0){
       stop("Extremes must sum to unity.")
   }
   if(min(agg) < 0 - min(expand) | max(ret) > 1 + max(expand)){
-    writeLines("ATTENTION: Non-Default Ternary Limits are outside [0,1]")
+    writeLines("ATTENTION: Non-Default Ternary Limits are outside the range [0,1]")
     print(report.data)
-    stop("Negative Values, or Values > 1 are Not Acceptable")
+    stop("Negative Values, or Values > 1 are Not Acceptable",call.=FALSE)
   }else if(verbose){
     writeLines("ATTENTION: Non-Default Ternary Limits are OK.")
     print(report.data)

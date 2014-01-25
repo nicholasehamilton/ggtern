@@ -78,7 +78,8 @@
   \item{verbose}{logical indicating verbose reporting to
   console}
 
-  \item{expand}{numeric value to}
+  \item{expand}{numeric do define the max and min
+  acceptable limits above and below the intended range.}
 
   \item{label}{character label}
 
