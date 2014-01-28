@@ -30,6 +30,9 @@
                              axis.T        = col.T,
                              axis.L        = col.L,
                              axis.R        = col.R,
+                             arrow.T       = col.T,
+                             arrow.L       = col.L,
+                             arrow.R       = col.R,
                              title.T       = col.T,
                              title.L       = col.L,
                              title.R       = col.R,
@@ -70,12 +73,11 @@
       #axis.tern.ticklength.major = unit(5,"mm"),
       #axis.tern.ticklength.minor = unit(2.5,"mm"),
       
-      axis.tern.padding          = unit(20,  "mm"),
+      #axis.tern.padding         = unit(20,  "mm"),
+      axis.tern.padding          = unit(5,"lines"),
       axis.tern.hshift           = unit(0.0, "mm"),
       axis.tern.vshift           = unit(1.0, "lines"),#unit(0*20/4,"mm"),
       axis.tern.arrowsep         = unit(1.0, "lines"),
-      axis.tern.ticklength.major = ticklength.major,
-      axis.tern.ticklength.minor = ticklength.minor,
       
       axis.tern               = element_line(size=axis.tern.size,linetype="solid"),
       axis.tern.line          = element_line(),
@@ -84,9 +86,9 @@
       axis.tern.line.R        = element_line(colour=axis.R),
       
       axis.tern.arrow         = element_line(lineend=arrow(length=unit(2.5,"mm"))),
-      axis.tern.arrow.T       = element_line(colour=col.T),
-      axis.tern.arrow.L       = element_line(colour=col.L),
-      axis.tern.arrow.R       = element_line(colour=col.R),
+      axis.tern.arrow.T       = element_line(colour=arrow.T),
+      axis.tern.arrow.L       = element_line(colour=arrow.L),
+      axis.tern.arrow.R       = element_line(colour=arrow.R),
       
       axis.tern.text          = element_text(size=size.base,face="plain"),
       axis.tern.text.T        = element_text(colour=col.T,vjust=0.5,hjust=-0.2,angle =0),
@@ -113,13 +115,17 @@
       axis.tern.ticks.outside       = getOption("tern.ticks.outside"),
       axis.tern.ticks.showsecondary = getOption("tern.ticks.showsecondary"),
       axis.tern.ticks.showprimary   = getOption("tern.ticks.showprimary"),
+      
+      axis.tern.ticklength.major    = ticklength.major,
+      axis.tern.ticklength.minor    = ticklength.minor,
+      
       axis.tern.ticks         = element_line(),
       axis.tern.ticks.major   = element_line(color="black"),
       axis.tern.ticks.major.T = element_line(colour=col.T),
       axis.tern.ticks.major.L = element_line(colour=col.L),
       axis.tern.ticks.major.R = element_line(colour=col.R),
       
-      axis.tern.ticks.minor   = element_line(size=0.25),
+      axis.tern.ticks.minor   = element_line(size=0.20),
       axis.tern.ticks.minor.T = element_line(colour=col.T),
       axis.tern.ticks.minor.L = element_line(colour=col.L),
       axis.tern.ticks.minor.R = element_line(colour=col.R)
@@ -204,16 +210,64 @@ theme_bw    <- function(base_size = 12, base_family = ""){
               col.T ="black",
               col.L ="black",
               col.R ="black",
-              grid.T="black",
-              grid.L="black",
-              grid.R="black",
-              grid.minor="gray90",
+              grid.T="gray90",
+              grid.L="gray90",
+              grid.R="gray90",
+              axis.T="gray50",
+              axis.L="gray50",
+              axis.R="gray50",
+              arrow.T="gray50",
+              arrow.L="gray50",
+              arrow.R="gray50",
+              grid.minor="gray98",
               grid.linetype.minor=1,
-              grid.linetype=6,
+              grid.linetype=1,
               grid.major.size=0.25)
 }
 theme_tern_bw <- function(base_size = 12, base_family = ""){
   tern_dep("1.0.1.3","theme_tern_bw has been superceded by the ggplot2 standard theme_bw")
   theme_bw(base_size,base_family)
 }
+
+
+
+#' A minimalistic theme with no background annotations (ggtern version)
+#'
+#' @param base_size base font size
+#' @param base_family base font family
+#' @aliases theme_tern_minimal
+#' @export
+theme_minimal    <- function(base_size = 12, base_family = ""){
+  #if(!inherits(get_last_coord(),"ternary")){
+  #  return(ggplot2::theme_bw(base_size=base_size,base_family=base_family))
+  #}
+  .theme_tern(base_size=base_size, base_family=base_family,base_ggplot2_theme="theme_minimal",
+              col.BG=NA,
+              col.T ="black",
+              col.L ="black",
+              col.R ="black",
+              grid.T="gray90",
+              grid.L="gray90",
+              grid.R="gray90",
+              axis.T="gray90",
+              axis.L="gray90",
+              axis.R="gray90",
+              arrow.T="gray50",
+              arrow.L="gray50",
+              arrow.R="gray50",
+              grid.minor="gray98",
+              grid.linetype.minor=1,
+              grid.linetype=1,
+              grid.major.size=0.25,
+              ticklength.minor=unit(0,"npc"),
+              showarrow=FALSE)
+}
+theme_tern_minimal <- function(base_size = 12, base_family = ""){
+  tern_dep("1.0.1.3","theme_tern_minimal has been superceded by the ggplot2 standard theme_minimal")
+  theme_minimal(base_size,base_family)
+}
+
+
+
+
 
