@@ -79,4 +79,5 @@ Collate:
   'TRL-line.R'
   'arrow.R'
   'unit.R'
+  'multiplot.R'
   'onLoad.R'
