@@ -24,10 +24,11 @@ print.ggplot <- function(x, newpage = is.null(vp), vp = NULL, ...) {
   ggint$set_last_plot(x)
   if(newpage) 
     grid.newpage()
-  data <- ggplot_build(x)
+  data   <- ggplot_build(x)
   gtable <- ggplot_gtable(data)
+  #print(gtable) #debug
   if (is.null(vp)){
-    grid.draw(gtable) 
+    grid.draw(gtable)
   }else{
     if (is.character(vp)) seekViewport(vp) else pushViewport(vp)
     grid.draw(gtable) 

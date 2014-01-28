@@ -4,7 +4,6 @@
 \alias{Statnew}
 \alias{arrow_label_formatter}
 \alias{calc_element_plot}
-\alias{cullAndConstrain}
 \alias{find_global}
 \alias{firstUpper}
 \alias{get_last_coord}
@@ -54,8 +53,6 @@
   get_last_coord()
 
   set_last_coord(new)
-
-  cullAndConstrain(data)
 }
 \arguments{
   \item{s}{character string to convert}
@@ -193,9 +190,6 @@
   coordinate system used.
 
   \code{set_last_coord} set the last coordinate system.
-
-  \code{cullAndConstrain} is a function that is not
-  implemented at this point in time, ignore it.
 }
 \examples{
 \donttest{

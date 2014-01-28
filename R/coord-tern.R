@@ -235,13 +235,17 @@ coord_render_axis_h.ternary <- function(coord, details, theme) {
 #' @S3method coord_render_fg ternary
 coord_render_fg.ternary <- function(coord,details,theme){
   #List to hold the grobs.
-  #items <- list()
+  items <- list()
   
   #The limits.
-  #data.extreme <- .get.data.extreme(coord,details)
+  data.extreme <- .get.data.extreme(coord,details)
   
   #render.
-  #ggint$ggname("background",gTree(children = do.call("gList", items)))
+  items <- .render.titles(data.extreme,items,theme,details) #MAIN TITLES
+  items <- .render.arrows(data.extreme,items,theme,details) #ARROWS
+  
+  #render.
+  ggint$ggname("foreground",gTree(children = do.call("gList", items)))
 }
 
 #' S3 Method Render Background
@@ -249,7 +253,7 @@ coord_render_fg.ternary <- function(coord,details,theme){
 #' @rdname coord
 #' @method coord_render_bg ternary
 #' @S3method coord_render_bg ternary
-coord_render_bg.ternary <- function(coord,details,theme){
+coord_render_bg.ternary <- function(coord,details,theme){  
   #List to hold the grobs.
   items <- list()
   
@@ -259,8 +263,6 @@ coord_render_bg.ternary <- function(coord,details,theme){
   #Build the plot region.
   items <- .render.background(data.extreme,items,theme)     #BACKGROUND...
   items <- .render.grids(data.extreme,items,theme,details)  #GRIDS
-  items <- .render.arrows(data.extreme,items,theme,details) #ARROWS
-  items <- .render.titles(data.extreme,items,theme,details) #MAIN TITLES
   items <- .render.border(data.extreme,items,theme)         #BORDER
   
   #render.
@@ -337,17 +339,21 @@ coord_render_bg.ternary <- function(coord,details,theme){
   showsecondary
 }
 
-#For relative arrow positioning, this function allows global 'width' metric to be stored via getter and setter methods
-#This technique is used to store the maximum ticklabel grob width (when they are generated) so that the stored value
-#can be picked up later when trying to determine the location to place the axis arrows.
-.arrow.pos <- (function(){
-  width <- unit(0,"npc")
-  list(
-    get   = function(){width},
-    set   = function(new){width <<- new},
-    reset = function(){   width <<- unit(0,"npc")}
-  )
-})()
+#For relative arrow positioning, this function allows global 'width' metric to be determined
+.theme.get.maxlabwidth <- function(details,theme,ixseq){
+  maxlabwidth <- unit(0,"npc")
+  for(ix in ixseq){
+    name      <- paste0("axis.tern.text.",ix)
+    element   <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
+    text      <- as.character(max(as.numeric(details[[paste0(ix,".labels")]])))
+    grobwidth <- grobWidth(textGrob(text,gp=gpar(fontsize  =element$size,
+                                                 fontfamily=element$family,
+                                                 fontface  =element$face,
+                                                 lineheight=element$lineheight)))
+    maxlabwidth <- convertUnit(max(maxlabwidth,grobwidth),"npc")
+  }
+  maxlabwidth
+}
 
 #----------------------------------------------------------------------------------
 #Internals >>>> Data Extremes.
@@ -543,6 +549,9 @@ coord_render_bg.ternary <- function(coord,details,theme){
     },error = function(e){ warning(e)})
     return(items)
   }
+  
+  loc.width = unit(0,"npc")
+  
   .render.labels <- function(name,items,d){    
     tryCatch({  
       e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
@@ -569,9 +578,6 @@ coord_render_bg.ternary <- function(coord,details,theme){
                                          fontfamily = family, 
                                          fontface   = face, 
                                          lineheight = lineheight))
-      
-      #Update the maximum grob width allocated to labels.
-      .arrow.pos$set(convertUnit(max(grobWidth(grob),grobHeight(grob),.arrow.pos$get()),"npc"))
       
       ##Add to the items.
       items[[length(items) + 1]] <- grob
@@ -617,8 +623,6 @@ coord_render_bg.ternary <- function(coord,details,theme){
     for(n in unique(d$NameTicks)){items <- .render.ticks(name=n,items=items,d=d[which(d$NameTicks == n),],primary=FALSE)}
   if(showlabels)
     for(n in unique(d$NameText)){ items <- .render.labels(name=n,items=items,d=d[which(d$NameText  == n),])}
-  else
-    .arrow.pos$reset()
   items
 }
 .render.border <- function(data.extreme,items,theme){
@@ -711,10 +715,11 @@ coord_render_bg.ternary <- function(coord,details,theme){
       
       #get set of 3 arrowsep positions
       arrowsep <- sapply(c(1:3),function(x){
-        convertUnit(  arrowsep[x] + 
-                      ifthenelse(arrowbaseline[x] >= 1 & ticksoutside,ticklength[x], unit(0,"npc")) + 
-                      ifthenelse(arrowbaseline[x] >= 2,.arrow.pos$get(),unit(0,"npc")),
-                    "npc",valueOnly=TRUE)
+        newunit <- arrowsep[x] + 
+          ifthenelse(arrowbaseline[x] >= 1 & ticksoutside,ticklength[x], unit(0,"npc")) + 
+          ifthenelse(arrowbaseline[x] >= 2,.theme.get.maxlabwidth(details,theme,ixseq),unit(0,"npc"))
+        
+        convertWidth(newunit,"npc",valueOnly=TRUE)
       })
       
       #MOVE the Arrows Off the Axes.
@@ -755,7 +760,10 @@ coord_render_bg.ternary <- function(coord,details,theme){
           )
           ##Add to the items.
           items[[length(items) + 1]] <- grob
-        },error = function(e){ warning(e)})
+        },error = function(error){ 
+          print(error)
+          warning(error)
+        })
         return(items)
       }
       .render.label <- function(name,ix,items){

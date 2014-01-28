@@ -26,28 +26,27 @@ GeomConfidence <- proto(Geom, {
     required_aes <- sort(unique(c(.$required_aes,coordinates$required_aes)))
     check_required_aesthetics(required_aes, names(data),"geom_confidence")
     
-    #SINK THE POLYGON COMPONENTS OUT OF RANGE>
-    data <- cullAndConstrain(data)
-    if (empty(data)) return(.zeroGrob)
-    
     ##REMOVE MISSING DATA.
     data <- remove_missing(data, na.rm = na.rm,c(required_aes),name = "geom_confidence")
-    if (empty(data)) return(.zeroGrob)
-    data.poly <- data; data.poly$colour=NA
+    if(empty(data)) 
+      return(.zeroGrob)
     
     ##Create two grobsets, one for the polygon and the other for the paths.
     polygrob <- .zeroGrob
     pathgrob <- .zeroGrob
     
-    #Check
-    colours <- unique(data$colour)
+    #The polygons
     fills   <- unique(data$fill)
+    if(length(fills) >0 & length(fills) > length(which(is.na(fills)))){
+      #Polygon will be handled slightly different (no colour, only fill), but it is based off the same data.
+      data.poly <- data; data.poly$colour <- NA
+      polygrob <- GeomPolygon$draw(data=data.poly, scales=scales, coordinates=coordinates, ...)
+    }
     
+    #The paths
+    colours <- unique(data$colour)
     if(length(colours) > 0 & length(colours) > length(which(is.na(colours))))
       pathgrob <- GeomPath$draw(data=data, scales=scales, coordinates=coordinates, ...)
-    
-    if(length(fills) >0 & length(fills) > length(which(is.na(fills))))
-      polygrob <- GeomPolygon$draw(data=data.poly, scales=scales, coordinates=coordinates, ...)
     
     #return the complete grobs, paths on top of polygons.
     gTree(children = gList(polygrob,pathgrob))
@@ -78,7 +77,6 @@ StatConfidence <- proto(ggint$Stat, {
     
     RESULT <- data.frame()
     ret  <- within(data,by(data,data[,c("PANEL","group")],function(df){
-      #z  <- ifthenelse(is.tern,isomLR(df[,ifthenelse(lc$clockwise,c(lc$R,lc$L,lc$T),c(lc$L,lc$R,lc$T))]),df[,.$required_aes])
       z  <- ifthenelse(is.tern,isomLR(df[,c(lc$L,lc$R,lc$T)]),df[,.$required_aes])
       mu <- colMeans(z)
       cm <- cov(z)
@@ -118,55 +116,3 @@ StatConfidence <- proto(ggint$Stat, {
   default_aes <- function(.) aes(level =..level..)
   required_aes <- c("x", "y")
 })
-
-#' \code{cullAndConstrain} is a function that is not implemented at this point in time, ignore it.
-#' @rdname undocumented
-cullAndConstrain <- function(data){
-  lc <- get_last_coord()
-  ##Remove data outside plotting area.
-  if(inherits(lc,"ternary")){
-    .fnc <- function(data,TLR,xy,TOL = getOption("tern.pip.tollerance")){
-      if(nrow(data)==0){return(data)}
-      lim <- lc$limits[[TLR]]; tol <- TOL*diff(lim)
-      
-      #indexes to remove.
-      is.in  <- data[,xy] <= (max(lim)+0*tol) & data[,xy] >= (min(lim)-0*tol)
-      L <- length(is.in)
-      is.in.L <- c(is.in[L],is.in[1:(L-1)])
-      is.in.R <- c(is.in[2:L],is.in[1])
-      ix.rem <- which(is.in | (!is.in & is.in.L) | (!is.in & is.in.R))
-      
-      #assign new groups to be cut and re-evaluated.
-      #data$group.cut <- data$group
-      #id <- 1:nrow(data)
-      #if(length(ix.rem) > 0){
-      #  data <-  data[ix.rem,]; 
-      #  id   <- id[ix.rem]
-      #  r    <- nrow(data)
-      #  if(r > 1){
-      #    ix.breaks <- which(id[2:r] > (id[1:(r-1)] + 1))
-      #    if(length(ix.breaks) > 0){
-      #      ix.breaks <- ix.breaks + 1 #back to original indexes.
-      #      writeLines("Indexes To Regroup:")
-      #      print(ix.breaks)
-      #    }
-      #  }
-      #}
-      data  <-  data[ix.rem,];
-      #data[,xy] <- pmax(pmin(data[,xy],max(lim)),min(lim))
-      
-      #pos.ix         <- c("x","y","z")
-      #pos.oth        <- pos.ix[which(!pos.ix %in% xy)]
-      #agg.diff       <- apply(data[,pos.ix],1,sum)-1
-      #data[,pos.oth] <- data[,pos.oth] + agg.diff/2
-      
-      data
-    }
-    data <- .fnc(data,"T","x")
-    data <- .fnc(data,"L","y")
-    data <- .fnc(data,"R","z")
-    
-    #print(apply(data[,c("x","y","z")],1,sum))
-  }
-  data
-}

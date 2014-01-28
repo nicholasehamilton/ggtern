@@ -17,10 +17,9 @@ ggplot_build <- function(plot) {
   
   #if we have ternary coordinate system but not ternary plot class, make it ternary.
   if(inherits(plot$coordinates,"ternary")){
-    if(!inherits(plot,"ggtern")){
+    if(!inherits(plot,"ggtern") & inherits(plot,"ggplot"))
       class(plot) <- c("ggtern",class(plot))
-    }
-    plot <- plot + .theme_nocart()
+    plot <- plot + .theme_nocart() #destroy any cartesian theme elements
   }
   
   # Initialise panels, add extra data for margins & missing facetting
@@ -34,43 +33,38 @@ ggplot_build <- function(plot) {
     ##Strip Unapproved Ternary Layers
     plot$layers <- strip_unapproved(plot$layers)
     
-    ##Check that there are layers.
+    ##Check that there are layers remaining after potentially stripping all layers
     if(length(plot$layers) == 0){stop("No layers in ternary plot",call.=F)}  
     
-    #The ternary axis names.
-    scales.tern <- c("T","L","R","x","y")
-    
-    #names(which(plot$coordinates=="y"))
-    ix <- function(x){names(plot$coordinates)[which(plot$coordinates == x)]}
-    
-    ##Add the missing scales
-    ggint$scales_add_missing(plot,scales.tern,environment())
-    for(i in 1:3)
-      assign(paste0("scale_",scales.tern[i]),plot$scales$get_scales(scales.tern[i]))
+    #The ternary and cartesian axis names.
+    scales.tern <- c("T","L","R")
+    scales.cart <- c("x","y")
     
     ##Add the ternary fixed coordinates if it doesn't exist
     if(!inherits(plot$coordinates,"ternary")){plot <- plot + coord_tern()}
     
-    ##Update the scales limits from the coordinate
+    #Store coordinates for use by other methods
+    set_last_coord(plot$coordinates) 
+    
+    ##Add the missing scales
+    ggint$scales_add_missing(plot,c(scales.tern,scales.cart),environment())
+    
+    ##Update the scale limits from the coordinate system
+    for(X in c(scales.tern,scales.cart))
+      plot$coordinates$limits[[X]] <- is.numericor(.select.lim(plot$scales$get_scales(X)$limits, plot$coordinates$limits[[X]]),c(0,1))
+    
+    #Normally this info is handled in the by grid, however, this is one way of passing it through
+    panel <- .train_position_ternary(panel,plot$scales$get_scales("T"),plot$scales$get_scales("L"),plot$scales$get_scales("R"))
+    
+    #Assign the names Ternary scales and Wlabel (arrow label suffix) to the panel
     for(X in scales.tern)
-      plot$coordinates$limits[[X]] <- is.numericor(.select.lim(plot$scales$get_scales(X)$limits,
-                                                                plot$coordinates$limits[[X]]),c(0,1))
+      panel[[paste0(X,"_scales")]]$name <- do.call(paste0(".",X,"label"),list(panel = panel,labels = plot$labels))
+    panel$Wlabel = .Wlabel(panel,labels = plot$labels)
     
-    #STORE COORDINATES FOR USE BY OTHER METHODS.
-    set_last_coord(plot$coordinates)
-    
-    #THESE ARE A BIT OF A HACK. NORMALLY THIS INFO IS HANDLED IN THE GRID ARCHITECTURE.
-    #BUT THIS IS ONE WAY OF PASSING IT THROUGH...
-    panel <- .train_position_ternary(panel,get("scale_T"),get("scale_L"),get("scale_R"))
-    panel$Wlabel = .Wlabel(panel,plot$labels)
-    for(i in 1:3){
-      x = scales.tern[i]
-      #.Tlabel, .Llabel, .Rlabel
-      panel[[paste0(x,"_scales")]]$name <- do.call(paste0(".",x,"label"),list(panel  = panel,labels = plot$labels))
-    } 
+    #DONE
   }else set_last_coord(NULL)
   
-  layers <- plot$layers
+  layers     <- plot$layers
   layer_data <- lapply(layers, function(y) y$data)
   
   scales <- plot$scales
@@ -100,7 +94,7 @@ ggplot_build <- function(plot) {
   scale_y <- function() scales$get_scales("y")
   
   panel <- ggint$train_position(panel, data, scale_x(), scale_y())
-  data  <- ggint$map_position(panel, data, scale_x(), scale_y())
+  data  <- ggint$map_position(panel,   data, scale_x(), scale_y())
   
   # Apply and map statistics
   data <- calculate_stats(panel, data, layers)
