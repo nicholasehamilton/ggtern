@@ -202,9 +202,6 @@ theme_tern_rgbw <- function(base_size = 12, base_family = ""){
 #' @aliases theme_tern_bw
 #' @export
 theme_bw    <- function(base_size = 12, base_family = ""){
-  #if(!inherits(get_last_coord(),"ternary")){
-  #  return(ggplot2::theme_bw(base_size=base_size,base_family=base_family))
-  #}
   .theme_tern(base_size=base_size, base_family=base_family,base_ggplot2_theme="theme_bw",
               col.BG=NA,
               col.T ="black",
@@ -231,7 +228,7 @@ theme_tern_bw <- function(base_size = 12, base_family = ""){
 
 
 
-#' A minimalistic theme with no background annotations (ggtern version)
+#' A minimalistic theme with no background annotations (ggtern version).
 #'
 #' @param base_size base font size
 #' @param base_family base font family
@@ -265,6 +262,28 @@ theme_minimal    <- function(base_size = 12, base_family = ""){
 theme_tern_minimal <- function(base_size = 12, base_family = ""){
   tern_dep("1.0.1.3","theme_tern_minimal has been superceded by the ggplot2 standard theme_minimal")
   theme_minimal(base_size,base_family)
+}
+
+#' A classic-looking theme, with x and y axis lines and no gridlines (ggtern version).
+#'
+#' @param base_size base font size
+#' @param base_family base font family
+#' @aliases theme_tern_classic
+#' @export
+theme_classic <- function(base_size=12,base_family=""){
+  .theme_tern(base_size=base_size, base_family=base_family,base_ggplot2_theme="theme_classic",
+              col.BG=NA,
+              col.T ="black",
+              col.L ="black",
+              col.R ="black",
+              grid.T="black",
+              grid.L="black",
+              grid.R="black",             
+              grid.minor="gray90") %+replace% theme(axis.tern.showgrid.major=FALSE,axis.tern.showgrid.minor=FALSE)
+}
+theme_tern_classic <- function(base_size = 12, base_family = ""){
+  tern_dep("1.0.1.3","theme_tern_classic has been superceded by the ggplot2 standard theme_classic")
+  theme_classic(base_size,base_family)
 }
 
 

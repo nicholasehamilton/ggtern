@@ -32,7 +32,7 @@
 #'   \item \code{\link[=themeelements]{Ternary Theme Elements}} 
 #' }
 #' 
-#' @aliases modifynewthemes modifyterntheme convenience-functions
+#' @aliases modifynewthemes modifyterntheme convenience-functions theme_complete
 #' @name convenience
 #' @rdname convenience
 #' @examples

@@ -3,6 +3,7 @@
 \alias{convenience-functions}
 \alias{modifynewthemes}
 \alias{modifyterntheme}
+\alias{theme_complete}
 \title{Theme Convenience Functions}
 \description{
   \code{ggtern} has made available a number of convenience
