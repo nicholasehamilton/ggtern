@@ -437,11 +437,13 @@ coord_render_bg.ternary <- function(coord,details,theme){
     breaks <- if(major){
       breaks.major
     }else{
-      breaks.minor[which(!breaks.minor %in% breaks.major | !showgrid.major)]
+      breaks.minor
+      #breaks.minor[which(!breaks.minor %in% breaks.major | !showgrid.major)]
     }
     
     #BYPASS IF NECESSARY
-    if(length(breaks) == 0)return(existing)
+    if(length(breaks) == 0)
+      return(existing)
     
     labels <- if(major){details[[paste0(X,".labels")]]}else{""}
     labels <- ifthenelse(identical(labels,waiver()),100*breaks,labels)
@@ -515,9 +517,9 @@ coord_render_bg.ternary <- function(coord,details,theme){
   
   ##get the base data.
   d <- NULL
-  for(j in 1:2)
+  for(major in c(TRUE,FALSE))
     for(i in 1:length(seq.tlr))
-      d <- .getData(X=seq.tlr[i],ix=i,existing=d,major = (j==1),angle = angles[i],angle.text = angles.text[i]);
+      d <- .getData(X=seq.tlr[i],ix=i,existing=d, major = major,angle = angles[i],angle.text = angles.text[i]);
   
   if(empty(d))
     return(items)
