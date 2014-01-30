@@ -293,8 +293,8 @@
 #'   DATA.RANDOM[,paste0(a,"max")] = DATA.RANDOM[,a] + 0.25*sd(DATA.RANDOM[,a])
 #'   DATA.RANDOM[,paste0(a,"min")] = DATA.RANDOM[,a] - 0.25*sd(DATA.RANDOM[,a])
 #' }
-#' plot + geom_errorbarT(data=DATA.RANDOM,aes(Tmin=xmin,Tmax=xmax),width=0.01,color="red")
-#' plot + geom_errorbarL(data=DATA.RANDOM,aes(Lmin=ymin,Lmax=ymax),width=0.01,color="blue")
+#' plot + geom_errorbarT(data=DATA.RANDOM,aes(Tmin=ymin,Tmax=ymax),width=0.01,color="red")
+#' plot + geom_errorbarL(data=DATA.RANDOM,aes(Lmin=xmin,Lmax=xmax),width=0.01,color="blue")
 #' plot + geom_errorbarR(data=DATA.RANDOM,aes(Rmin=zmin,Rmax=zmax),width=0.01,color="green")
 #' 
 #' ##-----------------------------------------------

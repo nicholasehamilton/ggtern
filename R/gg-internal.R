@@ -1,4 +1,7 @@
-.internals <- unique(c(".all_aesthetics",
+
+#Create a list of the ggplot2 internal functions that we seek to get access to.
+.internals <- unique(
+              c(".all_aesthetics",
                 "set_last_plot",
                 "coord_transform.cartesian",
                 "scale_clone",
@@ -41,8 +44,8 @@
                 "el_def"
 ))
 
-#' \code{ggint} is a structure which holds all the internal functions from the ggplot2 namespace, which can be used conveniently
-#' via \code{ggint$ABC}.
+#' \code{ggint} is a structure which holds all the required internal functions from the ggplot2 namespace, 
+#' which can then be used conveniently via \code{ggint$ABC}.
 #' @rdname undocumented
 ggint <- structure(
   mapply(function(.internals, i) getFromNamespace(i,"ggplot2"),.internals, .internals),

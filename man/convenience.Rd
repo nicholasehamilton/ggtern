@@ -1,9 +1,6 @@
 \name{convenience}
 \alias{convenience}
-\alias{convenience-functions}
-\alias{modifynewthemes}
-\alias{modifyterntheme}
-\alias{theme_complete}
+\alias{theme_convenience}
 \title{Theme Convenience Functions}
 \description{
   \code{ggtern} has made available a number of convenience
@@ -12,15 +9,6 @@
   which can be manually modified, see
   \link[=themeelements]{HERE}.
 }
-\section{Default Themes}{
-  Default themes which ship with \code{ggtern}: \itemize{
-  \item \code{\link[=theme_tern_bw]{Black and White Theme}}
-  \item \code{\link[=theme_tern_gray]{Gray and White
-  Theme}} \item \code{\link[=theme_tern_rgbw]{RGB and White
-  Theme}} \item \code{\link[=theme_tern_rgbg]{RGB and Gray
-  Theme}} }
-}
-
 \section{Convenience Functions}{
   Convenience functions that ship with \code{ggtern}, to
   assist in the rapid modification of key theme elements:
@@ -42,8 +30,14 @@
 
 \section{Manual Modification}{
   For manual modification on a per-element basis: \itemize{
-  \item \code{\link[=themeelements]{Ternary Theme
+  \item \code{\link[=theme_elements]{Ternary Theme
   Elements}} }
+}
+
+\section{Default Themes}{
+  Default (complete) themes which ship with \code{ggtern}:
+  \itemize{ \item \code{\link[=theme_complete]{Complete
+  Themes}} }
 }
 \examples{
 \donttest{

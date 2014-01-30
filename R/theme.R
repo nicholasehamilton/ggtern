@@ -190,7 +190,6 @@ update_theme <- function(oldtheme, newtheme) {
 
 #' \code{calc_element} is a local copy of the ggplot2 function which determines the net element based on inheritances, given input theme.
 #' @inheritParams ggplot2::calc_element
-#' @seealso \code{\link[ggplot2]{calc_element}}
 #' @rdname overloaded
 calc_element <- function(element, theme, verbose = FALSE) {
   if (verbose) message(element, " --> ", appendLF = FALSE)

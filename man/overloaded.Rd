@@ -186,8 +186,6 @@
   \code{\link[ggplot2]{opts}}
 
   \code{\link[ggplot2]{add_theme}}
-
-  \code{\link[ggplot2]{calc_element}}
 }
 \keyword{internal}
 

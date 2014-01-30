@@ -42,7 +42,27 @@ StatDensity2dtern <- proto(Statnew, {
     
     #ggtern
     if(inherits(last_coord,"ternary")){
-      df <- sink_density(df,remove=!identical(geometry,"polygon"),coord=last_coord)
+      .sink_density <- function(df,remove=TRUE,coord=stop("coord is required")){
+        if(class(df) != "data.frame"){return(df)}
+        bup <- df
+        tryCatch({
+          if(inherits(coord,"ternary")){ #ONLY FOR ggtern object
+            tri <- transform_tern_to_cart(data=get_tern_extremes(coord),Tlim=coord$limits$T,Llim=coord$limits$L,Rlim=coord$limits$R)
+            inorout <- point.in.polygon(df$x,df$y,tri$x,tri$y)
+            inorout[which(inorout > 0)] <- 1
+            if(remove){
+              df <- df[which(inorout > 0),]
+            }else{
+              df[which(inorout <= 0),which(names(df) == "z")] <- 0
+            }
+          }
+        },error=function(e){
+          message(e)
+          df <- bup
+        })
+        df
+      }
+      df <- .sink_density(df,remove=!identical(geometry,"polygon"),coord=last_coord)
     }
     df$group <- data$group[1]
     

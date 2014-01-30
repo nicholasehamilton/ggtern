@@ -9,11 +9,14 @@
     clockwise)
 }
 \arguments{
-  \item{T}{the Top Mapping (default x)}
+  \item{T}{the Top Mapping (default ['x', 'y' or 'z']
+  stored in global option \code{'tern.default.T'})}
 
-  \item{L}{the Left Mapping (default y)}
+  \item{L}{the Left Mapping (default ['x', 'y' or 'z']
+  stored in global option \code{'tern.default.L'})}
 
-  \item{R}{the Right Mapping (default z)}
+  \item{R}{the Right Mapping (default ['x', 'y' or 'z']
+  stored in global option \code{'tern.default.R'})}
 
   \item{xlim}{the range of x in the cartesian space}
 
@@ -25,11 +28,8 @@
 
   \item{Rlim}{the range of R in the ternary space}
 
-  \item{clockwise}{(Depreciated, see
-  \code{\link{axis.tern.clockwise}}) logical (default
-  \code{FALSE}) indicating whether the precession of axes
-  is clockwise (\code{TRUE}) or counter-clockwise
-  (\code{FALSE}).}
+  \item{clockwise}{DEPRECIATED, replaced by individual
+  theme element, see \code{\link{axis.tern.clockwise}}.}
 }
 \value{
   \code{coord_tern} returns a ternary coordinate system

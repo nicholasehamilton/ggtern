@@ -19,15 +19,15 @@
 #' 
 #' In essence, the required aesthetics are the product between what
 #' is required of the 'layer' and what is required of the 'coordinate system'.
-#' @param T the Top Mapping (default x)
-#' @param L the Left Mapping (default y)
-#' @param R the Right Mapping (default z)
+#' @param T the Top Mapping (default ['x', 'y' or 'z'] stored in global option \code{'tern.default.T'})
+#' @param L the Left Mapping (default ['x', 'y' or 'z'] stored in global option \code{'tern.default.L'})
+#' @param R the Right Mapping (default ['x', 'y' or 'z'] stored in global option \code{'tern.default.R'})
 #' @param xlim the range of x in the cartesian space
 #' @param ylim the range of y in the cartesian space
 #' @param Tlim the range of T in the ternary space
 #' @param Llim the range of L in the ternary space
 #' @param Rlim the range of R in the ternary space
-#' @param clockwise (Depreciated, see \code{\link{axis.tern.clockwise}}) logical (default \code{FALSE}) indicating whether the precession of axes is clockwise (\code{TRUE}) or counter-clockwise (\code{FALSE}).
+#' @param clockwise DEPRECIATED, replaced by individual theme element, see \code{\link{axis.tern.clockwise}}.
 #' @return \code{coord_tern} returns a ternary coordinate system object.
 #' @export
 coord_tern <- function(T = getOption("tern.default.T"),

@@ -1,7 +1,4 @@
-#' \code{firstUpper} converts a string to the same string however, having first letter in uppercase.
-#' @param s character string to convert
-#' @rdname undocumented
-firstUpper <- function(s) {paste(toupper(substring(s, 1,1)), substring(s, 2), sep="")}
+.firstUpper <- function(s) {paste(toupper(substring(s, 1,1)), substring(s, 2), sep="")}
 
 .aesthetics <- function(x) {
   req_aes <- x$required_aes
@@ -23,12 +20,12 @@ firstUpper <- function(s) {paste(toupper(substring(s, 1,1)), substring(s, 2), se
 }
 
 .geom_aesthetics <- function(x) {
-  fullname = paste0("Geom",firstUpper(x))
+  fullname = paste0("Geom",.firstUpper(x))
   .aesthetics(get(fullname))
 }
 
 .stat_aesthetics <- function(x) {
-  fullname = paste0("Stat",firstUpper(x))
+  fullname = paste0("Stat",.firstUpper(x))
   .aesthetics(get(fullname))
 }
 
@@ -40,6 +37,7 @@ firstUpper <- function(s) {paste(toupper(substring(s, 1,1)), substring(s, 2), se
 
 #' \code{rd_aesthetics} is a helper function for documenting aesthetics in R help files.
 #' @param type geom, stat or coord
+#' @aliases undocumented internal
 #' @rdname undocumented
 rd_aesthetics <- function(type, name) {
   if(toupper(type)=="GEOM"){
@@ -49,7 +47,7 @@ rd_aesthetics <- function(type, name) {
   }else if(toupper(type)=="COORD"){
     aes = .coord_aesthetics(tolower(name))
   }else{
-    obj <- get(firstUpper(type))
+    obj <- get(.firstUpper(type))
     aes <- .aesthetics(obj$find(tolower(name)))
   }
   

@@ -23,11 +23,6 @@ is.numericor <- function(A,B){
 #' @param coordinates ggtern coordinate system, inheriting "ternary" and "coord" classes.
 #' @param verbose logical indicating verbose reporting to console
 #' @param expand numeric do define the max and min acceptable limits above and below the intended range.
-#' @examples 
-#' \donttest{
-#'  get_tern_extremes(coordinates = coord_tern())
-#' }
-#' @return \code{get_tern_extremes} returns data.frame representing the T, L and R amounts (Columns) at each of the tips (extremes) of the ternary plot area (Rows)
 #' @rdname undocumented
 get_tern_extremes <- function(coordinates,verbose=F,expand=0){
   expand = max(0,is.numericor(expand[1],0)); 
@@ -195,10 +190,6 @@ transform_cart_to_tern <- function(x,y,data=data.frame(x=x,y=y),...,Tlim=c(0,1),
 #' @param suffix chacater suffix behind each label
 #' @param sep the seperator between label and suffix 
 #' @rdname undocumented
-#' @examples 
-#' \donttest{
-#' arrow_label_formatter("TOP","Wt. %",sep="/")
-#' }
 arrow_label_formatter <- function(label,suffix="",...,sep="/"){
   if(missing(label))stop("label cannot be missing")
   label = .makevalid(label)
@@ -218,16 +209,10 @@ arrow_label_formatter <- function(label,suffix="",...,sep="/"){
   }
   return(ret) #result
 }
-#testing
-#if(0){
-#  data(Feldspar)
-#  ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point() + Tlab(expression(x^2)) #+ weight_percent()
-#}
 
 #' \code{calc_element_plot} Calculates the element properties, by inheriting properties from its parents, 
-#' and compares to whether the local plot overrides this value. Based largely off the \code{\link[ggplot2]{calc_element}} 
-#' as provided in \code{\link{ggplot2}}
-#' @seealso \code{\link[ggplot2]{calc_element}}
+#' and compares to whether the local plot overrides this value. Based largely off the calc_element function as provided
+#' in ggplot2
 #' @param element the element name to calculate
 #' @param theme the theme to inherit from
 #' @param plot the plot to check locally for theme element, NULL is ok.
@@ -251,12 +236,7 @@ calc_element_plot <- function(element,theme=theme_update(),...,plot=NULL,verbose
 #' now additionally searches within the \code{ggtern} namespace prior to the \code{ggplot2} namespace.
 #' @param name character name of object to search for
 #' @param env environment to search within as first priority
-#' @examples 
-#' \donttest{
-#' find_global('scale_x_continuous')
-#' }
 #' @rdname undocumented
-#' @return \code{find_global} returns an instance of the named object (if it exists), or \code{NULL} (if it does not).
 find_global <- function (name, env=environment()){  
   if(!is.character(name)){stop("'name' must be provided as a character")}
   if(!inherits(environment(),"environment")){stop("'env' must inherit the environment class")}
@@ -346,32 +326,6 @@ remove_outside <- function(data){
     #do nothing
   })
   return(bup)
-}
-
-#' \code{sink_density} is a function which permits contours on the ternary surface, without running over the ternary borders.
-#' @param df data.frame
-#' @param remove boolean remove or make zero
-#' @param coord coordinates of the type 'ternar', ie coord_tern()
-#' @rdname undocumented
-sink_density <- function(df,remove=TRUE,coord=stop("coord is required")){
-  if(class(df) != "data.frame"){return(df)}
-  bup <- df
-  tryCatch({
-    if(inherits(coord,"ternary")){ #ONLY FOR ggtern object
-      tri <- transform_tern_to_cart(data=get_tern_extremes(coord),Tlim=coord$limits$T,Llim=coord$limits$L,Rlim=coord$limits$R)
-      inorout <- point.in.polygon(df$x,df$y,tri$x,tri$y)
-      inorout[which(inorout > 0)] <- 1
-      if(remove){
-        df <- df[which(inorout > 0),]
-      }else{
-        df[which(inorout <= 0),which(names(df) == "z")] <- 0
-      }
-    }
-  },error=function(e){
-    message(e)
-    df <- bup
-  })
-  df
 }
 
 .hjust.flip    <- function(x,clockwise){if(clockwise){0.5 - (x - 0.5)}else{x}}

@@ -1,6 +1,7 @@
 #'Internal Functions
 #'
-#'INTERNAL FUNCTIONS (native to \code{ggtern}): \code{ggtern} makes use of several non-exported internal functions, a list of the internal functions is as follows:
+#'@description INTERNAL FUNCTIONS (native to \code{ggtern}): \code{ggtern} makes use of several 
+#'non-exported internal functions, a list of the internal functions are as follows:
 #'@format functions and objects
 #'@rdname undocumented
 #'@name zzz-internal

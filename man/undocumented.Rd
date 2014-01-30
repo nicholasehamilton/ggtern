@@ -5,23 +5,21 @@
 \alias{arrow_label_formatter}
 \alias{calc_element_plot}
 \alias{find_global}
-\alias{firstUpper}
 \alias{get_last_coord}
 \alias{get_tern_extremes}
 \alias{ggint}
 \alias{ifthenelse}
+\alias{internal}
 \alias{is.numericor}
 \alias{rd_aesthetics}
 \alias{rd_theme}
 \alias{remove_outside}
 \alias{set_last_coord}
-\alias{sink_density}
+\alias{undocumented}
 \alias{zzz-internal}
 \title{Internal Functions}
 \format{functions and objects}
 \usage{
-  firstUpper(s)
-
   rd_aesthetics(type, name)
 
   rd_theme()
@@ -47,16 +45,11 @@
 
   remove_outside(data)
 
-  sink_density(df, remove = TRUE,
-    coord = stop("coord is required"))
-
   get_last_coord()
 
   set_last_coord(new)
 }
 \arguments{
-  \item{s}{character string to convert}
-
   \item{type}{geom, stat or coord}
 
   \item{x}{logical input to check}
@@ -100,34 +93,13 @@
 
   \item{data}{data.frame}
 
-  \item{df}{data.frame}
-
-  \item{remove}{boolean remove or make zero}
-
-  \item{coord}{coordinates of the type 'ternar', ie
-  coord_tern()}
-
   \item{new}{the coordinate system to set}
-}
-\value{
-  \code{get_tern_extremes} returns data.frame representing
-  the T, L and R amounts (Columns) at each of the tips
-  (extremes) of the ternary plot area (Rows)
-
-  \code{find_global} returns an instance of the named
-  object (if it exists), or \code{NULL} (if it does not).
-
-  \code{get_last_coord} returns the current coordinate
-  system
 }
 \description{
   INTERNAL FUNCTIONS (native to \code{ggtern}):
   \code{ggtern} makes use of several non-exported internal
-  functions, a list of the internal functions is as
+  functions, a list of the internal functions are as
   follows:
-
-  \code{firstUpper} converts a string to the same string
-  however, having first letter in uppercase.
 
   \code{rd_aesthetics} is a helper function for documenting
   aesthetics in R help files.
@@ -135,9 +107,9 @@
   \code{rd_theme} is a helper function for documenting
   theme_elements in R help files.
 
-  \code{ggint} is a structure which holds all the internal
-  functions from the ggplot2 namespace, which can be used
-  conveniently via \code{ggint$ABC}.
+  \code{ggint} is a structure which holds all the required
+  internal functions from the ggplot2 namespace, which can
+  then be used conveniently via \code{ggint$ABC}.
 
   \code{Statnew} is a local copy of the ggplot2 Stat
   top-level proto
@@ -162,9 +134,8 @@
   \code{calc_element_plot} Calculates the element
   properties, by inheriting properties from its parents,
   and compares to whether the local plot overrides this
-  value. Based largely off the
-  \code{\link[ggplot2]{calc_element}} as provided in
-  \code{\link{ggplot2}}
+  value. Based largely off the calc_element function as
+  provided in ggplot2
 
   \code{find_global} is a function that conducts a named
   search for the \code{name} object instance, within the
@@ -182,28 +153,10 @@
   input datases, all the rows wich are outside the ternary
   plot area
 
-  \code{sink_density} is a function which permits contours
-  on the ternary surface, without running over the ternary
-  borders.
-
   \code{get_last_coord} is a function that returns the last
   coordinate system used.
 
   \code{set_last_coord} set the last coordinate system.
-}
-\examples{
-\donttest{
- get_tern_extremes(coordinates = coord_tern())
-}
-\donttest{
-arrow_label_formatter("TOP","Wt. \%",sep="/")
-}
-\donttest{
-find_global('scale_x_continuous')
-}
-}
-\seealso{
-  \code{\link[ggplot2]{calc_element}}
 }
 \keyword{datasets}
 

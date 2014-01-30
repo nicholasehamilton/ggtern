@@ -17,7 +17,6 @@
 
 #' \code{get_last_coord} is a function that returns the last coordinate system used.
 #' @rdname undocumented
-#' @return \code{get_last_coord} returns the current coordinate system
 get_last_coord <- .coordinates$get
 
 #' \code{set_last_coord} set the last coordinate system.

@@ -1,17 +1,23 @@
+#' Complete Themes
+#' 
+#' \code{ggtern} ships with a number of complete themes:
+#' \itemize{
+#'   \item Black and White Theme: \code{\link[=theme_tern_bw]{theme_bw(...)}}
+#'   \item Minimal Theme: \code{\link[=theme_tern_minimal]{theme_minimal(...)}}
+#'   \item Classic Theme: \code{\link[=theme_tern_classic]{theme_classic(...)}}
+#'   \item Gray and White Theme: \code{\link[=theme_tern_gray]{theme_gray(...)}} 
+#'   \item Red, Green, Blue and White Theme: \code{\link[=theme_tern_rgbw]{theme_rgbw(...)}}
+#'   \item Red, Green, Blue and Gray Theme: \code{\link[=theme_tern_rgbg]{theme_rgbg(...)}}
+#' }
+#' @rdname theme_complete
+#' @name theme_complete
+NULL
+
 #' Theme Convenience Functions
 #' 
 #' @description
 #' \code{ggtern} has made available a number of convenience functions for rapid tweaking of the various theme elements, 
 #' for a full list of the available theme elements which can be manually modified, see \link[=themeelements]{HERE}.
-#' 
-#' @section Default Themes:
-#' Default themes which ship with \code{ggtern}:
-#' \itemize{
-#'   \item \code{\link[=theme_tern_bw]{Black and White Theme}}
-#'   \item \code{\link[=theme_tern_gray]{Gray and White Theme}} 
-#'   \item \code{\link[=theme_tern_rgbw]{RGB and White Theme}}
-#'   \item \code{\link[=theme_tern_rgbg]{RGB and Gray Theme}}
-#' }
 #' 
 #' @section Convenience Functions:
 #' Convenience functions that ship with \code{ggtern}, to assist in the rapid modification of key theme elements:
@@ -29,10 +35,16 @@
 #' @section Manual Modification:
 #' For manual modification on a per-element basis:
 #' \itemize{
-#'   \item \code{\link[=themeelements]{Ternary Theme Elements}} 
+#'   \item \code{\link[=theme_elements]{Ternary Theme Elements}} 
 #' }
 #' 
-#' @aliases modifynewthemes modifyterntheme convenience-functions theme_complete
+#' @section Default Themes:
+#' Default (complete) themes which ship with \code{ggtern}:
+#' \itemize{
+#'   \item \code{\link[=theme_complete]{Complete Themes}} 
+#' }
+#' 
+#' @aliases theme_convenience
 #' @name convenience
 #' @rdname convenience
 #' @examples
