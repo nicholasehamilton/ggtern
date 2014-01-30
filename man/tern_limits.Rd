@@ -1,4 +1,5 @@
-\name{tern_limits}
+\name{coord_tern.limit_tern}
+\alias{coord_tern.limit_tern}
 \alias{limit_tern}
 \alias{limits_tern}
 \alias{tern_limit}

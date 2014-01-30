@@ -24,7 +24,7 @@
 #' ggplot object. The \code{ggtern(...)} constructor adds the \code{coord_tern(...)} coordinate system by default. 
 #' For further information on the \code{coord_tern(...)} coordinate system, click \link[=coord_tern]{HERE}.
 #'
-#' @section Valid Geometries for \code{ggtern}:
+#' @section  \code{ggtern} Valid Geometries:
 #' ggplot2, using the \code{\link{grid}} and \code{\link{proto}} architectures, makes provision for a many number of geometries to be added 
 #' progressively in \emph{'layers'} to a given base plot. Due to the nature of the ternary coordinate system, some of the 
 #' geometries which are available in ggplot2, are \strong{not relevant} (or won't function) with ternary plots and as such, a limited number of 
@@ -37,32 +37,32 @@
 #'   \item \code{\link[=geom_Tline]{Ternary Constant-Lines}}
 #' }
 #' 
-#' @section Handling Non-Approved Geometries:
+#' @section  \code{ggtern} Handling Non-Approved Geometries:
 #' If a geometric layer is added that is \strong{NOT} contained in the approved \link[=approved_geometries]{list}, \strong{IT WILL BE STRIPPED / IGNORED} from the ternary diagram 
 #' when rendering takes place (notifying the user to such effect). The reason for this is that subtle 'patches' have been applied, which are mainly to do with 
 #' the transformation procedures when incorporating a 'third' dimention. \strong{NB:} In the future, others may be made available once patched.
 #'
-#' @section New Theme Elements and Heirarchies:
+#' @section  \code{ggtern} New Theme Elements and Heirarchies:
 #' \code{ggtern} implements many new theme elements and heirarchies which can be tailored on a case-by-case basis. 
 #' The full list of new elements can is provided \link[=newelements]{HERE}.
 #'
-#' @section Theme Element Convenience Functions:
+#' @section  \code{ggtern} Theme Element Convenience Functions:
 #' \code{ggtern} has made available a number of convenience functions, for rapid tweaking of common theme elements, for a comprehensive list, 
 #' see \link[=convenience]{HERE}.
 #'
-#' @section Modification to Required Aesthetics:
+#' @section  \code{ggtern} Modification to Required Aesthetics:
 #' Each geometry has a pre-determined set of \strong{required} aesthetics. These have been modifid such that where \code{x} and \code{y} were previously 
 #' required, now an additional \code{z} aesthetic is required (\code{geom_segment} now requires \code{z} and \code{zend}). 
 #' This is made possible without affecting the standard ggplot2 behaviour because \code{ggtern} distinuishes between \code{ggplot} and 
 #' \code{ggtern} objects, distinguished by the presence of the \code{coord_tern(...)} coordinate system.
 #' 
-#' @section Provided Datasets:
+#' @section  \code{ggtern} Provided Datasets:
 #' \code{ggtern} ships with a number of datasets, including:
 #' \enumerate{
 #'   \item \code{\link[=data_Feldspar]{Elkin and Groves Feldspar Data}}
 #'   \item \code{\link[=data_USDA]{USDA Textural Classification Data}}
 #' }
-#' @aliases introduction intro overview
+#' @aliases introduction intro overview arrow unit
 #' @examples
 #' \donttest{
 #' ##-----------------------------------------------

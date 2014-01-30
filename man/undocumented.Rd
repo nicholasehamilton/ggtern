@@ -159,4 +159,5 @@
   \code{set_last_coord} set the last coordinate system.
 }
 \keyword{datasets}
+\keyword{internal}
 

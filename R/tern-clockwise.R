@@ -1,64 +1,45 @@
-.tern_clockwise <- function(clockwise){theme(axis.tern.clockwise=clockwise)}
+.tern_clockwise <- function(clockwise){theme(axis.tern.showarrows=TRUE,axis.tern.clockwise=clockwise)}
 
 #' Direction of Ternary Rotation
 #' 
-#' \code{tern_clockwise} is a function that instructs the axes precession to be clockwise
-#' @rdname ternary_clockwise
+#' \code{theme_clockwise, theme_anticlockwise} (or their aliasses) are function that instructs the axes 
+#' precession to be clockwise or anticlockwise respectively.
+#' 
+#' If the \code{\link{axis.tern.showarrows}} value is \code{FALSE}, these functions will set it to \code{TRUE}.
+#' @rdname theme_clockwise
+#' @name theme_clockwise
 #' @examples 
 #' \donttest{
-#' plot <- ggtern(data=data.frame(x=1,y=1,z=1),aes(x,y,z)) + 
-#'                   geom_point() + 
-#'                   tern_clockwise()
-#' plot
+#'   plot <- ggtern(data=data.frame(x=1,y=1,z=1),aes(x,y,z)) + 
+#'                     geom_point() + theme_hidearrows()
+#'   plot
+#'   plot + theme_clockwise()
+#'   plot + theme_anticlockwise()
+#'   plot + theme_counterclockwise()
 #' }
-#' @export
-tern_clockwise        <- function(){.tern_clockwise(TRUE)}
-
-#' Direction of Ternary Rotation
 #' 
-#' \code{tern_anticlockwise} is a function that instructs the axes precession to be anticlockwise
-#' @rdname ternary_clockwise
-#' @examples 
-#' \donttest{
-#' plot <- ggtern(data=data.frame(x=1,y=1,z=1),aes(x,y,z)) + 
-#'                   geom_point() + 
-#'                   tern_anticlockwise()
-#' plot
-#' }
-#' @export
-tern_anticlockwise    <- function(){.tern_clockwise(FALSE)}
+NULL
 
-#' Direction of Ternary Rotation
-#' 
-#' \code{tern_counterclockwise} is an alias for \code{tern_anticlockwise}
-#' @rdname ternary_clockwise
-#' @examples  
-#' \donttest{
-#' plot <- ggtern(data=data.frame(x=1,y=1,z=1),aes(x,y,z)) + 
-#'                   geom_point() + 
-#'                   tern_counterclockwise()
-#' plot
-#' }
+#' @rdname theme_clockwise
 #' @export
-tern_counterclockwise <- function(){.tern_clockwise(FALSE)}
+theme_clockwise        <- function(){.tern_clockwise(TRUE)}
 
-#' Direction of Ternary Rotation
-#' 
-#' \code{theme_clockwise} is an alias for \code{tern_clockwise}
-#' @rdname ternary_clockwise
+#' @rdname theme_clockwise
 #' @export
-theme_clockwise <- function(){tern_clockwise()}
+theme_anticlockwise    <- function(){.tern_clockwise(FALSE)}
 
-#' Direction of Ternary Rotation
-#' 
-#' \code{theme_anticlockwise} is an alias for \code{tern_anticlockwise}
-#' @rdname ternary_clockwise
+#' @rdname theme_clockwise
 #' @export
-theme_anticlockwise <- function(){tern_anticlockwise()}
+theme_counterclockwise <- function(){.tern_clockwise(FALSE)}
 
-#' Direction of Ternary Rotation
-#' 
-#' \code{theme_counterclockwise} is an alias for \code{tern_counterclockwise}
-#' @rdname ternary_clockwise
+#' @rdname theme_clockwise
 #' @export
-theme_counterclockwise <- function(){tern_counterclockwise()}
+tern_clockwise         <- function(){.tern_clockwise(TRUE)}
+
+#' @rdname theme_clockwise
+#' @export
+tern_anticlockwise     <- function(){.tern_clockwise(FALSE)}
+
+#' @rdname theme_clockwise
+#' @export
+tern_counterclockwise  <- function(){.tern_clockwise(FALSE)}

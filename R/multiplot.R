@@ -1,6 +1,6 @@
-#' Multiple plot function
+#' Arrange Multiple Plot Objects
 #'
-#' \code{multiplot} is a function which permits the arrangement of muliple \code{ggtern} or \code{ggplot2} objects,
+#' \code{ggtern.multi} is a function which permits the arrangement of muliple \code{ggtern} or \code{ggplot2} objects,
 #' plots can be provided to the elipsis argument, or, as a list and at the simplest case, the number of columns can be
 #' specified. For more advanced usage, consider the layout argument.
 #'
@@ -17,27 +17,28 @@
 #' @param cols number of columns if the layout parameter is not provided.
 #' @param layout override number of cols, and provide a matrix specifying the layout
 #' @source http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/
+#' @aliases multi multiplot
 #' @examples
 #' \donttest{
 #'  data(Feldspar)
-#'  p <- ggtern(data=Feldspar,aes(Ab,An,Or)) + geom_point() + labs(title="Multiplot Example")
+#'  p <- ggtern(data=Feldspar,aes(Ab,An,Or)) + geom_point() + labs(title="Multiple Plot Example")
 #' 
 #'  #two rows
-#'  multiplot(p,p)
+#'  ggtern.multi(p,p)
 #' 
 #'  #two cols
-#'  multiplot(p,p,cols=2)
+#'  ggtern.multi(p,p,cols=2)
 #' 
 #'  #using plotlist
-#'  multiplot(plotlist=list(p,p,p))
+#'  ggtern.multi(plotlist=list(p,p,p))
 #' 
 #'  #using matrix 1 on top, 2 on bottom
-#'  multiplot(p,p,p,layout=matrix(c(1,1,2,3), nrow=2,byrow=TRUE))
+#'  ggtern.multi(p,p,p,layout=matrix(c(1,1,2,3), nrow=2,byrow=TRUE))
 #'  #using matrix 2 on top, 1 on bottom
-#'  multiplot(p,p,p,layout=matrix(c(1,2,3,3), nrow=2,byrow=TRUE))
+#'  ggtern.multi(p,p,p,layout=matrix(c(1,2,3,3), nrow=2,byrow=TRUE))
 #' }
 #' @export
-multiplot <- function(..., plotlist = NULL, cols = 1, layout = NULL) {
+ggtern.multi <- function(..., plotlist = NULL, cols = 1, layout = NULL) {
   plots <- c(list(...), plotlist)
   cnt <- 0
   for(i in length(plots):1){
@@ -101,7 +102,7 @@ if(0){
   p2 <- ggtern() + Lline(.5)
   p3 <- ggtern() + Rline(.5)
   test <- rep(p1,2)
-  multiplot(plotlist=list(p1,p2,p3,textGrob(label="The Cat Sat on the Mat",gp=gpar(fontsize=10,color="black"))),layout=matrix(c(1,2,3,4), nrow=2,byrow=FALSE))
+  ggtern.multi(plotlist=list(p1,p2,p3,textGrob(label="The Cat Sat on the Mat",gp=gpar(fontsize=10,color="black"))),layout=matrix(c(1,2,3,4), nrow=2,byrow=FALSE))
 }
 
 

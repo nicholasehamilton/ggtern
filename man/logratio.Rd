@@ -40,4 +40,5 @@
   References are provided in the original
   \code{\link[robCompositions]{isomLR}} documentation.
 }
+\keyword{internal}
 

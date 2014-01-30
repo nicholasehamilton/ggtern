@@ -1,10 +1,11 @@
-\name{geom_errorbarT}
+\name{geom_errorbarTLR}
 \alias{GeomErrorbarl}
 \alias{GeomErrorbarr}
 \alias{GeomErrorbart}
 \alias{geom_errorbarL}
 \alias{geom_errorbarR}
 \alias{geom_errorbarT}
+\alias{geom_errorbarTLR}
 \title{Ternary Error Bars}
 \usage{
   geom_errorbarT(mapping = NULL, data = NULL,

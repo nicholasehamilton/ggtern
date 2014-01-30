@@ -37,4 +37,5 @@
   If the current subminor number differs from
   \code{version}'s subminor number, print a message.
 }
+\keyword{internal}
 

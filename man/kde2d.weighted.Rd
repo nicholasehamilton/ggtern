@@ -33,4 +33,5 @@
 \seealso{
   \code{\link{kde2d}}
 }
+\keyword{internal}
 

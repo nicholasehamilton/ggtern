@@ -2,6 +2,7 @@
 #' 
 #' Based of an algorithm found online at \code{https://stat.ethz.ch/pipermail/r-help/2006-June/107405.html}.
 #' @aliases kde kde2dweighted
+#' @keywords internal
 #' @inheritParams MASS::kde2d
 #' @param w numeric value or vector of same length as x (and y), for weighting.
 #' @seealso \code{\link{kde2d}}

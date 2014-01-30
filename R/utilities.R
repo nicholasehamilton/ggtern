@@ -279,6 +279,7 @@ trytransform <- function(data,coord){
 #' \code{notransform} is an internal function that permits the input argument (evaluate) to be executed with temporary disabling of
 #' ternary transformations, existing state is restored
 #' @param evaluate code to execute in a protected block from transformation
+#' @keywords internal
 notransform <- function(evaluate){
  existing <- getOption("tern.dont_transform")    
  options("tern.dont_transform" = TRUE)
@@ -379,6 +380,7 @@ check_required_aesthetics <- function(required, present, name) {
 #' @param version The last version of ggtern where this function was good
 #'   (in other words, the last version where it was not deprecated).
 #' @param msg The message to print.
+#' @keywords internal
 tern_dep <- function(version, msg) {
   v <- as.package_version(version)
   cv <- packageVersion("ggtern")

@@ -15,4 +15,5 @@ ternary transformations, existing state is restored}
   temporary disabling of ternary transformations, existing
   state is restored
 }
+\keyword{internal}
 

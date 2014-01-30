@@ -4,6 +4,7 @@
 #'
 #' \code{print.ggtern} is the default print function for \code{\link{ggtern}} objects.
 #' @inheritParams print.ggplot
+#' @keywords internal
 #' @rdname print
 #' @method print ggtern
 #' @export

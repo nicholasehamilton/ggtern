@@ -78,6 +78,4 @@ Collate:
   'stat-Lline.R'
   'stat-Rline.R'
   'TRL-line.R'
-  'arrow.R'
-  'unit.R'
   'multiplot.R'

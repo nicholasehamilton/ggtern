@@ -1,4 +1,4 @@
-#' @rdname ternaryerrorbars
+#' @rdname geom_errorbarTLR
 #' @aliases GeomErrorbarr
 #' @export
 geom_errorbarR <- function (mapping = NULL, data = NULL, stat = "identity", position = "identity", allow.outside=TRUE,...) { 

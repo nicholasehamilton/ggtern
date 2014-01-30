@@ -12,4 +12,5 @@
   system is ternary, and, if not, stops the current
   procedure, with a common message format
 }
+\keyword{internal}
 

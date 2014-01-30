@@ -1,4 +1,4 @@
-\name{geom_TRLline}
+\name{geom_TLRline}
 \alias{GeomLline}
 \alias{GeomRline}
 \alias{GeomTline}
@@ -10,11 +10,14 @@
 \alias{Tline}
 \alias{geom_Lline}
 \alias{geom_Rline}
-\alias{geom_TRLline}
+\alias{geom_TLRline}
 \alias{geom_Tline}
+\alias{lline}
+\alias{rline}
 \alias{stat_Lline}
 \alias{stat_Rline}
 \alias{stat_Tline}
+\alias{tline}
 \title{Add constant lines}
 \usage{
   geom_Tline(mapping = NULL, data = NULL, stat = "Tline",
@@ -85,8 +88,10 @@
 }
 \section{Tline, Lline and Rline}{
   Convenience functions, \code{Tline(...), Lline(...)} and
-  \code{Rline(...)} have been created so that constant
-  lines can be quickly created:
+  \code{Rline(...)} (or the aliasses \code{tline(...),
+  lline(...)} and \code{rline(...)}, respectively) have
+  been created so that constant lines can be quickly
+  created:
 }
 
 \section{Aesthetics}{

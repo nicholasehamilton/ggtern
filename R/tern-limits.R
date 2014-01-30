@@ -17,6 +17,10 @@
 #'         tern_limits(0.7,0.3,0.4)
 #' plot
 #' }
+#' @name   coord_tern.limit_tern
+#' @rdname tern_limits
+NULL
+
 #' @rdname tern_limits
 #' @export
 tern_limits <- function(T=1,L=1,R=1,...,verbose=F){
@@ -61,26 +65,17 @@ tern_limits <- function(T=1,L=1,R=1,...,verbose=F){
   return(ret)
 }
 
-#'Restrict Ternary Limits
-#'
 #'\code{limits_tern} is an alias for \code{tern_limits}
-#'@inheritParams tern_limits
 #'@rdname tern_limits
 #'@export 
 limits_tern <- function(...){tern_limits(...)}
 
-#'Restrict Ternary Limits
-#'
 #'\code{limit_tern} is an alias for \code{tern_limits}
-#'@inheritParams tern_limits
 #'@rdname tern_limits
 #'@export 
 limit_tern <- function(...){tern_limits(...)}
 
-#'Restrict Ternary Limits
-#'
 #'\code{tern_limit} is an alias for \code{tern_limits}
-#'@inheritParams tern_limits
 #'@rdname tern_limits
 #'@export 
 tern_limit <- function(...){tern_limits(...)}

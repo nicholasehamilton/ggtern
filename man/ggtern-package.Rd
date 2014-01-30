@@ -1,8 +1,10 @@
 \name{ggtern-package}
+\alias{arrow}
 \alias{ggtern-package}
 \alias{intro}
 \alias{introduction}
 \alias{overview}
+\alias{unit}
 \title{Ternary Diagrams in R}
 \description{
   Ternary diagrams are used frequently in a number of
@@ -43,7 +45,7 @@
   coordinate system, click \link[=coord_tern]{HERE}.
 }
 
-\section{Valid Geometries for \code{ggtern}}{
+\section{\code{ggtern} Valid Geometries}{
   ggplot2, using the \code{\link{grid}} and
   \code{\link{proto}} architectures, makes provision for a
   many number of geometries to be added progressively in
@@ -63,7 +65,7 @@
   \code{\link[=geom_Tline]{Ternary Constant-Lines}} }
 }
 
-\section{Handling Non-Approved Geometries}{
+\section{\code{ggtern} Handling Non-Approved Geometries}{
   If a geometric layer is added that is \strong{NOT}
   contained in the approved
   \link[=approved_geometries]{list}, \strong{IT WILL BE
@@ -76,20 +78,20 @@
   available once patched.
 }
 
-\section{New Theme Elements and Heirarchies}{
+\section{\code{ggtern} New Theme Elements and Heirarchies}{
   \code{ggtern} implements many new theme elements and
   heirarchies which can be tailored on a case-by-case
   basis. The full list of new elements can is provided
   \link[=newelements]{HERE}.
 }
 
-\section{Theme Element Convenience Functions}{
+\section{\code{ggtern} Theme Element Convenience Functions}{
   \code{ggtern} has made available a number of convenience
   functions, for rapid tweaking of common theme elements,
   for a comprehensive list, see \link[=convenience]{HERE}.
 }
 
-\section{Modification to Required Aesthetics}{
+\section{\code{ggtern} Modification to Required Aesthetics}{
   Each geometry has a pre-determined set of
   \strong{required} aesthetics. These have been modifid
   such that where \code{x} and \code{y} were previously
@@ -102,7 +104,7 @@
   \code{coord_tern(...)} coordinate system.
 }
 
-\section{Provided Datasets}{
+\section{\code{ggtern} Provided Datasets}{
   \code{ggtern} ships with a number of datasets, including:
   \enumerate{ \item \code{\link[=data_Feldspar]{Elkin and
   Groves Feldspar Data}} \item \code{\link[=data_USDA]{USDA
@@ -338,8 +340,8 @@ for(a in c("x","y","z")){
   DATA.RANDOM[,paste0(a,"max")] = DATA.RANDOM[,a] + 0.25*sd(DATA.RANDOM[,a])
   DATA.RANDOM[,paste0(a,"min")] = DATA.RANDOM[,a] - 0.25*sd(DATA.RANDOM[,a])
 }
-plot + geom_errorbarT(data=DATA.RANDOM,aes(Tmin=xmin,Tmax=xmax),width=0.01,color="red")
-plot + geom_errorbarL(data=DATA.RANDOM,aes(Lmin=ymin,Lmax=ymax),width=0.01,color="blue")
+plot + geom_errorbarT(data=DATA.RANDOM,aes(Tmin=ymin,Tmax=ymax),width=0.01,color="red")
+plot + geom_errorbarL(data=DATA.RANDOM,aes(Lmin=xmin,Lmax=xmax),width=0.01,color="blue")
 plot + geom_errorbarR(data=DATA.RANDOM,aes(Rmin=zmin,Rmax=zmax),width=0.01,color="green")
 
 ##-----------------------------------------------

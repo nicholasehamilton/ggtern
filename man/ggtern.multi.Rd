@@ -1,11 +1,14 @@
-\name{multiplot}
+\name{ggtern.multi}
+\alias{ggtern.multi}
+\alias{multi}
 \alias{multiplot}
-\title{Multiple plot function}
+\title{Arrange Multiple Plot Objects}
 \source{
   http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/
 }
 \usage{
-  multiplot(..., plotlist = NULL, cols = 1, layout = NULL)
+  ggtern.multi(..., plotlist = NULL, cols = 1,
+    layout = NULL)
 }
 \arguments{
   \item{...}{multiple plot objects}
@@ -21,7 +24,7 @@
   matrix specifying the layout}
 }
 \description{
-  \code{multiplot} is a function which permits the
+  \code{ggtern.multi} is a function which permits the
   arrangement of muliple \code{ggtern} or \code{ggplot2}
   objects, plots can be provided to the elipsis argument,
   or, as a list and at the simplest case, the number of
@@ -45,21 +48,21 @@
 \examples{
 \donttest{
  data(Feldspar)
- p <- ggtern(data=Feldspar,aes(Ab,An,Or)) + geom_point() + labs(title="Multiplot Example")
+ p <- ggtern(data=Feldspar,aes(Ab,An,Or)) + geom_point() + labs(title="Multiple Plot Example")
 
  #two rows
- multiplot(p,p)
+ ggtern.multi(p,p)
 
  #two cols
- multiplot(p,p,cols=2)
+ ggtern.multi(p,p,cols=2)
 
  #using plotlist
- multiplot(plotlist=list(p,p,p))
+ ggtern.multi(plotlist=list(p,p,p))
 
  #using matrix 1 on top, 2 on bottom
- multiplot(p,p,p,layout=matrix(c(1,1,2,3), nrow=2,byrow=TRUE))
+ ggtern.multi(p,p,p,layout=matrix(c(1,1,2,3), nrow=2,byrow=TRUE))
  #using matrix 2 on top, 1 on bottom
- multiplot(p,p,p,layout=matrix(c(1,2,3,3), nrow=2,byrow=TRUE))
+ ggtern.multi(p,p,p,layout=matrix(c(1,2,3,3), nrow=2,byrow=TRUE))
 }
 }
 

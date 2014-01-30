@@ -28,6 +28,7 @@
 #' relative to the x and y limits of the cartesian plot area. DEPRECIATED
 #' @param ticklength.minor the length of the minor ternary ticks as an euclidean distance 
 #' relative to the x and y limits of the cartesian plot area. DEPRECIATED
+#' @keywords internal
 #' @export
 element_ternary <- function(showarrows,
                             padding,

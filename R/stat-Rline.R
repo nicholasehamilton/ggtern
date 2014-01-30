@@ -1,4 +1,4 @@
-#' @rdname geom_TRLline
+#' @rdname geom_TLRline
 #' @aliases StatRline
 #' @export
 stat_Rline <- function (mapping = NULL, data = NULL, geom = "Rline", position = "identity", Rintercept, ...) {

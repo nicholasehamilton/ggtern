@@ -2,6 +2,7 @@
 #' 
 #' Log-ratio and Inverse Log-ratio transformations, for use as part of the \code{\link{geom_confidence}} geometry.
 #' @rdname logratio
+#' @keywords internal
 #' @name logratio
 NULL
 
@@ -10,6 +11,7 @@ NULL
 #' @param  x 2D object to transform 
 #' @aliases log-ratio
 #' @rdname logratio
+#' @keywords internal
 #' @return \code{isomLRinv} returns the transformed data
 #' @references References are provided in the original \code{\link[robCompositions]{isomLR}} documentation.
 isomLR <- function(x){
@@ -29,6 +31,7 @@ isomLR <- function(x){
 #' 
 #' The above functions are based on those provided as part of the robCompositions package.
 #' @param x.ilr 2D object to transform
+#' @keywords internal
 #' @rdname logratio
 #' @return \code{isomLRinv} returns the inverse-transformed data
 isomLRinv <- function(x.ilr){

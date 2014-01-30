@@ -1,9 +1,10 @@
-\name{ternaryscales}
+\name{scale_TLR_continuous}
 \alias{scale_L}
 \alias{scale_L_continuous}
 \alias{scale_R}
 \alias{scale_R_continuous}
 \alias{scale_T}
+\alias{scale_TLR_continuous}
 \alias{scale_T_continuous}
 \alias{scale_break_info.continuous_ternary}
 \alias{scale_breaks.continuous_ternary}
@@ -11,7 +12,6 @@
 \alias{scale_clone.continuous_ternary}
 \alias{scale_labels.continuous_ternary}
 \alias{scale_transform.continuous_ternary}
-\alias{ternaryscales}
 \title{Ternary Continuous Scales}
 \usage{
   scale_T_continuous(name = NULL,
@@ -52,7 +52,7 @@
   available. If one is interested in merely controling the
   limits (ranges) of the T, L and R species, it is much
   easier to use the \code{tern_limits(...)} function or its
-  aliasses, click \code{\link[=tern_limits]{HERE}} for
+  aliasses, click \code{\link[=limit_tern]{HERE}} for
   further information.
 }
 \section{Top Apex Species}{

@@ -55,4 +55,5 @@
   features which are unique to the ternary diagrams , and
   hence, this package.
 }
+\keyword{internal}
 

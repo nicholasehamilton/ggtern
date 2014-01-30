@@ -6,6 +6,7 @@
 #' @param x.cov coveriance value
 #' @param whichlines the confidence values
 #' @param m the number of values to return for each line
+#' @keywords internal
 #' @return list containing mdX and mdY values.
 #' @rdname mahalanobis
 mahalanobisDistance <- function(x,x.mean,x.cov,whichlines=c(0.975,0.90,0.75),m=360){    

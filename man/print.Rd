@@ -26,4 +26,5 @@
   \code{ggplot} objects.
 }
 \keyword{hplot}
+\keyword{internal}
 

@@ -14,7 +14,8 @@
 #' 
 #' @section Aesthetics (geom_errorbarR):
 #' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "errorbarR")}
-#' @rdname ternaryerrorbars
+#' @rdname geom_errorbarTLR
+#' @name geom_errorbarTLR
 #' @examples
 #' \donttest{
 #' #Example with Dummy Data.
@@ -37,6 +38,9 @@
 #'   geom_errorbarT(aes(Tmin=Min,Tmax=Max,width=0.01),size=0.2,allow.outside=T) +
 #'   geom_point(fill="white",shape=21)
 #' }
+NULL
+
+#' @rdname geom_errorbarTLR
 #' @aliases GeomErrorbart
 #' @export
 geom_errorbarT <- function (mapping = NULL, data = NULL, stat = "identity", position = "identity", allow.outside=TRUE,...) { 

@@ -1,5 +1,6 @@
-\name{convenience}
+\name{convenience_functions}
 \alias{convenience}
+\alias{convenience_functions}
 \alias{theme_convenience}
 \title{Theme Convenience Functions}
 \description{
