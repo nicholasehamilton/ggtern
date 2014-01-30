@@ -42,6 +42,8 @@ StatDensity2dtern <- proto(Statnew, {
     
     #ggtern
     if(inherits(last_coord,"ternary")){
+      
+      #create the density sinking function.
       .sink_density <- function(df,remove=TRUE,coord=stop("coord is required")){
         if(class(df) != "data.frame"){return(df)}
         bup <- df
@@ -62,11 +64,13 @@ StatDensity2dtern <- proto(Statnew, {
         })
         df
       }
+      
+      #Sink the densities
       df <- .sink_density(df,remove=!identical(geometry,"polygon"),coord=last_coord)
     }
     df$group <- data$group[1]
     
-    if (contour) {
+    if(contour) {
       ret <- StatContour$calculate(df, scales,...)     
     } else {
       names(df) <- c("x", "y", "density", "group")
@@ -75,6 +79,7 @@ StatDensity2dtern <- proto(Statnew, {
       ret <- df
     }
     
+    #UNDO (will be redone later with standard transformation routine)
     if(inherits(last_coord,"ternary")){
       Tlim = last_coord$limits$T
       Rlim = last_coord$limits$R
