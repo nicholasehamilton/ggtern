@@ -13,10 +13,11 @@ stat_density2d <- function (mapping = NULL, data = NULL, geom = "density2dtern",
 
 StatDensity2dtern <- proto(Statnew, {
   objname <- "density2dtern"
-  default_geom <- function(.) GeomDensity2dTern
+  default_geom <- function(.) GeomDensity2dtern
   required_aes <- c("x", "y")
-  calculate <- function(., data, scales, na.rm = FALSE, contour = TRUE, n = 100, geometry="Density2dTern",...) {
-    if(empty(data)){return(data.frame())}
+  calculate <- function(., data, scales, na.rm = FALSE, contour = TRUE, n = 100,geometry="density2dtern",...) { # geom="Density2dTern"
+    if(empty(data))
+      return(data.frame())
     
     #ggtern
     last_coord <- get_last_coord()
@@ -30,53 +31,52 @@ StatDensity2dtern <- proto(Statnew, {
     xlim <- ifthenelse(inherits(last_plot(),"ggtern"),c(1,0),scale_dimension(scales$x))
     ylim <- ifthenelse(inherits(last_plot(),"ggtern"),c(1,0),scale_dimension(scales$y))
     
-    w <- df$weight
+    #Weighted or not
+    w <- is.numericor(df$weight,1)
     if(is.numeric(w) & length(unique(w)) > 1){
       dens <- safe.call(kde2d.weighted, list(x = df$x, y = df$y, w=w, n = n,lims = c(xlim,ylim), ...))
-      dens$z <- (dens$z - min(dens$z))/(max(dens$z) - min(dens$z))
-      dens$z <- dens$z*diff(range(w)) + min(w)
+      if(min(w) != max(w)){
+        dens$z <- (dens$z - min(dens$z))/(max(dens$z) - min(dens$z))
+        dens$z <- dens$z*diff(range(w)) + min(w)
+      }
     }else{
       dens <- safe.call(kde2d, list(x = df$x, y = df$y, n = n,lims = c(xlim,ylim), ...))
     }
-    df <- with(dens, data.frame(expand.grid(x = x, y = y), z = as.vector(z)))
-    
+    DF <- with(dens, data.frame(expand.grid(x = x, y = y), z = as.vector(z)))
     #ggtern
     if(inherits(last_coord,"ternary")){
       
       #create the density sinking function.
-      .sink_density <- function(df,remove=TRUE,coord=stop("coord is required")){
-        if(class(df) != "data.frame"){return(df)}
-        bup <- df
+      .sink_density <- function(data,remove=TRUE,coord=stop("coord is required")){
+        bup <- data
         tryCatch({
           if(inherits(coord,"ternary")){ #ONLY FOR ggtern object
-            tri <- transform_tern_to_cart(data=get_tern_extremes(coord),Tlim=coord$limits$T,Llim=coord$limits$L,Rlim=coord$limits$R)
-            inorout <- point.in.polygon(df$x,df$y,tri$x,tri$y)
-            inorout[which(inorout > 0)] <- 1
-            if(remove){
-              df <- df[which(inorout > 0),]
-            }else{
-              df[which(inorout <= 0),which(names(df) == "z")] <- 0
-            }
+            transfm <- transform_tern_to_cart(data=get_tern_extremes(coord),Tlim=coord$limits$T,Llim=coord$limits$L,Rlim=coord$limits$R)
+            inorout <- sp::point.in.polygon(data$x,data$y,transfm$x,transfm$y)
+            if(remove)
+              data <- data[which(inorout > 0),]
+            else
+              data[which(inorout <= 0),which(names(data) == "z")] <- 0
           }
         },error=function(e){
           message(e)
-          df <- bup
+          return(bup)
         })
-        df
+        data
       }
-      
       #Sink the densities
-      df <- .sink_density(df,remove=!identical(geometry,"polygon"),coord=last_coord)
+      remove <- !identical(geometry,"polygon")
+      DF <- .sink_density(data=DF,remove=remove,coord=last_coord)
     }
-    df$group <- data$group[1]
+    DF$group <- data$group[1]
     
     if(contour) {
-      ret <- StatContour$calculate(df, scales,...)     
+      ret <- StatContour$calculate(DF, scales,...)     
     } else {
-      names(df) <- c("x", "y", "density", "group")
-      df$level <- 1
-      df$piece <- 1
-      ret <- df
+      names(DF) <- c("x", "y", "density", "group")
+      DF$level <- 1
+      DF$piece <- 1
+      ret <- DF
     }
     
     #UNDO (will be redone later with standard transformation routine)

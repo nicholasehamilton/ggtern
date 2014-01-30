@@ -320,7 +320,7 @@ remove_outside <- function(data){
       coord <- get_last_coord()
       lim <- list(Tlim=coord$limits[["T"]],Llim=coord$limits[["L"]],Rlim=coord$limits[["R"]])
       tri <- transform_tern_to_cart(data=get_tern_extremes(coord),Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)
-      ix  <- point.in.polygon(data$x,data$y,tri$x,tri$y)
+      ix  <- sp::point.in.polygon(data$x,data$y,tri$x,tri$y)
       return(data[which(ix > 0),])
     }
   },error=function(e){

@@ -149,7 +149,7 @@ coord_transform.ternary <- function(coord, data, details,
         data.extremes <-transform_tern_to_cart(data = xtrm,Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,c("x","y")]
         
         #In polygon or not.
-        in.poly <- point.in.polygon(data$x,data$y,as.numeric(data.extremes$x),as.numeric(data.extremes$y))
+        in.poly <- sp::point.in.polygon(data$x,data$y,as.numeric(data.extremes$x),as.numeric(data.extremes$y))
         data <- data[which(in.poly > 0),]
       }
       

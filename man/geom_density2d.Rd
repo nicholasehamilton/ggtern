@@ -5,7 +5,7 @@
 \title{Contours from a 2d density estimate - (ggtern version)}
 \usage{
   geom_density2d(mapping = NULL, data = NULL,
-    stat = "density2dtern", position = "identity",
+    stat = "Density2dtern", position = "identity",
     lineend = "butt", linejoin = "round", linemitre = 1,
     na.rm = FALSE, ...)
 }

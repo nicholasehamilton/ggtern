@@ -12,14 +12,16 @@
 #' @inheritParams ggplot2::geom_path
 #' @aliases GeomDensity2dtern
 #' @export
-geom_density2d <- function (mapping = NULL, data = NULL, stat = "density2dtern", position = "identity", 
+geom_density2d <- function (mapping = NULL, data = NULL, stat = "Density2dtern", position = "identity",
                             lineend = "butt", linejoin = "round", linemitre = 1, na.rm = FALSE, ...) { 
   GeomDensity2dtern$new(mapping = mapping, data = data, stat = stat, position = position, 
-                    lineend = lineend, linejoin = linejoin, linemitre = linemitre, na.rm = na.rm, ...)
+                    lineend = lineend, linejoin = linejoin, linemitre = linemitre, na.rm = na.rm,...)
 }
 
 GeomDensity2dtern <- proto(ggint$GeomPath,{
   objname <- "density2dtern"
+  #draw <- function(., data, scales, coordinates, arrow = NULL, lineend = "butt", linejoin = "round", linemitre = 1, ..., na.rm = FALSE)
+  #  GeomConfidence$draw(.=.,data=data,scales=scales,coordinates=coordinates,lineend = lineend,na.rm = na.rm,...)
   default_stat <- function(.) StatDensity2dtern
-  default_aes <- function(.) aes(colour="#3366FF", size = 0.5, linetype = 1, alpha = NA,weight=NULL)
+  default_aes <- function(.) aes(colour="#3366FF", size = 0.5, linetype = 1, alpha = NA,weight=NULL,fill="transparent")
 })
