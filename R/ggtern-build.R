@@ -36,15 +36,13 @@ ggplot_build <- function(plot) {
     ##Check that there are layers remaining after potentially stripping all layers
     if(length(plot$layers) == 0){stop("No layers in ternary plot",call.=F)}  
     
-    #The ternary and cartesian axis names.
-    scales.tern <- c("T","L","R")
-    scales.cart <- c("x","y")
-    
     ##Add the ternary fixed coordinates if it doesn't exist
     if(!inherits(plot$coordinates,"ternary")){plot <- plot + coord_tern()}
     
-    #Store coordinates for use by other methods
-    set_last_coord(plot$coordinates) 
+    #The ternary and cartesian axis names.
+    scales.tern <- plot$coordinates$required_axes #c("T","L","R")
+    scales.aes  <- plot$coordinates$required_aes  #c("x","y","z")
+    scales.cart <- c("x","y")
     
     ##Add the missing scales
     ggint$scales_add_missing(plot,c(scales.tern,scales.cart),environment())
@@ -53,12 +51,25 @@ ggplot_build <- function(plot) {
     for(X in c(scales.tern,scales.cart))
       plot$coordinates$limits[[X]] <- is.numericor(.select.lim(plot$scales$get_scales(X)$limits, plot$coordinates$limits[[X]]),c(0,1))
     
+    #Store coordinates for use by other methods, AFTER the limits have been updated (ie the previous command)
+    set_last_coord(plot$coordinates) 
+    
     #Normally this info is handled in the by grid, however, this is one way of passing it through
     panel <- .train_position_ternary(panel,plot$scales$get_scales("T"),plot$scales$get_scales("L"),plot$scales$get_scales("R"))
     
+    #get snapshot of panel so updates to panel dont interfere through the next loop.
+    panel.bup <- panel 
+    
     #Assign the names Ternary scales and Wlabel (arrow label suffix) to the panel
-    for(X in scales.tern)
-      panel[[paste0(X,"_scales")]]$name <- do.call(paste0(".",X,"label"),list(panel = panel,labels = plot$labels))
+    for(X in scales.tern){
+      #Resolve the 'effective' T, L and R index, for case of non default coord_tern T, L and R assignments
+      XResolved <- scales.tern[which(scales.aes == plot$coordinates[[X]])] 
+      #Make update scale names, on effective axes.
+      #Executes .Tlabel, .Llabel and .Rlabel
+      panel[[paste0(X,"_scales")]]$name <- do.call(paste0(".",X,"label"),list(panel = panel.bup,labels = plot$labels))
+    }
+    
+    #Make update to axes arrow suffix label
     panel$Wlabel = .Wlabel(panel,labels = plot$labels)
     
     #DONE

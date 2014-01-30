@@ -48,12 +48,17 @@ calculate_stats <- function(panel, data, layers) {
 #' and patched for the ternary system.
 #' @rdname overloaded
 train_ranges <- function(panel, coord) {
+  which.scale <- function(x)
+    paste0(coord$required_axes[which(coord$required_aes == coord[[x]])],"_scales")
   compute_range <- function(ix, iy) {
     scales <- list(x = panel$x_scales[[ix]], 
                    y = panel$y_scales[[iy]],
                    T = panel$T_scales,
                    L = panel$L_scales,
                    R = panel$R_scales,
+                   #T = panel[[which.scale("T")]],
+                   #L = panel[[which.scale("L")]],
+                   #R = panel[[which.scale("R")]],
                    W = panel$Wlabel)
     scales[sapply(scales, is.null)] <- NULL
     
@@ -65,16 +70,21 @@ train_ranges <- function(panel, coord) {
   panel
 }
 
-.Tlabel <- function(panel, labels) {
+#--------------------------------------------------
+# Axis labels get read by priority. 
+#--------------------------------------------------
+# 1. Scale Name                            THEN 
+# 2. Explicit Label Assignment             THEN 
+# 3. Coordinate-System Assigment           THEN 
+# 4. Default/Fallback Value
+# NOTE: These functions get used in ggtern-build.R, during which T, L and R gets resolved to the specific x, y and z
+#       to the particular coord_tern(...) that is being used.
+.Tlabel <- function(panel, labels)
   panel$T_scales$name  %||% labels[["T"]] %||% labels[[get_last_coord()$T]] %||% labels$x %||% "T"
-}
-.Llabel <- function(panel, labels,force=F) {  
+.Llabel <- function(panel, labels,force=F)
   panel$L_scales$name  %||% labels[["L"]] %||% labels[[get_last_coord()$L]] %||% labels$y %||% "L"
-}
-.Rlabel <- function(panel, labels,force=F) {
+.Rlabel <- function(panel, labels,force=F)
   panel$R_scales$name  %||% labels[["R"]] %||% labels[[get_last_coord()$R]] %||% labels$z %||% "R"
-} 
-.Wlabel <- function(panel, labels) {
+.Wlabel <- function(panel, labels)
   (panel$W %||% labels$W) %||% ""
-}
 

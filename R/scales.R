@@ -7,7 +7,8 @@
 #' At the moment, only continuous scales are availa ble for \code{ggtern} T, L and R axes - log scales are NOT available. If one is interested in merely controling the limits (ranges) of the T, L and R species, it is much easier to use the \code{tern_limits(...)} function 
 #' or its aliasses, click \code{\link[=tern_limits]{HERE}} for further information.
 #' 
-#' @aliases scale_L_continuous scale_T_continuous scale_R_continuous scale_T scale_L scale_R
+#' @aliases scale_L_continuous scale_T_continuous scale_R_continuous scale_T scale_L scale_R scale_clone.continuous_ternary scale_transform.continuous_ternary 
+#' scale_break_info.continuous_ternary scale_breaks.continuous_ternary scale_labels.continuous_ternary scale_breaks_minor.continuous_ternary
 #' @param breaks the major breaks
 #' @param minor_breaks the minor breaks
 #' @param labels the major labels

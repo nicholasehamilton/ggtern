@@ -1,6 +1,6 @@
 #' Change Axis labels and legend titles
 #' 
-#' New label modification functions, equivalent to the original functions in ggplot2 (\code{\link{xlab} and \code{\link{ylab}}}) 
+#' New label modification functions, equivalent to the original functions in ggplot2 (\code{\link{xlab}} and \code{\link{ylab}}) 
 #' however for the new axes used in the \code{ggtern} package
 #' 
 #' \code{Tlab} and \code{\link{xlab}} are equivalent, as is \code{Llab} and \code{\link{ylab}}, and \code{Rlab} and \code{zlab} (\code{zlab} is new to \code{ggtern}).

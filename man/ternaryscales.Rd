@@ -5,6 +5,12 @@
 \alias{scale_R_continuous}
 \alias{scale_T}
 \alias{scale_T_continuous}
+\alias{scale_break_info.continuous_ternary}
+\alias{scale_breaks.continuous_ternary}
+\alias{scale_breaks_minor.continuous_ternary}
+\alias{scale_clone.continuous_ternary}
+\alias{scale_labels.continuous_ternary}
+\alias{scale_transform.continuous_ternary}
 \alias{ternaryscales}
 \title{Ternary Continuous Scales}
 \usage{

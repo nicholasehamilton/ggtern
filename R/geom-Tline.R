@@ -59,7 +59,7 @@ GeomTline <- proto(Geom, {
     .super$new(., data = data, mapping = mapping, inherit.aes = FALSE, Tintercept = Tintercept, ...)
   }
   draw <- function(., data, scales, coordinates, ...){
-    data <- unique(data[,which(!colnames(data) %in% "TinterceptXXX")])
+    data <- unique(data[,which(!colnames(data) %in% "Tintercept")])
     ggint$GeomSegment$draw(data,scales,coordinates,...)
   }
   default_stat <- function(.) StatTline

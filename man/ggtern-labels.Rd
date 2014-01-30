@@ -30,8 +30,8 @@
 }
 \description{
   New label modification functions, equivalent to the
-  original functions in ggplot2 (\code{\link{xlab} and
-  \code{\link{ylab}}}) however for the new axes used in the
+  original functions in ggplot2 (\code{\link{xlab}} and
+  \code{\link{ylab}}) however for the new axes used in the
   \code{ggtern} package
 }
 \details{
