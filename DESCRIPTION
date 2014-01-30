@@ -23,6 +23,7 @@ Imports:
 License: GPL-2
 URL: http://www.ggtern.com
 Collate:
+  'onLoad.R'
   'ggtern-package.R'
   'aaa.R'
   'utilities-help.R'
@@ -80,4 +81,3 @@ Collate:
   'arrow.R'
   'unit.R'
   'multiplot.R'
-  'onLoad.R'

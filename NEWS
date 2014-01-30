@@ -13,6 +13,8 @@ ggtern 1.0.3.0
 * Creation of theme_minimal, equivalent to the ggplot2 version.
 * Creation of theme_classic, equivalent to the ggplot2 version.
 * Creation of Multiplot function, for arranging multiple plots.
+* Changed the default mapping T=y, L=x and R=z, since it is likely that people new to ternary plots will find this more intuitive, created global options so this can be modified.
+* Modified logic so that T, L and R ALWAYS relate to the Top, Left and Right apex, regardless of assignment in coord_tern(...).
 
 BUG FIXES
 * Labels not assigning correctly when coord_tern() not using default x,y,z mapping.

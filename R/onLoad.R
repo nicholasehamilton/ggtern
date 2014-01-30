@@ -14,6 +14,9 @@
   options("tern.breaks.default"        = seq(0.2, 1.0,by=0.2))
   options("tern.breaks.default.minor"  = seq(0.1, 0.9,by=0.2))
   options("tern.dont_transform"        = FALSE)
+  options("tern.default.T"             = "y")
+  options("tern.default.L"             = "x")
+  options("tern.default.R"             = "z")
   
   #Set the theme and the last coordinates.
   theme_set(theme_gray())

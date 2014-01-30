@@ -30,7 +30,11 @@
 #' @param clockwise (Depreciated, see \code{\link{axis.tern.clockwise}}) logical (default \code{FALSE}) indicating whether the precession of axes is clockwise (\code{TRUE}) or counter-clockwise (\code{FALSE}).
 #' @return \code{coord_tern} returns a ternary coordinate system object.
 #' @export
-coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Llim=NULL,Rlim=NULL,clockwise) {
+coord_tern <- function(T = getOption("tern.default.T"),
+                       L = getOption("tern.default.L"),
+                       R = getOption("tern.default.R"),
+                       xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Llim=NULL,Rlim=NULL,clockwise) {
+  #clockwise parameter has been depreciated in favour of a specific theme element.
   if(!missing(clockwise))
     tern_dep("1.0.1.3","clockwise is now controlled by the theme element 'axis.tern.clockwise'")
   
@@ -38,46 +42,53 @@ coord_tern <- function(T = "x",L="y",R="z",xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Lli
   xlim <- sort(is.numericor(ifthenelse(!is.numeric(xlim) & is.numeric(ylim),ylim,xlim),c(0,1)))
   ylim <- sort(is.numericor(ifthenelse(!is.numeric(ylim) & is.numeric(xlim),xlim,ylim),c(0,1)))
   
-  ##Put into correct aspect.
+  ##Put into correct aspect ratio.
   if(diff(xlim) != diff(ylim)){
     warning("Error in xlim and ylim ratios, adjusting ymax to maintain aspect.",call.=FALSE)
     ylim <- c(min(ylim),min(ylim) + diff(xlim))
   }
   ylim <- c(min(ylim), min(ylim) + diff(ylim)*coord_aspect.ternary())
   
+  #Fallback if invalid values provided.
+  T = ifthenelse(!is.character(T),"x",T[1])
+  L = ifthenelse(!is.character(L),"y",L[1])
+  R = ifthenelse(!is.character(R),"z",R[1])
+  
+  #Run some checks to ensure valid assignment will transpire between T, L, R and x, y and z.
   all.coords <- c("x","y","z")
-  if(length(which(!c(T,L,R) %in% all.coords)) > 0){stop("Options for T, L and R are x,y and z")}
-  if(length(unique(c(T,L,R))) != 3){stop("x, y and z must be assigned to T, L and R in some order and NOT duplicated")}
+  all.axes   <- c("T","L","R")
+  if(length(which(!c(T,L,R) %in% all.coords)) > 0)
+    stop("Options for T, L and R are x,y and z",call.=FALSE)
+  if(length(unique(c(T,L,R))) != 3)
+    stop("x, y and z must be assigned to T, L and R in some order and NOT duplicated",call.=FALSE)
   
+  #Progressively assign to T, L and R.
   T <- match.arg(T, all.coords)
-  L <- match.arg(L, all.coords[which(!all.coords %in% c(T  ))]) #T is picked
-  R <- match.arg(R, all.coords[which(!all.coords %in% c(T,L))]) #T & L are picked
+  L <- match.arg(L, all.coords[which(!all.coords %in% c(T  ))]) #T      is picked, L and R to remain
+  R <- match.arg(R, all.coords[which(!all.coords %in% c(T,L))]) #T & L are picked, R       to remain
   
-  #return coord object.
+  #return coordinate object of fixed ratio.
   coord(
-    T = T, L = L, R = R,
-    limits = list(x = xlim, y = ylim,T = Tlim,L = Llim,R = Rlim),
-    required_aes=all.coords,
-    subclass = c("ternary","fixed")
+    T = T, 
+    L = L, 
+    R = R,
+    limits = list(x = xlim, 
+                  y = ylim,
+                  T = Tlim,
+                  L = Llim,
+                  R = Rlim),
+    #required_aes is now a function of the coordinate system, as well as the geometries.
+    required_aes = all.coords, 
+    required_axes= all.axes,
+    #the class, ternary fixed ratio.
+    subclass     = c("ternary","fixed")
   )
 }
 
 #' S3 Method Is Linear
 #'
-#' @param coord coordinate system
-#' @param data input data
-#' @param details scales details
-#' @param verbose verbose reporting
-#' @param revertToCart fall back to cartesian data if error
-#' @param dont_transform override the ternary transformation
-#' @param adjustCart adjust for the cartesian scale or not
-#' @param discard throw away data outside the plotting perimeter
-#' @param scales plot scales 
-#' @param scale plot scale
-#' @param aesthetic mappings
 #' @param x data
 #' @param y data
-#' @param theme net theme
 #' @rdname coord
 #' @keywords internal
 #' @method is.linear ternary
@@ -86,13 +97,21 @@ is.linear.ternary <- function(coord) TRUE
 
 #' S3 Method Coordinate Transform
 #'
+#' @param coord coordinate system
+#' @param data input data
+#' @param details scales details
+#' @param verbose verbose reporting
+#' @param revertToCart fall back to cartesian data if error
+#' @param passToCartesian after conducting the ternary transformation, then execute the standard cartesian transformation.
+#' @param discard throw away data outside the plotting perimeter
+#' @param dont_transform override the ternary transformation
 #' @rdname coord
 #' @method coord_transform ternary
 #' @S3method coord_transform ternary
 coord_transform.ternary <- function(coord, data, details, 
                                     verbose        = FALSE,
                                     revertToCart   = FALSE,
-                                    adjustCart     = TRUE,
+                                    passToCartesian= TRUE,
                                     discard        = getOption("tern.discard.external"),
                                     dont_transform = getOption("tern.dont_transform")){
   #If transformation is enabled
@@ -146,7 +165,7 @@ coord_transform.ternary <- function(coord, data, details,
   }
   
   ##Default is to execute the cartesian transformation (DEFAULT)
-  if(adjustCart & !missing(details)){
+  if(passToCartesian & !missing(details)){
     ggint$coord_transform.cartesian(coord,data,details)
   }else{ ##however sometimes (say in an intermediate step), we may wish to suppress.
     data
@@ -155,11 +174,13 @@ coord_transform.ternary <- function(coord, data, details,
 
 #' S3 Method Expand Deraults
 #'
+#' @param scales plot scales 
+#' @param aesthetic mappings
 #' @rdname coord
 #' @method coord_expand_defaults ternary
 #' @S3method coord_expand_defaults ternary
-coord_expand_defaults.ternary <- function(coord, scale, aesthetic){
-  ggint$expand_default(scale)
+coord_expand_defaults.ternary <- function(coord, scales, aesthetic){
+  ggint$expand_default(scales)
 }
 
 #' S3 Method Coordinate Train
@@ -168,13 +189,22 @@ coord_expand_defaults.ternary <- function(coord, scale, aesthetic){
 #' @method coord_train ternary
 #' @S3method coord_train ternary
 coord_train.ternary <- function(coord, scales){
-  p  <- convertUnit(calc_element_plot("axis.tern.padding",theme=theme_update(),verbose=F,plot=last_plot()),"npc",valueOnly=TRUE)
-  h  <- convertUnit(calc_element_plot("axis.tern.hshift", theme=theme_update(),verbose=F,plot=last_plot()),"npc",valueOnly=TRUE)
-  v  <- convertUnit(calc_element_plot("axis.tern.vshift", theme=theme_update(),verbose=F,plot=last_plot()),"npc",valueOnly=TRUE)
+  #Current theme and last plot.
+  theme <- theme_update()
+  plot  <- last_plot()
   
-  #trimmed down cartesian coords
-  ret <- c(ggint$train_cartesian(scales$x, coord$limits$x + c(-p,p) - h, "x"),
-           ggint$train_cartesian(scales$y, coord$limits$y + c(-p,p)*coord_aspect.ternary() - v, "y"))[c("x.range","y.range")]
+  #Mimic the way spacing is applied around the ggplot plot (usually done via adding rows and columns to the grid) 
+  #area by manually adding padding to the actual plot region.
+  padding  <- convertUnit(calc_element_plot("axis.tern.padding",theme=theme,verbose=FALSE,plot=plot),"npc",valueOnly=TRUE)
+  padding  <- c(-padding,padding)
+  
+  #Shift the plot up/down, left/right
+  hshift   <- convertUnit(calc_element_plot("axis.tern.hshift", theme=theme,verbose=FALSE,plot=plot),"npc",valueOnly=TRUE)
+  vshift   <- convertUnit(calc_element_plot("axis.tern.vshift", theme=theme,verbose=FALSE,plot=plot),"npc",valueOnly=TRUE)
+  
+  #build some trimmed down cartesian coords
+  ret <- c(ggint$train_cartesian(scales$x, coord$limits$x - hshift + padding, "x"),
+           ggint$train_cartesian(scales$y, coord$limits$y - vshift + padding*coord_aspect.ternary(), "y"))[c("x.range","y.range")]
   
   #detailed ternary coords
   IX <- c("T","L","R")
@@ -186,7 +216,11 @@ coord_train.ternary <- function(coord, scales){
       ret[paste0(ix,"label")] <- scale$name #labels
     }
   }
+  
+  #Add the 
   ret$Wlabel = scales$W
+  
+  
   ret
 }
 
@@ -202,14 +236,14 @@ coord_aspect.ternary <- function(coord, details){0.5*tan(60*pi/180)}
 #' @rdname coord
 #' @method coord_distance ternary
 #' @S3method coord_distance ternary
-coord_distance.ternary <- function(coord,x,y,details){
-  max_dist <- .dist_euclidean(details$x.range, details$y.range)
-  .dist_euclidean(x, y) / max_dist
+coord_distance.ternary <- function(coord,x,y,details) {
+  .dist_euclidean(x, y) / .dist_euclidean(details$x.range, details$y.range)
 }
 
 
 #' S3 Method Render Vertical Axis
 #'
+#' @param theme net theme
 #' @rdname coord
 #' @method coord_render_axis_v ternary
 #' @S3method coord_render_axis_v ternary
@@ -289,11 +323,12 @@ coord_render_bg.ternary <- function(coord,details,theme){
 
 #----------------------------------------------------------------------------------
 #Internals >>>> ANGLES
+#Functions to determine the rotation angles for the various components
 #----------------------------------------------------------------------------------
-.get.angles <- function(clockwise){ifthenelse(clockwise,c(-180,-60,60),c(0,120,240))}
-.get.angles.arrows <- function(clockwise){ifthenelse(clockwise,c(150,-90,30),c(30,150,-90))}
+.get.angles             <- function(clockwise){ifthenelse(clockwise,c(-180,-60,60),c(0,120,240))}
+.get.angles.arrows      <- function(clockwise){.get.angles(clockwise) + ifthenelse(clockwise,-30,30)}
 .get.angles.arrowmarker <- function(clockwise){ifthenelse(clockwise,c(60,0,-60),c(-60,60,0) )}
-.get.angles.text <- function(clockwise){ifthenelse(clockwise,c(0,-60,60),c(0,-60,60))}
+.get.angles.ticklabels  <- function(clockwise){ifthenelse(clockwise,c(0,-60,60),c(0,-60,60))}
 
 #----------------------------------------------------------------------------------
 #Internals >>>> Theme flags.
@@ -357,6 +392,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
 
 #----------------------------------------------------------------------------------
 #Internals >>>> Data Extremes.
+#Function to determine apex points of ternary plot area in cartesian coordinates
 #----------------------------------------------------------------------------------
 .get.data.extreme <- function(coord,details){
   data.extreme <- transform_tern_to_cart(data = get_tern_extremes(coordinates=coord),
@@ -370,6 +406,11 @@ coord_render_bg.ternary <- function(coord,details,theme){
 
 #----------------------------------------------------------------------------------
 #Internals >>>> Render Components
+# -Backgrounds
+# -Grid lines
+# -Ternary Border
+# -Precession Arrows
+# -Apex Titles
 #----------------------------------------------------------------------------------
 .render.background <- function(data.extreme,items,theme){
   data.background <- data.extreme
@@ -511,7 +552,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   }
   
   angles      <- .get.angles(clockwise) + shift
-  angles.text <- .get.angles.text(clockwise)
+  angles.text <- .get.angles.ticklabels(clockwise)
   
   #print(details) # for debug
   
@@ -812,17 +853,16 @@ coord_render_bg.ternary <- function(coord,details,theme){
 }
 .render.titles <- function(data.extreme,items,theme,details){
   showtitles <- .theme.get.showtitles(theme)
-  clockwise <- .theme.get.clockwise(theme) 
+  if(!showtitles)
+    return(items)
+  clockwise  <- .theme.get.clockwise(theme)
   
   d    <- data.extreme
   d$L  <- as.expression(c(details$Tlabel,details$Llabel,details$Rlabel))
   
   ##Function to create new axis grob
   .render <- function(name,ix,items,hshift=0,vshift=0){
-    tryCatch({  
-      if(!showtitles)
-        return(items)
-      
+    tryCatch({
       e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
       colour    <- e$colour
       size      <- e$size;

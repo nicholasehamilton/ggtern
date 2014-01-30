@@ -2,7 +2,9 @@
 \alias{coord_tern}
 \title{Ternary Coordinate System}
 \usage{
-  coord_tern(T = "x", L = "y", R = "z", xlim = c(0, 1),
+  coord_tern(T = getOption("tern.default.T"),
+    L = getOption("tern.default.L"),
+    R = getOption("tern.default.R"), xlim = c(0, 1),
     ylim = c(0, 1), Tlim = NULL, Llim = NULL, Rlim = NULL,
     clockwise)
 }
