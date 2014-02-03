@@ -41,7 +41,8 @@
                 "make_labels",
                 "update_guides",
                 "zeroGrob",
-                "el_def"
+                "el_def",
+                "digest.ggplot"
 ))
 
 #' \code{ggint} is a structure which holds all the required internal functions from the ggplot2 namespace, 
