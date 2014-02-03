@@ -18,7 +18,7 @@ GeomErrorbarl <- proto(Geom,{
     
     #Check
     required_aes <- sort(unique(c(.$required_aes,coordinates$required_aes)))
-    check_required_aesthetics(required_aes, names(df),"geom_errorbarR")
+    check_required_aesthetics(required_aes, names(df),"geom_errorbarL")
     
     IX <- coordinates$L
     df$width <- df$width %||% params$width %||% 0
