@@ -60,13 +60,19 @@ GeomConfidence <- proto(Geom, {
 StatConfidence <- proto(ggint$Stat, {
   objname <- "confidence"
   calculate_groups <- function(., data, scales, na.rm = FALSE,breaks=c(0.50,0.90,0.95),n=500) {
+    
+    #Remove na.rm values
     data <- remove_missing(data, na.rm, name = "stat_confidence", finite = TRUE)
     
-    if(length(breaks) == 0 | !is.numeric(breaks)){return(data.frame())}
+    #Check breaks are valid
+    if(length(breaks) == 0 | !is.numeric(breaks))
+      return(data.frame())
+    
+    #Breaks in decreasing order since largest confidence value covers largest area
     breaks <- sort(breaks,decreasing=T)
     
     #get the last coordinates
-    lc <- get_last_coord();
+    lc <- get_last_coord()
     
     ##DO THE VARIABLE AESTHETIC CHECK x and y for cartesian, and x,y,z for ternary...
     required_aes <- sort(unique(c(.$required_aes,lc$required_aes)))
@@ -75,41 +81,59 @@ StatConfidence <- proto(ggint$Stat, {
     #Ternary is a special case.
     is.tern <- inherits(lc,"ternary")
     
+    #Empty data set to store results.
     RESULT <- data.frame()
-    ret  <- within(data,by(data,data[,c("PANEL","group")],function(df){
+    
+    #For each panel and group, do the transformation, appending each calculated set to the RESULT set.
+    within(data,by(data,data[,c("PANEL","group")],function(df){
+      
+      #If ternary conduct isometricLogRatio
       z  <- ifthenelse(is.tern,isomLR(df[,c(lc$L,lc$R,lc$T)]),df[,.$required_aes])
+      
+      #
       mu <- colMeans(z)
       cm <- cov(z)
       dat<- mahalanobisDistance(z, mu, cm, whichlines=breaks,m=n)
-      grp<- unique(df$group)
       
-      TMP<- data.frame()
-      for(i in 1:length(breaks)){
+      #The panel
+      panel <- unique(df$PANEL)
+      
+      #The main group
+      group <- unique(df$group)
+      
+      #Data frame to store result for each break inside each panel.
+      tmp <- data.frame()
+      
+      #for each break
+      for(i in c(1:length(breaks))){
+        #The subgroup for index i
+        group_i = paste(group,i,sep="-")
+        level_i = breaks[i]
+        
+        #default x and y from mahalanobis distance for break 'i'
+        xp1 <- dat$mdX[,i]
+        yp1 <- dat$mdY[,i]
+        
+        #if ternary conduct inverse isometric log ratio
         if(is.tern){
-          e <- isomLRinv(cbind(dat$mdX[,i], dat$mdY[,i]))
-          xp1 <- e[, 2] + e[, 3]/2
-          yp1 <- e[, 3] * sqrt(3)/2
-        }else{
-          xp1 <- dat$mdX[,i]
-          yp1 <- dat$mdY[,i]
+          inv <- isomLRinv(cbind(xp1,yp1))
+          xp1 <- inv[, 2] + inv[, 3]/2
+          yp1 <- inv[, 3] * sqrt(3)/2
         }
-        TMP <- rbind(TMP, data.frame(x=xp1,y=yp1,group=paste(grp,i,sep="-"),level=breaks[i]))
+        
+        #Create the data including panel and break, append it to existing set.
+        tmp <- rbind(tmp,data.frame(x=xp1,y=yp1,group=group_i,level=level_i,PANEL=panel))
       }
-      TMP$PANEL   = unique(df$PANEL)
-      RESULT <<- rbind(RESULT,TMP)
+      
+      #Append
+      RESULT <<- rbind(RESULT,tmp)
     }))
     
     #Transform RESULT back to ternary
-    if(is.tern){
-      input <- RESULT[,.$required_aes]
-      THS <- input$y/coord_aspect.ternary()
-      RHS <- input$x - input$y*tan(pi*30/180)
-      LHS <- 1 - THS - RHS      
-      
-      RESULT[,lc$T] = THS
-      RESULT[,lc$L] = LHS
-      RESULT[,lc$R] = RHS
-    }
+    if(is.tern)
+      RESULT[,as.character(lc[lc$required_axes])] <- transform_cart_to_tern(data=RESULT[,.$required_aes])
+    
+    #Return the final transformation.
     RESULT
   }
   default_geom <- function(.) GeomConfidence
