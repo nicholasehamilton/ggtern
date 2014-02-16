@@ -1,5 +1,7 @@
 ggtern 1.0.3.2
 ----------------------------------------------------------------
+* Added convenience functions, and global options for modifying the length of the ternary arrows easily.
+
 BUG FIXES
 * Fixed broken ggsave function, which was not using the local print function.
 * Fixed geom_errorbarR reference in geom_errorbarT and geom_errorbarL aesthetic check.

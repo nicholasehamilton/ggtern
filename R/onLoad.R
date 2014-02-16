@@ -17,6 +17,9 @@
   options("tern.default.T"             = "y")
   options("tern.default.L"             = "x")
   options("tern.default.R"             = "z")
+  options("tern.arrowstart"            = 0.3)
+  options("tern.arrowfinish"           = 0.7)
+  options("tern.arrowbaseline"         = 2)
   
   #Set the theme and the last coordinates.
   theme_set(theme_gray())

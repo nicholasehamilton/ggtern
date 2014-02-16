@@ -39,6 +39,7 @@ Collate:
   'theme-elements.R'
   'theme.R'
   'theme-noarrows.R'
+  'theme-arrowlength.R'
   'theme-showsecondary.R'
   'theme-showtitles.R'
   'theme-showlabels.R'

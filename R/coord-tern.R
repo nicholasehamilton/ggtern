@@ -729,9 +729,28 @@ coord_render_bg.ternary <- function(coord,details,theme){
       arrowstart = theme$axis.tern.arrowstart[1]
       arrowfinish= theme$axis.tern.arrowfinish[1]
       
+      #Put in correct order.
+      if(arrowfinish < arrowstart){
+        warning(paste("Arrow size theme element axis.tern.arrowfinish (",arrowfinish,") is < axis.tern.arrowstart (",arrowstart,"), values will be swapped.",sep=""),call.=FALSE)
+        tmp  = arrowstart #hold in memory
+        #Swap values
+        arrowstart  = arrowfinish
+        arrowfinish = tmp
+      }
+      #Check finish
+      if(arrowfinish > 1.0){
+        warning(paste("Arrow size theme element axis.tern.arrowfinish (",arrowfinish,") is > 1.0 and will be truncated",sep=""),call.=FALSE)
+        arrowfinish = 1.0
+      }
+      #Check start
+      if(arrowstart < 0.0){
+        warning(paste("Arrow size theme element axis.tern.arrowstart (",arrowstart,") is < 0.0 and will be truncated",sep=""),call.=FALSE)
+        arrowstart = 0.0
+      }
+      
       #Cut down to relative proportion.
-      d.f <- d.f -   (1-max(min(arrowfinish,1.0),0.0))*d.diff
-      d.s <- d.s +   (min(max(arrowstart, 0.0),1.0)  )*d.diff
+      d.f <- d.f -   (1-arrowfinish)*d.diff
+      d.s <- d.s +   arrowstart*d.diff
       d <- rbind(d.s,d.f)
       
       ixseq <- c("T","L","R")
