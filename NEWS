@@ -1,6 +1,7 @@
 ggtern 1.0.3.2
 ----------------------------------------------------------------
 * Added convenience functions, and global options for modifying the length of the ternary arrows easily.
+* Added function for putting points in sequence for path plotting, see ?point.in.sequence
 
 BUG FIXES
 * Fixed broken ggsave function, which was not using the local print function.

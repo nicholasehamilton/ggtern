@@ -79,3 +79,4 @@ Collate:
   'TRL-line.R'
   'multiplot.R'
   'ggsave.R'
+  'point-in-sequence.R'
