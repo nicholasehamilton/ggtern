@@ -20,46 +20,54 @@
 \title{Overloaded ggplot2 functions}
 \format{functions and objects}
 \usage{
-  check_required_aesthetics(required, present, name)
+panel_scales(panel, i)
 
-  validate_element(el, elname)
+calculate_stats(panel, data, layers)
 
-  theme_update(...)
+train_ranges(panel, coord)
 
-  opts(...)
+e1 \%+\% e2
 
-  plot_theme(x)
+add_ggplot(p, object, objectname)
 
-  theme_get()
+validate_element(el, elname)
 
-  theme_set(new)
+theme_update(...)
 
-  add_theme(t1, t2, t2name)
+opts(...)
 
-  %+replace%(e1, e2)
+plot_theme(x)
 
-  update_theme(oldtheme, newtheme)
+theme_get()
 
-  calc_element(element, theme, verbose = FALSE)
+theme_set(new)
 
-  combine_elements(e1, e2)
+add_theme(t1, t2, t2name)
 
-  panel_scales(panel, i)
+e1 \%+replace\% e2
 
-  calculate_stats(panel, data, layers)
+update_theme(oldtheme, newtheme)
 
-  train_ranges(panel, coord)
+calc_element(element, theme, verbose = FALSE)
 
-  %+%(e1, e2)
+combine_elements(e1, e2)
 
-  add_ggplot(p, object, objectname)
+check_required_aesthetics(required, present, name)
 }
 \arguments{
-  \item{character}{vector of required aesthetics}
+  \item{panel}{the particular panel}
 
-  \item{character}{vector of present aesthetics}
+  \item{i}{index number}
 
-  \item{name}{of object for error message}
+  \item{layers}{list of layers}
+
+  \item{data}{a list of data frames (one for each layer)}
+
+  \item{p}{plot}
+
+  \item{object}{to add}
+
+  \item{objectname}{name of obeject}
 
   \item{el}{the element}
 
@@ -78,19 +86,11 @@
 
   \item{e2}{second element}
 
-  \item{panel}{the particular panel}
+  \item{character}{vector of required aesthetics}
 
-  \item{i}{index number}
+  \item{character}{vector of present aesthetics}
 
-  \item{layers}{list of layers}
-
-  \item{data}{a list of data frames (one for each layer)}
-
-  \item{p}{plot}
-
-  \item{object}{to add}
-
-  \item{objectname}{name of obeject}
+  \item{name}{of object for error message}
 
   \item{new}{new theme (a list of theme elements)}
 
@@ -111,81 +111,75 @@
   inherits from}
 }
 \description{
-  INTERNAL FUNCTIONS (Overloaded from ggplot2): The source
-  of the following functions originate from ggplot2,
-  however, minor patches were required in order for them to
-  function under the ggtern framework. Patches were mainly
-  to do with handling the new theme elements and
-  heirarchies.
+INTERNAL FUNCTIONS (Overloaded from ggplot2): The source of
+the following functions originate from ggplot2, however,
+minor patches were required in order for them to function
+under the ggtern framework. Patches were mainly to do with
+handling the new theme elements and heirarchies.
 
-  \code{check_required_aesthetics} is a local copy of the
-  ggplot2 function that checks if the required aesthetics
-  are present. This is used by geoms and stats to give a
-  more helpful error message when required aesthetics are
-  missing.
+\code{panel_scales} is a local copy of the ggplot2 function
+that calculates the scales for each panel, patched for the
+ternary system.
 
-  \code{validate_element} is a local copy of the ggplot2
-  function which checks the validity of a given theme
-  element against the elements table. Since the
-  \code{.elements_tree} is an internal function, which is
-  not exported, and modifications could not be made, a new
-  (and equivalent) \code{.element_tree} is created within
-  ggtern to handle the new theme elements created within
-  this package.
+\code{calculate_stats} is a local copy of the ggplot2
+function that calculates various stats for each layer.
 
-  \code{opts} is deprecated. See the \code{\link{theme}}
-  function.
+\code{train_ranges} is a local copy of the ggplot2 function
+that computes ranges and dimensions of each panel, using
+the coord, and patched for the ternary system.
 
-  \code{plot_theme} is a local copy of the method that
-  determines the net theme between a plot and the current
-  global theme.
+\code{"\%+\%"} is a local copy of the ggplot2 add operator,
+no change other than exporting from the ggtern namespace
 
-  \code{add_theme} is a local copy of the ggplot2 function
-  which modifies the current theme, by a proposed theme. It
-  is slightly modified to handle 'logical' values the same
-  way it handles 'character' or 'numeric' values, which do
-  not inherit from 'element' objects.
+\code{add_ggplot} is a local copy of the ggplot2 method
+that adds elements to an existing gg object.
 
-  \code{"\%+replace\%"} is a local copy of the ggplot2
-  replace operator, no different other than being exported
-  from the ggtern namespace.
+\code{validate_element} is a local copy of the ggplot2
+function which checks the validity of a given theme element
+against the elements table. Since the \code{.elements_tree}
+is an internal function, which is not exported, and
+modifications could not be made, a new (and equivalent)
+\code{.element_tree} is created within ggtern to handle the
+new theme elements created within this package.
 
-  \code{update_theme} is a local copy of a ggplot2
-  function, which copies elements from the new theme into
-  an old theme.
+\code{opts} is deprecated. See the \code{\link{theme}}
+function.
 
-  \code{calc_element} is a local copy of the ggplot2
-  function which determines the net element based on
-  inheritances, given input theme.
+\code{plot_theme} is a local copy of the method that
+determines the net theme between a plot and the current
+global theme.
 
-  \code{combine_elements} is a local copy of the ggplot2
-  function that combines two theme elements
+\code{add_theme} is a local copy of the ggplot2 function
+which modifies the current theme, by a proposed theme. It
+is slightly modified to handle 'logical' values the same
+way it handles 'character' or 'numeric' values, which do
+not inherit from 'element' objects.
 
-  \code{panel_scales} is a local copy of the ggplot2
-  function that calculates the scales for each panel,
-  patched for the ternary system.
+\code{"\%+replace\%"} is a local copy of the ggplot2
+replace operator, no different other than being exported
+from the ggtern namespace.
 
-  \code{calculate_stats} is a local copy of the ggplot2
-  function that calculates various stats for each layer.
+\code{update_theme} is a local copy of a ggplot2 function,
+which copies elements from the new theme into an old theme.
 
-  \code{train_ranges} is a local copy of the ggplot2
-  function that computes ranges and dimensions of each
-  panel, using the coord, and patched for the ternary
-  system.
+\code{calc_element} is a local copy of the ggplot2 function
+which determines the net element based on inheritances,
+given input theme.
 
-  \code{"\%+\%"} is a local copy of the ggplot2 add
-  operator, no change other than exporting from the ggtern
-  namespace
+\code{combine_elements} is a local copy of the ggplot2
+function that combines two theme elements
 
-  \code{add_ggplot} is a local copy of the ggplot2 method
-  that adds elements to an existing gg object.
+\code{check_required_aesthetics} is a local copy of the
+ggplot2 function that checks if the required aesthetics are
+present. This is used by geoms and stats to give a more
+helpful error message when required aesthetics are missing.
 }
 \seealso{
-  \code{\link[ggplot2]{theme_update}}
+\code{\link[ggplot2]{theme_update}}
 
-  \code{\link[ggplot2]{opts}}
+\code{\link[ggplot2]{opts}}
 
-  \code{\link[ggplot2]{add_theme}}
+\code{\link[ggplot2]{add_theme}}
 }
 \keyword{internal}
 

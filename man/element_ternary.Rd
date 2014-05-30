@@ -2,9 +2,8 @@
 \alias{element_ternary}
 \title{Theme element: ternary structure}
 \usage{
-  element_ternary(showarrows, padding, arrowsep,
-    arrowstart, arrowfinish, vshift, hshift,
-    ticklength.major, ticklength.minor)
+element_ternary(showarrows, padding, arrowsep, arrowstart, arrowfinish, vshift,
+  hshift, ticklength.major, ticklength.minor)
 }
 \arguments{
   \item{showarrows}{logical whether to show the axis
@@ -37,23 +36,23 @@
   limits of the cartesian plot area. DEPRECIATED}
 }
 \description{
-  \strong{NB:} This function has been entirely
-  \strong{DEPRECIATED} as of version 1.0.1.3 and, has been
-  replaced by individual theme elements: \enumerate{ \item
-  \code{\link{axis.tern.showarrows}} \item
-  \code{\link{axis.tern.padding}} \item
-  \code{\link{axis.tern.arrowsep}} \item
-  \code{\link{axis.tern.arrowstart}} \item
-  \code{\link{axis.tern.arrowfinish}} \item
-  \code{\link{axis.tern.vshift}} \item
-  \code{\link{axis.tern.hshift}} \item
-  \code{\link{axis.tern.ticklength.major}} \item
-  \code{\link{axis.tern.ticklength.minor}} }
+\strong{NB:} This function has been entirely
+\strong{DEPRECIATED} as of version 1.0.1.3 and, has been
+replaced by individual theme elements: \enumerate{ \item
+\code{\link{axis.tern.showarrows}} \item
+\code{\link{axis.tern.padding}} \item
+\code{\link{axis.tern.arrowsep}} \item
+\code{\link{axis.tern.arrowstart}} \item
+\code{\link{axis.tern.arrowfinish}} \item
+\code{\link{axis.tern.vshift}} \item
+\code{\link{axis.tern.hshift}} \item
+\code{\link{axis.tern.ticklength.major}} \item
+\code{\link{axis.tern.ticklength.minor}} }
 }
 \details{
-  Used to define the layout of some of the ggtern plot
-  features which are unique to the ternary diagrams , and
-  hence, this package.
+Used to define the layout of some of the ggtern plot
+features which are unique to the ternary diagrams , and
+hence, this package.
 }
 \keyword{internal}
 

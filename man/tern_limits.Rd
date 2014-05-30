@@ -6,13 +6,13 @@
 \alias{tern_limits}
 \title{Restrict Ternary Limits}
 \usage{
-  tern_limits(T = 1, L = 1, R = 1, ..., verbose = F)
+tern_limits(T = 1, L = 1, R = 1, ..., verbose = F)
 
-  limits_tern(...)
+limits_tern(...)
 
-  limit_tern(...)
+limit_tern(...)
 
-  tern_limit(...)
+tern_limit(...)
 }
 \arguments{
   \item{T}{numeric value of the maximum T species scale
@@ -30,16 +30,16 @@
   \item{verbose}{report the solved values}
 }
 \description{
-  \code{tern_limits} (or its aliasses) appends new
-  \code{T}, \code{L} and \code{R} ternary continuous
-  scales, where the maximum scale value is specified, and,
-  where the minimums for each are solved.
+\code{tern_limits} (or its aliasses) appends new \code{T},
+\code{L} and \code{R} ternary continuous scales, where the
+maximum scale value is specified, and, where the minimums
+for each are solved.
 
-  \code{limits_tern} is an alias for \code{tern_limits}
+\code{limits_tern} is an alias for \code{tern_limits}
 
-  \code{limit_tern} is an alias for \code{tern_limits}
+\code{limit_tern} is an alias for \code{tern_limits}
 
-  \code{tern_limit} is an alias for \code{tern_limits}
+\code{tern_limit} is an alias for \code{tern_limits}
 }
 \examples{
 \donttest{
@@ -52,8 +52,8 @@ plot
 }
 }
 \seealso{
-  \code{\link{scale_T_continuous}},
-  \code{\link{scale_L_continuous}} and
-  \code{\link{scale_R_continuous}}
+\code{\link{scale_T_continuous}},
+\code{\link{scale_L_continuous}} and
+\code{\link{scale_R_continuous}}
 }
 

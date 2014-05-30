@@ -8,47 +8,47 @@
 \alias{weight_percent}
 \title{Atomic, Weight or Custom Percentage Suffix}
 \usage{
-  percent_weight()
+percent_weight()
 
-  weight_percent()
+weight_percent()
 
-  percent_atomic()
+percent_atomic()
 
-  atomic_percent()
+atomic_percent()
 
-  percent_custom(x)
+percent_custom(x)
 
-  custom_percent(x)
+custom_percent(x)
 }
 \arguments{
   \item{x}{the custom suffix}
 }
 \description{
-  By default there are no suffixes behind the arrow label
-  marker (the arrow up next to the ternary axes), and these
-  functions appends to the set of arrow labels, a value to
-  indicate the nature of the scale.
+By default there are no suffixes behind the arrow label
+marker (the arrow up next to the ternary axes), and these
+functions appends to the set of arrow labels, a value to
+indicate the nature of the scale.
 
-  \code{percent_weight} adds 'Wt. \%' to the arrow marker
-  label as a suffix
+\code{percent_weight} adds 'Wt. \%' to the arrow marker
+label as a suffix
 
-  \code{weight_percent} is an alias for
-  \code{percent_weight()}
+\code{weight_percent} is an alias for
+\code{percent_weight()}
 
-  \code{percent_atomic} adds 'At. \%' to the arrow marker
-  label as a suffix
+\code{percent_atomic} adds 'At. \%' to the arrow marker
+label as a suffix
 
-  \code{atomic_percent} is an alias for
-  \code{percent_atomic()}
+\code{atomic_percent} is an alias for
+\code{percent_atomic()}
 
-  \code{percent_custom} adds a custom suffix to the arrow
-  label marker.
+\code{percent_custom} adds a custom suffix to the arrow
+label marker.
 
-  \code{custom_percent} is an alias for
-  \code{percent_custom()}
+\code{custom_percent} is an alias for
+\code{percent_custom()}
 }
 \details{
-  These are convenience wrappers to \code{labs(W="XYZ")}.
+These are convenience wrappers to \code{labs(W="XYZ")}.
 }
 \examples{
 \donttest{
@@ -59,7 +59,7 @@
 }
 }
 \seealso{
-  Convenience functions for \code{\link[=Tlab]{T, L, R, W
-  labels}}
+Convenience functions for \code{\link[=Tlab]{T, L, R, W
+labels}}
 }
 

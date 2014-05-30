@@ -13,54 +13,54 @@
 \alias{theme_tern_nogrid_minor}
 \title{Show or Hide Grid}
 \usage{
-  theme_showgrid()
+theme_showgrid()
 
-  theme_hidegrid()
+theme_hidegrid()
 
-  theme_showgrid_major()
+theme_showgrid_major()
 
-  theme_hidegrid_major()
+theme_hidegrid_major()
 
-  theme_showgrid_minor()
+theme_showgrid_minor()
 
-  theme_hidegrid_minor()
+theme_hidegrid_minor()
 }
 \description{
-  A set of convenience functions to enable or disable the
-  use of major or minor (or both) gridlines.
+A set of convenience functions to enable or disable the use
+of major or minor (or both) gridlines.
 
-  \code{theme_showgrid} is a function which
-  \strong{enables} both MAJOR and MINOR gridlines.
+\code{theme_showgrid} is a function which \strong{enables}
+both MAJOR and MINOR gridlines.
 
-  \code{theme_hidegrid} or \code{theme_nogrid} (alias) is a
-  function which \strong{disables} both MAJOR and MINOR
-  gridlines.
+\code{theme_hidegrid} or \code{theme_nogrid} (alias) is a
+function which \strong{disables} both MAJOR and MINOR
+gridlines.
 
-  \code{theme_showgrid_major} is a function which
-  \strong{enables} MAJOR gridlines.
+\code{theme_showgrid_major} is a function which
+\strong{enables} MAJOR gridlines.
 
-  \code{theme_hidegrid_major} or \code{theme_nogrid_major}
-  (alias) is a function which \strong{disables} MAJOR
-  gridlines.
+\code{theme_hidegrid_major} or \code{theme_nogrid_major}
+(alias) is a function which \strong{disables} MAJOR
+gridlines.
 
-  \code{theme_showgrid_major} is a function which
-  \strong{enables} MINOR gridlines.
+\code{theme_showgrid_major} is a function which
+\strong{enables} MINOR gridlines.
 
-  \code{theme_hidegrid_minor} or \code{theme_nogrid_minor}
-  (alias) is a function which \strong{disables} MINOR
-  gridlines.
+\code{theme_hidegrid_minor} or \code{theme_nogrid_minor}
+(alias) is a function which \strong{disables} MINOR
+gridlines.
 }
 \details{
-  These flags operate at the 'rendering' level, and,
-  supercede the presence of theme elements, therefore,
-  \code{theme_hidegrid(...)} or its aliases will PREVENT
-  rendering of grid elements, irrespective of whether those
-  grid elements are valid (renderable). From the counter
-  perspective, \code{theme_showgrid(...)} or its aliases
-  will ALLOW rendering of grid elements, subject to those
-  grid elements being valid (renderable, ie say
-  \code{\link{element_line}} as opposed to
-  \code{\link{element_blank}}).
+These flags operate at the 'rendering' level, and,
+supercede the presence of theme elements, therefore,
+\code{theme_hidegrid(...)} or its aliases will PREVENT
+rendering of grid elements, irrespective of whether those
+grid elements are valid (renderable). From the counter
+perspective, \code{theme_showgrid(...)} or its aliases will
+ALLOW rendering of grid elements, subject to those grid
+elements being valid (renderable, ie say
+\code{\link{element_line}} as opposed to
+\code{\link{element_blank}}).
 }
 \examples{
 \donttest{

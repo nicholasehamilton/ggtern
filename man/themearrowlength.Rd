@@ -10,23 +10,23 @@
 \alias{themearrowlength}
 \title{Change the Length of the Ternary Arrows}
 \usage{
-  theme_arrowcustomlength(start = getOption("tern.arrowstart"),
-    finish = getOption("tern.arrowfinish"))
+theme_arrowcustomlength(start = getOption("tern.arrowstart"),
+  finish = getOption("tern.arrowfinish"))
 
-  theme_arrowlength(start = getOption("tern.arrowstart"),
-    finish = getOption("tern.arrowfinish"))
+theme_arrowlength(start = getOption("tern.arrowstart"),
+  finish = getOption("tern.arrowfinish"))
 
-  theme_arrowsmall()
+theme_arrowsmall()
 
-  theme_arrowshort()
+theme_arrowshort()
 
-  theme_arrownormal()
+theme_arrownormal()
 
-  theme_arrowdefault()
+theme_arrowdefault()
 
-  theme_arrowlarge()
+theme_arrowlarge()
 
-  theme_arrowlong()
+theme_arrowlong()
 }
 \arguments{
   \item{start}{a numeric scalar, or numeric vector of
@@ -38,26 +38,26 @@
   position along the axis where the arrow/s should FINISH.}
 }
 \description{
-  A set of convenience functions to rapidly change the
-  length of the ternary arrows, the convenience functions
-  include presets (short, normal, long), or makes provision
-  for the user to specify custom fractional starting and
-  ending values relative to the size of the ternary axis.
-  In the event that the user elects to specify the values
-  via the \code{theme_arrowcustomlength} (or its aliasses),
-  then the user can specify a single scalar value which
-  apply to all three (3) arrows, or, alternatively, can
-  provide a numeric vector of length three (3), one for
-  each arrow respectively.
+A set of convenience functions to rapidly change the length
+of the ternary arrows, the convenience functions include
+presets (short, normal, long), or makes provision for the
+user to specify custom fractional starting and ending
+values relative to the size of the ternary axis. In the
+event that the user elects to specify the values via the
+\code{theme_arrowcustomlength} (or its aliasses), then the
+user can specify a single scalar value which apply to all
+three (3) arrows, or, alternatively, can provide a numeric
+vector of length three (3), one for each arrow
+respectively.
 }
 \details{
-  If the ternary arrows are switched OFF (via the
-  \code{\link{theme_hidearrows}} command, or the
-  \code{theme(axis.tern.showarrows=FALSE)} theme element),
-  then under such circumstance, these convenience functions
-  will turn ON the ternary arrows, essentially running
-  \code{\link{theme_showarrows}} or
-  \code{theme(axis.tern.showarrows=TRUE)}
+If the ternary arrows are switched OFF (via the
+\code{\link{theme_hidearrows}} command, or the
+\code{theme(axis.tern.showarrows=FALSE)} theme element),
+then under such circumstance, these convenience functions
+will turn ON the ternary arrows, essentially running
+\code{\link{theme_showarrows}} or
+\code{theme(axis.tern.showarrows=TRUE)}
 }
 \section{Custom Length}{
   \code{theme_arrowcustomlength} or
@@ -117,9 +117,9 @@
 }
 }
 \seealso{
-  \code{\link{theme_arrowbaseline}} and
-  \code{theme(\link{axis.tern.arrowsep}=X)} for methods to
-  adjust the separation distance of the ternary arrows from
-  the ternary axes.
+\code{\link{theme_arrowbaseline}} and
+\code{theme(\link{axis.tern.arrowsep}=X)} for methods to
+adjust the separation distance of the ternary arrows from
+the ternary axes.
 }
 

@@ -7,27 +7,27 @@
 \alias{unit}
 \title{Ternary Diagrams in R}
 \description{
-  Ternary diagrams are used frequently in a number of
-  disciplines to graph compositional features for mixtures
-  of three different elements or compounds. It is possible
-  to represent a coordinate system having three (3) degrees
-  of freedom, in 2D space, since the third dimention is
-  linear and depends only on the other two.
+Ternary diagrams are used frequently in a number of
+disciplines to graph compositional features for mixtures of
+three different elements or compounds. It is possible to
+represent a coordinate system having three (3) degrees of
+freedom, in 2D space, since the third dimention is linear
+and depends only on the other two.
 
-  The \code{ggtern} package is based on (extends) the very
-  popular \code{\link{ggplot}} package, which is an
-  implementation of Wilkinsons "The Grammar of Graphics",
-  and, makes provision for a highly methodical construction
-  process for the development of meaningful (graphical)
-  data representations. Of course, the above book by
-  Wilkinson outlines the \emph{theory}, whilst Hadley
-  Wickhams \code{\link{ggplot2}} implementation is where
-  much of the magic happens, and, an ideal base-platform
-  for the \code{ggtern} package.
+The \code{ggtern} package is based on (extends) the very
+popular \code{\link{ggplot}} package, which is an
+implementation of Wilkinsons "The Grammar of Graphics",
+and, makes provision for a highly methodical construction
+process for the development of meaningful (graphical) data
+representations. Of course, the above book by Wilkinson
+outlines the \emph{theory}, whilst Hadley Wickhams
+\code{\link{ggplot2}} implementation is where much of the
+magic happens, and, an ideal base-platform for the
+\code{ggtern} package.
 
-  In this document, some of the main features are
-  highlighted, however, current examples (and corresponding
-  outputs) can be viewed at http://ggtern.com
+In this document, some of the main features are
+highlighted, however, current examples (and corresponding
+outputs) can be viewed at http://ggtern.com
 }
 \section{\code{ggtern} Constructor}{
   Plots in \code{ggtern} are instigated via the default

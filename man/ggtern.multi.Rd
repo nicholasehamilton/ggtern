@@ -4,11 +4,10 @@
 \alias{multiplot}
 \title{Arrange Multiple Plot Objects}
 \source{
-  http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/
+http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/
 }
 \usage{
-  ggtern.multi(..., plotlist = NULL, cols = 1,
-    layout = NULL)
+ggtern.multi(..., plotlist = NULL, cols = 1, layout = NULL)
 }
 \arguments{
   \item{...}{multiple plot objects}
@@ -24,26 +23,26 @@
   matrix specifying the layout}
 }
 \description{
-  \code{ggtern.multi} is a function which permits the
-  arrangement of muliple \code{ggtern} or \code{ggplot2}
-  objects, plots can be provided to the elipsis argument,
-  or, as a list and at the simplest case, the number of
-  columns can be specified. For more advanced usage,
-  consider the layout argument.
+\code{ggtern.multi} is a function which permits the
+arrangement of muliple \code{ggtern} or \code{ggplot2}
+objects, plots can be provided to the elipsis argument, or,
+as a list and at the simplest case, the number of columns
+can be specified. For more advanced usage, consider the
+layout argument.
 }
 \details{
-  By default, 1 column is specified, which means that the
-  plots will be stacked on top of each other in a single
-  column, however, if say 4 plots are provided to the
-  ellipsis or \code{plotlist}, with \code{cols} equal to 2,
-  then this will produce a 2 x 2 arrangement.
+By default, 1 column is specified, which means that the
+plots will be stacked on top of each other in a single
+column, however, if say 4 plots are provided to the
+ellipsis or \code{plotlist}, with \code{cols} equal to 2,
+then this will produce a 2 x 2 arrangement.
 
-  In regards to the \code{layout} argument (which overrides
-  the \code{cols} argument), if it is something like
-  matrix(c(1,2,3,3), nrow=2, byrow=TRUE), then plot number
-  1 will go in the upper left, 2 will go in the upper
-  right, and 3 will go all the way across the bottom - see
-  the last example below.
+In regards to the \code{layout} argument (which overrides
+the \code{cols} argument), if it is something like
+matrix(c(1,2,3,3), nrow=2, byrow=TRUE), then plot number 1
+will go in the upper left, 2 will go in the upper right,
+and 3 will go all the way across the bottom - see the last
+example below.
 }
 \examples{
 \donttest{

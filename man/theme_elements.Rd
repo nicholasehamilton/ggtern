@@ -67,7 +67,7 @@
 \alias{themeelements}
 \title{New Theme Elements}
 \usage{
-  theme(..., complete = FALSE)
+theme(..., complete = FALSE)
 }
 \arguments{
   \item{...}{a list of element name, element pairings that
@@ -79,24 +79,22 @@
   object.}
 }
 \description{
-  \code{ggtern} creates many new theme elements and
-  inheritances, the following is an outline:
+\code{ggtern} creates many new theme elements and
+inheritances, the following is an outline:
 }
 \details{
-  Theme elements can inherit properties from other theme
-  elements. For example, \code{axis.title.x} inherits from
-  \code{axis.title}, which in turn inherits from
-  \code{text}. All text elements inherit directly or
-  indirectly from \code{text}; all lines inherit from
-  \code{line}, and all rectangular objects inherit from
-  \code{rect}.
+Theme elements can inherit properties from other theme
+elements. For example, \code{axis.title.x} inherits from
+\code{axis.title}, which in turn inherits from \code{text}.
+All text elements inherit directly or indirectly from
+\code{text}; all lines inherit from \code{line}, and all
+rectangular objects inherit from \code{rect}.
 
-  Modifying the newly created items requires the same
-  procedures as introduced in the ggplot2
-  \code{\link[ggplot2]{theme}} documentation. Some
-  convenience functions have been also newly created,
-  proceed to \code{\link{convenience}} for additional
-  information.
+Modifying the newly created items requires the same
+procedures as introduced in the ggplot2
+\code{\link[ggplot2]{theme}} documentation. Some
+convenience functions have been also newly created, proceed
+to \code{\link{convenience}} for additional information.
 }
 \section{New/Additional Inheritance Structures}{
   \Sexpr[results=rd,stage=build]{ggtern:::rd_theme()} **

@@ -4,22 +4,22 @@
 \alias{theme_showlabels}
 \title{Show or Hide Axis Ticklabels}
 \usage{
-  theme_showlabels()
+theme_showlabels()
 
-  theme_hidelabels()
+theme_hidelabels()
 
-  theme_nolabels()
+theme_nolabels()
 }
 \description{
-  Convenience functions to enable or disable the axis
-  ticklabels
+Convenience functions to enable or disable the axis
+ticklabels
 
-  \code{theme_showlabels} is a function that apends to the
-  current theme a flag to switch ON the axis ticklabels
+\code{theme_showlabels} is a function that apends to the
+current theme a flag to switch ON the axis ticklabels
 
-  \code{theme_hidelabels} or \code{theme_nolabels} (Alias)
-  are functions that apends to the current theme a flag to
-  switch OFF the axis ticklabels
+\code{theme_hidelabels} or \code{theme_nolabels} (Alias)
+are functions that apends to the current theme a flag to
+switch OFF the axis ticklabels
 }
 \examples{
 \donttest{

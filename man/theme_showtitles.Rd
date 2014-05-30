@@ -4,21 +4,21 @@
 \alias{theme_showtitles}
 \title{Show or Hide the Axis (Apex) Titles}
 \usage{
-  theme_showtitles()
+theme_showtitles()
 
-  theme_hidetitles()
+theme_hidetitles()
 
-  theme_notitles()
+theme_notitles()
 }
 \description{
-  Convenience functions to SHOW or HIDE the apex labels.
+Convenience functions to SHOW or HIDE the apex labels.
 
-  \code{theme_showtitles} is a function that apends to the
-  current theme a flag to switch ON the apex titles.
+\code{theme_showtitles} is a function that apends to the
+current theme a flag to switch ON the apex titles.
 
-  \code{theme_hidetitles} or \code{theme_notitles} (alias)
-  is a function that apends to the current theme a flag to
-  switch OFF the apex titles.
+\code{theme_hidetitles} or \code{theme_notitles} (alias) is
+a function that apends to the current theme a flag to
+switch OFF the apex titles.
 }
 \examples{
 \donttest{

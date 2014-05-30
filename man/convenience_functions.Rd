@@ -4,11 +4,10 @@
 \alias{theme_convenience}
 \title{Theme Convenience Functions}
 \description{
-  \code{ggtern} has made available a number of convenience
-  functions for rapid tweaking of the various theme
-  elements, for a full list of the available theme elements
-  which can be manually modified, see
-  \link[=themeelements]{HERE}.
+\code{ggtern} has made available a number of convenience
+functions for rapid tweaking of the various theme elements,
+for a full list of the available theme elements which can
+be manually modified, see \link[=themeelements]{HERE}.
 }
 \section{Convenience Functions}{
   Convenience functions that ship with \code{ggtern}, to

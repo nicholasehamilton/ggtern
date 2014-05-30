@@ -11,15 +11,15 @@
 \alias{zlab}
 \title{Change Axis labels and legend titles}
 \usage{
-  Tlab(label)
+Tlab(label)
 
-  Llab(label)
+Llab(label)
 
-  Rlab(label)
+Rlab(label)
 
-  Wlab(label)
+Wlab(label)
 
-  zlab(label)
+zlab(label)
 }
 \arguments{
   \item{label}{the desired label, usually as a
@@ -29,34 +29,34 @@
   \code{\link{logical}}).}
 }
 \description{
-  New label modification functions, equivalent to the
-  original functions in ggplot2 (\code{\link{xlab}} and
-  \code{\link{ylab}}) however for the new axes used in the
-  \code{ggtern} package
+New label modification functions, equivalent to the
+original functions in ggplot2 (\code{\link{xlab}} and
+\code{\link{ylab}}) however for the new axes used in the
+\code{ggtern} package
 
-  \code{Tlab} modifies the label of the TOP apex species
+\code{Tlab} modifies the label of the TOP apex species
 
-  \code{Llab} modifies the label of the LHS apex species
+\code{Llab} modifies the label of the LHS apex species
 
-  \code{Rlab} modifies the label of the RHS apex species
+\code{Rlab} modifies the label of the RHS apex species
 
-  \code{Wlab} modifies the label of the arrow suffix
+\code{Wlab} modifies the label of the arrow suffix
 }
 \details{
-  \code{Tlab} and \code{\link{xlab}} are equivalent (when
-  \code{T='x'} in the \code{\link{coord_tern}} definition),
-  as is \code{Llab} and \code{\link{ylab}} (when
-  \code{L='y'}) , and \code{Rlab} and \code{zlab} (when
-  \code{R='z'}), for other assignments when
-  \code{coord_tern} is defined, the equivalence is not the
-  case, however, if \code{T='XXX'}, then \code{Tlab} will
-  be the same as \code{XXXlab} (where \code{XXX} can be
-  substituted for \code{'x', 'y' or 'z'}, and likewise for
-  \code{Llab} and \code{Rlab}).
+\code{Tlab} and \code{\link{xlab}} are equivalent (when
+\code{T='x'} in the \code{\link{coord_tern}} definition),
+as is \code{Llab} and \code{\link{ylab}} (when
+\code{L='y'}) , and \code{Rlab} and \code{zlab} (when
+\code{R='z'}), for other assignments when \code{coord_tern}
+is defined, the equivalence is not the case, however, if
+\code{T='XXX'}, then \code{Tlab} will be the same as
+\code{XXXlab} (where \code{XXX} can be substituted for
+\code{'x', 'y' or 'z'}, and likewise for \code{Llab} and
+\code{Rlab}).
 
-  \code{zlab} is new to \code{ggtern}, but is intended to
-  be an analogous to \code{xlab} and \code{ylab} as per the
-  definitions in \code{ggplot2}.
+\code{zlab} is new to \code{ggtern}, but is intended to be
+an analogous to \code{xlab} and \code{ylab} as per the
+definitions in \code{ggplot2}.
 }
 \section{Arrow Label Suffix}{
   \code{Wlab} changes the ternary arrow suffix (ie atomic
@@ -108,6 +108,6 @@ plot + Tlab(expression(a^2~+b[2]~"/ Total \%"))
 }
 }
 \seealso{
-  ggplot2 \code{\link[ggplot2]{labs}}
+ggplot2 \code{\link[ggplot2]{labs}}
 }
 

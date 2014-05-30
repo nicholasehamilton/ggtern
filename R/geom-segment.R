@@ -70,8 +70,8 @@ ggint$GeomSegment <- proto(Geom, {
     pieces <- pieces[order(pieces$group),]
     GeomPath$draw_groups(pieces, scales, coordinates, arrow = arrow, ...)
   }
-  default_stat <- function(.) StatIdentity
   required_aes <- c("x", "y")
+  default_stat <- function(.) StatIdentity
   default_aes <- function(.) aes(colour="black", size=0.5, linetype=1, alpha = NA)
   guide_geom <- function(.) "path"
 })

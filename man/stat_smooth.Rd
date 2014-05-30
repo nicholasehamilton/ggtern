@@ -3,10 +3,9 @@
 \alias{stat_smooth}
 \title{Add a smoother. (Ternary Version)}
 \usage{
-  stat_smooth(mapping = NULL, data = NULL,
-    geom = "smoothtern", position = "identity",
-    method = "auto", formula = y ~ x, se = TRUE, n = 80,
-    fullrange = FALSE, level = 0.95, na.rm = FALSE, ...)
+stat_smooth(mapping = NULL, data = NULL, geom = "smoothtern",
+  position = "identity", method = "auto", formula = y ~ x, se = TRUE,
+  n = 80, fullrange = FALSE, level = 0.95, na.rm = FALSE, ...)
 }
 \arguments{
   \item{mapping}{The aesthetic mapping, usually constructed
@@ -50,10 +49,10 @@
   function}
 }
 \description{
-  Aids the eye in seeing patterns in the presence of
-  overplotting
+Aids the eye in seeing patterns in the presence of
+overplotting
 }
 \seealso{
-  \code{\link[ggplot2]{stat_smooth}}
+\code{\link[ggplot2]{stat_smooth}}
 }
 

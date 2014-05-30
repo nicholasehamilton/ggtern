@@ -5,14 +5,17 @@
 \title{USDA Textural Classification Data}
 \format{1row per point, many points per classification representing the extremes of the area.}
 \source{
-  Soil Mechanics Level 1, Module 3, USDA Textural
-  Classification Study Guide
+Soil Mechanics Level 1, Module 3, USDA Textural
+Classification Study Guide
+}
+\usage{
+data(USDA)
 }
 \description{
-  This dataset was issued by the United States Department
-  of Agriculture (USDA) in the form of a ternary diagram,
-  this original ternary diagram has been converted to
-  numerical data and included here.
+This dataset was issued by the United States Department of
+Agriculture (USDA) in the form of a ternary diagram, this
+original ternary diagram has been converted to numerical
+data and included here.
 }
 \examples{
 \donttest{
@@ -43,10 +46,9 @@ ggtern(data=USDA,aes(Clay,Sand,Silt,color=Label,fill=Label)) +
 }
 }
 \author{
-  United States Department of Agriculture (USDA)
+United States Department of Agriculture (USDA)
 }
 \seealso{
-  \link[=data]{ggtern datasets}
+\link[=data]{ggtern datasets}
 }
-\keyword{datasets}
 

@@ -8,7 +8,9 @@
 #' @rdname print
 #' @method print ggtern
 #' @export
-print.ggtern <- function(x, newpage = is.null(vp), vp = NULL, ...){print.ggplot(x=x,newpage=newpage,vp=NULL,...)}
+print.ggtern <- function(x, newpage = is.null(vp), vp = NULL, ...){
+  print.ggplot(x=x,newpage=newpage,vp=NULL,...)
+}
 
 #' Draw plot on current graphics device.
 #'
@@ -22,20 +24,23 @@ print.ggtern <- function(x, newpage = is.null(vp), vp = NULL, ...){print.ggplot(
 #' @export
 #' @method print ggplot
 print.ggplot <- function(x, newpage = is.null(vp), vp = NULL, ...) {
-  ggint$set_last_plot(x)
-  if(newpage) 
-    grid.newpage()
-  data   <- ggplot_build(x)
-  gtable <- ggplot_gtable(data)
-  #print(gtable) #debug
-  if (is.null(vp)){
-    grid.draw(gtable)
-  }else{
-    if (is.character(vp)) seekViewport(vp) else pushViewport(vp)
-    grid.draw(gtable) 
-    upViewport()
-  }
-  set_last_coord(NULL)
+  tryCatch({
+    ggint$set_last_plot(x)
+    if(newpage) grid.newpage()
+    data   <- ggplot_build(x)
+    gtable <- ggplot_gtable(data)
+    if (is.null(vp)){
+      grid.draw(gtable)
+    }else{
+      if (is.character(vp)) seekViewport(vp) else pushViewport(vp)
+      grid.draw(gtable) 
+      upViewport()
+    }
+  },error=function(e){
+    stop(e)
+  },finally={
+    set_last_coord(NULL)
+  })
   invisible(data)
 }
 

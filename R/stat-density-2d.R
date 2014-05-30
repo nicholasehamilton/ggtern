@@ -7,7 +7,8 @@
 #' @aliases StatDensity2dtern
 #' @export
 #' @seealso \code{\link[ggtern]{geom_density2d}}
-stat_density2d <- function (mapping = NULL, data = NULL, geom = "density2dtern", position = "identity", na.rm = FALSE, contour = TRUE, n = 100, ...) {
+stat_density2d <- function (mapping = NULL, data = NULL, geom = "auto", position = "identity", na.rm = FALSE, contour = TRUE, n = 100, ...) {
+  if(geom == 'auto') geom = iflasttern('density2dtern','density2d')
   StatDensity2dtern$new(mapping = mapping, data = data,geom=geom,geometry=geom,position = position, na.rm = na.rm, contour = contour, n = n,...)
 }
 

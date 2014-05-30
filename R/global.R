@@ -17,9 +17,11 @@
 
 #' \code{get_last_coord} is a function that returns the last coordinate system used.
 #' @rdname undocumented
+#' @keywords internal
 get_last_coord <- .coordinates$get
 
 #' \code{set_last_coord} set the last coordinate system.
 #' @param new the coordinate system to set
 #' @rdname undocumented
+#' @keywords internal
 set_last_coord <- .coordinates$set

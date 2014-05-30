@@ -20,36 +20,38 @@
 \title{Internal Functions}
 \format{functions and objects}
 \usage{
-  rd_aesthetics(type, name)
+Geom
 
-  rd_theme()
+ggint
 
-  ggint
+get_last_coord()
 
-  Statnew
+set_last_coord(new)
 
-  Geom
+Statnew
 
-  ifthenelse(x, a, b)
+rd_aesthetics(type, name)
 
-  is.numericor(A, B)
+rd_theme()
 
-  get_tern_extremes(coordinates, verbose = F, expand = 0)
+ifthenelse(x, a, b)
 
-  arrow_label_formatter(label, suffix = "", ..., sep = "/")
+is.numericor(A, B)
 
-  calc_element_plot(element, theme = theme_update(), ...,
-    plot = NULL, verbose = F)
+get_tern_extremes(coordinates, verbose = F, expand = 0)
 
-  find_global(name, env = environment())
+arrow_label_formatter(label, suffix = "", ..., sep = "/")
 
-  remove_outside(data)
+calc_element_plot(element, theme = theme_update(), ..., plot = NULL,
+  verbose = F)
 
-  get_last_coord()
+find_global(name, env = environment())
 
-  set_last_coord(new)
+remove_outside(data)
 }
 \arguments{
+  \item{new}{the coordinate system to set}
+
   \item{type}{geom, stat or coord}
 
   \item{x}{logical input to check}
@@ -92,71 +94,67 @@
   priority}
 
   \item{data}{data.frame}
-
-  \item{new}{the coordinate system to set}
 }
 \description{
-  INTERNAL FUNCTIONS (native to \code{ggtern}):
-  \code{ggtern} makes use of several non-exported internal
-  functions, a list of the internal functions are as
-  follows:
+INTERNAL FUNCTIONS (native to \code{ggtern}): \code{ggtern}
+makes use of several non-exported internal functions, a
+list of the internal functions are as follows:
 
-  \code{rd_aesthetics} is a helper function for documenting
-  aesthetics in R help files.
+\code{Geom} is a local copy of the ggplot2 Gom top-level
+proto
 
-  \code{rd_theme} is a helper function for documenting
-  theme_elements in R help files.
+\code{ggint} is a structure which holds all the required
+internal functions from the ggplot2 namespace, which can
+then be used conveniently via \code{ggint$ABC}.
 
-  \code{ggint} is a structure which holds all the required
-  internal functions from the ggplot2 namespace, which can
-  then be used conveniently via \code{ggint$ABC}.
+\code{get_last_coord} is a function that returns the last
+coordinate system used.
 
-  \code{Statnew} is a local copy of the ggplot2 Stat
-  top-level proto
+\code{set_last_coord} set the last coordinate system.
 
-  \code{Geom} is a local copy of the ggplot2 Gom top-level
-  proto
+\code{Statnew} is a local copy of the ggplot2 Stat
+top-level proto
 
-  \code{ifthenelse} function takes input arguments
-  \code{x}, \code{a} and \code{b} and returns \code{a} if
-  \code{x} is \code{TRUE}, else, returns \code{b}
+\code{rd_aesthetics} is a helper function for documenting
+aesthetics in R help files.
 
-  \code{is.numericor} function takes input arguments
-  \code{A} and \code{B} and returns \code{A} if \code{A} is
-  numeric, else, returns \code{B}
+\code{rd_theme} is a helper function for documenting
+theme_elements in R help files.
 
-  \code{get_tern_extremes} determines the limiting ternary
-  coordinates given input coordinates.
+\code{ifthenelse} function takes input arguments \code{x},
+\code{a} and \code{b} and returns \code{a} if \code{x} is
+\code{TRUE}, else, returns \code{b}
 
-  \code{arrow_label_formatter} is a function that formats
-  the labels directly adjacent to the ternary arrows.
+\code{is.numericor} function takes input arguments \code{A}
+and \code{B} and returns \code{A} if \code{A} is numeric,
+else, returns \code{B}
 
-  \code{calc_element_plot} Calculates the element
-  properties, by inheriting properties from its parents,
-  and compares to whether the local plot overrides this
-  value. Based largely off the calc_element function as
-  provided in ggplot2
+\code{get_tern_extremes} determines the limiting ternary
+coordinates given input coordinates.
 
-  \code{find_global} is a function that conducts a named
-  search for the \code{name} object instance, within the
-  \code{env} environment. If an instance doesn't exist
-  within the \code{env} environment, a search is then
-  conducted within the \code{ggtern} and \code{ggplot2}
-  namespaces \emph{(in that order)}. This is a modified
-  version of the original source as provided in
-  \code{ggplot2}, which has the same functionality,
-  however, the modification is such that the function now
-  additionally searches within the \code{ggtern} namespace
-  prior to the \code{ggplot2} namespace.
+\code{arrow_label_formatter} is a function that formats the
+labels directly adjacent to the ternary arrows.
 
-  \code{remove_outside} is a function that removes, from an
-  input datases, all the rows wich are outside the ternary
-  plot area
+\code{calc_element_plot} Calculates the element properties,
+by inheriting properties from its parents, and compares to
+whether the local plot overrides this value. Based largely
+off the calc_element function as provided in ggplot2
 
-  \code{get_last_coord} is a function that returns the last
-  coordinate system used.
+\code{find_global} is a function that conducts a named
+search for the \code{name} object instance, within the
+\code{env} environment. If an instance doesn't exist within
+the \code{env} environment, a search is then conducted
+within the \code{ggtern} and \code{ggplot2} namespaces
+\emph{(in that order)}. This is a modified version of the
+original source as provided in \code{ggplot2}, which has
+the same functionality, however, the modification is such
+that the function now additionally searches within the
+\code{ggtern} namespace prior to the \code{ggplot2}
+namespace.
 
-  \code{set_last_coord} set the last coordinate system.
+\code{remove_outside} is a function that removes, from an
+input datases, all the rows wich are outside the ternary
+plot area
 }
 \keyword{datasets}
 \keyword{internal}

@@ -5,12 +5,10 @@
 \alias{trytransform}
 \title{Ternary Transformations}
 \usage{
-  transform_tern_to_cart(T, L, R,
-    data = data.frame(T = T, L = L, R = R), ...,
-    Tlim = c(0, 1), Llim = c(0, 1), Rlim = c(0, 1),
-    scale = TRUE)
+transform_tern_to_cart(T, L, R, data = data.frame(T = T, L = L, R = R), ...,
+  Tlim = c(0, 1), Llim = c(0, 1), Rlim = c(0, 1), scale = TRUE)
 
-  trytransform(data, coord)
+trytransform(data, coord)
 }
 \arguments{
   \item{T}{the concentrations of the \strong{Top} species
@@ -44,19 +42,18 @@
   \item{coord}{the coordinates}
 }
 \value{
-  \code{transform_tern_to_cart} returns a \code{data.frame}
-  object with columns \code{x} and \code{y} representing
-  the transformed coordinates, and, number of rows equal to
-  that of the \code{data} argument. In other words, a '1 to
-  1' transformation from the ternary to the cartesian
-  space.
+\code{transform_tern_to_cart} returns a \code{data.frame}
+object with columns \code{x} and \code{y} representing the
+transformed coordinates, and, number of rows equal to that
+of the \code{data} argument. In other words, a '1 to 1'
+transformation from the ternary to the cartesian space.
 
-  \code{trytransform} returns a \code{data.frame} object
-  regardless of the success of the function operation.
+\code{trytransform} returns a \code{data.frame} object
+regardless of the success of the function operation.
 }
 \description{
-  Functions relating to the transformation from the ternary
-  coordinate systems, to the cartesian coordinate system.
+Functions relating to the transformation from the ternary
+coordinate systems, to the cartesian coordinate system.
 }
 \section{Transform Ternary Coordinates to Cartesian Coordinates}{
   \code{transform_tern_to_cart(...)} is a function that

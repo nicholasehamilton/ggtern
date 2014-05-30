@@ -3,6 +3,7 @@
                  segment   = "segment",
                  polygon   = "polygon",
                  text      = "text",
+                 contour   = "contourtern",
                  density2d = "density2dtern",
                  smooth    = "smoothtern",
                  rug       = "rug",

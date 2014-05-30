@@ -4,8 +4,7 @@
 \alias{kde2dweighted}
 \title{Two-Dimentional Kernel Density Estimation (Weighted)}
 \usage{
-  kde2d.weighted(x, y, w, h, n = 25,
-    lims = c(range(x), range(y)))
+kde2d.weighted(x, y, w, h, n = 25, lims = c(range(x), range(y)))
 }
 \arguments{
   \item{w}{numeric value or vector of same length as x (and
@@ -27,11 +26,11 @@
   grid as \code{c(xl, xu, yl, yu)}. }
 }
 \description{
-  Based of an algorithm found online at
-  \code{https://stat.ethz.ch/pipermail/r-help/2006-June/107405.html}.
+Based of an algorithm found online at
+\code{https://stat.ethz.ch/pipermail/r-help/2006-June/107405.html}.
 }
 \seealso{
-  \code{\link{kde2d}}
+\code{\link{kde2d}}
 }
 \keyword{internal}
 

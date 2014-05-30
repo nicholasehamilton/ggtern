@@ -2,11 +2,9 @@
 \alias{coord_tern}
 \title{Ternary Coordinate System}
 \usage{
-  coord_tern(T = getOption("tern.default.T"),
-    L = getOption("tern.default.L"),
-    R = getOption("tern.default.R"), xlim = c(0, 1),
-    ylim = c(0, 1), Tlim = NULL, Llim = NULL, Rlim = NULL,
-    clockwise)
+coord_tern(T = getOption("tern.default.T"), L = getOption("tern.default.L"),
+  R = getOption("tern.default.R"), xlim = c(0, 1), ylim = c(0, 1),
+  Tlim = NULL, Llim = NULL, Rlim = NULL, clockwise)
 }
 \arguments{
   \item{T}{the Top Mapping (default ['x', 'y' or 'z']
@@ -32,15 +30,15 @@
   theme element, see \code{\link{axis.tern.clockwise}}.}
 }
 \value{
-  \code{coord_tern} returns a ternary coordinate system
-  object.
+\code{coord_tern} returns a ternary coordinate system
+object.
 }
 \description{
-  \code{coord_tern} is a function which creates a
-  transformation mechanism between the ternary system, and,
-  the cartesian system. It inherits from the fixed
-  coordinate system, employing fixed ratio between x and y
-  axes once transformed.
+\code{coord_tern} is a function which creates a
+transformation mechanism between the ternary system, and,
+the cartesian system. It inherits from the fixed coordinate
+system, employing fixed ratio between x and y axes once
+transformed.
 }
 \section{Aesthetics (Required in Each Layer)}{
   \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("coord",

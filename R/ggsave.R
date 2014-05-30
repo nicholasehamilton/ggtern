@@ -12,8 +12,7 @@
 #' @param filename file name/filename of plot
 #' @param plot plot to save, defaults to last plot displayed
 #' @param device device to use, automatically extract from file name extension
-#' @param path path to save plot to (if you just want to set path and not
-#'    filename)
+#' @param path path to save plot to (if you just want to set path and not filename)
 #' @param scale scaling factor
 #' @param width width (defaults to the width of current plotting window)
 #' @param height height (defaults to the height of current plotting window)
@@ -29,11 +28,10 @@
 #' plot <- ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point() + theme_rgbw()
 #' ggsave(plot,filename='test.png')
 #' }
-ggsave <- function(filename = default_name(plot), plot = last_plot(),
+ggsave <- function(filename = default_name(), plot = last_plot(),
                    device = default_device(filename), path = NULL, scale = 1,
                    width = par("din")[1], height = par("din")[2], units = c("in", "cm", "mm"),
                    dpi = 300, limitsize = TRUE, ...) {
-  
   if (!inherits(plot, "ggplot")) stop("plot should be a ggplot2 plot")
   
   eps <- ps <- function(..., width, height)  
@@ -49,7 +47,6 @@ ggsave <- function(filename = default_name(plot), plot = last_plot(),
     grDevices::win.metafile(..., width=width, height=height)
   emf <- function(..., width, height)
     grDevices::win.metafile(..., width=width, height=height)
-  
   png <- function(..., width, height) 
     grDevices::png(...,  width=width, height=height, res = dpi, units = "in")
   jpg <- jpeg <- function(..., width, height) 
@@ -59,10 +56,15 @@ ggsave <- function(filename = default_name(plot), plot = last_plot(),
   tiff <- function(..., width, height) 
     grDevices::tiff(..., width=width, height=height, res = dpi, units = "in")
   
-  default_name <- function(plot) { 
-    paste(ggtern:::ggint$digest.ggplot(plot), ".pdf", sep="")
+  default_name <- function(){
+    filename="plot"
+    suffix = NULL
+    while(file.exists(paste(filename,suffix,".pdf",sep=""))){
+      if(is.null(suffix)) suffix = 0
+      else suffix = suffix + 1
+    }
+    paste(filename,suffix,".pdf",sep="")
   }
-  
   default_device <- function(filename) {
     pieces <- strsplit(filename, "\\.")[[1]]
     ext <- tolower(pieces[length(pieces)])
@@ -117,5 +119,3 @@ ggsave <- function(filename = default_name(plot), plot = last_plot(),
   
   invisible()
 }
-
-#body(ggsave)[[which(as.list(body(ggsave)) == 'print(plot)')]] <- substitute(ggtern::print.ggtern(plot))

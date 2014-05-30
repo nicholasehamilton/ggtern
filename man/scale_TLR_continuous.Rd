@@ -14,20 +14,17 @@
 \alias{scale_transform.continuous_ternary}
 \title{Ternary Continuous Scales}
 \usage{
-  scale_T_continuous(name = NULL,
-    breaks = getOption("tern.breaks.default"),
-    minor_breaks = getOption("tern.breaks.default.minor"),
-    labels = 100 * breaks, limits = waiver())
+scale_T_continuous(name = NULL, breaks = getOption("tern.breaks.default"),
+  minor_breaks = getOption("tern.breaks.default.minor"), labels = 100 *
+  breaks, limits = waiver())
 
-  scale_L_continuous(name = NULL,
-    breaks = getOption("tern.breaks.default"),
-    minor_breaks = getOption("tern.breaks.default.minor"),
-    labels = 100 * breaks, limits = waiver())
+scale_L_continuous(name = NULL, breaks = getOption("tern.breaks.default"),
+  minor_breaks = getOption("tern.breaks.default.minor"), labels = 100 *
+  breaks, limits = waiver())
 
-  scale_R_continuous(name = NULL,
-    breaks = getOption("tern.breaks.default"),
-    minor_breaks = getOption("tern.breaks.default.minor"),
-    labels = 100 * breaks, limits = waiver())
+scale_R_continuous(name = NULL, breaks = getOption("tern.breaks.default"),
+  minor_breaks = getOption("tern.breaks.default.minor"), labels = 100 *
+  breaks, limits = waiver())
 }
 \arguments{
   \item{breaks}{the major breaks}
@@ -41,19 +38,19 @@
   \item{name}{the name of the scale}
 }
 \description{
-  Create continuous scales for the top (T), left (L) and
-  right(R) species in the ternary diagram, and, control the
-  appearance of the labels, the limits, major and minor
-  breaks.
+Create continuous scales for the top (T), left (L) and
+right(R) species in the ternary diagram, and, control the
+appearance of the labels, the limits, major and minor
+breaks.
 }
 \details{
-  At the moment, only continuous scales are availa ble for
-  \code{ggtern} T, L and R axes - log scales are NOT
-  available. If one is interested in merely controling the
-  limits (ranges) of the T, L and R species, it is much
-  easier to use the \code{tern_limits(...)} function or its
-  aliasses, click \code{\link[=limit_tern]{HERE}} for
-  further information.
+At the moment, only continuous scales are availa ble for
+\code{ggtern} T, L and R axes - log scales are NOT
+available. If one is interested in merely controling the
+limits (ranges) of the T, L and R species, it is much
+easier to use the \code{tern_limits(...)} function or its
+aliasses, click \code{\link[=limit_tern]{HERE}} for further
+information.
 }
 \section{Top Apex Species}{
   \code{scale_T_continuous} creates a continuous scale for

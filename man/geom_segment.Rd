@@ -2,9 +2,9 @@
 \alias{geom_segment}
 \title{Single line segments (Ternary Version).}
 \usage{
-  geom_segment(mapping = NULL, data = NULL,
-    stat = "identity", position = "identity", arrow = NULL,
-    lineend = "butt", na.rm = FALSE, ...)
+geom_segment(mapping = NULL, data = NULL, stat = "identity",
+  position = "identity", arrow = NULL, lineend = "butt", na.rm = FALSE,
+  ...)
 }
 \arguments{
   \item{mapping}{The aesthetic mapping, usually constructed
@@ -19,7 +19,7 @@
   data for this layer.}
 
   \item{position}{The position adjustment to use for
-  overlappling points on this layer}
+  overlapping points on this layer}
 
   \item{arrow}{specification for arrow heads, as created by
   arrow()}
@@ -36,7 +36,7 @@
   for more details.}
 }
 \description{
-  Modified geom_segment geometry
+Modified geom_segment geometry
 }
 \section{Aesthetics}{
   \Sexpr[results=rd,stage=build]{ggplot2:::rd_aesthetics("geom",
@@ -44,6 +44,6 @@
   \itemize{ \item \strong{z} \item \strong{zend} }
 }
 \seealso{
-  \code{\link[ggplot2]{geom_segment}}
+\code{\link[ggplot2]{geom_segment}}
 }
 

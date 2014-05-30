@@ -1,4 +1,4 @@
-\name{geom_errorbarTLR}
+\name{geom_errorbarL}
 \alias{GeomErrorbarl}
 \alias{GeomErrorbarr}
 \alias{GeomErrorbart}
@@ -8,17 +8,14 @@
 \alias{geom_errorbarTLR}
 \title{Ternary Error Bars}
 \usage{
-  geom_errorbarT(mapping = NULL, data = NULL,
-    stat = "identity", position = "identity",
-    allow.outside = TRUE, ...)
+geom_errorbarL(mapping = NULL, data = NULL, stat = "identity",
+  position = "identity", allow.outside = TRUE, ...)
 
-  geom_errorbarL(mapping = NULL, data = NULL,
-    stat = "identity", position = "identity",
-    allow.outside = TRUE, ...)
+geom_errorbarR(mapping = NULL, data = NULL, stat = "identity",
+  position = "identity", allow.outside = TRUE, ...)
 
-  geom_errorbarR(mapping = NULL, data = NULL,
-    stat = "identity", position = "identity",
-    allow.outside = TRUE, ...)
+geom_errorbarT(mapping = NULL, data = NULL, stat = "identity",
+  position = "identity", allow.outside = TRUE, ...)
 }
 \arguments{
   \item{allow.outside}{logical value indicating whether the
@@ -37,7 +34,7 @@
   data for this layer.}
 
   \item{position}{The position adjustment to use for
-  overlappling points on this layer}
+  overlapping points on this layer}
 
   \item{...}{other arguments passed on to
   \code{\link{layer}}. This can include aesthetics whose
@@ -45,12 +42,12 @@
   for more details.}
 }
 \description{
-  \code{geom_errorbarT}, \code{geom_errorbarL} and
-  \code{geom_errorbarR} are geometries to render error bars
-  for the top, left and right apex species respectively,
-  analogous to \code{\link[ggplot2]{geom_errorbar}} and/or
-  \code{\link[ggplot2]{geom_errorbarh}} as provided in the
-  base ggplot2 package.
+\code{geom_errorbarT}, \code{geom_errorbarL} and
+\code{geom_errorbarR} are geometries to render error bars
+for the top, left and right apex species respectively,
+analogous to \code{\link[ggplot2]{geom_errorbar}} and/or
+\code{\link[ggplot2]{geom_errorbarh}} as provided in the
+base ggplot2 package.
 }
 \section{Aesthetics (geom_errorbarT)}{
   \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom",

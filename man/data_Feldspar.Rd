@@ -5,11 +5,14 @@
 \title{Elkin and Groves Feldspar Data}
 \format{One (1) row per Feldspar composition}
 \source{
-  American Mineralogist, June 1990, v. 75, p. 544-559
+American Mineralogist, June 1990, v. 75, p. 544-559
+}
+\usage{
+data(Feldspar)
 }
 \description{
-  This dataset is some data on Feldspar and its phases, as
-  a function of temperature and pressure.
+This dataset is some data on Feldspar and its phases, as a
+function of temperature and pressure.
 }
 \examples{
 \donttest{
@@ -19,10 +22,9 @@
 }
 }
 \author{
-  Linda T. Elkins and Timothy L. Grove
+Linda T. Elkins and Timothy L. Grove
 }
 \seealso{
-  \link[=data]{ggtern datasets}
+\link[=data]{ggtern datasets}
 }
-\keyword{datasets}
 

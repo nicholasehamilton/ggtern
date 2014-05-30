@@ -17,8 +17,8 @@
 #' as it actually holds NO information regarding the geometry (width, height), only fill, color, 
 #' size and linetype border (ie the style of how it will be rendered).
 #' *** \strong{NB:} \code{ternary.options} has been fully Depreciated since \code{ggtern} version 1.0.1.3
-#' @aliases themeelements elements newelements theme-tern newthemes newtheme theme
-#' @aliases panel.background.tern axis.tern.clockwise axis.tern.padding axis.tern 
+#' @aliases themeelements elements newelements theme-tern newthemes newtheme theme 
+#' panel.background.tern axis.tern.clockwise axis.tern.padding axis.tern 
 #' axis.tern.hshift axis.tern.vshift axis.tern.line axis.tern.line.T axis.tern.line.L 
 #' axis.tern.line.R axis.tern.text axis.tern.text.T axis.tern.text.L axis.tern.text.R 
 #' axis.tern.showarrows axis.tern.arrowsep axis.tern.arrowstart axis.tern.arrowfinish 

@@ -2,8 +2,7 @@
 \alias{point.in.sequence}
 \title{Put Points in Sequence}
 \usage{
-  point.in.sequence(x, y, ...,
-    df = data.frame(x = x, y = y), close = FALSE)
+point.in.sequence(x, y, ..., df = data.frame(x = x, y = y), close = FALSE)
 }
 \arguments{
   \item{x}{vector of numeric \code{x} values}
@@ -20,27 +19,27 @@
   the first row (after ordering) to the end of the set.}
 }
 \value{
-  \code{data.frame} object containing the re-ordered input
-  set.
+\code{data.frame} object containing the re-ordered input
+set.
 }
 \description{
-  The \code{point.in.sequence} function takes numeric input
-  vectors \code{x} and \code{y} or a
-  \code{\link{data.frame}} object, and orders the values in
-  such way that they are correctly sequenced by the angle
-  subtended between each point, and, the centroid of the
-  total set. If the data is provided in the format of a
-  \code{data.frame}, then it must containing columns named
-  \code{x} and \code{y}, else an error will be thrown.
+The \code{point.in.sequence} function takes numeric input
+vectors \code{x} and \code{y} or a \code{\link{data.frame}}
+object, and orders the values in such way that they are
+correctly sequenced by the angle subtended between each
+point, and, the centroid of the total set. If the data is
+provided in the format of a \code{data.frame}, then it must
+containing columns named \code{x} and \code{y}, else an
+error will be thrown.
 }
 \details{
-  The arguments \code{x} and \code{y} represent cartesian
-  coordinates. This is useful if a path is sought that
-  passes through each point in the ordered set, however, no
-  two lines in the total path cross over each other. Uses
-  the \code{\link{atan2}} function to determine the angle
-  (theta) between each point (x,y) and the centroid of the
-  data, it then orders based on increasing values of theta.
+The arguments \code{x} and \code{y} represent cartesian
+coordinates. This is useful if a path is sought that passes
+through each point in the ordered set, however, no two
+lines in the total path cross over each other. Uses the
+\code{\link{atan2}} function to determine the angle (theta)
+between each point (x,y) and the centroid of the data, it
+then orders based on increasing values of theta.
 }
 \examples{
 \donttest{

@@ -2,15 +2,15 @@
 \alias{tern_stop}
 \title{Stop Procedure}
 \usage{
-  tern_stop(src = "target")
+tern_stop(src = "target")
 }
 \arguments{
   \item{src}{character name of current procedure}
 }
 \description{
-  Internal Function, checks if the most recent coordinate
-  system is ternary, and, if not, stops the current
-  procedure, with a common message format
+Internal Function, checks if the most recent coordinate
+system is ternary, and, if not, stops the current
+procedure, with a common message format
 }
 \keyword{internal}
 

@@ -3,9 +3,8 @@
 \alias{geom_smooth}
 \title{Add a smoothed conditional mean (MODIFIED)}
 \usage{
-  geom_smooth(mapping = NULL, data = NULL,
-    stat = "smoothtern", position = "identity",
-    limitarea = TRUE, fullrange = FALSE, ...)
+geom_smooth(mapping = NULL, data = NULL, stat = "smoothtern",
+  position = "identity", limitarea = TRUE, fullrange = FALSE, ...)
 }
 \arguments{
   \item{limitarea}{logical value to indicate whether
@@ -31,7 +30,7 @@
   data for this layer.}
 
   \item{position}{The position adjustment to use for
-  overlappling points on this layer}
+  overlapping points on this layer}
 
   \item{...}{other arguments passed on to
   \code{\link{layer}}. This can include aesthetics whose
@@ -39,11 +38,11 @@
   for more details.}
 }
 \description{
-  \code{geom_smooth} is a function that provides additional
-  functionality to the standard
-  \code{\link[ggplot2]{geom_smooth}} function in the event
-  that it is being used on a \code{ggtern} object.
-  Parameters are the same, with the exception of the
-  introduction of the \code{limitarea} parameter.
+\code{geom_smooth} is a function that provides additional
+functionality to the standard
+\code{\link[ggplot2]{geom_smooth}} function in the event
+that it is being used on a \code{ggtern} object. Parameters
+are the same, with the exception of the introduction of the
+\code{limitarea} parameter.
 }
 

@@ -169,7 +169,7 @@ transform_cart_to_tern <- function(x,y,data=data.frame(x=x,y=y),...,Tlim=c(0,1),
     out.R = .adj.rev(out.R,Rlim)
     
     data.frame(T=out.T,L=out.L,R=out.R)
-    },error=function(e){
+  },error=function(e){
       return(data)
   })
 }
@@ -404,6 +404,16 @@ tern_dep <- function(version, msg) {
   
   invisible()
 }
+
+#' Switch between two values for the ternary system
+#' 
+#' Returns yes if the current system is ternary, and no if it is not
+#' @param yes value to return when the current system is ternary
+#' @param no value to return when the current system is not
+#' @keywords internal
+#' 
+iflasttern <- function(yes=stop("yes value required"),no=stop("no value required"))
+  ifthenelse(inherits(get_last_coord(),"ternary"),yes,no)
 
 
 

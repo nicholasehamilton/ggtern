@@ -3,9 +3,8 @@
 \alias{stat_density2d}
 \title{2d density estimation - (ggtern version)}
 \usage{
-  stat_density2d(mapping = NULL, data = NULL,
-    geom = "density2dtern", position = "identity",
-    na.rm = FALSE, contour = TRUE, n = 100, ...)
+stat_density2d(mapping = NULL, data = NULL, geom = "auto",
+  position = "identity", na.rm = FALSE, contour = TRUE, n = 100, ...)
 }
 \arguments{
   \item{mapping}{The aesthetic mapping, usually constructed
@@ -34,9 +33,9 @@
   \code{\link{kde2d}}}
 }
 \description{
-  Patched version of the 2d density estimation.
+Patched version of the 2d density estimation.
 }
 \seealso{
-  \code{\link[ggtern]{geom_density2d}}
+\code{\link[ggtern]{geom_density2d}}
 }
 
