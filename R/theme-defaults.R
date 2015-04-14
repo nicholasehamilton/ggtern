@@ -175,6 +175,23 @@ theme_tern_rgbg <- function(base_size = 12, base_family = ""){
 }
 theme_rgb <- theme_rgbg
 
+#' Theme with custom basic colours
+#' 
+#' @param base_size base font size
+#' @param base_family base font family
+#' @param col.T colour of top axis, ticks labels and major gridlines
+#' @param col.L colour of left axis, ticks, labels and major gridlines
+#' @param col.R colour of right axis, ticks, labels and major gridlines
+#' @param col.BG colour of background colour to plot area
+#' \code{theme_custom} is a convenience function to allow the user to control the basic theme colours very easily.
+#' @export
+theme_custom  <- function(base_size = 12, base_family = "",col.T="darkred",col.L="darkblue",col.R="darkgreen",col.BG="white"){
+  .theme_tern(base_size=base_size, base_family=base_family, col.BG=col.BG,
+                       col.T=col.T,col.L=col.L,col.R=col.R,
+                       grid.T =col.T,grid.L=col.L,grid.R=col.R,
+                       grid.minor ="gray90",grid.linetype=6,grid.linetype.minor=1,grid.major.size=0.25)
+}
+
 #' #' A theme with white background, red, green and blue axes and gidlines
 #' 
 #' \code{theme_rgbw} is a theme with white background, red, green and blue axes and gidlines

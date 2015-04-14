@@ -28,14 +28,4 @@ to be clockwise or anticlockwise respectively.
 If the \code{\link{axis.tern.showarrows}} value is
 \code{FALSE}, these functions will set it to \code{TRUE}.
 }
-\examples{
-\donttest{
-  plot <- ggtern(data=data.frame(x=1,y=1,z=1),aes(x,y,z)) +
-                    geom_point() + theme_hidearrows()
-  plot
-  plot + theme_clockwise()
-  plot + theme_anticlockwise()
-  plot + theme_counterclockwise()
-}
-}
 

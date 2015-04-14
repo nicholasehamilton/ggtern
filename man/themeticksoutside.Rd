@@ -14,14 +14,4 @@ ticks are placed OUTSIDE of the plot area, whereas,
 ticks are placed INSIDE of the plot area (opposite to
 \code{theme_ticksoutside})
 }
-\examples{
-\donttest{
-data(Feldspar)
-ggtern(data=Feldspar,aes(Ab,An,Or)) +
-  geom_point() +
-  theme_bw() +
-  theme_nogrid() +
-  theme_ticksinside()
-}
-}
 

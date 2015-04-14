@@ -72,14 +72,8 @@ and \code{\link{axis.tern.ticks.showsecondary}} theme
 elements respectively.
 }
 \examples{
-\donttest{
 data(Feldspar)
-plot <- ggtern(data=Feldspar,aes(Ab,An,Or)) + geom_point()
-plot
-plot + theme_showsecondary()
-plot + theme_noprimary() + theme_nosecondary()
-plot + theme_showticks()
-plot + theme_hideticks()
-}
+plot <- ggtern(data=Feldspar,aes(Ab,An,Or)) + geom_point() +
+  theme_showsecondary()
 }
 

@@ -1,5 +1,6 @@
 .approved <-   c(point     = "point",
                  path      = "path",
+                 line      = "line",
                  segment   = "segment",
                  polygon   = "polygon",
                  text      = "text",

@@ -16,15 +16,9 @@
 #' LHS, whilst, the secondary ticks, woudl run along the RHS. By default, the primary ticks are switched ON, whilst the secondary ticks are switched OFF and are
 #' controlled by the \code{\link{axis.tern.ticks.showprimary}} and \code{\link{axis.tern.ticks.showsecondary}} theme elements respectively.
 #' @examples
-#' \donttest{
 #' data(Feldspar)
-#' plot <- ggtern(data=Feldspar,aes(Ab,An,Or)) + geom_point()
-#' plot
-#' plot + theme_showsecondary()
-#' plot + theme_noprimary() + theme_nosecondary()
-#' plot + theme_showticks()
-#' plot + theme_hideticks()
-#' }
+#' plot <- ggtern(data=Feldspar,aes(Ab,An,Or)) + geom_point() + 
+#'   theme_showsecondary()
 #' @rdname theme_showprimary
 #' @name theme_showprimary
 NULL

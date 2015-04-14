@@ -22,12 +22,6 @@ coord_tern()}, indeed, if one wishes to use
 \code{ggplot{...} + coord_tern()} then this is quite
 satisfactory.
 }
-\examples{
-\donttest{
- data(Feldspar)
- ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point()
-}
-}
 \seealso{
 For an introduction to the \code{ggtern} package,
 (including many examples), click

@@ -23,11 +23,6 @@
 #'   specifying dimensions in pixels.
 #' @param ... other arguments passed to graphics device
 #' @export
-#' @examples
-#' \donttest{
-#' plot <- ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point() + theme_rgbw()
-#' ggsave(plot,filename='test.png')
-#' }
 ggsave <- function(filename = default_name(), plot = last_plot(),
                    device = default_device(filename), path = NULL, scale = 1,
                    width = par("din")[1], height = par("din")[2], units = c("in", "cm", "mm"),

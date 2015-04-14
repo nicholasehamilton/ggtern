@@ -18,7 +18,6 @@ original ternary diagram has been converted to numerical
 data and included here.
 }
 \examples{
-\donttest{
 #Load the Libraries
 library(ggtern)
 library(plyr)
@@ -43,7 +42,6 @@ ggtern(data=USDA,aes(Clay,Sand,Silt,color=Label,fill=Label)) +
   weight_percent() +
   theme(legend.justification=c(0,1),legend.position=c(0,1),axis.tern.padding=unit(.15,"npc")) +
   labs(title="USDA Textural Classification Chart",fill="Textural Class",color="Textural Class")
-}
 }
 \author{
 United States Department of Agriculture (USDA)

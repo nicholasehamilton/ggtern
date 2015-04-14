@@ -96,15 +96,5 @@ coordinate systems, to the cartesian coordinate system.
   attempts to make ternary transformation. If fails, the
   original data is returned.
 }
-\examples{
-\donttest{
-#Species Concentrations
-T=c(1,0,0) #TOP
-L=c(0,1,0) #LEFT
-R=c(0,0,1) #RIGHT
-#Transform
-transform_tern_to_cart(T,L,R)
-}
-}
 \keyword{internal}
 

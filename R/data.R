@@ -20,11 +20,9 @@ NULL
 #' @source American Mineralogist, June 1990, v. 75, p. 544-559
 #' @author Linda T. Elkins and Timothy L. Grove
 #' @examples
-#' \donttest{
 #'  data(Feldspar)
 #'  summary(Feldspar)
 #'  ggtern(data=Feldspar,aes(x=An,y=Ab,z=Or)) + geom_point()
-#' }
 #' @seealso \link[=data]{ggtern datasets}
 #' @export
 NULL
@@ -42,7 +40,6 @@ NULL
 #' @author United States Department of Agriculture (USDA)
 #' @seealso \link[=data]{ggtern datasets}
 #' @examples
-#' \donttest{
 #' #Load the Libraries
 #' library(ggtern)
 #' library(plyr)
@@ -67,6 +64,5 @@ NULL
 #'   weight_percent() + 
 #'   theme(legend.justification=c(0,1),legend.position=c(0,1),axis.tern.padding=unit(.15,"npc")) +
 #'   labs(title="USDA Textural Classification Chart",fill="Textural Class",color="Textural Class")
-#' }
 #' @export
 NULL

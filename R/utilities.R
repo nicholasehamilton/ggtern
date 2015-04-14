@@ -108,15 +108,6 @@ get_tern_extremes <- function(coordinates,verbose=F,expand=0){
 #' @rdname ternary_transformations
 #' @name   ternary_transformations
 #' @aliases transform_tern_to_cart transform_cart_to_tern
-#' @examples
-#' \donttest{
-#' #Species Concentrations
-#' T=c(1,0,0) #TOP 
-#' L=c(0,1,0) #LEFT
-#' R=c(0,0,1) #RIGHT
-#' #Transform
-#' transform_tern_to_cart(T,L,R)
-#' }
 transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),...,Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1),scale=TRUE){
   if(class(data) != "data.frame")stop("data must be of type 'data.frame'")
   if(length(which(c("T","L","R") %in% colnames(data))) < 3) stop("data must contain columns T, L and R")
@@ -230,14 +221,14 @@ calc_element_plot <- function(element,theme=theme_update(),...,plot=NULL,verbose
   ifthenelse(!identical(ret.plot,NULL),ret.plot,ret.theme)
 }
 
-#' \code{find_global} is a function that conducts a named search for the \code{name} object instance, within the \code{env} environment. 
+#' \code{find_global_tern} is a function that conducts a named search for the \code{name} object instance, within the \code{env} environment. 
 #' If an instance doesn't exist within the \code{env} environment, a search is then conducted within the \code{ggtern} and \code{ggplot2} 
 #' namespaces \emph{(in that order)}. This is a modified version of the original source as provided in \code{ggplot2}, which has the same functionality, however, the modification is such that the function
 #' now additionally searches within the \code{ggtern} namespace prior to the \code{ggplot2} namespace.
 #' @param name character name of object to search for
 #' @param env environment to search within as first priority
 #' @rdname undocumented
-find_global <- function (name, env=environment()){  
+find_global_tern <- function (name, env=environment()){  
   if(!is.character(name)){stop("'name' must be provided as a character")}
   if(!inherits(environment(),"environment")){stop("'env' must inherit the environment class")}
   if (exists(name, env)){return(get(name, env))}

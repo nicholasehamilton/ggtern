@@ -5,11 +5,6 @@
 #' @inheritParams ggplot2::ggplot
 #' @aliases constructor
 #' @return \code{ggtern(...)} returns an object of class \code{ggplot}.
-#' @examples
-#' \donttest{
-#'  data(Feldspar)
-#'  ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point()
-#' }
 #' @seealso For an introduction to the \code{ggtern} package, (including many examples), click \link[=introduction]{HERE}.
 #' @export
 ggtern <- function(data=NULL,...){ggplot(data=data,...) + coord_tern()}

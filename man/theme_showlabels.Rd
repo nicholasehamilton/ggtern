@@ -21,12 +21,4 @@ current theme a flag to switch ON the axis ticklabels
 are functions that apends to the current theme a flag to
 switch OFF the axis ticklabels
 }
-\examples{
-\donttest{
-data(Feldspar)
-plot <- ggtern(data=Feldspar,aes(Ab,An,Or)) + geom_point()
-plot
-plot + theme_hidelabels()
-}
-}
 

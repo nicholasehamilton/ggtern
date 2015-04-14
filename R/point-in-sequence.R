@@ -17,35 +17,6 @@
 #' @param close logical value (default \code{FALSE}), as to whether the set should be closed by adding (duplicating) 
 #' the first row (after ordering) to the end of the set.
 #' @return \code{data.frame} object containing the re-ordered input set.
-#' @examples
-#' \donttest{
-#'  #Load plotting library
-#'  library(ggplot2)
-#'  
-#'  #For reproducability
-#'  set.seed(1)
-#'
-#'  #Build data in an approximate loop
-#'  theta <- seq(0,2*pi,by=pi/100)
-#'  r <- 1 + (runif(length(theta))-0.5)/5
-#'  df2 <- data.frame(x=r*cos(theta),y=r*sin(theta))
-#' 
-#'  #Randomise the order of the data
-#'  df2 <- df2[sample(nrow(df2)),]
-#'
-#'  #Function to plot data
-#'  demo <- function(ret){
-#'    ggplot(data=ret,aes(x,y)) + 
-#'      geom_path() +
-#'      geom_point(fill="yellow",color="black",shape=21)
-#'  }
-#' 
-#'  #Demonstrate how the data would plot WITHOUT sorting
-#'  demo(df2)
-#' 
-#'  #Demonstrate how the data would plot WITH sorting
-#'  demo(point.in.sequence(df=df2,close=TRUE))
-#' }
 #' @export  
 point.in.sequence <- function(x,y,...,df=data.frame(x=x,y=y),close=FALSE){
   #If first argument is provided as data.frame, re-assign to df

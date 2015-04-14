@@ -48,46 +48,46 @@ NULL
 #' @name convenience_functions
 #' @rdname convenience_functions
 #' @examples
-#' \donttest{
 #' #Load data and create the base plot.
 #' data(Feldspar)
 #' plot <- ggtern(data=Feldspar,aes(x=An,y=Ab,z=Or)) + geom_point()
 #' 
 #' #Default Themes
-#' plot + theme_rgbg()
 #' plot + theme_rgbw()
-#' plot + theme_bw()
-#' plot + theme_gray()
+#' #plot + theme_rgbg()
+#' #plot + theme_bw()
+#' #plot + theme_gray()
+#' #plot + theme_custom(col.T="red",col.L="blue",col.R="black")
 #' 
 #' #Show or Hide Arrows
 #' plot + theme_showarrows()
-#' plot + theme_noarrows()
+#' #plot + theme_hidearrows()
+#' #plot + theme_noarrows()
 #' 
 #' #Major/Minor Grids?
 #' plot + theme_nogrid_minor()
-#' plot + theme_nogrid_major()
-#' plot + theme_nogrid()
+#' #plot + theme_nogrid_major()
+#' #plot + theme_nogrid()
 #' 
 #' #Clockwise/Anticlockwise Precession
 #' plot + theme_clockwise()
-#' plot + theme_anticlockwise()
+#' #plot + theme_anticlockwise()
 #' 
 #' #Ticks Inside or Outside
 #' plot + theme_ticksoutside()
-#' plot + theme_ticksinside()
+#' #plot + theme_ticksinside()
 #' 
 #' #Show/Hide BOTH Primary and Secondary Ticks
 #' plot + theme_showticks()
-#' plot + theme_hideticks()
+#' #plot + theme_hideticks()
 #' 
 #' #Show/Hide EITHER Primary OR Secondary Ticks.
 #' plot + theme_showprimary() + theme_hidesecondary()
-#' plot + theme_hideprimary() + theme_showsecondary()
+#' #plot + theme_hideprimary() + theme_showsecondary()
 #' 
 #' #Atomic / Weight Percent
 #' plot + theme_showarrows() + atomic_percent()
-#' plot + theme_showarrows() + weight_percent()
-#' }
+#' #plot + theme_showarrows() + weight_percent()
 #' @export
 NULL
 

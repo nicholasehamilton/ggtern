@@ -113,18 +113,8 @@ species.
   "Rline")}
 }
 \examples{
-\donttest{
-#Base usage
 ggtern()  +
- geom_Lline(Lintercept=0.5,color="red") +
- geom_Tline(Tintercept=0.5,color="green") +
- geom_Rline(Rintercept=0.5,color="blue")
-
-#Convenience Functions
-ggtern() +
- Tline(0.5,color="red") +
- Lline(0.5,color="green") +
- Rline(0.5,color="blue")
-}
+ geom_Lline(Lintercept=0.50,color="red") +
+ Lline(0.25,color="green")
 }
 

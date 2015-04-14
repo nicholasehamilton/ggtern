@@ -91,30 +91,16 @@ will turn ON the ternary arrows, essentially running
   length of the ternary axis
 }
 \examples{
-\donttest{
- #Create base plot
- plot <- ggtern(data=data.frame(x=1,y=1,z=1),aes(x,y,z)) + geom_point()
+#Create base plot
+ #plot <- ggtern(data=data.frame(x=1,y=1,z=1),aes(x,y,z)) + geom_point()
 
  #Pre-Specified Values
- #Short arrows
  plot + theme_arrowsmall()
- plot + theme_arrowshort() #Alias to previous line
-
- #Normally sized arrows
- plot + theme_arrownormal()
- plot + theme_arrowdefault() #Alias to previous line
-
- #Long arrows
- plot + theme_arrowlarge()
- plot + theme_arrowlong() #Alias to previous line
-
- #User-Specified Values
- plot + theme_arrowcustomlength(.1,.8)
- plot + theme_arrowlength(.15,.75) #Alias to previous line
-
- #User-Specified Values, different for each arrow
- plot + theme_arrowlength(start=c(.1,.2,.3),finish=c(.9,.8,.7))
-}
+ ## Alternatives, Uncomment lines below
+ #plot + theme_arrownormal()
+ #plot + theme_arrowlarge()
+ #plot + theme_arrowcustomlength(.1,.8)
+ #plot + theme_arrowlength(start=c(.1,.2,.3),finish=c(.9,.8,.7))
 }
 \seealso{
 \code{\link{theme_arrowbaseline}} and

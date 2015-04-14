@@ -7,17 +7,9 @@
 #' @rdname theme_showtitles
 #' @name theme_showtitles
 #' @examples
-#' \donttest{
 #'  #Load data
 #'  data(Feldspar)
-#'  
-#'  #Hide the titles
-#'  plot <- ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point() + theme_bw() + theme_hidetitles()
-#'  plot
-#'  
-#'  #Show the titles
-#'  plot + theme_showtitles()
-#' }
+#'  ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point() + theme_bw() + theme_hidetitles()
 NULL
 
 

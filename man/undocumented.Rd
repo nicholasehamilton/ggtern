@@ -4,7 +4,7 @@
 \alias{Statnew}
 \alias{arrow_label_formatter}
 \alias{calc_element_plot}
-\alias{find_global}
+\alias{find_global_tern}
 \alias{get_last_coord}
 \alias{get_tern_extremes}
 \alias{ggint}
@@ -45,7 +45,7 @@ arrow_label_formatter(label, suffix = "", ..., sep = "/")
 calc_element_plot(element, theme = theme_update(), ..., plot = NULL,
   verbose = F)
 
-find_global(name, env = environment())
+find_global_tern(name, env = environment())
 
 remove_outside(data)
 }
@@ -140,7 +140,7 @@ by inheriting properties from its parents, and compares to
 whether the local plot overrides this value. Based largely
 off the calc_element function as provided in ggplot2
 
-\code{find_global} is a function that conducts a named
+\code{find_global_tern} is a function that conducts a named
 search for the \code{name} object instance, within the
 \code{env} environment. If an instance doesn't exist within
 the \code{env} environment, a search is then conducted

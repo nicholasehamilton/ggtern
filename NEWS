@@ -1,3 +1,15 @@
+ggtern 1.0.5.0
+----------------------------------------------------------------
+* Added convenience function theme_custom() to allow the user to control basic theme colours very easily
+* Added geom_line() to the list of approved geometries.
+* Fixed 'abuse of donttest' as required by CRAN
+
+ggtern 1.0.4.0
+----------------------------------------------------------------
+
+BUG FIXES
+* Fixed broken dependency between ggplot2 0.9.3.2 and ggplot 1.0.0 from find_global internal function
+
 ggtern 1.0.3.2
 ----------------------------------------------------------------
 * Added convenience functions, and global options for modifying the length of the ternary arrows easily.

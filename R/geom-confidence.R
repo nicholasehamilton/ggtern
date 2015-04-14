@@ -10,10 +10,8 @@
 #' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "confidence")}
 #' @aliases GeomConfidence StatConfidence
 #' @examples
-#' \donttest{
 #'   data(Feldspar)
 #'   ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point() + geom_confidence()
-#' }
 #' @export
 geom_confidence <- function (mapping = NULL, data = NULL,breaks=c(0.50,0.90,0.95),n=500,stat = "confidence", position = "identity",na.rm = FALSE, ...) {
   GeomConfidence$new(mapping = mapping, data = data, breaks=breaks,stat = stat, n=n,position = position, na.rm = na.rm, ...)

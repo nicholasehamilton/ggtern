@@ -45,23 +45,14 @@ and 3 will go all the way across the bottom - see the last
 example below.
 }
 \examples{
-\donttest{
- data(Feldspar)
+data(Feldspar)
  p <- ggtern(data=Feldspar,aes(Ab,An,Or)) + geom_point() + labs(title="Multiple Plot Example")
-
- #two rows
- ggtern.multi(p,p)
 
  #two cols
  ggtern.multi(p,p,cols=2)
 
- #using plotlist
- ggtern.multi(plotlist=list(p,p,p))
-
- #using matrix 1 on top, 2 on bottom
- ggtern.multi(p,p,p,layout=matrix(c(1,1,2,3), nrow=2,byrow=TRUE))
- #using matrix 2 on top, 1 on bottom
- ggtern.multi(p,p,p,layout=matrix(c(1,2,3,3), nrow=2,byrow=TRUE))
-}
+ ##Below are some alternatives, uncomment to run
+ #ggtern.multi(plotlist=list(p,p,p))
+ #ggtern.multi(p,p,p,layout=matrix(c(1,1,2,3), nrow=2,byrow=TRUE))
 }
 

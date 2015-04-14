@@ -38,7 +38,7 @@ NULL
 
 
 #SEARCH FOR THE ORIGINAL FUNCTIONS
-ggint$.element_tree      <- find_global(".element_tree")
+ggint$.element_tree      <- find_global_tern(".element_tree")
 ggint$.element_tree.orig <- ggint$.element_tree #To determine the new set relative to the existing.
 .el_def                  <- ggint$el_def
 

@@ -3,13 +3,6 @@
 #' Show or Hide Axis Ticklabels
 #' 
 #' Convenience functions to enable or disable the axis ticklabels
-#' @examples
-#' \donttest{
-#' data(Feldspar)
-#' plot <- ggtern(data=Feldspar,aes(Ab,An,Or)) + geom_point()
-#' plot
-#' plot + theme_hidelabels()
-#' }
 #' @rdname theme_showlabels
 #' @name theme_showlabels
 NULL

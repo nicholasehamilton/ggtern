@@ -42,14 +42,12 @@ for each are solved.
 \code{tern_limit} is an alias for \code{tern_limits}
 }
 \examples{
-\donttest{
 plot <- ggtern(data=data.frame(x=runif(100),
                                y=runif(100),
                                z=runif(100)), aes(x,y,z)) +
         geom_point() +
         tern_limits(0.7,0.3,0.4)
 plot
-}
 }
 \seealso{
 \code{\link{scale_T_continuous}},

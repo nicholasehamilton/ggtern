@@ -21,16 +21,8 @@ a function that apends to the current theme a flag to
 switch OFF the apex titles.
 }
 \examples{
-\donttest{
- #Load data
+#Load data
  data(Feldspar)
-
- #Hide the titles
- plot <- ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point() + theme_bw() + theme_hidetitles()
- plot
-
- #Show the titles
- plot + theme_showtitles()
-}
+ ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point() + theme_bw() + theme_hidetitles()
 }
 

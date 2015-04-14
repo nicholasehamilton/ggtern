@@ -17,14 +17,11 @@
 #' @rdname scale_TLR_continuous
 #' @name scale_TLR_continuous
 #' @examples
-#' \donttest{
 #'   data(Feldspar)
-#'   plot <- ggtern(data=Feldspar,aes(An,Ab,Or)) + 
-#'           geom_point() + 
+#'   plot <- ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point() + 
 #'           scale_T_continuous(breaks=seq(0,1,0.2),minor_breaks=seq(0,1,0.1)) +
 #'           scale_L_continuous(breaks=seq(0,1,0.2),minor_breaks=seq(0,1,0.1))
 #'   plot
-#' }
 NULL 
 
 #' @section Top Apex Species:
@@ -63,10 +60,10 @@ scale_R_continuous <- function(name=NULL,breaks=getOption("tern.breaks.default")
   ret
 }
 
-scale_clone.continuous_ternary       <- find_global("scale_clone.continuous")
-scale_transform.continuous_ternary   <- find_global("scale_transform.continuous")
-scale_break_info.continuous_ternary  <- find_global("scale_break_info.continuous")
-scale_breaks.continuous_ternary      <- find_global("scale_breaks.continuous")
-scale_labels.continuous_ternary      <- find_global("scale_labels.continuous")
-scale_breaks_minor.continuous_ternary<- find_global("scale_breaks_minor.continuous")
+scale_clone.continuous_ternary       <- find_global_tern("scale_clone.continuous")
+scale_transform.continuous_ternary   <- find_global_tern("scale_transform.continuous")
+scale_break_info.continuous_ternary  <- find_global_tern("scale_break_info.continuous")
+scale_breaks.continuous_ternary      <- find_global_tern("scale_breaks.continuous")
+scale_labels.continuous_ternary      <- find_global_tern("scale_labels.continuous")
+scale_breaks_minor.continuous_ternary<- find_global_tern("scale_breaks_minor.continuous")
 

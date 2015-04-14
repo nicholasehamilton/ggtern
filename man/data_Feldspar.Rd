@@ -15,11 +15,9 @@ This dataset is some data on Feldspar and its phases, as a
 function of temperature and pressure.
 }
 \examples{
-\donttest{
- data(Feldspar)
+data(Feldspar)
  summary(Feldspar)
  ggtern(data=Feldspar,aes(x=An,y=Ab,z=Or)) + geom_point()
-}
 }
 \author{
 Linda T. Elkins and Timothy L. Grove

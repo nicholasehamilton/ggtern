@@ -50,14 +50,6 @@ label marker.
 \details{
 These are convenience wrappers to \code{labs(W="XYZ")}.
 }
-\examples{
-\donttest{
-  plot <- ggtern(data=data.frame(THS=1,LHS=0,RHS=0),aes(x=THS,y=LHS,z=RHS)) + geom_point()
-  plot + percent_weight()
-  plot + percent_atomic()
-  plot + percent_custom("Percentage")
-}
-}
 \seealso{
 Convenience functions for \code{\link[=Tlab]{T, L, R, W
 labels}}

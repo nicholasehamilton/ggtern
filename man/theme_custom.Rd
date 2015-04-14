@@ -1,0 +1,29 @@
+\name{theme_custom}
+\alias{theme_custom}
+\title{Theme with custom basic colours}
+\usage{
+theme_custom(base_size = 12, base_family = "", col.T = "darkred",
+  col.L = "darkblue", col.R = "darkgreen", col.BG = "white")
+}
+\arguments{
+  \item{base_size}{base font size}
+
+  \item{base_family}{base font family}
+
+  \item{col.T}{colour of top axis, ticks labels and major
+  gridlines}
+
+  \item{col.L}{colour of left axis, ticks, labels and major
+  gridlines}
+
+  \item{col.R}{colour of right axis, ticks, labels and
+  major gridlines}
+
+  \item{col.BG}{colour of background colour to plot area
+  \code{theme_custom} is a convenience function to allow
+  the user to control the basic theme colours very easily.}
+}
+\description{
+Theme with custom basic colours
+}
+

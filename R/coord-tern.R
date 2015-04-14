@@ -81,7 +81,7 @@ coord_tern <- function(T = getOption("tern.default.T"),
     required_aes = all.coords, 
     required_axes= all.axes,
     #the class, ternary fixed ratio.
-    subclass     = c("ternary","fixed")
+    subclass = c("ternary","fixed")
   )
 }
 
@@ -431,7 +431,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
                                 id   = data.background$id,
                                 gp   = gpar(  col  = colour,
                                               fill = alpha(fill,alpha),
-                                              lwd  = size *find_global(".pt"),
+                                              lwd  = size *find_global_tern(".pt"),
                                               lty  = linetype
                                 )
       )
@@ -585,7 +585,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
         gp = gpar(col     = colour, 
                   lty     = linetype,
                   lineend = lineend,
-                  lwd     = size*find_global(".pt"))
+                  lwd     = size*find_global_tern(".pt"))
       )
       ##Add to the items.
       items[[length(items) + 1]] <- grob
@@ -647,7 +647,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
             gp = gpar(col     = colour, 
                       lty     = linetype,
                       lineend = lineend,
-                      lwd     = size*find_global(".pt"))
+                      lwd     = size*find_global_tern(".pt"))
           )
           ##Add to the items.
           items[[length(items) + 1]] <- grob
@@ -688,7 +688,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
           gp = gpar(col = colour, 
                     lty = linetype,
                     lineend=lineend,
-                    lwd = size*find_global(".pt"))
+                    lwd = size*find_global_tern(".pt"))
         )
       },error=function(e){
         #just handle it.
@@ -827,7 +827,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
             gp = gpar(col    = colour, 
                       lty    = linetype,
                       lineend="butt",
-                      lwd    = size*find_global(".pt"))
+                      lwd    = size*find_global_tern(".pt"))
           )
           ##Add to the items.
           items[[length(items) + 1]] <- grob

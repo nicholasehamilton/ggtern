@@ -52,10 +52,4 @@ supply is the filename.
 tex (pictex), pdf, jpeg, tiff, png, bmp, svg and wmf
 (windows only).
 }
-\examples{
-\donttest{
-plot <- ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point() + theme_rgbw()
-ggsave(plot,filename='test.png')
-}
-}
 

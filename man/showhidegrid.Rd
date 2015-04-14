@@ -63,11 +63,8 @@ elements being valid (renderable, ie say
 \code{\link{element_blank}}).
 }
 \examples{
-\donttest{
-  #Load data
+#Load data
   data(Feldspar)
-
-  #Create plot, Switch OFF gridlines
   plot <- ggtern(data=Feldspar,aes(Ab,An,Or)) +
           geom_point()   + #Layer
           theme_bw()     + #For clarity
@@ -79,14 +76,10 @@ elements being valid (renderable, ie say
   plot + theme_showgrid_major() #show major only
   plot + theme_showgrid()       #show both major and minor
 
-  #Switch ON gridlines
-  plot <- plot + theme_showgrid() #as before
-  plot
-
-  #Demonstrate switching OFF major, minor and both gridlines
-  plot + theme_hidegrid_minor() #show major only (hide minor)
-  plot + theme_hidegrid_major() #show minor only (hide major)
-  plot + theme_hidegrid()       #show none (hide both major and minor)
-}
+  #Demonstrate switching OFF major, minor and both gridlines, Uncomment to run
+  #plot <- plot + theme_showgrid() #as before
+  #plot + theme_hidegrid_minor() #show major only (hide minor)
+  #plot + theme_hidegrid_major() #show minor only (hide major)
+  #plot + theme_hidegrid()       #show none (hide both major and minor)
 }
 

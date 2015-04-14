@@ -41,34 +41,4 @@ lines in the total path cross over each other. Uses the
 between each point (x,y) and the centroid of the data, it
 then orders based on increasing values of theta.
 }
-\examples{
-\donttest{
- #Load plotting library
- library(ggplot2)
-
- #For reproducability
- set.seed(1)
-
- #Build data in an approximate loop
- theta <- seq(0,2*pi,by=pi/100)
- r <- 1 + (runif(length(theta))-0.5)/5
- df2 <- data.frame(x=r*cos(theta),y=r*sin(theta))
-
- #Randomise the order of the data
- df2 <- df2[sample(nrow(df2)),]
-
- #Function to plot data
- demo <- function(ret){
-   ggplot(data=ret,aes(x,y)) +
-     geom_path() +
-     geom_point(fill="yellow",color="black",shape=21)
- }
-
- #Demonstrate how the data would plot WITHOUT sorting
- demo(df2)
-
- #Demonstrate how the data would plot WITH sorting
- demo(point.in.sequence(df=df2,close=TRUE))
-}
-}
 

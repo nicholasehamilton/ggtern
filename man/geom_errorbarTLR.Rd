@@ -64,7 +64,6 @@ base ggplot2 package.
   "errorbarR")}
 }
 \examples{
-\donttest{
 #Example with Dummy Data.
 tmp <- data.frame(x=1/3,
 y=1/3,
@@ -76,14 +75,5 @@ ggtern(data=tmp,aes(x,y,z)) +
   geom_errorbarT(aes(Tmin=Min,Tmax=Max))+
   geom_errorbarL(aes(Lmin=Min,Lmax=Max))+
   geom_errorbarR(aes(Rmin=Min,Rmax=Max))
-
-#Example with Feldspar Data
-data(Feldspar)
-Feldspar$Min <- (Feldspar$An - 5)
-Feldspar$Max <- (Feldspar$An + 5)
-ggtern(data=Feldspar,aes(x=An,y=Ab,z=Or)) +
-  geom_errorbarT(aes(Tmin=Min,Tmax=Max,width=0.01),size=0.2,allow.outside=T) +
-  geom_point(fill="white",shape=21)
-}
 }
 

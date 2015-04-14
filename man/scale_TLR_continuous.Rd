@@ -67,13 +67,10 @@ information.
   the right (R) species in the ternary diagram
 }
 \examples{
-\donttest{
-  data(Feldspar)
-  plot <- ggtern(data=Feldspar,aes(An,Ab,Or)) +
-          geom_point() +
+data(Feldspar)
+  plot <- ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point() +
           scale_T_continuous(breaks=seq(0,1,0.2),minor_breaks=seq(0,1,0.1)) +
           scale_L_continuous(breaks=seq(0,1,0.2),minor_breaks=seq(0,1,0.1))
   plot
-}
 }
 

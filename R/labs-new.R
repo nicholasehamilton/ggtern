@@ -35,26 +35,13 @@
 #' @name TLRWlab
 #' @seealso ggplot2 \code{\link[ggplot2]{labs}}
 #' @examples
-#' \donttest{
 #' data(Feldspar)
-#' plot <- ggtern(data=Feldspar,aes(Ab,An,Or)) + 
-#'         geom_point() + 
-#'         xlab("ABC")  + 
-#'         ylab("DEF")  + 
-#'         zlab("GHI")
-#' plot
+#' plot <- ggtern(data=Feldspar,aes(Ab,An,Or)) +  geom_point() + 
+#'         xlab("ABC") + ylab("DEF") + zlab("GHI")
 #' 
-#' #Top, Left and Right label (aliasses have been commented out)
-#' plot + Tlab("TOP") #tlab("TOP")
-#' plot + Llab("LHS") #llab("LHS")
-#' plot + Rlab("RHS") #rlab("RHS")
-#' 
-#' #Weight Suffix (ensure showarrows enabled)
-#' plot + theme_showarrows() + Wlab("WEIGHT")
-#' 
-#' #Use of expressions
-#' plot + Tlab(expression(a^2~+b[2]~"/ Total %"))
-#' }
+#' #Alternatives, and Arrow Label
+#' plot + Tlab("TOP") + Llab("LHS") + Rlab("RHS") + 
+#'   theme_showarrows() + Wlab("WEIGHT")
 #' @export
 NULL
 

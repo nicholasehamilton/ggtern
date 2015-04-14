@@ -48,9 +48,7 @@ Transformation}}.
   "confidence")}
 }
 \examples{
-\donttest{
-  data(Feldspar)
+data(Feldspar)
   ggtern(data=Feldspar,aes(An,Ab,Or)) + geom_point() + geom_confidence()
-}
 }
 
