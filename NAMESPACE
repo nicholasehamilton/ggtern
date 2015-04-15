@@ -1,5 +1,7 @@
 exportPattern("^[[:alpha:]]+")
 S3method("+",gg)
+S3method(print,ggtern)
+S3method(print,ggplot)
 import(ggplot2)
 import(grid)
 import(gtable)
