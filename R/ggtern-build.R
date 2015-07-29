@@ -55,7 +55,10 @@ ggplot_build <- function(plot) {
     set_last_coord(plot$coordinates) 
     
     #Normally this info is handled in the by grid, however, this is one way of passing it through
-    panel <- .train_position_ternary(panel,plot$scales$get_scales("T"),plot$scales$get_scales("L"),plot$scales$get_scales("R"))
+    panel <- .train_position_ternary(panel,
+                                     plot$scales$get_scales("T"),
+                                     plot$scales$get_scales("L"),
+                                     plot$scales$get_scales("R"))
     
     #get snapshot of panel so updates to panel dont interfere through the next loop.
     panel.bup <- panel 
@@ -127,7 +130,7 @@ ggplot_build <- function(plot) {
   # displayed, or does it include the range of underlying data
   ggint$reset_scales(panel)
   panel <- ggint$train_position(panel, data, scale_x(), scale_y())
-  data  <- ggint$map_position(panel, data, scale_x(), scale_y())
+  data  <- ggint$map_position(panel,   data, scale_x(), scale_y())
   
   # Train and map non-position scales
   npscales <- scales$non_position_scales()  

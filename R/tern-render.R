@@ -85,6 +85,7 @@ ggplot_gtable <- function(data) {
   # List by layer, list by panel
   geom_grobs <- Map(build_grob, plot$layer, data)
   
+  # Render the plot components
   plot_table <- ggint$facet_render(plot$facet, panel, plot$coordinates, plot_theme(plot), geom_grobs)
   
   # Axis labels
