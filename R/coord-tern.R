@@ -448,7 +448,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   items <- .renderA("panel.background.tern",items)
   items
 }
-.render.grids <- function(data.extreme,items,theme,details){
+.render.grids      <- function(data.extreme,items,theme,details){
   #Process the flags.
   clockwise     <- .theme.get.clockwise(theme)
   outside       <- .theme.get.outside(theme)
@@ -465,7 +465,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
     tl.major <- convertUnit(theme$axis.tern.ticklength.major,"npc",valueOnly=T)
     tl.minor <- convertUnit(theme$axis.tern.ticklength.minor,"npc",valueOnly=T)
   },error=function(x){
-    #handle qietly
+    #handle quietly
   })
   
   #Top, Left Right sequence.
@@ -483,11 +483,10 @@ coord_render_bg.ternary <- function(coord,details,theme){
     }
     
     #BYPASS IF NECESSARY
-    if(length(breaks) == 0)
-      return(existing)
-    
+    if(length(breaks) == 0){ return(existing) }
+   
     labels <- if(major){details[[paste0(X,".labels")]]}else{""}
-    labels <- ifthenelse(identical(labels,waiver()),100*breaks,labels)
+    labels <- as.character(ifthenelse(identical(labels,waiver()),100*breaks,labels))
     
     #Assign new id.
     id <- (max(existing$ID,0) + 1)
@@ -554,16 +553,13 @@ coord_render_bg.ternary <- function(coord,details,theme){
   angles      <- .get.angles(clockwise) + shift
   angles.text <- .get.angles.ticklabels(clockwise)
   
-  #print(details) # for debug
-  
   ##get the base data.
   d <- NULL
   for(major in c(TRUE,FALSE))
     for(i in 1:length(seq.tlr))
-      d <- .getData(X=seq.tlr[i],ix=i,existing=d, major = major,angle = angles[i],angle.text = angles.text[i]);
+        d <- .getData(X=seq.tlr[i],ix=i,existing=d, major = major,angle = angles[i],angle.text = angles.text[i]);
   
-  if(empty(d))
-    return(items)
+  if(empty(d)){ return(items) } 
   if(nrow(d) > 1){d <- d[nrow(d):1,]}  #REVERSE (minor under major)
   
   #FUNCTION TO RENDER TICKS AND LABELS
@@ -589,13 +585,13 @@ coord_render_bg.ternary <- function(coord,details,theme){
       )
       ##Add to the items.
       items[[length(items) + 1]] <- grob
-    },error = function(e){ warning(e)})
+    },error = function(e){ 
+      warning(e)
+    })
     return(items)
   }
   
-  loc.width = unit(0,"npc")
-  
-  .render.labels <- function(name,items,d){    
+  .render.labels <- function(name,items,d){ 
     tryCatch({  
       e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
       if(identical(e,element_blank()))
@@ -656,7 +652,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
     }
     return(items)
   }
-  
+
   #PROCESS TICKS AND LABELS
   if(showgrid.major | showgrid.minor)
     for(n in unique(d$NameGrid)){ items <- .render.grid(  name=n,items=items,d=d[which(d$NameGrid  == n),], showgrid.major=showgrid.major,showgrid.minor=showgrid.minor)}  
@@ -668,7 +664,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
     for(n in unique(d$NameText)){ items <- .render.labels(name=n,items=items,d=d[which(d$NameText  == n),])}
   items
 }
-.render.border <- function(data.extreme,items,theme){
+.render.border     <- function(data.extreme,items,theme){
   clockwise <- .theme.get.clockwise(theme) 
   .renderB  <- function(name,s,f,items){
     tryCatch({
@@ -712,7 +708,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   }
   items
 }
-.render.arrows <- function(data.extreme,items,theme,details,maxgrob){
+.render.arrows     <- function(data.extreme,items,theme,details,maxgrob){
   axis.tern.showarrows <- theme$axis.tern.showarrows
   if(is.logical(axis.tern.showarrows) && (axis.tern.showarrows)){
     tryCatch({
@@ -879,7 +875,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   }
   items
 }
-.render.titles <- function(data.extreme,items,theme,details){
+.render.titles     <- function(data.extreme,items,theme,details){
   showtitles <- .theme.get.showtitles(theme)
   if(!showtitles)
     return(items)
