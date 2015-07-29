@@ -85,8 +85,7 @@ ggplot_gtable <- function(data) {
   # List by layer, list by panel
   geom_grobs <- Map(build_grob, plot$layer, data)
   
-  plot_table <- ggint$facet_render(plot$facet, panel, plot$coordinates,
-                             plot_theme(plot), geom_grobs)
+  plot_table <- ggint$facet_render(plot$facet, panel, plot$coordinates, plot_theme(plot), geom_grobs)
   
   # Axis labels
   labels <- ggint$coord_labels(plot$coordinates, list(
@@ -97,7 +96,6 @@ ggplot_gtable <- function(data) {
   ylabel <- ggint$element_render(theme, "axis.title.y", labels$y)
   
   panel_dim <-  .find_panel(plot_table)
-  
   
   #ggtern suppress existing x and y axes
   if(!inherits(plot$coordinates,"ternary")){
@@ -122,7 +120,7 @@ ggplot_gtable <- function(data) {
   }
   
   legend_box <- if (position != "none") {
-    ggint$build_guides(plot$scales, plot$layers, plot$mapping, position, theme, plot$guides, plot$labels)
+    ggint$build_guides(plot$scales,plot$layers, plot$mapping, position, theme, plot$guides, plot$labels)
   } else {
     ggint$zeroGrob
   }
@@ -206,5 +204,6 @@ ggplot_gtable <- function(data) {
     plot_table$layout <- plot_table$layout[c(nrow(plot_table$layout), 1:(nrow(plot_table$layout) - 1)),]
     plot_table$grobs <- plot_table$grobs[c(nrow(plot_table$layout), 1:(nrow(plot_table$layout) - 1))]
   }
+  plot_table$layout$clip <- "off"
   plot_table
 }
