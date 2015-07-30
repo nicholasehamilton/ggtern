@@ -193,18 +193,13 @@ coord_train.ternary <- function(coord, scales){
   theme <- theme_update()
   plot  <- last_plot()
   
-  #Mimic the way spacing is applied around the ggplot plot (usually done via adding rows and columns to the grid) 
-  #area by manually adding padding to the actual plot region.
-  padding  <- convertUnit(calc_element_plot("axis.tern.padding",theme=theme,verbose=FALSE,plot=plot),"npc",valueOnly=TRUE)
-  padding  <- c(-padding,padding)
-  
-  #Shift the plot up/down, left/right
+  #Shift the plot left/right, up/down
   hshift   <- convertUnit(calc_element_plot("axis.tern.hshift", theme=theme,verbose=FALSE,plot=plot),"npc",valueOnly=TRUE)
   vshift   <- convertUnit(calc_element_plot("axis.tern.vshift", theme=theme,verbose=FALSE,plot=plot),"npc",valueOnly=TRUE)
   
   #build some trimmed down cartesian coords
-  ret <- c(ggint$train_cartesian(scales$x, coord$limits$x - hshift + padding, "x"),
-           ggint$train_cartesian(scales$y, coord$limits$y - vshift + padding*coord_aspect.ternary(), "y"))[c("x.range","y.range")]
+  ret <- c(ggint$train_cartesian(scales$x,coord$limits$x - hshift, "x"),
+           ggint$train_cartesian(scales$y,coord$limits$y - vshift, "y"))[c("x.range","y.range")]
   
   #detailed ternary coords
   IX <- c("T","L","R")
