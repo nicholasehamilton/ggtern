@@ -8,7 +8,6 @@ validate_element <- function(el, elname) {
   eldef <- ggint$.element_tree[[elname]]
   
   if (is.null(eldef)) {
-    writeLines("testing")
     stop('"', elname, '" is not a valid theme element name...')
   }
   

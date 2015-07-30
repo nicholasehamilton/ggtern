@@ -29,7 +29,7 @@ get_tern_extremes <- function(coordinates,verbose=F,expand=0){
   expand <- c(-expand/2,expand)
   
   if(!inherits(coordinates,"ternary") & !inherits(coordinates,"coord"))stop("coordinates must be ternary coordinates")
-  
+ 
   Tlim <- coordinates$limits$T; if(!is.numeric(Tlim)){Tlim <- c(0,1)};Tlim <- Tlim + expand 
   Llim <- coordinates$limits$L; if(!is.numeric(Llim)){Llim <- c(0,1)};Llim <- Llim + expand
   Rlim <- coordinates$limits$R; if(!is.numeric(Rlim)){Rlim <- c(0,1)};Rlim <- Rlim + expand 
@@ -141,7 +141,6 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),...,Tlim=c
   #Calculate
   out.Y <- d$T*tan(pi/3)*0.5
   out.X <- d$R + out.Y*tan(pi/6)
-    
   return(data.frame(x=out.X,y=out.Y))
 }
 transform_cart_to_tern <- function(x,y,data=data.frame(x=x,y=y),...,Tlim=c(0,1),Llim=c(0,1),Rlim=c(0,1)){

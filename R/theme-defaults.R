@@ -2,7 +2,7 @@
 #internal kills the cartesian elements.
 .theme_nocart <- function(){
     theme(
-      panel.background     = element_blank(),
+      #panel.background     = element_blank(),
       panel.border         = element_blank(),
       panel.grid.major     = element_blank(), 
       panel.grid.minor     = element_blank(), 
@@ -73,10 +73,9 @@
       #axis.tern.ticklength.major = unit(5,"mm"),
       #axis.tern.ticklength.minor = unit(2.5,"mm"),
       
-      #axis.tern.padding         = unit(20,  "mm"),
-      axis.tern.padding          = unit(5,"lines"),
-      axis.tern.hshift           = unit(0.0, "mm"),
-      axis.tern.vshift           = unit(1.0, "lines"),#unit(0*20/4,"mm"),
+      axis.tern.padding          = unit(c(1,1,1,1),"lines"),
+      axis.tern.hshift           = unit(0.0, "lines"),
+      axis.tern.vshift           = unit(0.0, "lines"),
       axis.tern.arrowsep         = unit(1.0, "lines"),
       
       axis.tern               = element_line(size=axis.tern.size,linetype="solid"),

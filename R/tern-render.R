@@ -79,8 +79,10 @@ ggplot_gtable <- function(data) {
   }
   
   # helper function return the position of panels in plot_table
-  .find_panel <- function(table)
-    summarise(subset(table$layout, grepl("^panel", get("name"))),t = min(get("t")), r = max(get("r")), b = max(get("b")), l = min(get("l")))
+  .find_panel <- function(table){
+    summarise(subset(table$layout, grepl("^panel", get("name"))),
+              t = min(get("t")), r = max(get("r")), b = max(get("b")), l = min(get("l")))
+  }
   
   # List by layer, list by panel
   geom_grobs <- Map(build_grob, plot$layer, data)
@@ -101,13 +103,13 @@ ggplot_gtable <- function(data) {
   #ggtern suppress existing x and y axes
   if(!inherits(plot$coordinates,"ternary")){
     xlab_height <- grobHeight(xlabel) + 
-      if (is.null(labels$x)) unit(0, "lines") else unit(0.5, "lines")
+      if (is.null(labels$x) | labels$x == "") unit(0, "lines") else unit(0.5, "lines")
     plot_table <- gtable_add_rows(plot_table, xlab_height)
     plot_table <- gtable_add_grob(plot_table, xlabel, name = "xlab",
                                   l = panel_dim$l, r = panel_dim$r, t = -1, clip = "off")
     
     ylab_width <- grobWidth(ylabel) + 
-      if (is.null(labels$y)) unit(0, "lines") else unit(0.5, "lines")
+      if (is.null(labels$y) | labels$x == "") unit(0, "lines") else unit(0.5, "lines")
     plot_table <- gtable_add_cols(plot_table, ylab_width, pos = 0)
     plot_table <- gtable_add_grob(plot_table, ylabel, name = "ylab",
                                   l = 1, b = panel_dim$b, t = panel_dim$t, clip = "off")
@@ -154,9 +156,8 @@ ggplot_gtable <- function(data) {
     }
   }
   
+  #Get the Panel
   panel_dim <-  .find_panel(plot_table)
-  # for align-to-device, use this:
-  # panel_dim <-  summarise(plot_table$layout, t = min(t), r = max(r), b = max(b), l = min(l))
   
   if (position == "left") {
     plot_table <- gtable_add_cols(plot_table, legend_width, pos = 0)
@@ -181,30 +182,37 @@ ggplot_gtable <- function(data) {
                                   clip = "off", name = "guide-box")
   }
   
-  # Title  
-  title <- ggint$element_render(theme, "plot.title", plot$labels$title)
-  title_height <- grobHeight(title) + 
-    if (is.null(plot$labels$title)) unit(0, "lines") else unit(0.5, "lines")
+  #Function to Add Padding / Margins
+  addMargin <- function(t,m,eb=unit(0,"lines")){
+    for(x in c(1:4)){
+      args = list(x=t, pos = if(x == 1 | x == 4){0}else{-1})
+      args[[if(x %% 2){"heights"}else{"widths"}]] = m[if(length(m) < 4){1}else{x}] + if(x == 3){eb}else{unit(0,"lines")}
+      t <- do.call(paste0("gtable_add_",if(x %% 2){"rows"}else{"cols"}),args=args, quote=FALSE)
+    }; t
+  }
   
+  #Add the Padding
+  plot_table <- addMargin(plot_table,theme$axis.tern.padding,if(theme$axis.tern.showarrows){theme$axis.tern.arrowsep}else{unit(0,"lines")})
+  
+  #The Grid Positions for Main Panel
   pans <- subset(plot_table$layout, grepl("^panel", get("name")))
   
-  plot_table <- gtable_add_rows(plot_table, title_height, pos = 0)
-  plot_table <- gtable_add_grob(plot_table, title, name = "title",
-                                t = 1, b = 1, l = min(pans$l), r = max(pans$r), clip = "off")
+  # Title  
+  title      <- ggint$element_render(theme,"plot.title",plot$labels$title) 
+  plot_table <- gtable_add_rows(plot_table, grobHeight(title), pos = 0)
+  plot_table <- gtable_add_grob(plot_table, title, name = "title", t = 1, b = 1, l = min(pans$l), r = max(pans$r), clip = "off")
   
-  # Margins
-  plot_table <- gtable_add_rows(plot_table, theme$plot.margin[1], pos = 0)
-  plot_table <- gtable_add_cols(plot_table, theme$plot.margin[2])
-  plot_table <- gtable_add_rows(plot_table, theme$plot.margin[3])
-  plot_table <- gtable_add_cols(plot_table, theme$plot.margin[4], pos = 0)
+  #Add the Margin
+  plot_table = addMargin(plot_table,theme$plot.margin)
   
+  ##Add the background and render the grobs.
   if (inherits(theme$plot.background, "element")) {
-    plot_table <- gtable_add_grob(plot_table,
-                                  ggint$element_render(theme, "plot.background"),
-                                  t = 1, l = 1, b = -1, r = -1, name = "background", z = -Inf)
+    background <- ggint$element_render(theme, "plot.background")
+    plot_table <- gtable_add_grob(plot_table,background,t = 1, l = 1, b = -1, r = -1, name = "background", z = -Inf)
     plot_table$layout <- plot_table$layout[c(nrow(plot_table$layout), 1:(nrow(plot_table$layout) - 1)),]
-    plot_table$grobs <- plot_table$grobs[c(nrow(plot_table$layout), 1:(nrow(plot_table$layout) - 1))]
+    plot_table$grobs <-  plot_table$grobs[c(nrow(plot_table$layout),  1:(nrow(plot_table$layout) - 1))]
   }
+
   plot_table$layout$clip <- "off"
   plot_table
 }
