@@ -81,3 +81,4 @@ Collate:
   'multiplot.R'
   'ggsave.R'
   'point-in-sequence.R'
+  'theme-novar-tern.R'

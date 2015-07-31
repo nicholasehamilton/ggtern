@@ -1,4 +1,3 @@
-
 #' Ternary Coordinate System
 #' 
 #' \code{coord_tern} is a function which creates a transformation mechanism between the ternary system, and, the cartesian system.

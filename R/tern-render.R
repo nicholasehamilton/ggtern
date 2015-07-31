@@ -188,8 +188,9 @@ ggplot_gtable <- function(data) {
   }
   
   #Add the Padding
+  axis.tern.title.T = calc_element_plot("axis.tern.title.T",theme=theme,verbose=F,plot=NULL)
   plot_table <- addMargin(plot_table,theme$axis.tern.padding,
-                          et=unit(2.0*calc_element_plot("axis.tern.title.T",theme=theme,verbose=F,plot=NULL)$size,'points'),
+                          et=unit(2*is.numericor(axis.tern.title.T$size,5),'points'),
                           eb=if(theme$axis.tern.showarrows){theme$axis.tern.arrowsep}else{unit(0,"lines")})
   
   #The Grid Positions for Main Panel
