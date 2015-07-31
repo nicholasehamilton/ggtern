@@ -24,22 +24,18 @@ print.ggtern <- function(x, newpage = is.null(vp), vp = NULL, ...){
 #' @export
 #' @method print ggplot
 print.ggplot <- function(x, newpage = is.null(vp), vp = NULL, ...) {
-  tryCatch({
-    ggint$set_last_plot(x)
-    #set_last_coord(x$coordinates)
-    if(newpage) grid.newpage()
-    data   <- ggplot_build(x)
-    gtable <- ggplot_gtable(data)
-    if (is.null(vp)){
-      grid.draw(gtable)
-    }else{
-      if (is.character(vp)) seekViewport(vp) else pushViewport(vp)
-      grid.draw(gtable) 
-      upViewport()
-    }
-  },error=function(e){
-    stop(e)
-  })
+  ggint$set_last_plot(x)
+  #set_last_coord(x$coord)
+  if(newpage) grid.newpage()
+  data   <- ggplot_build(x)
+  gtable <- ggplot_gtable(data)
+  if (is.null(vp)){
+    grid.draw(gtable)
+  }else{
+    if (is.character(vp)) seekViewport(vp) else pushViewport(vp)
+    grid.draw(gtable) 
+    upViewport()
+  }
   #set_last_coord(NULL)
   invisible(data)
 }

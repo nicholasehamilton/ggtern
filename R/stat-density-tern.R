@@ -7,23 +7,26 @@
 #' @aliases StatDensity2dtern
 #' @export
 #' @seealso \code{\link[ggtern]{geom_density2d}}
-stat_density2d <- function (mapping = NULL, data = NULL,
+stat_density_tern <- function (mapping = NULL, data = NULL,
                             position = "identity", na.rm = FALSE, contour = TRUE, n = 100,weight=NULL, 
                             buffer = getOption('tern.densitygrid.buffer'),...) {
-  StatDensity2dtern$new(mapping  = mapping,data = data, buffer = buffer,
-                        geometry = iflasttern('density2dtern','density2d'),
-                        position = position, na.rm = na.rm, contour = contour, n = n,...)
+  #geometry = iflasttern('density2dtern','density2d'); print(geometry)
+  StatDensityTern$new(
+    mapping  = mapping,data = data, buffer = buffer,
+    geometry = 'DensityTern',
+    position = position, na.rm = na.rm, contour = contour, n = n,...)
+             
 }
 
 
 
-StatDensity2dtern <- proto(Statnew, {
-  objname      <- "density2dtern"
+StatDensityTern <- proto(Statnew, {
+  objname      <- "density_tern"
   required_aes <- c("x", "y")
-  parms        <- list(outsideColour='transparent')
   desc         <- "Density Estimate for Ternary Diagram"
-  default_geom <- function(.) GeomDensity2dtern
-  calculate    <- function(., data, scales,...,na.rm = FALSE, contour = TRUE, geometry="density2dtern",buffer= getOption('tern.densitygrid.buffer'),n = 100*buffer) { 
+  default_geom <- function(.) GeomDensityTern
+  calculate    <- function(., data, scales,...,na.rm = FALSE, contour = TRUE, 
+                           geometry="density_tern",buffer= getOption('tern.densitygrid.buffer'),n = 100*buffer) { 
   
   # geom="Density2dTern"
     last_coord <- get_last_coord()

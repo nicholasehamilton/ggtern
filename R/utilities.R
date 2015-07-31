@@ -448,14 +448,20 @@ ternLimitsForCoord = function(coord){
 #' Similar to the 'expand' term in ggplot2 on a rectangular grid
 #' @parm coord ternary coordinates
 expandTern <- function(coord){
-  lim = ternLimitsForCoord(coord)
-  max(is.numericor(getOption("tern.pip.tollerance"),0.01))*max(sapply(lim,diff))
+  tryCatch({
+    lim = ternLimitsForCoord(coord)
+    return(max(is.numericor(getOption("tern.pip.tollerance"),0.01))*max(sapply(lim,diff)))
+  },error=function(e){
+    #pass
+  })
+  return(c(0,0))
 }
 
 #' Suppress Colours
 #' @param data ggplot dataframe
 #' @param coord ternary coordinates
 suppressColours <- function(data,layers,coord){
+  if(!inherits(coord,"ternary")) return(data)
   if(!getOption('tern.discard.external')) return(data)
   if(class(data)  != 'list' | class(layers) != 'list') return(data)
   if(length(data) != length(layers)) return(data)
@@ -476,8 +482,9 @@ suppressColours <- function(data,layers,coord){
     if(length(outside.ix) > 0){ 
       for(x in c('colour')){
         tryCatch({
+          xr = sprintf("%sOutside",x)
           if(!x %in% names(df)){ df[,x] = ly$geom$default_aes()[x] }
-          df[outside.ix,x] = ly$geom$default_aes()[sprintf("%sOutside",x)]  
+          df[outside.ix,x] = ly$geom$default_aes()[xr]  
         },error=function(e){
           #Silent
         })
@@ -485,16 +492,3 @@ suppressColours <- function(data,layers,coord){
     }; df
   }, dfa=data,n=names(data))
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

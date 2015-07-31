@@ -5,7 +5,7 @@
                  polygon   = "polygon",
                  text      = "text",
                  contour   = "contourtern",
-                 density2d = "density2dtern",
+                 density2d = "density_tern",
                  smooth    = "smoothtern",
                  rug       = "rug",
                  Tline     = "Tline",
