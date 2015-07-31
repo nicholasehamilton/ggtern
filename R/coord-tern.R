@@ -125,9 +125,7 @@ coord_transform.ternary <- function(coord, data, details,
       data   <- .rename_data_ternary(coord, data)
       ix.tern <- c("T","L","R"); 
       ix.cart <- c("x","y")
-      lim <- list(Tlim=coord$limits[["T"]],
-                  Llim=coord$limits[["L"]],
-                  Rlim=coord$limits[["R"]])
+      lim           <- ternLimitsForCoord(coord)
       
       #HACK
       for(ix in ix.tern)
@@ -139,18 +137,15 @@ coord_transform.ternary <- function(coord, data, details,
       
       #Discard records outside the polygon region that defines the plot area.
       if(discard){
-        #EXPAND THE MAX LIMITS
-        TOLLERANCE <- max(is.numericor(getOption("tern.pip.tollerance"),0.01))*max(as.numeric(sapply(lim,function(x)diff(x))))
         
         #Get the extremes (PLUS TOLLERANCE) to determine if points are outside the plot area.
-        xtrm <- get_tern_extremes(coord,expand=TOLLERANCE)[,ix.tern]
+        xtrm <- get_tern_extremes(coord,expand=expandTern(coord))[,ix.tern]
         
         #Transform extremes to cartesian space
-        data.extremes <-transform_tern_to_cart(data = xtrm,Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,c("x","y")]
+        data.extremes <-transform_tern_to_cart(data = xtrm,Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,ix.cart]
         
-        #In polygon or not.
         in.poly <- sp::point.in.polygon(data$x,data$y,as.numeric(data.extremes$x),as.numeric(data.extremes$y))
-        data <- data[which(in.poly > 0),]
+        data   <- subset(data,in.poly > 0)
       }
       
     #Error Handling - Terminate or Revert to 'cartesian'

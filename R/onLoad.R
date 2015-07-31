@@ -20,6 +20,7 @@
   options("tern.arrowstart"            = 0.3)
   options("tern.arrowfinish"           = 0.7)
   options("tern.arrowbaseline"         = 2)
+  options("tern.densitygrid.buffer"    = 1.50)
   
   #Set the theme and the last coordinates.
   theme_set(theme_gray())

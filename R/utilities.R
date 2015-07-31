@@ -25,7 +25,7 @@ is.numericor <- function(A,B){
 #' @param expand numeric do define the max and min acceptable limits above and below the intended range.
 #' @rdname undocumented
 get_tern_extremes <- function(coordinates,verbose=F,expand=0){
-  expand = max(0,is.numericor(expand[1],0)); 
+  expand = is.numericor(expand[1],0); 
   expand <- c(-expand/2,expand)
   
   if(!inherits(coordinates,"ternary") & !inherits(coordinates,"coord"))stop("coordinates must be ternary coordinates")
@@ -308,6 +308,7 @@ remove_outside <- function(data){
       if(length(which(c("x","y") %in% names(data))) != 2){warning("x and y are required"); return(data)}
       
       coord <- get_last_coord()
+      if(is.null(coord)){writeLines("remove_outside -- coord is NULL")}
       lim <- list(Tlim=coord$limits[["T"]],Llim=coord$limits[["L"]],Rlim=coord$limits[["R"]])
       tri <- transform_tern_to_cart(data=get_tern_extremes(coord),Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)
       ix  <- sp::point.in.polygon(data$x,data$y,tri$x,tri$y)
@@ -404,6 +405,129 @@ tern_dep <- function(version, msg) {
 #' 
 iflasttern <- function(yes=stop("yes value required"),no=stop("no value required"))
   ifthenelse(inherits(get_last_coord(),"ternary"),yes,no)
+
+#' Clip Polygons
+#' 
+#' Using the using the PolyClip Package, This clips input polygons for 
+#' use in the density and contour geometries.
+#' @param df a data frame
+#' @param coord a ternary coordinate system
+#' @plyon items in the data frame to pass to ddply argument
+#' @keywords polygon clipping
+clipPolygons <- function(df,coord,plyon=c('level','piece','group')){
+  if(!inherits(coord,"ternary")) stop("'coord' must be ternary") 
+    if(getOption('tern.discard.external')){
+      extremes = get_tern_extremes(coord)
+      clipee   = transform_tern_to_cart(data=extremes, Tlim=coord$limits$T, Llim=coord$limits$L,Rlim=coord$limits$R)
+      connect  = function(x){if(length(x) > 0){c(x,x[1])}else{x}}
+      df       = ddply(df,plyon,function(clipor){
+        tryCatch({
+           clipor = rbind(clipor,clipor[nrow(clipor),])   # Close the Loop
+           A      = list(list(x=clipor$x,y=clipor$y))     # The Data
+           B      = list(list(x=clipee$x,y=clipee$y))     # The Triangle
+           clip   = polyclip(A,B,op="intersection",fillB="evenodd",fillA="evenodd")
+           return(data.frame(x=connect(clip[[1]]$x), y=connect(clip[[1]]$y)))
+        },error=function(e){
+          ## SILENT
+        });return(NULL)
+      })
+    }; df
+}
+
+#' Undo a Ternary Transformation
+#' 
+#' Using the provided ternary coordinates, and a data-frame containing x, y, z values, convert back
+#' to the cartesian coordinates
+#' @param df data frame containing x, y, z
+#' @param coord ternary coordinate system
+undoCartesian <- function(df,coord){
+  if(inherits(coord,"ternary")){
+    ix = as.character(unlist(coord[c("T","L","R")])) 
+    df[,ix] <- transform_cart_to_tern(data=df,Tlim=coord$limits$T,Llim=coord$limits$L,Rlim=coord$limits$R)
+  }
+  df
+}
+
+#' Expand a Range of Values
+#' 
+#' Expands a range of values about its midpoint, by an amount equal to the multiplyer
+#' @param x range of values, required to be numeric and of length 2
+#' @param m multiplyer
+expandRange <- function(x,m=1){
+  if(!is.numeric(x) | length(x) != 2)stop("x must numeric and of length 2")
+  if(diff(x)   == 0)return(x)
+  med = mean(range(x))
+  c(med + (x[1] - med)*m[1],
+    med + (x[2] - med)*m[1])
+}
+
+
+#' Ternary Limits
+#' 
+#' Determine the Ternary Limits for Coordinate System
+#' @param coord ternary coordinates
+ternLimitsForCoord = function(coord){
+  lapply(list(Tlim="T",Llim="L",Rlim="R"),function(x){coord$limits[[x]]} )
+}
+
+
+#' Determine Expansiion Buffer on Ternary Surface
+#' 
+#' Similar to the 'expand' term in ggplot2 on a rectangular grid
+#' @parm coord ternary coordinates
+expandTern <- function(coord){
+  lim = ternLimitsForCoord(coord)
+  max(is.numericor(getOption("tern.pip.tollerance"),0.01))*max(sapply(lim,diff))
+}
+
+#' Suppress Colours
+#' @param data ggplot dataframe
+#' @param coord ternary coordinates
+suppressColours <- function(data,layers,coord){
+  if(!getOption('tern.discard.external')) return(data)
+  if(class(data)  != 'list' | class(layers) != 'list') return(data)
+  if(length(data) != length(layers)) return(data)
+  ix.tern       <- c("T","L","R"); 
+  ix.cart       <- c("x","y")
+  lim           <- ternLimitsForCoord(coord)
+  expand        <- expandTern(coord)
+  xtrm          <- get_tern_extremes(coord,expand=-1.0*expand)[,ix.tern]
+  data.extremes <- transform_tern_to_cart(data = xtrm,Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,ix.cart]
+  
+  ## Edit the List in place.
+  ret = lapply(seq_along(data), function(dfa,n,i) {
+    df          = dfa[[i]]
+    ly          = layers[[i]]
+    data.cart   = transform_tern_to_cart(df[,coord$T],df[,coord$L],df[,coord$R],Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,ix.cart]
+    in.poly     = sp::point.in.polygon(data.cart$x,data.cart$y,as.numeric(data.extremes$x),as.numeric(data.extremes$y))
+    outside.ix  = which(in.poly < 1)
+    if(length(outside.ix) > 0){ 
+      for(x in c('colour')){
+        tryCatch({
+          if(!x %in% names(df)){ df[,x] = ly$geom$default_aes()[x] }
+          df[outside.ix,x] = ly$geom$default_aes()[sprintf("%sOutside",x)]  
+        },error=function(e){
+          #Silent
+        })
+      }
+    }; df
+  }, dfa=data,n=names(data))
+  return(ret)
+  
+  #lapply(data,function(df){
+  #  data.cart   <- transform_tern_to_cart(df[,coord$T],df[,coord$L],df[,coord$R],Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,ix.cart]
+  #  in.poly     <- sp::point.in.polygon(data.cart$x,data.cart$y,as.numeric(data.extremes$x),as.numeric(data.extremes$y))
+  #  outside.ix  <- which(in.poly < 1)
+  #  if(length(outside.ix) > 0){ 
+  #    for(x in c('colour','color'))
+  #      if(x %in% names(df)){ df[outside.ix,x] = "transparent" }
+  #  }
+  #  df
+  #})
+}
+
+
+
 
 
 

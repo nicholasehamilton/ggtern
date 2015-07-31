@@ -3,17 +3,17 @@
 #' @rdname undocumented
 Statnew <- proto(ggint$TopLevel, expr={
   objname <- "" 
-  desc <- ""
+  desc    <- ""
   
   # Should the values produced by the statistic also be transformed
   # in the second pass when recently added statistics are trained to 
   # the scales
   retransform <- TRUE
   
-  default_geom <- function(.) Geom
-  default_aes <- function(.) aes()
-  default_pos <- function(.) .$default_geom()$default_pos()
-  required_aes <- c()
+  default_geom  <- function(.) Geom
+  default_aes   <- function(.) aes()
+  default_pos   <- function(.) .$default_geom()$default_pos()
+  required_aes  <- c()
   
   aesthetics <- list()
   calculate <- function(., data, scales, ...) {}
@@ -29,7 +29,7 @@ Statnew <- proto(ggint$TopLevel, expr={
     
     stats <- mapply(function(new, old) {
       if (empty(new)) return(data.frame())
-      unique <- uniquecols(old)
+      unique  <- uniquecols(old)
       missing <- !(names(unique) %in% names(new))
       cbind(
         new, 

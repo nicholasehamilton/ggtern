@@ -1,3 +1,9 @@
+ggtern 1.0.6.0
+----------------------------------------------------------------
+* Fixed bug in the rendering of coordinates axes, when not using any breaks or labels for the top axis
+* Greately improved placement, padding and margin logic and use of grid
+* Revised and greatly improved manual clippiing procedure for data outside the ternary surface
+
 ggtern 1.0.5.0
 ----------------------------------------------------------------
 * Added convenience function theme_custom() to allow the user to control basic theme colours very easily

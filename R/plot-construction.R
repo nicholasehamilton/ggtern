@@ -46,26 +46,26 @@ add_ggplot <- function(p, object, objectname) {
       p <- p + o
     }
   } else if(is.proto(object)) {
+    #set_last_coord(p$coordinates)
     p <- switch(object$class(),
-                layer  = {
-                  p$layers <- append(p$layers, object)
-                  
-                  # Add any new labels
-                  mapping <- ggint$make_labels(object$mapping)
-                  default <- ggint$make_labels(object$stat$default_aes())
-                  
-                  new_labels <- defaults(mapping, default)
-                  p$labels <- defaults(p$labels, new_labels)
-                  p
-                },
-                coord = {
-                  p$coordinates <- object
-                  p
-                }
+      layer  = {
+        p$layers <- append(p$layers, object)
+        
+        # Add any new labels
+        mapping <- ggint$make_labels(object$mapping)
+        default <- ggint$make_labels(object$stat$default_aes())
+        
+        new_labels <- defaults(mapping, default)
+        p$labels <- defaults(p$labels, new_labels)
+        p
+      },
+      coord = {
+        p$coordinates <- object
+        p
+      }
     )
   } else {
-    stop("Don't know how to add ", objectname, " to a plot",
-         call. = FALSE)
+    stop("Don't know how to add ", objectname, " to a plot", call. = FALSE)
   }
   ggint$set_last_plot(p)
   p

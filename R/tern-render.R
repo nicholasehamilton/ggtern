@@ -26,6 +26,7 @@ print.ggtern <- function(x, newpage = is.null(vp), vp = NULL, ...){
 print.ggplot <- function(x, newpage = is.null(vp), vp = NULL, ...) {
   tryCatch({
     ggint$set_last_plot(x)
+    #set_last_coord(x$coordinates)
     if(newpage) grid.newpage()
     data   <- ggplot_build(x)
     gtable <- ggplot_gtable(data)
@@ -38,9 +39,8 @@ print.ggplot <- function(x, newpage = is.null(vp), vp = NULL, ...) {
     }
   },error=function(e){
     stop(e)
-  },finally={
-    set_last_coord(NULL)
   })
+  #set_last_coord(NULL)
   invisible(data)
 }
 
@@ -62,10 +62,10 @@ print.ggplot <- function(x, newpage = is.null(vp), vp = NULL, ...) {
 #' @export
 ggplot_gtable <- function(data) {
   
-  plot <- data$plot
-  panel <- data$panel
-  data <- data$data
-  theme <- ggtern::plot_theme(plot)
+  plot   <- data$plot
+  panel  <- data$panel
+  data   <- data$data
+  theme  <- ggtern::plot_theme(plot)
   
   build_grob <- function(layer, layer_data) {
     if(is.null(layer_data))
@@ -183,16 +183,18 @@ ggplot_gtable <- function(data) {
   }
   
   #Function to Add Padding / Margins
-  addMargin <- function(t,m,eb=unit(0,"lines")){
+  addMargin <- function(t,m,...,et=unit(0,"lines"),er=unit(0,"lines"),eb=unit(0,"lines"),el=unit(0,"lines")){
     for(x in c(1:4)){
       args = list(x=t, pos = if(x == 1 | x == 4){0}else{-1})
-      args[[if(x %% 2){"heights"}else{"widths"}]] = m[if(length(m) < 4){1}else{x}] + if(x == 3){eb}else{unit(0,"lines")}
+      args[[if(x %% 2){"heights"}else{"widths"}]] = m[if(length(m) < 4){1}else{x}] + list(et,er,eb,el)[[x]]
       t <- do.call(paste0("gtable_add_",if(x %% 2){"rows"}else{"cols"}),args=args, quote=FALSE)
     }; t
   }
   
   #Add the Padding
-  plot_table <- addMargin(plot_table,theme$axis.tern.padding,if(theme$axis.tern.showarrows){theme$axis.tern.arrowsep}else{unit(0,"lines")})
+  plot_table <- addMargin(plot_table,theme$axis.tern.padding,
+                          et=unit(2.0*calc_element_plot("axis.tern.title.T",theme=theme,verbose=F,plot=NULL)$size,'points'),
+                          eb=if(theme$axis.tern.showarrows){theme$axis.tern.arrowsep}else{unit(0,"lines")})
   
   #The Grid Positions for Main Panel
   pans <- subset(plot_table$layout, grepl("^panel", get("name")))
@@ -200,7 +202,8 @@ ggplot_gtable <- function(data) {
   # Title  
   title      <- ggint$element_render(theme,"plot.title",plot$labels$title) 
   plot_table <- gtable_add_rows(plot_table, grobHeight(title), pos = 0)
-  plot_table <- gtable_add_grob(plot_table, title, name = "title", t = 1, b = 1, l = min(pans$l), r = max(pans$r), clip = "off")
+  plot_table <- gtable_add_grob(plot_table, title, name = "title", 
+                                t = 1, b = 1, l = min(pans$l), r = max(pans$r), clip = "off")
   
   #Add the Margin
   plot_table = addMargin(plot_table,theme$plot.margin)

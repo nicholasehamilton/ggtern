@@ -73,10 +73,11 @@
       #axis.tern.ticklength.major = unit(5,"mm"),
       #axis.tern.ticklength.minor = unit(2.5,"mm"),
       
-      axis.tern.padding          = unit(c(1,1,1,1),"lines"),
-      axis.tern.hshift           = unit(0.0, "lines"),
-      axis.tern.vshift           = unit(0.0, "lines"),
-      axis.tern.arrowsep         = unit(1.0, "lines"),
+      axis.tern.padding          = unit(rep( 0,4),"points"),
+      plot.margin                = unit(rep(.05,4),"npc"),
+      axis.tern.hshift           = unit(0.0,       "npc"),
+      axis.tern.vshift           = unit(0.0,       "npc"),
+      axis.tern.arrowsep         = unit(1.0,       "lines"),
       
       axis.tern               = element_line(size=axis.tern.size,linetype="solid"),
       axis.tern.line          = element_line(),

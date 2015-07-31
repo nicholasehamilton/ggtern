@@ -17,8 +17,9 @@ ggplot_build <- function(plot) {
   
   #if we have ternary coordinate system but not ternary plot class, make it ternary.
   if(inherits(plot$coordinates,"ternary")){
-    if(!inherits(plot,"ggtern") & inherits(plot,"ggplot"))
+    if(!inherits(plot,"ggtern") & inherits(plot,"ggplot")){
       class(plot) <- c("ggtern",class(plot))
+    }
     plot <- plot + .theme_nocart() #destroy any cartesian theme elements
   }
   
@@ -76,7 +77,7 @@ ggplot_build <- function(plot) {
     panel$Wlabel = .Wlabel(panel,labels = plot$labels)
     
     #DONE
-  }else set_last_coord(NULL)
+  }else{ set_last_coord(NULL) }
   
   layers     <- plot$layers
   layer_data <- lapply(layers, function(y) y$data)
@@ -140,9 +141,12 @@ ggplot_build <- function(plot) {
   }
   
   # Train coordinate system
-  panel <- train_ranges(panel, plot$coordinates)
+  panel <- train_ranges(panel,plot$coordinates)
+  
+  #Remove colors if they are in proximity to the perimeter
+  data  <- suppressColours(data,plot$layers,plot$coordinates)
+  
+  #return
   list(data = data, panel = panel, plot = plot)
 }
-
-
 
