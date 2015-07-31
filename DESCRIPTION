@@ -31,6 +31,7 @@ Collate:
   'data.R'
   'element_ternary.R'
   'utilities.R'
+  'clip-polygons.R'
   'tern-stop.R'
   'strip-unapproved.R'
   'coord-tern.R'

@@ -406,34 +406,6 @@ tern_dep <- function(version, msg) {
 iflasttern <- function(yes=stop("yes value required"),no=stop("no value required"))
   ifthenelse(inherits(get_last_coord(),"ternary"),yes,no)
 
-#' Clip Polygons
-#' 
-#' Using the using the PolyClip Package, This clips input polygons for 
-#' use in the density and contour geometries.
-#' @param df a data frame
-#' @param coord a ternary coordinate system
-#' @plyon items in the data frame to pass to ddply argument
-#' @keywords polygon clipping
-clipPolygons <- function(df,coord,plyon=c('level','piece','group')){
-  if(!inherits(coord,"ternary")) stop("'coord' must be ternary") 
-    if(getOption('tern.discard.external')){
-      extremes = get_tern_extremes(coord)
-      clipee   = transform_tern_to_cart(data=extremes, Tlim=coord$limits$T, Llim=coord$limits$L,Rlim=coord$limits$R)
-      connect  = function(x){if(length(x) > 0){c(x,x[1])}else{x}}
-      df       = ddply(df,plyon,function(clipor){
-        tryCatch({
-           clipor = rbind(clipor,clipor[nrow(clipor),])   # Close the Loop
-           A      = list(list(x=clipor$x,y=clipor$y))     # The Data
-           B      = list(list(x=clipee$x,y=clipee$y))     # The Triangle
-           clip   = polyclip(A,B,op="intersection",fillB="evenodd",fillA="evenodd")
-           return(data.frame(x=connect(clip[[1]]$x), y=connect(clip[[1]]$y)))
-        },error=function(e){
-          ## SILENT
-        });return(NULL)
-      })
-    }; df
-}
-
 #' Undo a Ternary Transformation
 #' 
 #' Using the provided ternary coordinates, and a data-frame containing x, y, z values, convert back
@@ -495,7 +467,7 @@ suppressColours <- function(data,layers,coord){
   data.extremes <- transform_tern_to_cart(data = xtrm,Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,ix.cart]
   
   ## Edit the List in place.
-  ret = lapply(seq_along(data), function(dfa,n,i) {
+  lapply(seq_along(data), function(dfa,n,i) {
     df          = dfa[[i]]
     ly          = layers[[i]]
     data.cart   = transform_tern_to_cart(df[,coord$T],df[,coord$L],df[,coord$R],Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,ix.cart]
@@ -512,18 +484,6 @@ suppressColours <- function(data,layers,coord){
       }
     }; df
   }, dfa=data,n=names(data))
-  return(ret)
-  
-  #lapply(data,function(df){
-  #  data.cart   <- transform_tern_to_cart(df[,coord$T],df[,coord$L],df[,coord$R],Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,ix.cart]
-  #  in.poly     <- sp::point.in.polygon(data.cart$x,data.cart$y,as.numeric(data.extremes$x),as.numeric(data.extremes$y))
-  #  outside.ix  <- which(in.poly < 1)
-  #  if(length(outside.ix) > 0){ 
-  #    for(x in c('colour','color'))
-  #      if(x %in% names(df)){ df[outside.ix,x] = "transparent" }
-  #  }
-  #  df
-  #})
 }
 
 
