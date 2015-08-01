@@ -5,16 +5,16 @@
 #' @inheritParams ggplot2::stat_smooth
 #' @aliases StatSmoothtern
 #' @export
-stat_smooth <- function (mapping = NULL, data = NULL, geom = "smoothtern", position = "identity", 
+stat_smooth_tern <- function (mapping = NULL, data = NULL, geom = "SmoothTern", position = "identity", 
                          method = "auto", formula = y ~ x, se = TRUE, n = 80, fullrange = FALSE, 
                          level = 0.95, na.rm = FALSE, ...) { 
-  StatSmoothtern$new(mapping = mapping, data = data, geom = geom, position = position, 
+  StatSmoothTern$new(mapping = mapping, data = data, geom = geom, position = position, 
                  method = method, formula = formula, se = se, n = n, fullrange = fullrange, 
                  level = level, na.rm = na.rm, ...)
 }
 
-StatSmoothtern <- proto(Statnew, {
-  objname <- "smoothtern"
+StatSmoothTern <- proto(Statnew, {
+  objname <- "smooth_tern"
   calculate_groups <- function(., data, scales, method=ifthenelse(inherits(last_plot(),"ggtern"),"lm","auto"), formula=y~x, ...){
     rows <- daply(data, .(group), function(df) length(unique(df$x)))
     if (all(rows == 1) && length(rows) > 1) {

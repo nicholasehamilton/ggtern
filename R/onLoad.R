@@ -10,7 +10,8 @@
   options("tern.ticks.outside"         = TRUE)
   options("tern.ticks.showprimary"     = TRUE)
   options("tern.ticks.showsecondary"   = FALSE)
-  options("tern.pip.tollerance"        = 0.005)
+  options("tern.expand"                = 0.005)
+  options("tern.expand.contour.inner"  =-0.001)
   options("tern.breaks.default"        = seq(0.2, 1.0,by=0.2))
   options("tern.breaks.default.minor"  = seq(0.1, 0.9,by=0.2))
   options("tern.dont_transform"        = FALSE)
@@ -21,6 +22,7 @@
   options("tern.arrowfinish"           = 0.7)
   options("tern.arrowbaseline"         = 2)
   options("tern.densitygrid.buffer"    = 1.50)
+  options("tern.panel.buffer"          = 1.25)
   
   #Set the theme and the last coordinates.
   theme_set(theme_gray())

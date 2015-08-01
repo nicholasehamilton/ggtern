@@ -7,13 +7,16 @@
 #' @aliases StatDensity2dtern
 #' @export
 #' @seealso \code{\link[ggtern]{geom_density2d}}
-stat_density_tern <- function (mapping = NULL, data = NULL,
-                            position = "identity", na.rm = FALSE, contour = TRUE, n = 100,weight=NULL, 
-                            buffer = getOption('tern.densitygrid.buffer'),...) {
-  #geometry = iflasttern('density2dtern','density2d'); print(geometry)
+stat_density_tern <- function ( mapping  = NULL, 
+                                data     = NULL,
+                                stat     ="DensityTern",
+                                position = "identity", 
+                                na.rm    = FALSE, 
+                                contour  = TRUE, n = 100,weight=NULL, 
+                                buffer   = getOption('tern.densitygrid.buffer'),...) {
   StatDensityTern$new(
     mapping  = mapping,data = data, buffer = buffer,
-    geometry = 'DensityTern',
+    #geometry = geom,
     position = position, na.rm = na.rm, contour = contour, n = n,...)
              
 }

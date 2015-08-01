@@ -29,13 +29,24 @@
 #' @param clockwise DEPRECIATED, replaced by individual theme element, see \code{\link{axis.tern.clockwise}}.
 #' @return \code{coord_tern} returns a ternary coordinate system object.
 #' @export
-coord_tern <- function(T = getOption("tern.default.T"),
-                       L = getOption("tern.default.L"),
-                       R = getOption("tern.default.R"),
-                       xlim=c(0,1),ylim=c(0,1),Tlim=NULL,Llim=NULL,Rlim=NULL,clockwise) {
-  #clockwise parameter has been depreciated in favour of a specific theme element.
-  if(!missing(clockwise))
-    tern_dep("1.0.1.3","clockwise is now controlled by the theme element 'axis.tern.clockwise'")
+coord_tern <- function(T      = getOption("tern.default.T"),
+                       L      = getOption("tern.default.L"),
+                       R      = getOption("tern.default.R"),
+                       xlim   = c(0,1),
+                       ylim   = c(0,1),
+                       Tlim   = NULL,
+                       Llim   = NULL,
+                       Rlim   = NULL,
+                       buffer = getOption('tern.panel.buffer'),
+                       clockwise) {
+  
+  #Expand the x and y ranges
+  tryCatch({
+    xlim = mean(xlim) + abs(buffer[1])*c(-1,1)*(max(xlim) - mean(xlim))
+    ylim = mean(ylim) + abs(buffer[1])*c(-1,1)*(max(ylim) - mean(ylim))
+  },error=function(e){
+    #pass
+  })
   
   ##Validate x and y lims...
   xlim <- sort(is.numericor(ifthenelse(!is.numeric(xlim) & is.numeric(ylim),ylim,xlim),c(0,1)))
@@ -43,8 +54,7 @@ coord_tern <- function(T = getOption("tern.default.T"),
   
   ##Put into correct aspect ratio.
   if(diff(xlim) != diff(ylim)){
-    warning("Error in xlim and ylim ratios, adjusting ymax to maintain aspect.",call.=FALSE)
-    ylim <- c(min(ylim),min(ylim) + diff(xlim))
+    ylim <- c(mean(ylim) - diff(xlim)/2,mean(ylim) + diff(xlim)/2)
   }
   ylim <- c(min(ylim), min(ylim) + diff(ylim)*coord_aspect.ternary())
   

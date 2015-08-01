@@ -252,18 +252,15 @@ find_global_tern <- function (name, env=environment()){
 trytransform <- function(data,coord){
   if(missing(coord)){stop("coord are required")}
   bup <- data
-  Tlim <- coord$limits$T; Llim <- coord$limits$L; Rlim <- coord$limits$R
   tryCatch({
-    if(inherits(coord,"ternary")){  
+    if(inherits(coord,"ternary")){ 
+      Tlim <- coord$limits$T; Llim <- coord$limits$L; Rlim <- coord$limits$R
       res <- transform_tern_to_cart(T=data[,coord$T],L=data[,coord$L],R=data[,coord$R],Tlim=Tlim,Llim=Llim,Rlim=Rlim)[,c("x","y")]
-      data <- cbind(res,data[,which(!colnames(data) %in% c(coord$T,coord$L,coord$R))])
+      return(cbind(res,data[,which(!colnames(data) %in% c(coord$T,coord$L,coord$R))]))
     }
   },error=function(e){
-    #warning(e)
-    #message(e)
-    data <- bup
   })
-  data
+  bup
 }
 
 #' \code{notransform} is an internal function that permits the input argument (evaluate) to be executed with temporary disabling of
@@ -321,7 +318,7 @@ remove_outside <- function(data){
 }
 
 .hjust.flip    <- function(x,clockwise){if(clockwise){0.5 - (x - 0.5)}else{x}}
-.zeroGrob <- grob(cl = "zeroGrob", name = "NULL")
+.zeroGrob      <- grob(cl = "zeroGrob", name = "NULL")
 
 # Euclidean distance between points.
 # NA indicates a break / terminal points
@@ -447,10 +444,10 @@ ternLimitsForCoord = function(coord){
 #' 
 #' Similar to the 'expand' term in ggplot2 on a rectangular grid
 #' @parm coord ternary coordinates
-expandTern <- function(coord){
+expandTern <- function(coord,by=getOption('tern.expand')){
   tryCatch({
     lim = ternLimitsForCoord(coord)
-    return(max(is.numericor(getOption("tern.pip.tollerance"),0.01))*max(sapply(lim,diff)))
+    if(is.numeric(by)) return(max(by)*max(sapply(lim,diff)))
   },error=function(e){
     #pass
   })
@@ -458,37 +455,47 @@ expandTern <- function(coord){
 }
 
 #' Suppress Colours
+#' 
+#' Function to Suppress Colours
 #' @param data ggplot dataframe
 #' @param coord ternary coordinates
-suppressColours <- function(data,layers,coord){
+suppressColours <- function(data,coord,toColor="transparent",remove=FALSE){
   if(!inherits(coord,"ternary")) return(data)
   if(!getOption('tern.discard.external')) return(data)
-  if(class(data)  != 'list' | class(layers) != 'list') return(data)
-  if(length(data) != length(layers)) return(data)
+  if(class(data)  != 'data.frame') return(data)
   ix.tern       <- c("T","L","R"); 
   ix.cart       <- c("x","y")
+  ix.tern.n     <- c(coord$T,coord$L,coord$R)
   lim           <- ternLimitsForCoord(coord)
-  expand        <- expandTern(coord)
-  xtrm          <- get_tern_extremes(coord,expand=-1.0*expand)[,ix.tern]
+  expand        <- expandTern(coord,by=getOption('tern.expand.contour.inner'))
+  xtrm          <- get_tern_extremes(coord,expand=expand)[,ix.tern]
   data.extremes <- transform_tern_to_cart(data = xtrm,Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,ix.cart]
-  
-  ## Edit the List in place.
-  lapply(seq_along(data), function(dfa,n,i) {
-    df          = dfa[[i]]
-    ly          = layers[[i]]
-    data.cart   = transform_tern_to_cart(df[,coord$T],df[,coord$L],df[,coord$R],Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,ix.cart]
+  if(all(ix.tern.n %in% names(data))){
+    rnm         = function(x){x=x[,ix.tern.n];names(x)=ix.tern;x}
+    data.cart   = transform_tern_to_cart(data=rnm(data), Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,ix.cart]
     in.poly     = sp::point.in.polygon(data.cart$x,data.cart$y,as.numeric(data.extremes$x),as.numeric(data.extremes$y))
-    outside.ix  = which(in.poly < 1)
+    outside.ix  = intersect(1:nrow(data),which(in.poly < 1))
     if(length(outside.ix) > 0){ 
-      for(x in c('colour')){
-        tryCatch({
-          xr = sprintf("%sOutside",x)
-          if(!x %in% names(df)){ df[,x] = ly$geom$default_aes()[x] }
-          df[outside.ix,x] = ly$geom$default_aes()[xr]  
-        },error=function(e){
-          #Silent
-        })
+      if(remove){
+        data = data[-outside.ix,]
+      } else{
+        for(x in c('colour')){
+          if(x %in% names(data)){
+            data[outside.ix,x] = toColor
+          }
+        }  
       }
-    }; df
-  }, dfa=data,n=names(data))
+    }
+  }
+  data
 }
+
+#' Enforce Coordinates
+#' 
+#' Function to Enforce Coordinates
+enforceTernaryCoordinates <- function(){
+  coordinates  <- get_last_coord()
+  if(!inherits(coordinates,"ternary")) stop("Coordinates Must be Ternary.")
+  return(coordinates)
+}
+

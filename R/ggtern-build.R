@@ -14,19 +14,16 @@
 ggplot_build <- function(plot) {
   if (length(plot$layers) == 0) stop("No layers in plot", call.=FALSE)
   plot <- ggint$plot_clone(plot)
+
   
   #if we have ternary coordinate system but not ternary plot class, make it ternary.
   if(inherits(plot$coordinates,"ternary")){
-    if(!inherits(plot,"ggtern") & inherits(plot,"ggplot")){
-      class(plot) <- c("ggtern",class(plot))
-    }
+    if(inherits(plot,"ggplot")) class(plot) <- c("ggtern",class(plot)) 
     plot <- plot + .theme_nocart() #destroy any cartesian theme elements
   }
   
-  # Initialise panels, add extra data for margins & missing facetting
-  # variables, and add on a PANEL variable to data
+  # Initialise panels, add extra data for margins
   panel <- ggint$new_panel()
-  #... CONTINUED BELOW...
   
   ##-------------------------------------------------------------------------------
   #IF WE HAVE TERNARY OPTIONS SOMEWHERE...  
@@ -144,7 +141,7 @@ ggplot_build <- function(plot) {
   panel <- train_ranges(panel,plot$coordinates)
   
   #Remove colors if they are in proximity to the perimeter
-  data  <- suppressColours(data,plot$layers,plot$coordinates)
+  #data  <- suppressColours(data,plot$layers,plot$coordinates)
   
   #return
   list(data = data, panel = panel, plot = plot)

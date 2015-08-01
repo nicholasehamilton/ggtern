@@ -23,31 +23,49 @@ GeomConfidence <- proto(Geom, {
     ##DO THE VARIABLE AESTHETIC CHECK x and y for cartesian, and x,y,z for ternary...
     required_aes <- sort(unique(c(.$required_aes,coordinates$required_aes)))
     check_required_aesthetics(required_aes, names(data),"geom_confidence")
-    
     ##REMOVE MISSING DATA.
     data <- remove_missing(data, na.rm = na.rm,c(required_aes),name = "geom_confidence")
-    if(empty(data)) 
+    if(empty(data)) return(.zeroGrob)
+    
+    #Check
+    if(!inherits(coordinates,"ternary")){
+      warning("Coordinates Must be Ternary, returning zerogrob")
       return(.zeroGrob)
-    
-    ##Create two grobsets, one for the polygon and the other for the paths.
-    polygrob <- .zeroGrob
-    pathgrob <- .zeroGrob
-    
-    #The polygons
-    fills   <- unique(data$fill)
-    if(length(fills) >0 & length(fills) > length(which(is.na(fills)))){
-      #Polygon will be handled slightly different (no colour, only fill), but it is based off the same data.
-      data.poly <- data; data.poly$colour <- NA
-      polygrob <- GeomPolygon$draw(data=data.poly, scales=scales, coordinates=coordinates, ...)
     }
     
-    #The paths
-    colours <- unique(data$colour)
-    if(length(colours) > 0 & length(colours) > length(which(is.na(colours))))
-      pathgrob <- GeomPath$draw(data=data, scales=scales, coordinates=coordinates, ...)
+    #Which to Ply On 
+    plyon = c("PANEL","group")
     
-    #return the complete grobs, paths on top of polygons.
-    gTree(children = gList(polygrob,pathgrob))
+    ##Build the List of Grobs in Sequence
+    contours = dlply(data,plyon,function(df.orig){
+      
+      #Kill the Colours
+      df  <- suppressColours(df.orig,coordinates,remove=FALSE)
+      
+      #Default Grobs
+      polygrob = pathgrob = .zeroGrob
+      
+      if(nrow(df) > 0){
+        #Polygons, with no border (color)
+        df.poly <- subset(df,!(fill == 'transparent') | fill == NA)
+        if(nrow(df.poly) > 0){
+          df.poly$colour <- NA
+          polygrob <- (GeomPolygon)$draw(data=df.poly, scales=scales, coordinates=coordinates,...)
+        }
+        
+        #Paths, to immitate the border
+        pathgrob   <- (GeomPath)$draw(data=df, scales=scales, coordinates=coordinates,...)
+      }
+      
+      #Done
+      list(polygrob,pathgrob)
+    })
+    
+    # Ensure al least minimum grobs are available to return
+    if(length(contours) == 0){ contours = list(.zeroGrob) }
+    
+    #Put in gtree format and return
+    gTree(children = do.call("gList",unlist(contours,recursive=F)))
   }
   default_stat <- function(.) StatConfidence
   required_aes <- c("x", "y")

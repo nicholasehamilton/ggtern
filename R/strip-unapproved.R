@@ -4,9 +4,10 @@
                  segment   = "segment",
                  polygon   = "polygon",
                  text      = "text",
-                 contour   = "contourtern",
+                 contour   = "contour_tern",
                  density2d = "density_tern",
-                 smooth    = "smoothtern",
+                 smooth    = "smooth_tern",
+                 polygon   = "polygon_tern",
                  rug       = "rug",
                  Tline     = "Tline",
                  Lline     = "Lline",
@@ -56,14 +57,17 @@ strip_unapproved <- function(layers){
   for(ix in L:1){ #backwards.
     if(inherits(layers[[ix]],"proto")){
       name <- layers[[ix]]$geom$objname
-      if(is.character(name)){
-        if(!name %in% .approved){
-            #IT IS NOT OK
-            writeLines(paste0("Removing Layer ",(L - ix + 1),". '",name,"' is not an approved proto (for ternary plots) under the present ggtern package",
-                              ifthenelse(name %in% .dissaproved,", furthermore, it is FORBIDDEN!",".")))
-            layers[[ix]] <- NULL
-        }
-      }
+      stat <- layers[[ix]]$stat$objname
+      if(!name %in% .approved){
+          #IT IS NOT OK
+          writeLines(paste0("Removing Layer ",(L - ix + 1),". '",name,"' is not an approved proto (for ternary plots) under the present ggtern package",
+                            ifthenelse(name %in% .dissaproved,", furthermore, it is FORBIDDEN!",".")))
+          layers[[ix]] <- NULL
+      }#else if(!stat %in% .approved){
+      #    writeLines(paste0("Removing Layer ",(L - ix + 1),". '",stat,"' is not an approved proto (for ternary plots) under the present ggtern package",
+      #                      ifthenelse(name %in% .dissaproved,", furthermore, it is FORBIDDEN!",".")))
+      #    layers[[ix]] <- NULL
+      #}
     }
   }
   

@@ -45,6 +45,7 @@ add_ggplot <- function(p, object, objectname) {
     for (o in object) {
       p <- p + o
     }
+    p
   } else if(is.proto(object)) {
     #set_last_coord(p$coordinates)
     p <- switch(object$class(),
@@ -64,6 +65,7 @@ add_ggplot <- function(p, object, objectname) {
         p
       }
     )
+    p
   } else {
     stop("Don't know how to add ", objectname, " to a plot", call. = FALSE)
   }
