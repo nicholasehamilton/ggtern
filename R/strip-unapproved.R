@@ -4,7 +4,7 @@
                  segment   = "segment",
                  polygon   = "polygon",
                  text      = "text",
-                 contour   = "contour_tern",
+                 contour   = "interpolate_tern",
                  density2d = "density_tern",
                  smooth    = "smooth_tern",
                  polygon   = "polygon_tern",

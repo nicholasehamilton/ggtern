@@ -303,13 +303,11 @@ remove_outside <- function(data){
     if(inherits(lp,"ggtern")){ #ONLY FOR ggtern object
       if(class(data) != "data.frame"){return(data)}
       if(length(which(c("x","y") %in% names(data))) != 2){warning("x and y are required"); return(data)}
-      
       coord <- get_last_coord()
-      if(is.null(coord)){writeLines("remove_outside -- coord is NULL")}
       lim <- list(Tlim=coord$limits[["T"]],Llim=coord$limits[["L"]],Rlim=coord$limits[["R"]])
       tri <- transform_tern_to_cart(data=get_tern_extremes(coord),Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)
       ix  <- sp::point.in.polygon(data$x,data$y,tri$x,tri$y)
-      return(data[which(ix > 0),])
+      return(subset(data,ix > 0))
     }
   },error=function(e){
     #do nothing
@@ -474,7 +472,7 @@ suppressColours <- function(data,coord,toColor="transparent",remove=FALSE){
     rnm         = function(x){x=x[,ix.tern.n];names(x)=ix.tern;x}
     data.cart   = transform_tern_to_cart(data=rnm(data), Tlim = lim$Tlim,Llim = lim$Llim,Rlim = lim$Rlim)[,ix.cart]
     in.poly     = sp::point.in.polygon(data.cart$x,data.cart$y,as.numeric(data.extremes$x),as.numeric(data.extremes$y))
-    outside.ix  = intersect(1:nrow(data),which(in.poly < 1))
+    outside.ix  = intersect(1:nrow(data),which(in.poly %in% c(0,2,3)))
     if(length(outside.ix) > 0){ 
       if(remove){
         data = data[-outside.ix,]
