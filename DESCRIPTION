@@ -64,6 +64,7 @@ Collate:
   'tern-limits.R'
   'geom-smooth.R'
   'geom-segment.R'
+  'geom-polygon-tern.R'
   'geom-Tline.R'
   'geom-Lline.R'
   'geom-Rline.R'
@@ -84,5 +85,4 @@ Collate:
   'theme-novar-tern.R'
   'stat-contour-tern.R'
   'geom-contour-tern.R'
-  'geom-polygon-tern.R'
   
