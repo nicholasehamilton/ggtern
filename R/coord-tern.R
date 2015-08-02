@@ -42,26 +42,30 @@ coord_tern <- function(T      = getOption("tern.default.T"),
   
   #Expand the x and y ranges
   tryCatch({
-    xlim = mean(xlim) + abs(buffer[1])*c(-1,1)*(max(xlim) - mean(xlim))
-    ylim = mean(ylim) + abs(buffer[1])*c(-1,1)*(max(ylim) - mean(ylim))
+    xlim = mean(xlim) + abs(buffer[1])*c(-1,1)*diff(xlim)/2
+    ylim = mean(ylim) + abs(buffer[1])*c(-1,1)*diff(ylim)/2
   },error=function(e){
-    #pass
+    
   })
   
   ##Validate x and y lims...
-  xlim <- sort(is.numericor(ifthenelse(!is.numeric(xlim) & is.numeric(ylim),ylim,xlim),c(0,1)))
-  ylim <- sort(is.numericor(ifthenelse(!is.numeric(ylim) & is.numeric(xlim),xlim,ylim),c(0,1)))
+  validateLims <- function(p,s){
+    if(length(p) >= 2 & is.numeric(p))return(sort(p[c(1:2)]))
+    if(length(2) >= 2 & is.numeric(s))return(sort(s[c(1:2)]))
+    c(0,1)
+  }
+  xlim <- validateLims(xlim,ylim)
+  ylim <- validateLims(ylim,xlim)
   
   ##Put into correct aspect ratio.
-  if(diff(xlim) != diff(ylim)){
-    ylim <- c(mean(ylim) - diff(xlim)/2,mean(ylim) + diff(xlim)/2)
-  }
-  ylim <- c(min(ylim), min(ylim) + diff(ylim)*coord_aspect.ternary())
+  if(diff(xlim) != diff(ylim)){ ylim <- mean(ylim) + c(-1,1)*diff(xlim)/2 }
+  ylim <- min(ylim) + c(0,1)*diff(xlim)*coord_aspect.ternary()
   
   #Fallback if invalid values provided.
-  T = ifthenelse(!is.character(T),"x",T[1])
-  L = ifthenelse(!is.character(L),"y",L[1])
-  R = ifthenelse(!is.character(R),"z",R[1])
+  resolve <- function(t,d){ifthenelse(!is.character(t),d,t[1])}
+  T = resolve(T,"x")
+  L = resolve(L,"y")
+  R = resolve(R,"z")
   
   #Run some checks to ensure valid assignment will transpire between T, L, R and x, y and z.
   all.coords <- c("x","y","z")
@@ -886,7 +890,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   ##Function to create new axis grob
   .render <- function(name,ix,items,hshift=0,vshift=0){
     tryCatch({
-      e <- calc_element_plot(name,theme=theme,verbose=F,plot=NULL)
+      e <- calc_element(name,theme=theme,verbose=F)
       colour    <- e$colour
       size      <- e$size;
       lineheight<- e$lineheight
