@@ -83,6 +83,6 @@ Collate:
   'ggsave.R'
   'point-in-sequence.R'
   'theme-novar-tern.R'
-  'stat-contour-tern.R'
-  'geom-contour-tern.R'
+  'stat-interpolate-tern.R'
+  'geom-interpolate-tern.R'
   

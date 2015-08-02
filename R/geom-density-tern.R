@@ -18,7 +18,7 @@ geom_density_tern <- function ( mapping   = NULL,
                                 lineend   = "butt", 
                                 linejoin  = "round", 
                                 linemitre = 1,
-                                n         = 100, 
+                                n         = 200, 
                                 na.rm     = FALSE,
                                 buffer    = getOption('tern.densitygrid.buffer'),...){
   GeomDensityTern$new(  mapping   = mapping, data = data, 
@@ -47,7 +47,7 @@ GeomDensityTern <- proto(ggint$GeomPath,{
     
     ##DO THE VARIABLE AESTHETIC CHECK x and y for cartesian, and x,y,z for ternary...
     req.aes <- unique(c(.$required_aes,coordinates$required_aes))
-    check_required_aesthetics(req.aes, names(data),.$objname)
+    check_required_aesthetics(req.aes,names(data),.$objname)
     
     return(GeomPolygonTern$draw(.,data   = data,scales=scales,coordinates=coordinates,
                                 arrow    = arrow,

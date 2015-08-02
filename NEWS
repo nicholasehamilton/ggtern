@@ -5,6 +5,7 @@ ggtern 1.0.6.0
 * Revised and greatly improved manual clippiing procedure for data outside the ternary surface
 * Added theme_novar_tern function, many thanks to John Szumiloski
 * Added geom_polygon_tern, and used it within geom_confidence and geom_density_tern
+* Added the (heavily requested) contoured smoothing geometry, geom_interpolate_tern
 
 ggtern 1.0.5.0
 ----------------------------------------------------------------

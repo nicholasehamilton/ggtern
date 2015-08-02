@@ -31,7 +31,7 @@ GeomPolygonTern <- proto( ggint$GeomPolygon, {
     }
     
     #Which to Ply On 
-    plyon = c("PANEL","group")
+    plyon = c("PANEL","group","level","piece")
     
     ##Build the List of Grobs in Sequence
     contours = dlply(data,plyon,function(df.orig){
@@ -46,7 +46,7 @@ GeomPolygonTern <- proto( ggint$GeomPolygon, {
         #Polygons, with no border (color)
         df.poly <- subset(df,!(fill == 'transparent') | fill == NA)
         if(nrow(df.poly) > 0){
-          df.poly$colour <- NA
+          df.poly$colour <- 'transparent'
           polygrob <- (GeomPolygon)$draw(data=df.poly, scales=scales, coordinates=coordinates,...)
         }
         
