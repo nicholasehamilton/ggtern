@@ -1,10 +1,15 @@
 
-
+#' Polygon Geometry (Ternary Version)
+#' 
+#' Add polygons to the ternary surface
+#' @inheritParams ggplot2::geom_polygon
+#' @aliases GeomPolygonTern
+#' @export
 geom_polygon_tern <- function (mapping = NULL, data = NULL, stat = "identity", position = "identity", ...) {
   GeomPolygonTern$new(mapping = mapping, data = data, stat = stat, position = position, ...)
 }
 
-GeomPolygonTern <- proto(ggint$GeomPolygon, {
+GeomPolygonTern <- proto( ggint$GeomPolygon, {
   objname      <- "polygon_tern"
   required_aes <- c("x", "y")
   default_stat <- function(.) StatIdentity

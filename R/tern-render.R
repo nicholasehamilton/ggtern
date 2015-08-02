@@ -104,7 +104,7 @@ ggplot_gtable <- function(data) {
   plot_table$layout$z[which(plot_table$layout$name == 'panel')] = Inf
   
   #Add the Padding for Title
-  axis.tern.title.T = calc_element_plot("axis.tern.title.T",theme=theme,verbose=F,plot=NULL)
+  axis.tern.title.T = calc_element("axis.tern.title.T",theme=theme,verbose=F)
   plot_table <- gtable_add_rows(plot_table,unit(1,"lines"), pos =  0)
   
   # Axis labels
