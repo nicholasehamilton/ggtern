@@ -5,6 +5,7 @@
 #' @importFrom MASS kde2d
 #' @name stat_density_tern
 #' @aliases StatDensityTern
+#' @param n Number of grid points in each direction of the mesh. Can be scalar or a length-2 integer vector.
 #' @param buffer factor to buffer the mesh, to prevent ugly truncation of contours, 1.0 means no buffering
 #' @param contour display the contour or show the mesh
 #' @export
@@ -15,11 +16,12 @@ stat_density_tern <- function ( mapping  = NULL,
                                 position = "identity", 
                                 na.rm    = FALSE, 
                                 contour  = TRUE, 
+                                n        = getOption('tern.mesh.size'),
                                 buffer   = getOption('tern.mesh.buffer'),...) {
   StatDensityTern$new(
     mapping  = mapping,
     data     = data, 
-    buffer   = buffer,
+    buffer   = buffer,n = n,
     position = position, 
     na.rm    = na.rm, 
     contour  = contour,...)
@@ -36,8 +38,8 @@ StatDensityTern <- proto(Statnew, {
                            na.rm   = FALSE, 
                            contour = TRUE, 
                            geometry="density_tern",
-                           buffer  = getOption('tern.mesh.buffer'),
-                           n       = 200,...) { 
+                           n       = getOption('tern.mesh.size'),
+                           buffer  = getOption('tern.mesh.buffer'),...) { 
     
     #Check the Coords
     last_coord <- get_last_coord()
@@ -50,7 +52,8 @@ StatDensityTern <- proto(Statnew, {
     df[,.$required_aes] = df[,.$required_aes]/rowSums(df[,.$required_aes])
     
     #Determine the Limits
-    lims = c(expandRange(c(1,0),buffer),expandRange(c(1,0),buffer))
+    lims = c(expandRange(c(1,0),buffer),
+             expandRange(c(1,0),buffer))
     
     #Execute the Density on the 
     dens = safe.call(kde2d,list(x = df$x, y = df$y, n = n ,lims = lims, ...))

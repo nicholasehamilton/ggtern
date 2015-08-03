@@ -2,12 +2,15 @@
 % Please edit documentation in R/stat-interpolate-tern.R
 \name{stat_interpolate_tern}
 \alias{StatInterpolateTern}
+\alias{interpolation}
 \alias{stat_interpolate_tern}
+\alias{stat_interpolation}
 \title{Ternary Interpolation}
 \usage{
 stat_interpolate_tern(mapping = NULL, data = NULL,
   geom = "InterpolateTern", position = "identity", na.rm = FALSE,
-  buffer = getOption("tern.mesh.buffer"), ...)
+  n = getOption("tern.mesh.size"), buffer = getOption("tern.mesh.buffer"),
+  formula = value ~ poly(x, y, degree = 2, raw = TRUE), method = "lm", ...)
 }
 \arguments{
 \item{mapping}{The aesthetic mapping, usually constructed with
@@ -19,15 +22,23 @@ the plot defaults.}
 
 \item{geom}{The geometric object to use display the data}
 
-\item{position}{The position adjustment to use for overlappling points
+\item{position}{The position adjustment to use for overlapping points
 on this layer}
 
 \item{na.rm}{If \code{FALSE} (the default), removes missing values with
 a warning.  If \code{TRUE} silently removes missing values.}
 
+\item{n}{Number of grid points in each direction of the mesh. Can be scalar or a length-2 integer vector.}
+
 \item{buffer}{factor to buffer the mesh, to prevent ugly truncation of contours, 1.0 means no buffering}
 
-\item{...}{other arguments passed on to the \code{method}, such as  \code{\link{lm}} (default) or \code{\link{loess}}}
+\item{formula}{formula to use in smoothing function, eg. \code{y ~ x},
+\code{y ~ poly(x, 2)}, \code{y ~ log(x)}}
+
+\item{method}{smoothing method (function) to use, eg. \code{\link{lm}}, \code{\link{glm}}, \code{\link{gam}},
+\code{link{loess}} or \code{\link{rlm}}}
+
+\item{...}{other arguments passed on to the \code{method} argument above}
 }
 \value{
 A data frame with additional column:
@@ -37,12 +48,19 @@ A data frame with additional column:
 This is the heavily requested statistic for interpolating between ternary values, results being
 rendered using contours on a ternary mesh
 }
-\details{
+\section{Model Formula}{
+
 By default, the interpolation is done using multivariate linear regression using the
-following \code{formula=value~poly(x,y,z,degree=2)},
-however this can be changed to anything that suits the user by including \code{method} and/or \code{formula} arguments
+following expression: \code{formula=value~poly(x,y,degree=2)}, where \code{value} is the response (dependent)
+variable, and the independent predictor variables, \code{x} and \code{y} represent the variables
+matching to twp (2) out of the three (3) ternary axis definitions (\code{T,L} or \code{R})
+as documented and defined within \code{\link{coord_tern}}.
+
+Having said the above, the model formula can be changed to anything that suits the user by
+including \code{method} and/or \code{formula} arguments
 which get passed through to the model fitting and prediction components of the calculation routine.
 }
+
 \section{Aesthetics}{
 
 \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("stat", "InterpolateTern")}

@@ -10,7 +10,7 @@
 #' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "DensityTern")}
 #' @inheritParams ggplot2::geom_point
 #' @inheritParams ggplot2::geom_path
-#' @param buffer factor to buffer the mesh, to prevent ugly truncation of contours, 1.0 means no buffering
+#' @inheritParams ggtern::stat_density_tern
 #' @export
 geom_density_tern <- function ( mapping   = NULL, 
                                 data      = NULL, 
@@ -20,6 +20,7 @@ geom_density_tern <- function ( mapping   = NULL,
                                 linejoin  = "round", 
                                 linemitre = 1, 
                                 na.rm     = FALSE,
+                                n         = getOption('tern.mesh.size'),
                                 buffer    = getOption('tern.mesh.buffer'),...){
   GeomDensityTern$new(  mapping   = mapping, data = data, 
                         stat      = stat, 
@@ -28,7 +29,9 @@ geom_density_tern <- function ( mapping   = NULL,
                         lineend   = lineend, 
                         linejoin  = linejoin, 
                         linemitre = linemitre, 
-                        na.rm     = na.rm,...)
+                        na.rm     = na.rm,
+                        n = n
+                        ,...)
 }
 
 GeomDensityTern <- proto(ggint$GeomPath,{

@@ -3,33 +3,46 @@
 #' This is the heavily requested statistic for interpolating between ternary values, results being
 #' rendered using contours on a ternary mesh
 #'
+#' @section Model Formula:
 #' By default, the interpolation is done using multivariate linear regression using the 
-#' following \code{formula=value~poly(x,y,z,degree=2)}, 
-#' however this can be changed to anything that suits the user by including \code{method} and/or \code{formula} arguments
+#' following expression: \code{formula=value~poly(x,y,degree=2)}, where \code{value} is the response (dependent)
+#' variable, and the independent predictor variables, \code{x} and \code{y} represent the variables 
+#' matching to twp (2) out of the three (3) ternary axis definitions (\code{T,L} or \code{R}) 
+#' as documented and defined within \code{\link{coord_tern}}.
+#' 
+#' Having said the above, the model formula can be changed to anything that suits the user by 
+#' including \code{method} and/or \code{formula} arguments
 #' which get passed through to the model fitting and prediction components of the calculation routine.
+#' 
 #' @section Aesthetics:
 #' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("stat", "InterpolateTern")}
 #' @param na.rm If \code{FALSE} (the default), removes missing values with
 #'    a warning.  If \code{TRUE} silently removes missing values.
 #' @return A data frame with additional column:
 #'  \item{level}{height of contour}
+#' @inheritParams ggtern::stat_density_tern
 #' @inheritParams ggplot2::stat_density2d
 #' @inheritParams ggplot2::geom_point
 #' @inheritParams ggplot2::geom_path
+#' @inheritParams ggplot2::stat_smooth
+#' @param method smoothing method (function) to use, eg. \code{\link{lm}}, \code{\link{glm}}, \code{\link{gam}}, 
+#' \code{link{loess}} or \code{\link{rlm}}
+#' @param ... other arguments passed on to the \code{method} argument above
+#' @aliases StatInterpolateTern stat_interpolation interpolation
 #' @seealso \code{\link{geom_interpolate_tern}}, \code{\link{lm}}, \code{\link{loess}}
-#' @param buffer factor to buffer the mesh, to prevent ugly truncation of contours, 1.0 means no buffering
-#' @param ... other arguments passed on to the \code{method}, such as  \code{\link{lm}} (default) or \code{\link{loess}}
-#' @aliases StatInterpolateTern
 #' @export
 stat_interpolate_tern <- function (mapping  = NULL, 
                                    data     = NULL, 
                                    geom     = "InterpolateTern", 
                                    position = "identity", 
                                    na.rm    = FALSE,
+                                   n        = getOption('tern.mesh.size'),
                                    buffer   = getOption('tern.mesh.buffer'),
+                                   formula  = value~poly(x,y, degree = 2, raw=TRUE),
+                                   method   = "lm",
                                    ...) {
   StatInterpolateTern$new(mapping = mapping, data = data, geom = geom, 
-                          position = position, na.rm = na.rm, buffer=buffer, ...)
+                          position = position, na.rm = na.rm, buffer=buffer,formula=formula,method=method,n=n,...)
 }
 
 StatInterpolateTern <- proto(ggint$Stat, {
@@ -43,10 +56,11 @@ StatInterpolateTern <- proto(ggint$Stat, {
                            contour      = TRUE, 
                            geometry     = "interpolate_tern",
                            buffer       = getOption('tern.mesh.buffer'),
-                           n            = 200,
+                           n            = getOption('tern.mesh.size'),
                            method       = "lm",
-                           formula      = value~poly(x,y,z, degree = 2, raw=TRUE),
+                           formula      = value~poly(x,y, degree = 2, raw=TRUE),
                            ...) {
+    
     #Check the Coords
     last_coord <- get_last_coord()
     if(empty(data) | is.null(last_coord) | inherits(last_coord,"ternary") == FALSE){ return(data.frame()) }
@@ -67,8 +81,8 @@ StatInterpolateTern <- proto(ggint$Stat, {
     
     #Determine the Limits
     lims = c(expandRange(c(1,0),buffer),expandRange(c(1,0),buffer))
-    x             = seq(lims[1],lims[2],length.out = n)
-    y             = seq(lims[3],lims[4],length.out = n)
+    x             = seq(lims[1],lims[2],length.out = n[1])
+    y             = seq(lims[3],lims[4],length.out = if(length(n) > 1){n[2]}else{n[1]})
     df            = data.frame(expand.grid(x = x, y = y),PANEL=df$PANEL[1],group=df$group[1]); 
     df$z          = 1 - (df$x + df$y)
     

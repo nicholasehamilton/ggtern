@@ -45,15 +45,22 @@ GeomPolygonTern <- proto( ggint$GeomPolygon, {
       polygrob = pathgrob = .zeroGrob
       
       if(nrow(df) > 0){
-        #Polygons, with no border (color)
-        df.poly <- subset(df,!(fill == 'transparent') | fill == NA)
-        if(nrow(df.poly) > 0){
-          df.poly$colour <- 'transparent'
-          polygrob <- (GeomPolygon)$draw(data=df.poly, scales=scales, coordinates=coordinates,...)
-        }
         
-        #Paths, to immitate the border
-        pathgrob   <- (GeomPath)$draw(data=df, scales=scales, coordinates=coordinates,...)
+        #Check the linetype is ok
+        okLineType = all(df$linetype %in% c(1))
+        
+        #Polygons, with no border (color)
+        if(okLineType){
+          df.poly <- subset(df,!(fill == 'transparent') | fill == NA)
+          if(nrow(df.poly) > 0){
+            df.poly$colour <- 'transparent'
+            polygrob <- (GeomPolygon)$draw(data=df.poly, scales=scales, coordinates=coordinates,...)
+          }
+          pathgrob   <- (GeomPath)$draw(data=df, scales=scales, coordinates=coordinates,...)
+        
+        }else{
+          polygrob  <- (GeomPolygon)$draw(data=df, scales=scales, coordinates=coordinates,...)
+        }
       }
       
       #Done

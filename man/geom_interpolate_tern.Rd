@@ -4,12 +4,14 @@
 \alias{GeomInterpolateTern}
 \alias{InterpolateTern}
 \alias{geom_interpolate_tern}
+\alias{geom_interpolation}
 \title{Ternary Interpolation}
 \usage{
 geom_interpolate_tern(mapping = NULL, data = NULL,
   stat = "InterpolateTern", position = "identity", lineend = "butt",
   linejoin = "round", linemitre = 1, na.rm = FALSE,
-  buffer = getOption("tern.mesh.buffer"), ...)
+  n = getOption("tern.mesh.size"), buffer = getOption("tern.mesh.buffer"),
+  ...)
 }
 \arguments{
 \item{mapping}{The aesthetic mapping, usually constructed with
@@ -33,6 +35,8 @@ on this layer}
 
 \item{na.rm}{If \code{FALSE} (the default), removes missing values with
 a warning.  If \code{TRUE} silently removes missing values.}
+
+\item{n}{Number of grid points in each direction of the mesh. Can be scalar or a length-2 integer vector.}
 
 \item{buffer}{factor to buffer the mesh, to prevent ugly truncation of contours, 1.0 means no buffering}
 
