@@ -71,8 +71,14 @@ StatInterpolateTern <- proto(ggint$Stat, {
     y             = seq(lims[3],lims[4],length.out = n)
     df            = data.frame(expand.grid(x = x, y = y),PANEL=df$PANEL[1],group=df$group[1]); 
     df$z          = 1 - (df$x + df$y)
-    prediction    = suppressWarnings(predict(fit,newdata=df))
-    df$z          = as.numeric(prediction)
+    
+    #Try and Do the Prediction
+    tryCatch({
+      prediction    = suppressWarnings(predict(fit,newdata=df))
+      df$z          = as.numeric(prediction)
+    },error=function(e){
+      stop(as.character(e))
+    })
     
     #Get the Finite Values
     df <- remove_missing(df, na.rm, name = "stat_contour_tern", finite = TRUE)
