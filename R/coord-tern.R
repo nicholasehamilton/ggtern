@@ -26,6 +26,7 @@
 #' @param Tlim the range of T in the ternary space
 #' @param Llim the range of L in the ternary space
 #' @param Rlim the range of R in the ternary space
+#' @param buffer fraction to buffer the limits by, 1.0 means no change
 #' @param clockwise DEPRECIATED, replaced by individual theme element, see \code{\link{axis.tern.clockwise}}.
 #' @return \code{coord_tern} returns a ternary coordinate system object.
 #' @export

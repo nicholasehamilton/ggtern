@@ -7,13 +7,13 @@
 #' @inheritParams ggplot2::geom_point
 #' @param allow.outside logical value indicating whether the error bars can overflow the plot area, if FALSE, bars outiside will be stripped.
 #' @section Aesthetics (geom_errorbarT): 
-#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "errorbarT")}
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "errorbart")}
 #' 
 #' @section Aesthetics (geom_errorbarL):
-#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "errorbarL")}
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "errorbarl")}
 #' 
 #' @section Aesthetics (geom_errorbarR):
-#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "errorbarR")}
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "errorbarl")}
 #' @rdname geom_errorbarTLR
 #' @name geom_errorbarTLR
 #' @examples

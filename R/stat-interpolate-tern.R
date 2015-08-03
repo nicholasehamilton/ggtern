@@ -1,21 +1,35 @@
-#' Interpolate between values are render using contours
+#' Ternary Interpolation
+#' 
+#' This is the heavily requested statistic for interpolating between ternary values, results being
+#' rendered using contours on a ternary mesh
 #'
+#' By default, the interpolation is done using multivariate linear regression using the 
+#' following \code{formula=value~poly(x,y,z,degree=2)}, 
+#' however this can be changed to anything that suits the user by including \code{method} and/or \code{formula} arguments
+#' which get passed through to the model fitting and prediction components of the calculation routine.
 #' @section Aesthetics:
-#' \Sexpr[results=rd,stage=build]{ggplot2:::rd_aesthetics("stat", "contour")}
-#'
-#' @inheritParams stat_identity
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("stat", "InterpolateTern")}
 #' @param na.rm If \code{FALSE} (the default), removes missing values with
 #'    a warning.  If \code{TRUE} silently removes missing values.
 #' @return A data frame with additional column:
 #'  \item{level}{height of contour}
+#' @inheritParams ggplot2::stat_density2d
+#' @inheritParams ggplot2::geom_point
+#' @inheritParams ggplot2::geom_path
+#' @seealso \code{\link{geom_interpolate_tern}}, \code{\link{lm}}, \code{\link{loess}}
+#' @param buffer factor to buffer the mesh, to prevent ugly truncation of contours, 1.0 means no buffering
+#' @param ... other arguments passed on to the \code{method}, such as  \code{\link{lm}} (default) or \code{\link{loess}}
+#' @aliases StatInterpolateTern
 #' @export
 stat_interpolate_tern <- function (mapping  = NULL, 
                                    data     = NULL, 
                                    geom     = "InterpolateTern", 
                                    position = "identity", 
                                    na.rm    = FALSE,
+                                   buffer   = getOption('tern.mesh.buffer'),
                                    ...) {
-  StatInterpolateTern$new(mapping = mapping, data = data, geom = geom, position = position, na.rm = na.rm, formula=formula, ...)
+  StatInterpolateTern$new(mapping = mapping, data = data, geom = geom, 
+                          position = position, na.rm = na.rm, buffer=buffer, ...)
 }
 
 StatInterpolateTern <- proto(ggint$Stat, {
@@ -28,7 +42,7 @@ StatInterpolateTern <- proto(ggint$Stat, {
                            na.rm        = FALSE, 
                            contour      = TRUE, 
                            geometry     = "interpolate_tern",
-                           buffer       = getOption('tern.densitygrid.buffer'),
+                           buffer       = getOption('tern.mesh.buffer'),
                            n            = 200,
                            method       = "lm",
                            formula      = value~poly(x,y,z, degree = 2, raw=TRUE),

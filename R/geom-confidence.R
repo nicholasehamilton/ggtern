@@ -7,7 +7,7 @@
 #' @param n the numer of points in the approximation for each confidence interval.
 #' @rdname geomconfidence
 #' @section Aesthetics:
-#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "confidence")}
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "Confidence")}
 #' @aliases GeomConfidence StatConfidence
 #' @examples
 #'   data(Feldspar)
@@ -108,7 +108,7 @@ StatConfidence <- proto(ggint$Stat, {
         }
         
         #Create the data including panel and break, append it to existing set.
-        tmp <- rbind(tmp,data.frame(x=xp1,y=yp1,group=group_i,level=level_i,PANEL=panel))
+        tmp <- rbind(tmp,data.frame(x=xp1,y=yp1,group=group_i,level=level_i,piece=i,PANEL=panel))
       }
       
       #Append

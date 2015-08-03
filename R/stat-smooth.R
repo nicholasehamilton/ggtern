@@ -3,7 +3,7 @@
 #' Aids the eye in seeing patterns in the presence of overplotting
 #' @seealso \code{\link[ggplot2]{stat_smooth}}
 #' @inheritParams ggplot2::stat_smooth
-#' @aliases StatSmoothtern
+#' @aliases StatSmoothTern
 #' @export
 stat_smooth_tern <- function (mapping = NULL, data = NULL, geom = "SmoothTern", position = "identity", 
                          method = "auto", formula = y ~ x, se = TRUE, n = 80, fullrange = FALSE, 

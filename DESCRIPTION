@@ -17,7 +17,8 @@ Imports:
   proto,
   MASS,
   sp,
-  grid
+  grid,
+  polyclip
 License: GPL-2
 URL: http://www.ggtern.com
 Collate:

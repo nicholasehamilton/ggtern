@@ -21,7 +21,7 @@
   options("tern.arrowstart"            = 0.3)
   options("tern.arrowfinish"           = 0.7)
   options("tern.arrowbaseline"         = 2)
-  options("tern.densitygrid.buffer"    = 1.50)
+  options("tern.mesh.buffer"           = 1.50)
   options("tern.panel.buffer"          = 1.25)
   
   #Set the theme and the last coordinates.

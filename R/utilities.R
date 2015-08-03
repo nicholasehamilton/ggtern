@@ -130,8 +130,7 @@ transform_tern_to_cart <- function(T,L,R,data=data.frame(T=T,L=L,R=R),...,Tlim=c
   
   #Adjust for the Limits.
   .adj <- function(input,lim){
-    if(is.null(lim))
-      lim=c(0,1)
+    if(is.null(lim)) lim=c(0,1)
     (input-min(lim))/(abs(diff(lim)))
   }
   d$T <- .adj(d$T,Tlim)
@@ -421,7 +420,7 @@ undoCartesian <- function(df,coord){
 #' @param x range of values, required to be numeric and of length 2
 #' @param m multiplyer
 expandRange <- function(x,m=1){
-  if(!is.numeric(x) | length(x) != 2)stop("x must numeric and of length 2")
+  if(!is.numeric(x) | length(x) != 2) x = c(0,1)
   if(diff(x)   == 0)return(x)
   med = mean(range(x))
   c(med + (x[1] - med)*m[1],
@@ -438,25 +437,35 @@ ternLimitsForCoord = function(coord){
 }
 
 
-#' Determine Expansiion Buffer on Ternary Surface
+#' Determine Ternary Expansion
 #' 
+#' Determines the Expansion Buffer on the Ternary Sufrace, 
 #' Similar to the 'expand' term in ggplot2 on a rectangular grid
-#' @parm coord ternary coordinates
+#' @param coord ternary coordinates
+#' @param by fraction to expand by
+#' @return numeric scalar, of the amount to expand ternary grid
 expandTern <- function(coord,by=getOption('tern.expand')){
   tryCatch({
-    lim = ternLimitsForCoord(coord)
-    if(is.numeric(by)) return(max(by)*max(sapply(lim,diff)))
+    if(inherits(coord,'ternary')){
+      lim = ternLimitsForCoord(coord)
+      if(is.numeric(by)) return(max(by)*max(sapply(lim,function(x){
+        if(is.null(x) | !is.numeric(x)){ x = c(0,1) }
+        diff(x)
+      })))
+    }
   },error=function(e){
     #pass
   })
-  return(c(0,0))
+  return(by)
 }
 
 #' Suppress Colours
-#' 
+#'
 #' Function to Suppress Colours
 #' @param data ggplot dataframe
 #' @param coord ternary coordinates
+#' @param toColor the colour to suppress to
+#' @param remove should suppressed points be removed entirely
 suppressColours <- function(data,coord,toColor="transparent",remove=FALSE){
   if(!inherits(coord,"ternary")) return(data)
   if(!getOption('tern.discard.external')) return(data)

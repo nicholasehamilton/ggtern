@@ -1,23 +1,28 @@
 #' 2d density estimation - (ggtern version)
 #'
 #' Patched version of the 2d density estimation.
-#' @inheritParams ggtern::stat_density2d
+#' @inheritParams ggplot2::geom_density2d
 #' @importFrom MASS kde2d
-#' @name stat_density2d
-#' @aliases StatDensity2dtern
+#' @name stat_density_tern
+#' @aliases StatDensityTern
+#' @param buffer factor to buffer the mesh, to prevent ugly truncation of contours, 1.0 means no buffering
+#' @param contour display the contour or show the mesh
 #' @export
-#' @seealso \code{\link[ggtern]{geom_density2d}}
+#' @seealso \code{\link[ggtern]{geom_density_tern}}
 stat_density_tern <- function ( mapping  = NULL, 
                                 data     = NULL,
                                 stat     = "DensityTern",
                                 position = "identity", 
                                 na.rm    = FALSE, 
                                 contour  = TRUE, 
-                                n        = 200, 
-                                buffer   = getOption('tern.densitygrid.buffer'),...) {
+                                buffer   = getOption('tern.mesh.buffer'),...) {
   StatDensityTern$new(
-    mapping  = mapping,data = data, buffer = buffer,
-    position = position, na.rm = na.rm, contour = contour, n = n,...)
+    mapping  = mapping,
+    data     = data, 
+    buffer   = buffer,
+    position = position, 
+    na.rm    = na.rm, 
+    contour  = contour,...)
              
 }
 
@@ -28,10 +33,11 @@ StatDensityTern <- proto(Statnew, {
   desc         <- "Density Estimate for Ternary Diagram"
   default_geom <- function(.) GeomDensityTern
   calculate    <- function(., data, scales,
-                           na.rm = FALSE, 
+                           na.rm   = FALSE, 
                            contour = TRUE, 
                            geometry="density_tern",
-                           buffer= getOption('tern.densitygrid.buffer'),n = n,...) { 
+                           buffer  = getOption('tern.mesh.buffer'),
+                           n       = 200,...) { 
     
     #Check the Coords
     last_coord <- get_last_coord()

@@ -41,14 +41,14 @@
 #' @rdname undocumented
 rd_aesthetics <- function(type, name) {
   if(toupper(type)=="GEOM"){
-    aes = .geom_aesthetics(tolower(name))
+    aes = .geom_aesthetics(name)
   }else if(toupper(type)=="STAT"){
-    aes = .stat_aesthetics(tolower(name))
+    aes = .stat_aesthetics(name)
   }else if(toupper(type)=="COORD"){
-    aes = .coord_aesthetics(tolower(name))
+    aes = .coord_aesthetics(name)
   }else{
     obj <- get(.firstUpper(type))
-    aes <- .aesthetics(obj$find(tolower(name)))
+    aes <- .aesthetics(obj$find(name))
   }
   
   paste("\\code{", type, "_", name, "} ",

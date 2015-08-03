@@ -2,7 +2,12 @@
 #' Polygon Geometry (Ternary Version)
 #' 
 #' Add polygons to the ternary surface
+#' @aliases PolygonTern GeomPolygonTern
+#' @section Aesthetics: 
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "PolygonTern")}
 #' @inheritParams ggplot2::geom_polygon
+#' @inheritParams ggplot2::geom_point
+#' @inheritParams ggplot2::geom_path
 #' @aliases GeomPolygonTern
 #' @export
 geom_polygon_tern <- function (mapping = NULL, data = NULL, stat = "identity", position = "identity", ...) {
@@ -16,7 +21,8 @@ GeomPolygonTern <- proto( ggint$GeomPolygon, {
   default_aes  <- function(.) aes(colour="NA", fill="grey20", size=0.5, linetype=1, alpha = NA)
   guide_geom   <- function(.) "polygon"
   draw         <- function(., data, scales, coordinates,...) {
-    ##DO THE VARIABLE AESTHETIC CHECK x and y for cartesian, and x,y,z for ternary...
+    #Run the Checks
+    if(!inherits(coordinates,"ternary")){ return(.zeroGrob) }
     required_aes <- sort(unique(c(.$required_aes,coordinates$required_aes)))
     check_required_aesthetics(required_aes, names(data),"geom_confidence")
     
@@ -24,20 +30,16 @@ GeomPolygonTern <- proto( ggint$GeomPolygon, {
     data <- remove_missing(data, na.rm = na.rm,c(required_aes),name = "geom_confidence")
     if(empty(data)) return(.zeroGrob)
     
-    #Check
-    if(!inherits(coordinates,"ternary")){
-      warning("Coordinates Must be Ternary, returning zerogrob")
-      return(.zeroGrob)
-    }
-    
-    #Which to Ply On 
-    plyon = c("PANEL","group","level","piece")
-    
     ##Build the List of Grobs in Sequence
-    contours = dlply(data,plyon,function(df.orig){
+    contours = dlply(data,c("PANEL","group","level","piece"),function(df){
       
       #Kill the Colours
-      df  <- suppressColours(df.orig,coordinates,remove=FALSE)
+      if('point.in.polygon.status' %in% names(df)){
+        ix <- which(df$point.in.polygon.status %in% c(0,2,3))
+        if(length(ix) > 0) df[ix,"colour"] = 'transparent'
+      }else{
+        df  <- suppressColours(df,coordinates,remove=FALSE)
+      }
       
       #Default Grobs
       polygrob = pathgrob = .zeroGrob

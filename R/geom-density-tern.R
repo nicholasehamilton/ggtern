@@ -5,11 +5,12 @@
 #' 
 #' This can be useful for dealing with overplotting. Additional weight aesthetic (see aesthetic section below) permits better weighting if desired
 #'
-#' @aliases Density2dTern GeomDensity2dtern
+#' @aliases DensityTern GeomDensityTern
 #' @section Aesthetics: 
-#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "density2dtern")}
+#' \Sexpr[results=rd,stage=build]{ggtern:::rd_aesthetics("geom", "DensityTern")}
 #' @inheritParams ggplot2::geom_point
 #' @inheritParams ggplot2::geom_path
+#' @param buffer factor to buffer the mesh, to prevent ugly truncation of contours, 1.0 means no buffering
 #' @export
 geom_density_tern <- function ( mapping   = NULL, 
                                 data      = NULL, 
@@ -17,10 +18,9 @@ geom_density_tern <- function ( mapping   = NULL,
                                 position  = "identity",
                                 lineend   = "butt", 
                                 linejoin  = "round", 
-                                linemitre = 1,
-                                n         = 200, 
+                                linemitre = 1, 
                                 na.rm     = FALSE,
-                                buffer    = getOption('tern.densitygrid.buffer'),...){
+                                buffer    = getOption('tern.mesh.buffer'),...){
   GeomDensityTern$new(  mapping   = mapping, data = data, 
                         stat      = stat, 
                         buffer    = buffer,
@@ -28,7 +28,7 @@ geom_density_tern <- function ( mapping   = NULL,
                         lineend   = lineend, 
                         linejoin  = linejoin, 
                         linemitre = linemitre, 
-                        na.rm     = na.rm,n = n,...)
+                        na.rm     = na.rm,...)
 }
 
 GeomDensityTern <- proto(ggint$GeomPath,{
