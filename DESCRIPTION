@@ -1,7 +1,7 @@
 Package: ggtern
 Type: Package
 Title: An Extension to 'ggplot2', for the Creation of Ternary Diagrams
-Version: 1.0.6.0
+Version: 1.0.6.1
 Date: 2015-04-15
 Author: Nicholas Hamilton <nick@ggtern.com>
 Maintainer: Nicholas Hamilton <nick@ggtern.com>
@@ -86,4 +86,5 @@ Collate:
   'theme-novar-tern.R'
   'stat-interpolate-tern.R'
   'geom-interpolate-tern.R'
+  'tern-tlr2xy.R'
   

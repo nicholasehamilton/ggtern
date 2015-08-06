@@ -31,6 +31,7 @@
 #' panel.grid.tern panel.grid.tern.major panel.grid.tern.major.T panel.grid.tern.major.L panel.grid.tern.major.R 
 #' axis.tern.showgrid.minor panel.grid.tern.minor 
 #' panel.grid.tern.minor.T panel.grid.tern.minor.L panel.grid.tern.minor.R ternary.options
+#' panel.margin.tern
 #' axis.tern.showlabels
 #' @name theme_elements
 #' @rdname theme_elements
@@ -114,7 +115,9 @@ ggint$.element_tree$panel.grid.tern.minor.T  = .el_def("element_line", "panel.gr
 ggint$.element_tree$panel.grid.tern.minor.L  = .el_def("element_line", "panel.grid.tern.minor",description="Minor Gridline for LHS Axis") #
 ggint$.element_tree$panel.grid.tern.minor.R  = .el_def("element_line", "panel.grid.tern.minor",description="Minor Gridline for RHS Axis") #
 
+ggint$.element_tree$panel.margin.tern        = .el_def("unit",'unit'                          ,description="Panel Margin of the Ternary Plot Region")
+
 #TERNARY OPTIONS.
-ggint$.element_tree$ternary.options          = .el_def("element_ternary","element_ternary",    description="Ternary Specific Options (Depreciated)***") #
+ggint$.element_tree$ternary.options          = .el_def("element_ternary","element_ternary"    ,description="Ternary Specific Options (Depreciated)***") #
 
 

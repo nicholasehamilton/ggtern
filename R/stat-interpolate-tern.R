@@ -76,11 +76,19 @@ StatInterpolateTern <- proto(ggint$Stat, {
       func = loess}
     }else{func=method}
     
+    #Local function to adjust the range, depending on if inverse or not
+    getLim <- function(lim){
+      if(is.null(lim)) lim=c(0,1)
+      if( !diff(lim) ) lim=c(0,1)
+      lim
+    }
+    
     #Fit the Model
     fit           = safe.call(func,list(formula=formula,data=df,...))
     
     #Determine the Limits
-    lims = c(expandRange(c(1,0),buffer),expandRange(c(1,0),buffer))
+    lims = c(expandRange(getLim(last_coord$limits$L),buffer[1]),
+             expandRange(getLim(last_coord$limits$T),if(length(buffer) > 1){buffer[2]}else{buffer[1]}))
     x             = seq(lims[1],lims[2],length.out = n[1])
     y             = seq(lims[3],lims[4],length.out = if(length(n) > 1){n[2]}else{n[1]})
     df            = data.frame(expand.grid(x = x, y = y),PANEL=df$PANEL[1],group=df$group[1]); 

@@ -26,7 +26,6 @@
 #' @param Tlim the range of T in the ternary space
 #' @param Llim the range of L in the ternary space
 #' @param Rlim the range of R in the ternary space
-#' @param buffer fraction to buffer the limits by, 1.0 means no change
 #' @param clockwise DEPRECIATED, replaced by individual theme element, see \code{\link{axis.tern.clockwise}}.
 #' @return \code{coord_tern} returns a ternary coordinate system object.
 #' @export
@@ -38,16 +37,7 @@ coord_tern <- function(T      = getOption("tern.default.T"),
                        Tlim   = NULL,
                        Llim   = NULL,
                        Rlim   = NULL,
-                       buffer = getOption('tern.panel.buffer'),
                        clockwise) {
-  
-  #Expand the x and y ranges
-  tryCatch({
-    xlim = mean(xlim) + abs(buffer[1])*c(-1,1)*diff(xlim)/2
-    ylim = mean(ylim) + abs(buffer[1])*c(-1,1)*diff(ylim)/2
-  },error=function(e){
-    
-  })
   
   ##Validate x and y lims...
   validateLims <- function(p,s){
@@ -282,7 +272,7 @@ coord_render_fg.ternary <- function(coord,details,theme){
   items <- .render.titles(data.extreme,items,theme,details) #MAIN TITLES
   items <- .render.arrows(data.extreme,items,theme,details) #ARROWS
   
-  #render.
+  #render
   ggint$ggname("foreground",gTree(children = do.call("gList", items)))
 }
 
@@ -300,8 +290,8 @@ coord_render_bg.ternary <- function(coord,details,theme){
   
   #Build the plot region.
   items <- .render.background(data.extreme,items,theme)     #BACKGROUND...
-  items <- .render.grids(data.extreme,items,theme,details)  #GRIDS
-  items <- .render.border(data.extreme,items,theme)         #BORDER
+  items <- .render.grids(data.extreme,     items,theme,details)  #GRIDS
+  items <- .render.border(data.extreme,    items,theme)         #BORDER
   
   #render.
   ggint$ggname("background",gTree(children = do.call("gList", items)))

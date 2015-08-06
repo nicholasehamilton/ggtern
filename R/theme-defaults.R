@@ -47,7 +47,8 @@
                              grid.linetype.minor = grid.linetype,
                              grid.major.size     = NULL,
                              ticklength.major    = unit(0.010,"npc"),
-                             ticklength.minor    = unit(0.005,"npc")){  
+                             ticklength.minor    = unit(0.005,"npc"),
+                             margin.tern         = unit(1,"lines")){  
   #TEXT SIZES
   size.base      <- max(base_size-4,2)
   size.text      <- max(base_size-2,4)
@@ -125,7 +126,9 @@
       axis.tern.ticks.minor   = element_line(size=0.20),
       axis.tern.ticks.minor.T = element_line(colour=col.T),
       axis.tern.ticks.minor.L = element_line(colour=col.L),
-      axis.tern.ticks.minor.R = element_line(colour=col.R)
+      axis.tern.ticks.minor.R = element_line(colour=col.R),
+      
+      panel.margin.tern       = margin.tern
     )
 }
 
