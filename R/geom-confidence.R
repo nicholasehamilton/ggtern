@@ -76,39 +76,44 @@ StatConfidence <- proto(ggint$Stat, {
       #If ternary conduct isometricLogRatio
       z  <- ifthenelse(is.tern,isomLR(df[,c(lc$L,lc$R,lc$T)]),df[,.$required_aes])
       
-      #
-      mu <- colMeans(z)
-      cm <- cov(z)
-      dat<- mahalanobisDistance(z, mu, cm, whichlines=breaks,m=n)
-      
-      #The panel
-      panel <- unique(df$PANEL)
-      
-      #The main group
-      group <- unique(df$group)
-      
       #Data frame to store result for each break inside each panel.
       tmp <- data.frame()
       
-      #for each break
-      for(i in c(1:length(breaks))){
-        #The subgroup for index i
-        group_i = paste(group,i,sep="-")
-        level_i = breaks[i]
+      #Remove Infinite and NaN's etc..
+      z = z[is.finite(z[,1]) & is.finite(z[,2]),]
+      
+      #Proceed if Data Exists
+      if(nrow(z) > 0){
+        mu <- colMeans(z)
+        cm <- cov(z)
+        dat<- mahalanobisDistance(z, mu, cm, whichlines=breaks,m=n)
         
-        #default x and y from mahalanobis distance for break 'i'
-        xp1 <- dat$mdX[,i]
-        yp1 <- dat$mdY[,i]
+        #The panel
+        panel <- unique(df$PANEL)
         
-        #if ternary conduct inverse isometric log ratio
-        if(is.tern){
-          inv <- isomLRinv(cbind(xp1,yp1))
-          xp1 <- inv[, 2] + inv[, 3]/2
-          yp1 <- inv[, 3] * sqrt(3)/2
+        #The main group
+        group <- unique(df$group)
+        
+        #for each break
+        for(i in c(1:length(breaks))){
+          #The subgroup for index i
+          group_i = paste(group,i,sep="-")
+          level_i = breaks[i]
+          
+          #default x and y from mahalanobis distance for break 'i'
+          xp1 <- dat$mdX[,i]
+          yp1 <- dat$mdY[,i]
+          
+          #if ternary conduct inverse isometric log ratio
+          if(is.tern){
+            inv <- isomLRinv(cbind(xp1,yp1))
+            xp1 <- inv[, 2] + inv[, 3]/2
+            yp1 <- inv[, 3] * sqrt(3)/2
+          }
+          
+          #Create the data including panel and break, append it to existing set.
+          tmp <- rbind(tmp,data.frame(x=xp1,y=yp1,group=group_i,level=level_i,piece=i,PANEL=panel))
         }
-        
-        #Create the data including panel and break, append it to existing set.
-        tmp <- rbind(tmp,data.frame(x=xp1,y=yp1,group=group_i,level=level_i,piece=i,PANEL=panel))
       }
       
       #Append
