@@ -506,3 +506,29 @@ enforceTernaryCoordinates <- function(){
   return(coordinates)
 }
 
+#' Get Number of Breaks
+#' 
+#' Calculates the Breaks for Major or Minor Gridlines
+#' based on the input limits.
+#' @param limits the scale limits
+#' @param isMajor major or minor grids
+#' @param nMajor number of major breaks
+#' @param nMinor number of minor breaks
+getBreaks <- function(limits,isMajor,nMajor=5,nMinor=2*nMajor){
+  if(is.null(limits)){ limits = c(0,1) }
+  if(!all(is.numeric(limits))){ limits=c(0,1) }
+  if(diff(limits) == 0){
+    return(if(isMajor){getOption("tern.breaks.default")}else{getOption("tern.breaks.default.minor")})
+  }else{
+    ret   = pretty(limits,nMajor)
+    if(!isMajor){
+      ret = ret[which(!pretty(limits,nMinor) %in% ret)]
+    }
+    if(!includeLowerLimit)
+      ret = ret[which(!ret %in% min(limits))]
+    ret
+  }
+}
+
+
+

@@ -1,6 +1,7 @@
 ggtern 1.0.6.1
 ----------------------------------------------------------------
 * Replaced the padding argument of the coord_tern constructor, with an insertion of rows and columns around the main panel in the rendering routine, with an associated theme element 'panel.margin.tern', which is distinct from and not to be confused with 'plot.margin' or 'panel.margin'
+* Better logic in determining the major and minor breaks in the event that the user does not specify explicitly
 
 ggtern 1.0.6.0
 ----------------------------------------------------------------

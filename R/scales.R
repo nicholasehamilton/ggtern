@@ -29,11 +29,11 @@ NULL
 #' @rdname scale_TLR_continuous
 #' @export
 scale_T_continuous <- function(name=NULL,
-                               breaks=getOption("tern.breaks.default"),
-                               minor_breaks=getOption("tern.breaks.default.minor"),
-                               labels=100*breaks,
-                               limits=waiver()){
-  if(!is.numeric(breaks)){minor_breaks=major_breaks="none"}
+                               limits       = waiver(),
+                               breaks       = getBreaks(limits,TRUE),
+                               minor_breaks = getBreaks(limits,FALSE),
+                               labels       = 100*breaks){
+  if(!is.numeric(breaks)){minor_breaks=breaks="none"}
   if(length(labels) == 1 & length(breaks) > 1){labels = rep(labels,length(breaks))}
   ret <- continuous_scale(c("T"),scale_name="tern_T",identity,breaks=breaks,minor_breaks=minor_breaks,labels=labels,
                           expand = waiver(),guide = "none",limits=limits,name=name)
@@ -45,8 +45,12 @@ scale_T_continuous <- function(name=NULL,
 #' \code{scale_L_continuous} creates a continuous scale for the left (L) species in the ternary diagram
 #' @rdname scale_TLR_continuous
 #' @export
-scale_L_continuous <- function(name=NULL,breaks=getOption("tern.breaks.default"),minor_breaks=getOption("tern.breaks.default.minor"),labels=100*breaks,limits=waiver()){
-  if(!is.numeric(breaks)){minor_breaks=major_breaks="none"}
+scale_L_continuous <- function(name=NULL,
+                               limits       = waiver(),
+                               breaks       = getBreaks(limits,TRUE),
+                               minor_breaks = getBreaks(limits,FALSE),
+                               labels       = 100*breaks){
+  if(!is.numeric(breaks)){minor_breaks=breaks="none"}
   if(length(labels) == 1 & length(breaks) > 1){labels = rep(labels,length(breaks))}
   ret <- continuous_scale(c("L"),scale_name="tern_L", identity,breaks=breaks,minor_breaks=minor_breaks,labels=labels,
                           expand = waiver(), guide = "none",limits=limits,name=name)
@@ -58,8 +62,12 @@ scale_L_continuous <- function(name=NULL,breaks=getOption("tern.breaks.default")
 #' \code{scale_R_continuous} creates a continuous scale for the right (R) species in the ternary diagram
 #' @rdname scale_TLR_continuous
 #' @export
-scale_R_continuous <- function(name=NULL,breaks=getOption("tern.breaks.default"),minor_breaks=getOption("tern.breaks.default.minor"),labels=100*breaks,limits=waiver()){
-  if(!is.numeric(breaks)){minor_breaks=major_breaks="none"}
+scale_R_continuous <- function(name=NULL,
+                               limits       = waiver(),
+                               breaks       = getBreaks(limits,TRUE),
+                               minor_breaks = getBreaks(limits,FALSE),
+                               labels       = 100*breaks){
+  if(!is.numeric(breaks)){minor_breaks=breaks="none"}
   if(length(labels) == 1 & length(breaks) > 1){labels = rep(labels,length(breaks))}
   ret <- continuous_scale(c("R"),scale_name="tern_R",identity,breaks=breaks,minor_breaks=minor_breaks,labels=labels,
                           expand = waiver(), guide = "none",limits=limits,name=name)
