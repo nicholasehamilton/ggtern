@@ -517,18 +517,25 @@ enforceTernaryCoordinates <- function(){
 getBreaks <- function(limits,isMajor,nMajor=5,nMinor=2*nMajor){
   if(is.null(limits)){ limits = c(0,1) }
   if(!all(is.numeric(limits))){ limits=c(0,1) }
-  if(diff(limits) == 0){
+  if(diff(range(limits)) == 0){
     return(if(isMajor){getOption("tern.breaks.default")}else{getOption("tern.breaks.default.minor")})
   }else{
-    ret   = pretty(limits,nMajor)
+    ret   = pretty(limits,n=nMajor)
     if(!isMajor){
-      ret = ret[which(!pretty(limits,nMinor) %in% ret)]
+      r = range(ret)
+      d = diff(r)/(length(ret)-1)
+      minor = seq(min(ret)-d,max(ret)+d,by=d/2)
+      minor = minor[which(minor >= min(limits) & minor <= max(limits))]
+      ret   = minor[which(!minor %in% ret)]
     }
-    if(!includeLowerLimit)
-      ret = ret[which(!ret %in% min(limits))]
+    ret = ret[which(!ret %in% min(limits))]
     ret
   }
 }
+
+
+
+
 
 
 

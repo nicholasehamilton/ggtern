@@ -6,8 +6,7 @@
 \usage{
 coord_tern(T = getOption("tern.default.T"), L = getOption("tern.default.L"),
   R = getOption("tern.default.R"), xlim = c(0, 1), ylim = c(0, 1),
-  Tlim = NULL, Llim = NULL, Rlim = NULL,
-  buffer = getOption("tern.panel.buffer"), clockwise)
+  Tlim = NULL, Llim = NULL, Rlim = NULL, clockwise)
 }
 \arguments{
 \item{T}{the Top Mapping (default ['x', 'y' or 'z'] stored in global option \code{'tern.default.T'})}
@@ -25,8 +24,6 @@ coord_tern(T = getOption("tern.default.T"), L = getOption("tern.default.L"),
 \item{Llim}{the range of L in the ternary space}
 
 \item{Rlim}{the range of R in the ternary space}
-
-\item{buffer}{fraction to buffer the limits by, 1.0 means no change}
 
 \item{clockwise}{DEPRECIATED, replaced by individual theme element, see \code{\link{axis.tern.clockwise}}.}
 }

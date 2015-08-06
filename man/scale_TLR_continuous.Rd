@@ -16,28 +16,28 @@
 \alias{scale_transform.continuous_ternary}
 \title{Ternary Continuous Scales}
 \usage{
-scale_T_continuous(name = NULL, breaks = getOption("tern.breaks.default"),
-  minor_breaks = getOption("tern.breaks.default.minor"), labels = 100 *
-  breaks, limits = waiver())
+scale_T_continuous(name = NULL, limits = waiver(),
+  breaks = getBreaks(limits, TRUE), minor_breaks = getBreaks(limits, FALSE),
+  labels = 100 * breaks)
 
-scale_L_continuous(name = NULL, breaks = getOption("tern.breaks.default"),
-  minor_breaks = getOption("tern.breaks.default.minor"), labels = 100 *
-  breaks, limits = waiver())
+scale_L_continuous(name = NULL, limits = waiver(),
+  breaks = getBreaks(limits, TRUE), minor_breaks = getBreaks(limits, FALSE),
+  labels = 100 * breaks)
 
-scale_R_continuous(name = NULL, breaks = getOption("tern.breaks.default"),
-  minor_breaks = getOption("tern.breaks.default.minor"), labels = 100 *
-  breaks, limits = waiver())
+scale_R_continuous(name = NULL, limits = waiver(),
+  breaks = getBreaks(limits, TRUE), minor_breaks = getBreaks(limits, FALSE),
+  labels = 100 * breaks)
 }
 \arguments{
 \item{name}{the name of the scale}
+
+\item{limits}{the range of the scale}
 
 \item{breaks}{the major breaks}
 
 \item{minor_breaks}{the minor breaks}
 
 \item{labels}{the major labels}
-
-\item{limits}{the range of the scale}
 }
 \description{
 Create continuous scales for the top (T), left (L) and right(R) species in the ternary diagram, and, control the appearance of the labels, the limits, major and

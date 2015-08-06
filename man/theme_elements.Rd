@@ -62,6 +62,7 @@
 \alias{panel.grid.tern.minor.L}
 \alias{panel.grid.tern.minor.R}
 \alias{panel.grid.tern.minor.T}
+\alias{panel.margin.tern}
 \alias{ternary.options}
 \alias{theme}
 \alias{theme-tern}

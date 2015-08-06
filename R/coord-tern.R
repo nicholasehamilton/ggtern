@@ -469,12 +469,7 @@ coord_render_bg.ternary <- function(coord,details,theme){
   .getData <- function(X,ix,existing=NULL,major=TRUE,angle=0,angle.text=0){
     breaks.major <- details[[paste0(X,".major_source")]]
     breaks.minor <- details[[paste0(X,".minor_source")]]
-    breaks <- if(major){
-      breaks.major
-    }else{
-      breaks.minor
-      #breaks.minor[which(!breaks.minor %in% breaks.major | !showgrid.major)]
-    }
+    breaks <- if(major){ breaks.major }else{ breaks.minor }
     
     #BYPASS IF NECESSARY
     if(length(breaks) == 0){ return(existing) }
@@ -491,14 +486,13 @@ coord_render_bg.ternary <- function(coord,details,theme){
       #quietly
     })
     limits <- is.numericor(limits,c(0,1))
-    b <- limits[length(limits)]; a <- limits[1] #The max/min limits.
-    ix <- min(ix,ifthenelse(major,length(tl.major),length(tl.minor)))
-    majmin        <- ifthenelse(major,"major","minor")  #Major or Minor Element Name part.
+    ix     <- min(ix,ifthenelse(major,length(tl.major),length(tl.minor)))
+    majmin <- ifthenelse(major,"major","minor")  #Major or Minor Element Name part.
     
     #The new dataframe
     new            <- data.frame(ID = id,Scale=X,Breaks=breaks,Labels=labels,Major=major)
-    new            <- new[which(new$Breaks >= min(b,a) & new$Breaks <= max(b,a)),]
-    new$Prop       <- (new$Breaks - a) / (b - a) #The relative position
+    new            <- subset(new,Breaks >= min(limits) & Breaks <= max(limits))
+    new$Prop       <- (new$Breaks - min(limits)) / abs(diff(limits))
     new$TickLength <- ifthenelse(major,tl.major[ix],tl.minor[ix])
     new$NameText   <- paste0("axis.tern.text.",X)
     new$NameTicks  <- paste0("axis.tern.ticks.",majmin,".",X)
@@ -649,7 +643,9 @@ coord_render_bg.ternary <- function(coord,details,theme){
 
   #PROCESS TICKS AND LABELS
   if(showgrid.major | showgrid.minor)
-    for(n in unique(d$NameGrid)){ items <- .render.grid(  name=n,items=items,d=d[which(d$NameGrid  == n),], showgrid.major=showgrid.major,showgrid.minor=showgrid.minor)}  
+    for(n in unique(d$NameGrid)){ 
+      items <- .render.grid(  name=n,items=items,d=d[which(d$NameGrid  == n),], showgrid.major=showgrid.major,showgrid.minor=showgrid.minor)
+    } 
   if(showprimary)
     for(n in unique(d$NameTicks)){items <- .render.ticks(name=n,items=items,d=d[which(d$NameTicks == n),],primary=TRUE)}
   if(showsecondary)
