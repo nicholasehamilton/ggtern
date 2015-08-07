@@ -4,8 +4,9 @@
 \alias{theme_custom}
 \title{Theme with custom basic colours}
 \usage{
-theme_custom(base_size = 12, base_family = "", col.T = "darkred",
-  col.L = "darkblue", col.R = "darkgreen", col.BG = "white")
+theme_custom(base_size = 12, base_family = "", col.T = "gray95",
+  col.L = "gray95", col.R = "gray95", col.BG = "transparent",
+  col.grid.minor = "gray90")
 }
 \arguments{
 \item{base_size}{base font size}

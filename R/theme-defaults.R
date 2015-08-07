@@ -22,23 +22,24 @@
                              col.T               = "black",
                              col.L               = "black",
                              col.R               = "black",
-                             grid.T              = "white",
-                             grid.L              = "white",
-                             grid.R              = "white",
-                             grid.minor          = "grey95",
+                             col.grid.T          = "white",
+                             col.grid.L          = "white",
+                             col.grid.R          = "white",
+                             col.grid.minor      = "grey95",
+                             col.axis.T          = col.T,
+                             col.axis.L          = col.L,
+                             col.axis.R          = col.R,
+                             col.arrow.T         = col.T,
+                             col.arrow.L         = col.L,
+                             col.arrow.R         = col.R,
+                             col.title.T         = col.T,
+                             col.title.L         = col.L,
+                             col.title.R         = col.R,
+                             col.arrow.text.T    = col.T,
+                             col.arrow.text.L    = col.L,
+                             col.arrow.text.R    = col.R,
+                             col.ticks.major     = "black",
                              axis.tern.size      = 0.5,
-                             axis.T              = col.T,
-                             axis.L              = col.L,
-                             axis.R              = col.R,
-                             arrow.T             = col.T,
-                             arrow.L             = col.L,
-                             arrow.R             = col.R,
-                             title.T             = col.T,
-                             title.L             = col.L,
-                             title.R             = col.R,
-                             arrow.text.T        = col.T,
-                             arrow.text.L        = col.L,
-                             arrow.text.R        = col.R,
                              showarrow           = getOption("tern.showarrows"),
                              ticks.outside       = getOption("tern.ticks.outside"),
                              ticks.showsecondary = getOption("tern.ticks.showsecondary"),
@@ -79,14 +80,14 @@
       
       axis.tern               = element_line(size=axis.tern.size,linetype="solid"),
       axis.tern.line          = element_line(),
-      axis.tern.line.T        = element_line(colour=axis.T),
-      axis.tern.line.L        = element_line(colour=axis.L),
-      axis.tern.line.R        = element_line(colour=axis.R),
+      axis.tern.line.T        = element_line(colour=col.axis.T),
+      axis.tern.line.L        = element_line(colour=col.axis.L),
+      axis.tern.line.R        = element_line(colour=col.axis.R),
       
       axis.tern.arrow         = element_line(lineend=arrow(length=unit(2.5,"mm"))),
-      axis.tern.arrow.T       = element_line(colour=arrow.T),
-      axis.tern.arrow.L       = element_line(colour=arrow.L),
-      axis.tern.arrow.R       = element_line(colour=arrow.R),
+      axis.tern.arrow.T       = element_line(colour=col.arrow.T),
+      axis.tern.arrow.L       = element_line(colour=col.arrow.L),
+      axis.tern.arrow.R       = element_line(colour=col.arrow.R),
       
       axis.tern.text          = element_text(size=size.base,face="plain",hjust=0.5,vjust=0.5),
       axis.tern.text.T        = element_text(colour=col.T,hjust=-0.2),
@@ -94,21 +95,21 @@
       axis.tern.text.R        = element_text(colour=col.R,hjust=+1.2),
       
       axis.tern.arrow.text    = element_text(size=size.text,face="plain",hjust=0.5,vjust=0.5),
-      axis.tern.arrow.text.T  = element_text(colour=arrow.text.T, vjust=-0.2),
-      axis.tern.arrow.text.L  = element_text(colour=arrow.text.L, vjust=-0.2),
-      axis.tern.arrow.text.R  = element_text(colour=arrow.text.R, vjust= 1.2),
+      axis.tern.arrow.text.T  = element_text(colour=col.arrow.text.T, vjust=-0.2),
+      axis.tern.arrow.text.L  = element_text(colour=col.arrow.text.L, vjust=-0.2),
+      axis.tern.arrow.text.R  = element_text(colour=col.arrow.text.R, vjust= 1.2),
       
       axis.tern.title         = element_text(size=size.title,face="bold",hjust=0.5 ,vjust=0.5),
-      axis.tern.title.T       = element_text(colour=title.T,vjust= -0.1),
-      axis.tern.title.L       = element_text(colour=title.L,hjust= +1.1),
-      axis.tern.title.R       = element_text(colour=title.R,hjust= -0.1),
+      axis.tern.title.T       = element_text(colour=col.title.T,vjust= -0.1),
+      axis.tern.title.L       = element_text(colour=col.title.L,hjust= +1.1),
+      axis.tern.title.R       = element_text(colour=col.title.R,hjust= -0.1),
       
       panel.grid.tern         = element_line(linetype=grid.linetype),
       panel.grid.tern.major   = element_line(color="black",size=grid.major.size),
-      panel.grid.tern.major.T = element_line(colour=grid.T),
-      panel.grid.tern.major.L = element_line(colour=grid.L),
-      panel.grid.tern.major.R = element_line(colour=grid.R),
-      panel.grid.tern.minor   = element_line(size=0.25,colour=grid.minor,linetype=grid.linetype.minor),
+      panel.grid.tern.major.T = element_line(colour=col.grid.T),
+      panel.grid.tern.major.L = element_line(colour=col.grid.L),
+      panel.grid.tern.major.R = element_line(colour=col.grid.R),
+      panel.grid.tern.minor   = element_line(size=0.25,colour=col.grid.minor,linetype=grid.linetype.minor),
       
       axis.tern.ticks.outside       = ticks.outside,
       axis.tern.ticks.showsecondary = ticks.showsecondary,
@@ -118,7 +119,7 @@
       axis.tern.ticklength.minor    = ticklength.minor,
       
       axis.tern.ticks         = element_line(),
-      axis.tern.ticks.major   = element_line(color="black"),
+      axis.tern.ticks.major   = element_line(color=col.ticks.major),
       axis.tern.ticks.major.T = element_line(colour=col.T),
       axis.tern.ticks.major.L = element_line(colour=col.L),
       axis.tern.ticks.major.R = element_line(colour=col.R),
@@ -145,16 +146,17 @@ theme_gray  <- function(base_size = 12, base_family = ""){
   .theme_tern(base_size=base_size, base_family=base_family, 
               col.BG="grey90",
               col.T ="gray50",col.L="gray50",col.R="gray50",
-              axis.T="grey90",axis.L="grey90",axis.R="grey90",
-              title.T="black",title.L="black",title.R="black",
+              col.axis.T="grey90",col.axis.L="grey90",col.axis.R="grey90",
+              col.title.T="black",col.title.L="black",col.title.R="black",
               axis.tern.size = 0.25,ticklength.minor = unit(0,"npc"),
               showarrow=FALSE,
-              arrow.text.T="black",arrow.text.L="black",arrow.text.R="black")
+              col.arrow.text.T="black",col.arrow.text.L="black",col.arrow.text.R="black")
 }
 theme_tern_gray <- function(base_size = 12, base_family = ""){
   tern_dep("1.0.1.3","theme_tern_gray has been superceded by the ggplot2 standard theme_gray")
   theme_gray(base_size,base_family)
 }
+theme_tern_grey <- theme_tern_gray
 theme_grey <- theme_gray
 
 #' A theme with grey background, red, green and blue axes and white gridlines
@@ -166,7 +168,8 @@ theme_grey <- theme_gray
 #' @seealso \code{\link{theme_rgbw}}
 #' @export
 theme_rgbg  <- function(base_size = 12, base_family = ""){
-  .theme_tern(base_size=base_size, base_family=base_family, col.BG="gray90",
+  .theme_tern(base_size=base_size, base_family=base_family, 
+              col.BG="gray90",
               col.T="darkred",col.L="darkblue",col.R="darkgreen")
 }
 theme_tern_rgbg <- function(base_size = 12, base_family = ""){
@@ -185,16 +188,30 @@ theme_rgb <- theme_rgbg
 #' @param col.BG colour of background colour to plot area
 #' \code{theme_custom} is a convenience function to allow the user to control the basic theme colours very easily.
 #' @export
-theme_custom  <- function(base_size = 12, base_family = "",col.T="darkred",col.L="darkblue",col.R="darkgreen",col.BG="white"){
-  .theme_tern(base_size=base_size, base_family=base_family, col.BG=col.BG,
-                       col.T=col.T,col.L=col.L,col.R=col.R,
-                       grid.T =col.T,grid.L=col.L,grid.R=col.R,
-                       grid.minor ="gray90",grid.linetype=6,grid.linetype.minor=1,grid.major.size=0.25)
+theme_custom  <- function(base_size = 12,
+                          base_family = "",
+                          col.T='gray95',
+                          col.L='gray95',
+                          col.R='gray95',
+                          col.BG="transparent",
+                          col.grid.minor="gray90"){
+  .theme_tern(base_size=base_size, base_family=base_family, 
+                        col.BG     = col.BG,
+                        col.T      = col.T,
+                        col.L      = col.L,
+                        col.R      = col.R,
+                        col.grid.T = col.T,
+                        col.grid.L = col.L,
+                        col.grid.R = col.R,
+                        col.grid.minor = col.grid.minor,
+                        grid.linetype=6,
+                        grid.linetype.minor=1,
+                        grid.major.size=0.25)
 }
 
-#' #' A theme with white background, red, green and blue axes and gidlines
+#' A theme with white background, red, green and blue axes and gidlines
 #' 
-#' \code{theme_rgbw} is a theme with white background, red, green and blue axes and gidlines
+#' \code{theme_rgbw} is a theme with white background, red, green and blue axes and gridlines
 #' @rdname theme_rgbw
 #' @inheritParams theme_gray
 #' @aliases theme_tern_rgbw
@@ -202,9 +219,13 @@ theme_custom  <- function(base_size = 12, base_family = "",col.T="darkred",col.L
 #' @export
 theme_rgbw  <- function(base_size = 12, base_family = ""){
   .theme_tern(base_size=base_size, base_family=base_family, col.BG="white",
-              col.T="darkred",col.L="darkblue",col.R="darkgreen",
-              grid.T ="darkred",grid.L="darkblue",grid.R="darkgreen",
-              grid.minor ="gray90",grid.linetype=6,grid.linetype.minor=1,grid.major.size=0.25)
+              col.T="darkred",
+              col.L="darkblue",
+              col.R="darkgreen",
+              col.grid.T ="darkred",
+              col.grid.L="darkblue",
+              col.grid.R="darkgreen",
+              col.grid.minor ="gray90",grid.linetype=6,grid.linetype.minor=1,grid.major.size=0.25)
 }
 theme_tern_rgbw <- function(base_size = 12, base_family = ""){
   tern_dep("1.0.1.3","theme_tern_rgbw has been superceded by theme_rgbw")
@@ -224,16 +245,16 @@ theme_bw    <- function(base_size = 12, base_family = ""){
               col.T ="black",
               col.L ="black",
               col.R ="black",
-              grid.T="gray90",
-              grid.L="gray90",
-              grid.R="gray90",
-              axis.T="gray50",
-              axis.L="gray50",
-              axis.R="gray50",
-              arrow.T="gray50",
-              arrow.L="gray50",
-              arrow.R="gray50",
-              grid.minor="gray98",
+              col.grid.T="gray90",
+              col.grid.L="gray90",
+              col.grid.R="gray90",
+              col.axis.T="gray50",
+              col.axis.L="gray50",
+              col.axis.R="gray50",
+              col.arrow.T="gray50",
+              col.arrow.L="gray50",
+              col.arrow.R="gray50",
+              #col.grid.minor="gray98",
               grid.linetype.minor=1,
               grid.linetype=1,
               grid.major.size=0.25)
@@ -260,16 +281,16 @@ theme_minimal    <- function(base_size = 12, base_family = ""){
               col.T ="black",
               col.L ="black",
               col.R ="black",
-              grid.T="gray90",
-              grid.L="gray90",
-              grid.R="gray90",
-              axis.T="gray90",
-              axis.L="gray90",
-              axis.R="gray90",
-              arrow.T="gray50",
-              arrow.L="gray50",
-              arrow.R="gray50",
-              grid.minor="gray98",
+              col.grid.T="gray90",
+              col.grid.L="gray90",
+              col.grid.R="gray90",
+              col.axis.T="gray90",
+              col.axis.L="gray90",
+              col.axis.R="gray90",
+              col.arrow.T="gray50",
+              col.arrow.L="gray50",
+              col.arrow.R="gray50",
+              col.grid.minor="gray98",
               grid.linetype.minor=1,
               grid.linetype=1,
               grid.major.size=0.25,
@@ -293,10 +314,11 @@ theme_classic <- function(base_size=12,base_family=""){
               col.T ="black",
               col.L ="black",
               col.R ="black",
-              grid.T="black",
-              grid.L="black",
-              grid.R="black",             
-              grid.minor="gray90") %+replace% theme(axis.tern.showgrid.major=FALSE,axis.tern.showgrid.minor=FALSE)
+              col.grid.T="black",
+              col.grid.L="black",
+              col.grid.R="black", 
+              col.ticks.major="magenta",
+              col.grid.minor="gray90") %+replace% theme(axis.tern.showgrid.major=FALSE,axis.tern.showgrid.minor=FALSE)
 }
 theme_tern_classic <- function(base_size = 12, base_family = ""){
   tern_dep("1.0.1.3","theme_tern_classic has been superceded by the ggplot2 standard theme_classic")
