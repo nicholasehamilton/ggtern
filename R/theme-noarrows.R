@@ -2,7 +2,7 @@
 
 #' Show or Hide the Ternary Arrows
 #' 
-#' \code{theme_noarrows} is a function that apepnds to the current theme a flag to switch OFF the ternary arrows
+#' \code{theme_noarrows} is a function that appends to the current theme a flag to switch OFF the ternary arrows
 #' @rdname themeshowhidearrows
 #' @export
 theme_noarrows   <- function(){.theme_arrows(FALSE)}
@@ -12,7 +12,7 @@ theme_noarrows   <- function(){.theme_arrows(FALSE)}
 #' @export
 theme_hidearrows <- theme_noarrows
 
-#' \code{theme_showarrows} is a function that apepnds to the current theme a flag to switch ON the ternary arrows
+#' \code{theme_showarrows} is a function that appends to the current theme a flag to switch ON the ternary arrows
 #' @rdname themeshowhidearrows
 #' @export
 theme_showarrows <- function(){.theme_arrows(TRUE)}
